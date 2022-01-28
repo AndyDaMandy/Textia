@@ -40,8 +40,14 @@ let armorOwned = [];
 let accesoriesOwned = [];
 let keyItems = [];
 // function save (){};
+// Query Selectors
 function showStats (x) {
-  console.log("Your current party contains " + x[0].name + ", " + x[1].name);
+//console.log("Your current party contains " + x[0].name + ", " + x[1].name);
+const stats = document.createElement("h3");
+const node = document.createTextNode("Your current party contains " + x[0].name + ", " + x[1].name);
+stats.appendChild(node);
+const element = document.getElementById("container");
+element.appendChild(stats)
   console.log("Here are their stats:");
   for (let i = 0; i < currentParty.length; i++){
     console.log("Name: " + x[i].name);

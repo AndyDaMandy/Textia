@@ -44,11 +44,12 @@ let accesoriesOwned = [];
 let keyItems = [];
 // function save (){};
 // Query Selectors
+
 function showStats (x) {
-//console.log("Your current party contains " + x[0].name + ", " + x[1].name);
-const element = document.getElementById("container");
+const element = document.getElementById("stats-menu");
 let stats = document.getElementById("party-status")
 let statsLog = document.getElementById("menu-items");  
+//checks if this has been run before and clears the content ahead of it.
 if (statsLog != ""){
   
   statsLog.innerHTML = "";
@@ -88,8 +89,22 @@ document.getElementById("line-1").innerHTML = "Here are their stats:";
 //=======================================
 //======================================
 //Menu functionality
-
-let menu = ["Items", "Stats", "Save"];
+let menu = document.getElementById("open-menu");
+function openMenu(){
+  document.getElementById("save-button").hidden = false;
+  document.getElementById("inventory-button").hidden = false;
+  document.getElementById("show-stats").hidden = false;
+  document.getElementById("close-menu").hidden = false;
+}
+function closeMenu() {
+  document.getElementById("save-button").hidden = true;
+  document.getElementById("inventory-button").hidden = true;
+  document.getElementById("show-stats").hidden = true;
+    document.getElementById("party-status").innerHTML = "";
+    document.getElementById("line-1").innerHTML = "";
+    document.getElementById("menu-items").innerHTML = "";
+  document.getElementById("close-menu").hidden = true;
+}
 //=====================================
 
 let enemyParty = [];

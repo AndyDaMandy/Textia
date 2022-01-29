@@ -7,15 +7,22 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>This site currently uses the console</h1>
-<div id="container">
-<button id="show-stats" onclick="showStats(currentParty)">Show Status of Party</button>
+    <h1>RPG Game!</h1>
+<div id="main-menu">
+  <button id="open-menu" onClick="openMenu()">Menu</button>
+  <button id="save-button" hidden>Save</button>
+  <button id="inventory-button" hidden>Inventory</div>
+  <button id="show-stats" onClick="showStats(currentParty)" hidden>Party Status</button>
+  <button id="close-menu" onClick="closeMenu()" hidden>Close Menu</button>
+</div>
+<div id="inventory-menu">
+  <h3></h3>
+  
+</div>
+<div id="stats-menu">
   <h3 id="party-status"></h3>
   <h4 id="line-1"></h4>
   <ul id="menu-items"></ul>
-  <div id="enemy">
-  </div>
-  <div id="playerParty"></div>
 </div>
     </ul>
     <script src="script.js"></script>

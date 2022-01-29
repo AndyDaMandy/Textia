@@ -34,6 +34,9 @@ let iceman = {
   type: "enemy"
 };
 
+//========================
+// event listeners go here
+//===========================
 let inventory = [];
 let weaponsOwned = [];
 let armorOwned = [];
@@ -49,17 +52,27 @@ stats.appendChild(node);
 const element = document.getElementById("container");
 element.appendChild(stats)
   console.log("Here are their stats:");
+let statsLog = document.getElementById("menu-items");  
   for (let i = 0; i < currentParty.length; i++){
-    console.log("Name: " + x[i].name);
-    console.log("HP: " + x[i].hp);
+    debugger;
+    let li = document.createElement("li");
+    li.innerHTML = "Name: " + x[i].name;
+    statsLog.appendChild(li);
+    li = document.createElement("li")
+    li.innerHTML = "HP: " + x[i].hp;
+    statsLog.appendChild(li);
+    li = document.createElement("li")
     console.log("MP: " + x[i].mp);
     console.log("Physical Attack: " + x[i].pAtk);
     console.log("Phsyical Defense: " + x[i].pDef);
-    console.log("Magic Attack: " + x[i].matk);
+    console.log("Magic Attack: " + x[i].mAtk);
     console.log("Magic Defense: " + x[i].mDef);
     console.log("Skills: " + x[i].skills);
   }
 };
+
+
+
 //=======================================
 //======================================
 //Menu functionality
@@ -73,6 +86,3 @@ let currentParty = [];
 // all testing goes below
 currentParty = [ando, marie];
 enemyParty = [iceman.name, iceman.name, iceman.name];
-showStats(currentParty);
-
-

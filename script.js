@@ -46,28 +46,40 @@ let keyItems = [];
 // Query Selectors
 function showStats (x) {
 //console.log("Your current party contains " + x[0].name + ", " + x[1].name);
-const stats = document.createElement("h3");
-const node = document.createTextNode("Your current party contains " + x[0].name + ", " + x[1].name);
-stats.appendChild(node);
 const element = document.getElementById("container");
-element.appendChild(stats)
-  console.log("Here are their stats:");
+let stats = document.getElementById("party-status")
 let statsLog = document.getElementById("menu-items");  
+if (statsLog != ""){
+  
+  statsLog.innerHTML = "";
+}
+stats.innerHTML ="Your current party contains " + x[0].name + ", " + x[1].name;
+document.getElementById("line-1").innerHTML = "Here are their stats:";
   for (let i = 0; i < currentParty.length; i++){
-    debugger;
     let li = document.createElement("li");
     li.innerHTML = "Name: " + x[i].name;
-    statsLog.appendChild(li);
-    li = document.createElement("li")
+      statsLog.appendChild(li);
+      li = document.createElement("li")
     li.innerHTML = "HP: " + x[i].hp;
-    statsLog.appendChild(li);
-    li = document.createElement("li")
-    console.log("MP: " + x[i].mp);
-    console.log("Physical Attack: " + x[i].pAtk);
-    console.log("Phsyical Defense: " + x[i].pDef);
-    console.log("Magic Attack: " + x[i].mAtk);
-    console.log("Magic Defense: " + x[i].mDef);
-    console.log("Skills: " + x[i].skills);
+      statsLog.appendChild(li);
+      li = document.createElement("li");
+    li.innerHTML = "MP: " + x[i].mp;
+      statsLog.appendChild(li);
+      li = document.createElement("li")
+    li.innerHTML = "Physical Attack: " + x[i].pAtk;
+     statsLog.appendChild(li);
+      li = document.createElement("li")
+    li.innerHTML = "Phsyical Defense: " + x[i].pDef;
+     statsLog.appendChild(li);
+      li = document.createElement("li")
+    li.innerHTML = "Magic Attack: " + x[i].mAtk;
+     statsLog.appendChild(li);
+      li = document.createElement("li")
+    li.innerHTML = "Magic Defense: " + x[i].mDef;
+     statsLog.appendChild(li);
+      li = document.createElement("li")
+    li.innerHTML = "Skills: " + x[i].skills;
+     statsLog.appendChild(li);
   }
 };
 

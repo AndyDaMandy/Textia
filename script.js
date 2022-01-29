@@ -54,7 +54,7 @@ if (statsLog != ""){
   
   statsLog.innerHTML = "";
 }
-stats.innerHTML ="Your current party contains " + x[0].name + ", " + x[1].name;
+stats.innerHTML ="Your current party: " + x[0].name + ", " + x[1].name;
 document.getElementById("line-1").innerHTML = "Here are their stats:";
   for (let i = 0; i < currentParty.length; i++){
     let li = document.createElement("li");

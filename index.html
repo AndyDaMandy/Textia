@@ -3,13 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Jrpg - Using Console</title>
+    <title>Andy RPG</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <h1>RPG Game!</h1>
+<div id="begin">
+  <h1>Text-RPG, the game</h1>
+  <p>Your adventure begins with two friends, Marie and Ando</p>
+  <button id="start-game" onClick="startGame()">Click here to begin the game!</button>
+</div>
 <div id="main-menu">
-  <button id="open-menu" onClick="openMenu()">Menu</button>
+  <button id="open-menu" onClick="openMenu()" hidden>Menu</button>
   <button id="save-button" hidden>Save</button>
   <button id="inventory-button" hidden>Inventory</div>
   <button id="show-stats" onClick="showStats(currentParty)" hidden>Party Status</button>
@@ -17,14 +22,27 @@
 </div>
 <div id="inventory-menu">
   <h3></h3>
-  
 </div>
 <div id="stats-menu">
   <h3 id="party-status"></h3>
   <h4 id="line-1"></h4>
   <ul id="menu-items"></ul>
+  </div>
+<div id="save-menu">
 </div>
-    </ul>
-    <script src="script.js"></script>
+<div id="shop">
+
+</div>
+<div id="battle-mode">
+</div>
+<div id="town-1" hidden>
+  <h2>Welcome to Area Town, it's the home of our protagonists!</h2>
+  <p>Shaman: "Hello Ando and Marie, I hope you are well."</p>
+  <p>"Allow me to explain the mission you're on and how you can move forward on your journey"</p>
+  <p>"To access the menu, click the "Menu" button above. You can check your items, party, skills, etc."</p>
+  <p>"If you'd like to move on"</p>
+</div>
+
+<script src="script.js"></script>
   </body>
 </html>

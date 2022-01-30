@@ -205,7 +205,6 @@ A gamestate value will be assigned to each area/location, thus allowing the trav
 const townOne = document.getElementById("town-1");
 
 //=====================================
-
 let inventory = [];
 let weaponsOwned = [];
 let armorOwned = [];
@@ -243,4 +242,5 @@ function startGame(){
   shopButton.hidden = false;
   begin.hidden = true;
   let gameState = 0;
+  let money = 100;
   };

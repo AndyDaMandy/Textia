@@ -3,22 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Andy RPG</title>
+    <title>Ando RPG</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <h1>RPG Game!</h1>
+    <!-- Starts Game -->
 <div id="begin">
-  <h1>Text-RPG, the game</h1>
+  <h2>Text-RPG, the game</h2>
   <p>Your adventure begins with two friends, Marie and Ando</p>
-  <button id="start-game" onClick="startGame()">Click here to begin the game!</button>
+  <button id="start-game" onClick="startGame()">New Game, Click Here</button>
+  <button id="continue" onClick="">Continue</button>
 </div>
-<div id="main-menu">
+<!-- Menu System below -->
+<div id="main-menu" hidden>
   <button id="open-menu" onClick="openMenu()" hidden>Menu</button>
   <button id="save-button" hidden>Save</button>
-  <button id="inventory-button" hidden>Inventory</div>
+  <button id="inventory-button" hidden>Inventory</button>
   <button id="show-stats" onClick="showStats(currentParty)" hidden>Party Status</button>
   <button id="close-menu" onClick="closeMenu()" hidden>Close Menu</button>
+  <hr>
 </div>
 <div id="inventory-menu">
   <h3></h3>
@@ -27,12 +31,28 @@
   <h3 id="party-status"></h3>
   <h4 id="line-1"></h4>
   <ul id="menu-items"></ul>
+  <hr  id="stats-line"hidden>
   </div>
 <div id="save-menu">
 </div>
-<div id="shop">
-
+<!--Level Up Menu-->
+<div id="level-up" hidden>
+  <h3>Congrats, you've leveled up!</h3>
+  <p>Please select a stat to level up below:</p>
+  <button></button>
 </div>
+<!--Gameplay Elements Below -->
+<button id="shop-button" onClick="openShop()" hidden>Shop</button>
+<div id="shop" hidden>
+  <button id="close-shop" onClick="closeShop()">Close Shop</button>
+  <p>Your money:</p>
+  <p>$0</p>
+  <h2>Welcome to the shop!</h2>
+  <p>We sell all sorts of items here!</p>
+  <hr>
+<!-- My idea for the shop is to have an array of buttons created containing the items.. It's kind of bold, but we'll see!-->
+</div>
+<!-- battles go here -->
 <div id="battle-mode">
 </div>
 <div id="town-1" hidden>
@@ -40,7 +60,14 @@
   <p>Shaman: "Hello Ando and Marie, I hope you are well."</p>
   <p>"Allow me to explain the mission you're on and how you can move forward on your journey"</p>
   <p>"To access the menu, click the "Menu" button above. You can check your items, party, skills, etc."</p>
-  <p>"If you'd like to move on"</p>
+  <p>"If you'd like to move on, click below, or click the shop button above"</p>
+  <button class="move-forward" onClick="moveForward(1)">Next Area</button>
+</div>
+<div id="forest-1" hidden>
+  <h2>The Forest</h2>
+  <p>You've found yourself in a mysterious forest. It's full of danger at every turn.</p>
+  <p>You're worried the danger might be too high, maybe you should head back to town?</p>
+  <button class="move-backward" onClick="moveBackward(0)">Back to Town</button>
 </div>
 
 <script src="script.js"></script>

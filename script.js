@@ -207,13 +207,32 @@ const commands = document.getElementById("commands");
 const enemyPlace = document.getElementById("enemies");
 const partyPlace = document.getElementById("party");
 const info = document.getElementById("info");
+const end = document.getElementById("end");
 //calcs go above battle func
-function battle(x) {
+function attack (char, target){
+};
+function skills(skill, char, target){
+};
+function levelUp(char){};
+function clearBattle() {
+  adv.hidden = false;
+  battleState = false;
+  battleMode.hidden = true;
+  mainMenu.hidden = false;
+};
+function endBattle(loc) {
+ // if (enemyParty.length === 0) {};
+ let endButton = document.createElement("button");
+ endButton.innerHTML = "End Battle";
+ endButton.addEventListener('click', function (x) {loc = x; clearBattle(); move(x)});
+ end.appendChild(endButton);
+};
+function battle(en, location) {
   adv.hidden = true;
   battleState = true;
   battleMode.hidden = false;
   mainMenu.hidden = true;
-  enemyParty = x;
+  enemyParty = en;
   let p = document.createElement("h4");
   p.innerHTML = "Enemies: " + enemyParty[0].name;
   enemyPlace.appendChild(p);
@@ -227,10 +246,12 @@ function battle(x) {
   let p4 = document.createElement("p");
   p4.innerHTML = "Please select a command: ";
   info.appendChild(p4);
+  endBattle(location);
   //loads character party as is and adds as new elements
   //loads functions for level up and such
   //final function hides buttons, etc.
-}
+  //There needs to be a way to return to the previous state once a battle is open, perhaps a new button opens up
+};
 //=====================================
 // Area 1
 const townOne = document.getElementById("town-1");

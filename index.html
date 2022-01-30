@@ -85,15 +85,16 @@
       <h2>The Forest</h2>
       <p>You've found yourself in a mysterious forest. It's full of danger at every turn.</p>
       <p>You're worried the danger might be too high, maybe you should head back to town?</p>
-      <button onClick="move(0);">Back to Town</button>
+      <button onClick="move(0)">Back to Town</button>
       <button onClick="move(2)">To large tree</button>
     </div>
     <div id="forest-1-2" hidden>
       <h2>The Large Tree</h2>
       <p>You've found a large tree!</p>
       <p>There are enemies near it!</p>
-      <p>You must fight!</p>
-      <button onClick="battle([iceman], 0)">Fight</button>
+      <p>Will you fight?</p>
+      <button onClick="move(1)">Go Back</button>
+      <button onClick="battle([iceman], 1)">Fight</button>
     </div>
 </div>
 

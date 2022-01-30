@@ -224,7 +224,7 @@ function endBattle(loc) {
  // if (enemyParty.length === 0) {};
  let endButton = document.createElement("button");
  endButton.innerHTML = "End Battle";
- endButton.addEventListener('click', function (x) {loc = x; clearBattle(); move(x)});
+ endButton.addEventListener('click', function (x) {debugger; x = loc; clearBattle(); move(x)});
  end.appendChild(endButton);
 };
 function battle(en, location) {
@@ -281,8 +281,10 @@ function gameFlow (state) {
   };
 //Forest 1
   if (state === 1) {
+    debugger;
   townOne.hidden = true;
   forestOne.hidden = false;
+  forestOneOne.hidden = false;
   forestOneTwo.hidden = true;
   shopButton.hidden = true;
   closeShop();

@@ -204,6 +204,9 @@ A gamestate value will be assigned to each area/location, thus allowing the trav
 let battleState = false;
 const battleMode = document.getElementById("battle-mode");
 const commands = document.getElementById("commands");
+const enemyPlace = document.getElementById("enemies");
+const partyPlace = document.getElementById("party");
+const info = document.getElementById("info");
 //calcs go above battle func
 function battle(x) {
   adv.hidden = true;
@@ -211,7 +214,19 @@ function battle(x) {
   battleMode.hidden = false;
   mainMenu.hidden = true;
   enemyParty = x;
+  let p = document.createElement("h4");
+  p.innerHTML = "Enemies: " + enemyParty[0].name;
+  enemyPlace.appendChild(p);
   //loads x as enemy party
+  let p2 = document.createElement("h4");
+  p2.innerHTML = "Party: " + currentParty[0].name + ", " + currentParty[1].name;
+  partyPlace.appendChild(p2);
+  let p3 = document.createElement("p");
+  p3.innerHTML = enemyParty.length + " enemies appeared!"
+  info.appendChild(p3);
+  let p4 = document.createElement("p");
+  p4.innerHTML = "Please select a command: ";
+  info.appendChild(p4);
   //loads character party as is and adds as new elements
   //loads functions for level up and such
   //final function hides buttons, etc.

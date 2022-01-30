@@ -53,21 +53,47 @@
 <!-- My idea for the shop is to have an array of buttons created containing the items.. It's kind of bold, but we'll see!-->
 </div>
 <!-- battles go here -->
-<div id="battle-mode">
+<div id="battle-mode" hidden>
+  <h2>Battle!</h2>
+  <div id="enemies">
+  </div>
+  <div id="party">
+  </div>
+  <div id="calc">
+  </div>
+  <div id="info"></div>
+  <div id="commands">
+    <button>Attack</button>
+    <button>Skills</button>
+    <button>Item</button>
+  </div>
+  <hr>
 </div>
-<div id="town-1" hidden>
-  <h2>Welcome to Area Town, it's the home of our protagonists!</h2>
-  <p>Shaman: "Hello Ando and Marie, I hope you are well."</p>
-  <p>"Allow me to explain the mission you're on and how you can move forward on your journey"</p>
-  <p>"To access the menu, click the "Menu" button above. You can check your items, party, skills, etc."</p>
-  <p>"If you'd like to move on, click below, or click the shop button above"</p>
-  <button class="move-forward" onClick="moveForward(1)">Next Area</button>
-</div>
-<div id="forest-1" hidden>
-  <h2>The Forest</h2>
-  <p>You've found yourself in a mysterious forest. It's full of danger at every turn.</p>
-  <p>You're worried the danger might be too high, maybe you should head back to town?</p>
-  <button class="move-backward" onClick="moveBackward(0)">Back to Town</button>
+<!-- Adventure elements below -->
+<div id="adv-mode">
+  <div id="town-1" hidden>
+    <h2>Welcome to Area Town, it's the home of our protagonists!</h2>
+    <p>Shaman: "Hello Ando and Marie, I hope you are well."</p>
+    <p>"Allow me to explain the mission you're on and how you can move forward on your journey"</p>
+    <p>"To access the menu, click the "Menu" button above. You can check your items, party, skills, etc."</p>
+    <p>"If you'd like to move on, click below, or click the shop button above"</p>
+    <button onClick="move(1);">Enter Forest</button>
+  </div>
+  <div id="forest-1" hidden>
+    <div id="forest-1-1">
+      <h2>The Forest</h2>
+      <p>You've found yourself in a mysterious forest. It's full of danger at every turn.</p>
+      <p>You're worried the danger might be too high, maybe you should head back to town?</p>
+      <button onClick="move(0);">Back to Town</button>
+      <button onClick="move(2)">To large tree</button>
+    </div>
+    <div id="forest-1-2" hidden>
+      <h2>The Large Tree</h2>
+      <p>You've found a large tree!</p>
+      <p>There are enemies near it!</p>
+      <p>You must fight!</p>
+      <button onClick="battle([iceman])">Fight</button>
+    </div>
 </div>
 
 <script src="script.js"></script>

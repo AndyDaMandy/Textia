@@ -200,9 +200,29 @@ function closeMenu() {
 The game flow will be simple. The game will go through "Areas", each one being a div. Each Div will be a town/level or pass through. By toggling the hidden property in html we can hide the divs as necessary. The progression will be linear, at least for now....
 A gamestate value will be assigned to each area/location, thus allowing the travel function to take you through each level. Battles will need to be manually accessed I think...
 */
+//Battle Mode
+let battleState = false;
+const battleMode = document.getElementById("battle-mode");
+const commands = document.getElementById("commands");
+//calcs go above battle func
+function battle(x) {
+  adv.hidden = true;
+  battleState = true;
+  battleMode.hidden = false;
+  mainMenu.hidden = true;
+  enemyParty = x;
+  //loads x as enemy party
+  //loads character party as is and adds as new elements
+  //loads functions for level up and such
+  //final function hides buttons, etc.
+}
 //=====================================
 // Area 1
 const townOne = document.getElementById("town-1");
+//Forest 1, Forest 1-1, 1-2
+const forestOne = document.getElementById("forest-1");
+const forestOneOne = document.getElementById("forest-1-1");
+const forestOneTwo = document.getElementById("forest-1-2");
 
 //=====================================
 let inventory = [];
@@ -212,18 +232,39 @@ let accesoriesOwned = [];
 let keyItems = [];
 let enemyParty = [];
 let currentParty = [];
+let money;
+let gameState;
 //===================================
 //Game State and game flow will go here:
-function moveFoward (state) {
-  
+function gameFlow (state) {
+//Area 1
+  if (state === 0) {
+  townOne.hidden = false;
+  forestOne.hidden = true;
+  shopButton.hidden = false;
+  };
+//Forest 1
+  if (state === 1) {
+  townOne.hidden = true;
+  forestOne.hidden = false;
+  forestOneTwo.hidden = true;
+  shopButton.hidden = true;
+  closeShop();
+  };
+//Forest 1-2
+  if (state === 2){
+    forestOneOne.hidden = true;
+    forestOneTwo.hidden = false;
+  }
 };
-function moveBackward (state) {
-  
+function move (state) {
+  gameState = state;
+  gameFlow(gameState);
 };
 //==================================
 // all testing goes below
 currentParty = [ando, marie];
-enemyParty = [iceman.name, iceman.name, iceman.name];
+enemyParty = [iceman];
 ando.weapon = woodSword;
 marie.weapon = woodStaff;
 ando.skills.push(basher);
@@ -235,12 +276,14 @@ ando.skills.push(iceSlash);
 const begin = document.getElementById("begin");
 const start = document.getElementById("start-game");
 const mainMenu = document.getElementById("main-menu");
+const adv = document.getElementById("adv-mode");
 function startGame(){
+  adv.hidden = false;
   mainMenu.hidden = false;
   menu.hidden = false;
-  townOne.hidden = false;
   shopButton.hidden = false;
   begin.hidden = true;
-  let gameState = 0;
-  let money = 100;
+  gameState = 0;
+  move(gameState);
+  money = 100;
   };

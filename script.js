@@ -87,11 +87,17 @@ const iceSlash = {
 //======================================
 //Items go here
 const potion = {
-  name: "potion",
+  name: "Potion",
   type: "Healing",
   des: "Heals 5 points of HP.",
   pow: 5
   };
+const magicPotion = {
+  name: "Magic Potion",
+  type: "Healing",
+  des: "Heals 5 points of MP.",
+  pow: 5
+};
 //=======================================
 // Weapons go here
 const woodSword = {
@@ -159,18 +165,31 @@ function showStats (x) {
     li.innerHTML = "Skills: " + joined;       
     statsLog.appendChild(li);
   };
-statsLine.hidden = false;
+  statsLine.hidden = false;
   };
-function showInventory (x) {
-
+function showInventory() {
+  let inventorySlot = document.getElementById("inventory-items");
+  if (inventorySlot != ""){
+  
+    inventorySlot.innerHTML = "";
+  }
+  let inventoryMenu = document.getElementById("inventory-menu");
+  let pusher = function (item) { 
+    let li = document.createElement("li");
+    li.innerHTML = item.name + ": " + "Type: " + item.type + " - " + item.des + " - Power:" + item.pow;
+    inventorySlot.appendChild(li)};
+    inventory.forEach(pusher);
+  inventoryMenu.hidden = false;
   };
 function save () {
 
   };
 
 let shop = document.getElementById("shop");
+let moneyShow = document.getElementById("money");
 let shopButton = document.getElementById("shop-button");
 function openShop(){
+  moneyShow.innerHTML = "$" + money;
   shop.hidden = false;
   };
 function closeShop() {
@@ -189,8 +208,12 @@ function openMenu(){
   };
 function closeMenu() {
   document.getElementById("save-button").hidden = true;
+  //inventory
   document.getElementById("inventory-button").hidden = true;
-  document.getElementById("show-stats").hidden = true;
+  document.getElementById("inventory-menu").hidden = true;
+  document.getElementById("inventory-items").innerHTML = "";
+  //party stats
+    document.getElementById("show-stats").hidden = true;
     document.getElementById("party-status").innerHTML = "";
     document.getElementById("line-1").innerHTML = "";
     document.getElementById("menu-items").innerHTML = "";
@@ -219,6 +242,7 @@ function clearBattle() {
   battleState = false;
   battleMode.hidden = true;
   mainMenu.hidden = false;
+  //I think this needs a better way of deciding where to go after a battle....
 };
 function endBattle(loc) {
  // if (enemyParty.length === 0) {};
@@ -240,17 +264,20 @@ function battle(en, location) {
   let p2 = document.createElement("h4");
   p2.innerHTML = "Party: " + currentParty[0].name + ", " + currentParty[1].name;
   partyPlace.appendChild(p2);
+  // start phase
   let p3 = document.createElement("p");
   p3.innerHTML = enemyParty.length + " enemies appeared!"
   info.appendChild(p3);
   let p4 = document.createElement("p");
-  p4.innerHTML = "Please select a command: ";
+  p4.innerHTML = currentParty[0].name + "'s turn." + "Please select a command: ";
   info.appendChild(p4);
-  endBattle(location);
+  // Phase 1
+  if {}
   //loads character party as is and adds as new elements
   //loads functions for level up and such
   //final function hides buttons, etc.
   //There needs to be a way to return to the previous state once a battle is open, perhaps a new button opens up
+  endBattle(location);
 };
 //=====================================
 // Area 1
@@ -303,11 +330,10 @@ function move (state) {
 // all testing goes below
 currentParty = [ando, marie];
 enemyParty = [iceman];
-ando.weapon = woodSword;
-marie.weapon = woodStaff;
 ando.skills.push(basher);
 marie.skills.push(fire);
 ando.skills.push(iceSlash);
+
 //======================================
 // Start Game , must go below everything else
 //======================================
@@ -324,4 +350,12 @@ function startGame(){
   gameState = 0;
   move(gameState);
   money = 100;
+  ando.weapon = woodSword;
+  marie.weapon = woodStaff;
+  inventory.push(potion);
+  inventory.push(potion);
+  inventory.push(magicPotion);
   };
+function loadGame(){
+
+};

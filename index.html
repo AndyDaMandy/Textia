@@ -22,13 +22,14 @@
 <div id="main-menu" hidden>
   <button id="open-menu" onClick="openMenu()" hidden>Menu</button>
   <button id="save-button" hidden>Save</button>
-  <button id="inventory-button" hidden>Inventory</button>
+  <button id="inventory-button" hidden onClick="showInventory()">Inventory</button>
   <button id="show-stats" onClick="showStats(currentParty)" hidden>Party Status</button>
   <button id="close-menu" onClick="closeMenu()" hidden>Close Menu</button>
   <hr>
 </div>
-<div id="inventory-menu">
-  <h3></h3>
+<div id="inventory-menu" hidden>
+  <h3>Inventory</h3>
+  <ul id="inventory-items"></ul>
 </div>
 <div id="stats-menu">
   <h3 id="party-status"></h3>
@@ -49,7 +50,7 @@
 <div id="shop" hidden>
   <button id="close-shop" onClick="closeShop()">Close Shop</button>
   <p>Your money:</p>
-  <p>$0</p>
+  <p id="money"></p>
   <h2>Welcome to the shop!</h2>
   <p>We sell all sorts of items here!</p>
   <hr>
@@ -66,8 +67,8 @@
   </div>
   <div id="info"></div>
   <div id="commands">
-    <button>Attack</button>
-    <button>Skills</button>
+    <button id="attack">Attack</button>
+    <button"skill-">Skills</button>
     <button>Item</button>
     <button hidden>Close Skills</button>
     <button hidden>Close Items</button>
@@ -91,7 +92,7 @@
       <p>You've found yourself in a mysterious forest. It's full of danger at every turn.</p>
       <p>You're worried the danger might be too high, maybe you should head back to town?</p>
       <button onClick="move(0)">Back to Town</button>
-      <button onClick="move(2)">To large tree</button>
+      <button onClick="move(2)">To the Large Tree</button>
     </div>
     <div id="forest-1-2" hidden>
       <h2>The Large Tree</h2>
@@ -100,6 +101,14 @@
       <p>Will you fight?</p>
       <button onClick="move(1)">Go Back</button>
       <button onClick="battle([iceman], 1)">Fight</button>
+    </div>
+    <div id="forest-1-3" hidden>
+      <h2>The Large Tree - 2</h2>
+      <p>after defeating the enemies you can now approach the tree.</p>
+      <p>there you find a treasure chest.</p>
+      <p>Will you open it?</p>
+      <button id="chest-1">Open Chest</button>
+      <button onClick="">Move Forward</button>
     </div>
 </div>
 

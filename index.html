@@ -3,15 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>Ando RPG</title>
+    <title>Textia</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>RPG Game!</h1>
+    <header>
+    <h1>Textia: a World without Images</h1>
+    <p><em>To play, click the buttons below:</em></p>
+    </header>
     <!-- Starts Game -->
 <div id="begin">
-  <h2>Text-RPG, the game</h2>
-  <p>Your adventure begins with two friends, Marie and Ando</p>
+  <h2>Game Start</h2>
+  <p><em>Your adventure begins with two friends, Marie and Ando</em></p>
   <button id="start-game" onClick="startGame()">New Game, Click Here</button>
   <button id="continue" onClick="">Continue</button>
 </div>
@@ -66,6 +69,8 @@
     <button>Attack</button>
     <button>Skills</button>
     <button>Item</button>
+    <button hidden>Close Skills</button>
+    <button hidden>Close Items</button>
   </div>
   <div id="end"></div>
   <hr>
@@ -73,7 +78,7 @@
 <!-- Adventure elements below -->
 <div id="adv-mode">
   <div id="town-1" hidden>
-    <h2>Welcome to Area Town, it's the home of our protagonists!</h2>
+    <h2>Area Town</h2>
     <p>Shaman: "Hello Ando and Marie, I hope you are well."</p>
     <p>"Allow me to explain the mission you're on and how you can move forward on your journey"</p>
     <p>"To access the menu, click the "Menu" button above. You can check your items, party, skills, etc."</p>

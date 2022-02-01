@@ -19,7 +19,7 @@ let marie = {
   level: 1,
   hp: 8,
   mp: 10,
-  pAtk: 2,
+  pAtk: 11,
   pDef: 2,
   mAtk: 6,
   mDef: 5,
@@ -27,21 +27,6 @@ let marie = {
   weapon: "Test",
   type: "player"
   };
-//========================================
-//enemies go here
-const iceman = {
-  name: "Ice Man",
-  level: 1,
-  hp: 8,
-  mp: 5,
-  pAtk: 1,
-  pDef: 1,
-  mAtk: 1,
-  mDef: 1,
-  eSkills: [],
-  type: "enemy"
-  };
-
 //===================================
 /*
 Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
@@ -62,6 +47,33 @@ const thunEl = {
 const watEl = {
   element: "Water",
   des: "Water Element, strong against Thunder"
+  };
+//========================================
+//enemies go here
+const iceman = {
+  name: "Ice Man",
+  level: 1,
+  hp: 8,
+  mp: 5,
+  pAtk: 1,
+  pDef: 1,
+  mAtk: 1,
+  mDef: 1,
+  weakness: fireEl,
+  eSkills: [],
+  type: "enemy"
+  };
+const goblin = {
+  name: "Goblin",
+  level: 1,
+  hp: 8,
+  mp: 5,
+  pAtk: 1,
+  pDef: 1,
+  mAtk: 1,
+  mDef: 1,
+  eSkills: [],
+  type: "enemy"
   };
 //============================
 //Skills
@@ -109,6 +121,7 @@ const woodSword = {
   type: "Sword",
   des: "A basic wooden sword",
   atr: "Physical",
+  el: fireEl,
   pow: 1
   };
 const woodStaff = {
@@ -249,31 +262,58 @@ const partyPlace = document.getElementById("party");
 const info = document.getElementById("info");
 const end = document.getElementById("end");
 const change = document.getElementById("p-com");
+let pStats = document.getElementById("p-stats");
 //calcs go above battle func
-function targetSelect (){
-  debugger;
-  let targ = [];
-  let count = 0;
+// targetting functions go above the battle selectors and such.
+//function targetSelect(x){};
+function backBtn (x){
+  let back = document.createElement("button");
+    back.innerHTML = "Back";
+    back.addEventListener('click', function (y) {y = x; info.innerHTML = ""; change.innerHTML = ""; battleMove(y)});
+    change.appendChild(back);
+  };
+function targetBtn(px){
+ // let targ = [];
+ // let count = 0;
   function createTarg (x){
+    debugger;
    let btn = document.createElement("button");
    btn.innerHTML = x.name;
-   btn.addEventListener('click', function (){targ.push(count)})
-   count++;
-  }
-  if (targ.length > 1){
-   let p = document.createElement("p");
-    p.innerHTML = "Which enemy will you select?";
-    enemyParty.forEach(createTarg);
-  } else {
-      targ.push(0);
+  btn.addEventListener('click', function (pl, y) {pl = px; y = x; attackCalc(px, y)});
+   change.appendChild(btn);
   };
-  function targConv(y) {
-    if (y.length === 1){
-      return enemyParty[y[0]];
-    }
-  }
+    change.innerHTML = "";
+    enemyParty.forEach(createTarg);
 };
 function attackCalc (char, target){
+  debugger;
+  info.innerHTML = "";
+  let pa = char.pAtk + char.weapon.pow - target.pDef;
+  let thp = target.hp;
+  let damage = pa - 2;
+  //if (target.weakness === char.weapon.el) {};
+  let final = thp - damage ;
+  console.log(final);
+  if (final <= 0) {
+    let p = document.createElement("p");
+      p.innerHTML = "The enemy was hit for " + damage + " damage!";
+      info.appendChild(p);
+    let p2 = document.createElement("p");
+      p2.innerHTML = target.name + "'s HP has been depleted!";
+      info.appendChild(p2);
+      enemyParty = enemyParty.splice(target);
+      battleMove(3)
+      console.log(enemyParty);
+  } else {
+    let p3 = document.createElement("p");
+      p3.innerHTML = target.name + " was hit for " + damage + " damage!";
+      info.appendChild(p3);
+      battleMove(3)
+  }
+
+};
+function enemCalc (enem, char){
+
 };
 function skills(skill, char, target){
 };
@@ -292,9 +332,10 @@ function endBattle(loc) {
  endButton.addEventListener('click', function (x) {x = loc; clearBattle(); move(x)});
  end.appendChild(endButton);
 };
+//atm battle mode will hold the location value for endBattle;
 function battle(en, location) {
-  //battleState controls battle flow.
-  // 0 = battle off, 1 == player 1 phase. 2 == player 2 phase. 3 == enemy 1 phase, 4 = enemy 2 phase, 3 == enemy 4 phase, 5 == turn end.
+  //battleState controls battle flow and button creation.
+  // 0 = battle off, 1 == player 1 phase buttons created. 2 == target selected, damage calculated, buttons removed. Then repeat 2 == player 2 phase. 3 == enemy 1 phase, 4 = enemy 2 phase, 3 == enemy 4 phase, 5 == turn end.
   adv.hidden = true;
   battleState = 1;
   battleMode.hidden = false;
@@ -319,6 +360,8 @@ function battle(en, location) {
   let p2 = document.createElement("h4");
   p2.innerHTML = "Party: " + currentParty[0].name + ", " + currentParty[1].name;
   partyPlace.appendChild(p2);
+    let partystat = document.createElement("li");
+    partystat.innerHTML = "P1 HP: " + currentParty[0].hp + "P2 HP: " + currentParty[1].hp;
   // start phase
   let p3 = document.createElement("p");
   p3.innerHTML = enemyParty.length + " enemies appeared!"
@@ -332,19 +375,20 @@ function battle(en, location) {
   //There needs to be a way to return to the previous state once a battle is open, perhaps a new button opens up
   endBattle(location);
 };
+let target = 0;
 function battleMove(x) {
   if (x === 0){
     clearBattle();
     endBattle();
   };
+  //player 1 turn
   if (x === 1){
-    //first it adds the character's turn and commands:
       let p4 = document.createElement("p");
         p4.innerHTML = currentParty[0].name + "'s turn. " + "Please select a command: ";
         info.appendChild(p4);
       let atkbtn = document.createElement("button");
       atkbtn.innerHTML = "Attack";
-      atkbtn.addEventListener('click', function (){targetSelect();});
+      atkbtn.addEventListener('click', function (){battleMove(2);});
       let skl = document.createElement("button");
       skl.innerHTML = "Skills";
       let itm = document.createElement("button");
@@ -355,17 +399,55 @@ function battleMove(x) {
      // button.addEventListener('click', function (){});
       
   };
+  //p1 target selection, uses targetBtn
   if (x === 2){
+    change.innerHTML = "";
+    info.innerHTML = "";
     let p4 = document.createElement("p");
-      p4.innerHTML = currentParty[1].name + "'s turn." + "Please select a command: ";
-      info.appendChild(p4);
+    p4.innerHTML = "Who will you target?";
+    info.appendChild(p4);
+    targetBtn(currentParty[0]);
+    backBtn(1); 
+    
   };
+  //p1 damage calculation phase, will include a button to flow to the next part.
   if (x === 3){
-        let p4 = document.createElement("p");
-      p4.innerHTML = currentParty[2].name + "'s turn." + "Please select a command: ";
-      info.appendChild(p4); 
+    //removes previous buttons
+    change.innerHTML = "";
+    //creates foward button and displays the info from the calculator
+        let fwd = document.createElement("button");
+        fwd.innerHTML = "Next";
+        fwd.addEventListener('click', function (){battleMove(4)});
+        change.appendChild(fwd);
   };
-
+  //starts p2 phase
+  if (x === 4){
+    change.innerHTML = "";
+    info.innerHTML = "";
+    let p4 = document.createElement("p");
+        p4.innerHTML = currentParty[1].name + "'s turn. " + "Please select a command: ";
+        info.appendChild(p4);
+      let atkbtn = document.createElement("button");
+      atkbtn.innerHTML = "Attack";
+      atkbtn.addEventListener('click', function (){battleMove(5);});
+      let skl = document.createElement("button");
+      skl.innerHTML = "Skills";
+      let itm = document.createElement("button");
+      itm.innerHTML = "Items";
+        change.appendChild(atkbtn);
+        change.appendChild(skl);
+        change.appendChild(itm);
+  }
+  //target phase
+  if (x === 5){
+     change.innerHTML = "";
+    info.innerHTML = "";
+    let p4 = document.createElement("p");
+    p4.innerHTML = "Who will you target?";
+    info.appendChild(p4);
+    targetBtn(currentParty[1]);
+    backBtn(5); 
+  }
 }
 //=====================================
 // Area 1
@@ -464,6 +546,7 @@ const adv = document.getElementById("adv-mode");
 let gameCheck = false;
 function startGame(){
   adv.hidden = false;
+  battleMode.hidden = true;
   mainMenu.hidden = false;
   menu.hidden = false;
   shopButton.hidden = false;
@@ -491,11 +574,10 @@ function load(){
   mainMenu.hidden = false;
   menu.hidden = false;
   begin.hidden = true;
-};
+  };
  function check() {
-   debugger;
   gameCheck = simpleStorage.get("gamecheck", gameCheck);
   if (gameCheck  === true)
   document.getElementById("continue").hidden = false;
    
-}
+  };

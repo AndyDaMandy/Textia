@@ -1,5 +1,11 @@
 //https://github.com/ZaDarkSide/simpleStorage
 //simple storage documentation above
+//Things that need to be done:
+//Finish battle system
+//adjust targetting system to select an enemy....perhaps cloning the enemy party?
+//treasure system
+//level-up system.
+// skill menu and item menu
 //Characters go here
 let ando = {
   name: "Ando",
@@ -274,16 +280,20 @@ function backBtn (x){
   };
 function targetBtn(px){
  // let targ = [];
- // let count = 0;
+  let count = 0;
   function createTarg (x){
     debugger;
    let btn = document.createElement("button");
    btn.innerHTML = x.name;
   btn.addEventListener('click', function (pl, y) {pl = px; y = x; attackCalc(px, y)});
    change.appendChild(btn);
+   count++
   };
     change.innerHTML = "";
     enemyParty.forEach(createTarg);
+};
+removeEnemy(){
+  
 };
 function attackCalc (char, target){
   debugger;
@@ -293,7 +303,6 @@ function attackCalc (char, target){
   let damage = pa - 2;
   //if (target.weakness === char.weapon.el) {};
   let final = thp - damage ;
-  console.log(final);
   if (final <= 0) {
     let p = document.createElement("p");
       p.innerHTML = "The enemy was hit for " + damage + " damage!";
@@ -301,7 +310,7 @@ function attackCalc (char, target){
     let p2 = document.createElement("p");
       p2.innerHTML = target.name + "'s HP has been depleted!";
       info.appendChild(p2);
-      enemyParty = enemyParty.splice(target);
+      
       battleMove(3)
       console.log(enemyParty);
   } else {

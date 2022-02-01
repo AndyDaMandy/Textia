@@ -1,3 +1,5 @@
+//https://github.com/ZaDarkSide/simpleStorage
+//simple storage documentation above
 //Characters go here
 let ando = {
   name: "Ando",
@@ -90,13 +92,15 @@ const potion = {
   name: "Potion",
   type: "Healing",
   des: "Heals 5 points of HP.",
-  pow: 5
+  effect: function (x) {x.hp + 5;},
+  cost: 5
   };
 const magicPotion = {
   name: "Magic Potion",
   type: "Healing",
   des: "Heals 5 points of MP.",
-  pow: 5
+  effect: function (x) {x.mp + 5},
+  cost: 5
 };
 //=======================================
 // Weapons go here
@@ -176,13 +180,21 @@ function showInventory() {
   let inventoryMenu = document.getElementById("inventory-menu");
   let pusher = function (item) { 
     let li = document.createElement("li");
-    li.innerHTML = item.name + ": " + "Type: " + item.type + " - " + item.des + " - Power:" + item.pow;
+    li.innerHTML = item.name + ": " + "Type: " + item.type + " - " + item.des;
     inventorySlot.appendChild(li)};
     inventory.forEach(pusher);
   inventoryMenu.hidden = false;
+  document.getElementById("close-menu").hidden = false;
   };
 function save () {
-
+  simpleStorage.set("ando", ando);
+  simpleStorage.set("marie", marie);
+  simpleStorage.set("currentParty", currentParty);
+  simpleStorage.set("inventory", inventory);
+  simpleStorage.set("money", money);
+  simpleStorage.set("gamestate", gameState);
+  simpleStorage.set("gamecheck", gameCheck);
+  document.getElementById("save-menu").hidden = false;
   };
 
 let shop = document.getElementById("shop");
@@ -191,6 +203,9 @@ let shopButton = document.getElementById("shop-button");
 function openShop(){
   moneyShow.innerHTML = "$" + money;
   shop.hidden = false;
+  shopFlow();
+  openMenu(); 
+  showInventory();
   };
 function closeShop() {
   shop.hidden = true;
@@ -217,6 +232,8 @@ function closeMenu() {
     document.getElementById("party-status").innerHTML = "";
     document.getElementById("line-1").innerHTML = "";
     document.getElementById("menu-items").innerHTML = "";
+  //hide save
+  document.getElementById("save-menu").hidden = true;
   document.getElementById("close-menu").hidden = true;
   };
 /*
@@ -224,22 +241,46 @@ The game flow will be simple. The game will go through "Areas", each one being a
 A gamestate value will be assigned to each area/location, thus allowing the travel function to take you through each level. Battles will need to be manually accessed I think...
 */
 //Battle Mode
-let battleState = false;
+let battleState = 0;
 const battleMode = document.getElementById("battle-mode");
 const commands = document.getElementById("commands");
 const enemyPlace = document.getElementById("enemies");
 const partyPlace = document.getElementById("party");
 const info = document.getElementById("info");
 const end = document.getElementById("end");
+const change = document.getElementById("p-com");
 //calcs go above battle func
-function attack (char, target){
+function targetSelect (){
+  debugger;
+  let targ = [];
+  let count = 0;
+  function createTarg (x){
+   let btn = document.createElement("button");
+   btn.innerHTML = x.name;
+   btn.addEventListener('click', function (){targ.push(count)})
+   count++;
+  }
+  if (targ.length > 1){
+   let p = document.createElement("p");
+    p.innerHTML = "Which enemy will you select?";
+    enemyParty.forEach(createTarg);
+  } else {
+      targ.push(0);
+  };
+  function targConv(y) {
+    if (y.length === 1){
+      return enemyParty[y[0]];
+    }
+  }
+};
+function attackCalc (char, target){
 };
 function skills(skill, char, target){
 };
 function levelUp(char){};
 function clearBattle() {
   adv.hidden = false;
-  battleState = false;
+  battleState = 0;
   battleMode.hidden = true;
   mainMenu.hidden = false;
   //I think this needs a better way of deciding where to go after a battle....
@@ -248,18 +289,32 @@ function endBattle(loc) {
  // if (enemyParty.length === 0) {};
  let endButton = document.createElement("button");
  endButton.innerHTML = "End Battle";
- endButton.addEventListener('click', function (x) {debugger; x = loc; clearBattle(); move(x)});
+ endButton.addEventListener('click', function (x) {x = loc; clearBattle(); move(x)});
  end.appendChild(endButton);
 };
 function battle(en, location) {
+  //battleState controls battle flow.
+  // 0 = battle off, 1 == player 1 phase. 2 == player 2 phase. 3 == enemy 1 phase, 4 = enemy 2 phase, 3 == enemy 4 phase, 5 == turn end.
   adv.hidden = true;
-  battleState = true;
+  battleState = 1;
   battleMode.hidden = false;
   mainMenu.hidden = true;
   enemyParty = en;
-  let p = document.createElement("h4");
-  p.innerHTML = "Enemies: " + enemyParty[0].name;
-  enemyPlace.appendChild(p);
+   if (enemyParty.length === 1){
+    let p = document.createElement("h4");
+    p.innerHTML = "Enemies: " + enemyParty[0].name;
+    enemyPlace.appendChild(p);
+    }
+    if (enemyParty.length === 2) {
+       let p = document.createElement("h4");
+        p.innerHTML = "Enemies: " + enemyParty[0].name + ", " + enemyParty[1].name;
+        enemyPlace.appendChild(p);
+      }
+    if (enemyParty.length === 3) {
+       let p = document.createElement("h4");
+        p.innerHTML = "Enemies: " + enemyParty[0].name + ", " + enemyParty[1].name + ", " + enemyParty[2].name;
+        enemyPlace.appendChild(p);
+      }
   //loads x as enemy party
   let p2 = document.createElement("h4");
   p2.innerHTML = "Party: " + currentParty[0].name + ", " + currentParty[1].name;
@@ -268,17 +323,50 @@ function battle(en, location) {
   let p3 = document.createElement("p");
   p3.innerHTML = enemyParty.length + " enemies appeared!"
   info.appendChild(p3);
-  let p4 = document.createElement("p");
-  p4.innerHTML = currentParty[0].name + "'s turn." + "Please select a command: ";
-  info.appendChild(p4);
+  battleMove(battleState);
   // Phase 1
-  if {}
+  //sets each button to move forward with phase 1
   //loads character party as is and adds as new elements
   //loads functions for level up and such
   //final function hides buttons, etc.
   //There needs to be a way to return to the previous state once a battle is open, perhaps a new button opens up
   endBattle(location);
 };
+function battleMove(x) {
+  if (x === 0){
+    clearBattle();
+    endBattle();
+  };
+  if (x === 1){
+    //first it adds the character's turn and commands:
+      let p4 = document.createElement("p");
+        p4.innerHTML = currentParty[0].name + "'s turn. " + "Please select a command: ";
+        info.appendChild(p4);
+      let atkbtn = document.createElement("button");
+      atkbtn.innerHTML = "Attack";
+      atkbtn.addEventListener('click', function (){targetSelect();});
+      let skl = document.createElement("button");
+      skl.innerHTML = "Skills";
+      let itm = document.createElement("button");
+      itm.innerHTML = "Items";
+        change.appendChild(atkbtn);
+        change.appendChild(skl);
+        change.appendChild(itm);
+     // button.addEventListener('click', function (){});
+      
+  };
+  if (x === 2){
+    let p4 = document.createElement("p");
+      p4.innerHTML = currentParty[1].name + "'s turn." + "Please select a command: ";
+      info.appendChild(p4);
+  };
+  if (x === 3){
+        let p4 = document.createElement("p");
+      p4.innerHTML = currentParty[2].name + "'s turn." + "Please select a command: ";
+      info.appendChild(p4); 
+  };
+
+}
 //=====================================
 // Area 1
 const townOne = document.getElementById("town-1");
@@ -297,6 +385,7 @@ let enemyParty = [];
 let currentParty = [];
 let money;
 let gameState;
+let shopState;
 //===================================
 //Game State and game flow will go here:
 function gameFlow (state) {
@@ -305,10 +394,10 @@ function gameFlow (state) {
   townOne.hidden = false;
   forestOne.hidden = true;
   shopButton.hidden = false;
+  shopState = 0;
   };
 //Forest 1
   if (state === 1) {
-    debugger;
   townOne.hidden = true;
   forestOne.hidden = false;
   forestOneOne.hidden = false;
@@ -318,6 +407,7 @@ function gameFlow (state) {
   };
 //Forest 1-2
   if (state === 2){
+    forestOne.hidden = false;
     forestOneOne.hidden = true;
     forestOneTwo.hidden = false;
   }
@@ -326,6 +416,36 @@ function move (state) {
   gameState = state;
   gameFlow(gameState);
 };
+//shop functions
+function purchaser (itemVal){
+  if (money >= itemVal.cost) {
+    document.getElementById("broke").hidden = true;
+    inventory.push(itemVal);
+    money -= itemVal.cost;
+    document.getElementById("money").innerHTML = "$" + money;
+  } else {
+    document.getElementById("broke").hidden = false;
+  }
+};
+let shopItems = document.getElementById("shop-items");
+function shopFlow (){
+  if (shopItems.length != 0){
+    shopItems.innerHTML = "";
+  }
+  //additional shops can be added easily
+  function pusher (item) {
+   let btn = document.createElement("button");
+   btn.innerHTML = item.name + ": cost: " + item.cost;
+   btn.addEventListener('click', function (x) {x =item ; purchaser(x); openMenu(); showInventory();});
+    shopItems.appendChild(btn);
+  }
+  // Shop 1 - Area Town
+    if (shopState === 0){
+    let shopOne = [potion, magicPotion];
+    shopOne.forEach(pusher);
+    }
+
+}
 //==================================
 // all testing goes below
 currentParty = [ando, marie];
@@ -341,6 +461,7 @@ const begin = document.getElementById("begin");
 const start = document.getElementById("start-game");
 const mainMenu = document.getElementById("main-menu");
 const adv = document.getElementById("adv-mode");
+let gameCheck = false;
 function startGame(){
   adv.hidden = false;
   mainMenu.hidden = false;
@@ -349,13 +470,32 @@ function startGame(){
   begin.hidden = true;
   gameState = 0;
   move(gameState);
-  money = 100;
+  money = 30;
   ando.weapon = woodSword;
   marie.weapon = woodStaff;
   inventory.push(potion);
   inventory.push(potion);
   inventory.push(magicPotion);
+  simpleStorage.flush();
+  gameCheck = true;
   };
-function loadGame(){
-
+function load(){
+ ando = simpleStorage.get("ando", ando);
+ marie = simpleStorage.get("marie", marie);
+ currentParty = simpleStorage.get("currentParty", currentParty);
+  inventory =  simpleStorage.get("inventory", inventory);
+  money =  simpleStorage.get("money", money);
+ gameState = simpleStorage.get("gamestate", gameState);
+  move(gameState);
+  adv.hidden = false;
+  mainMenu.hidden = false;
+  menu.hidden = false;
+  begin.hidden = true;
 };
+ function check() {
+   debugger;
+  gameCheck = simpleStorage.get("gamecheck", gameCheck);
+  if (gameCheck  === true)
+  document.getElementById("continue").hidden = false;
+   
+}

@@ -6,7 +6,7 @@
     <title>Textia</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
-  <body>
+  <body onload="check()">
     <header>
     <h1>Textia: a World without Images</h1>
     <p><em>To play, click the buttons below:</em></p>
@@ -16,16 +16,19 @@
   <h2>Game Start</h2>
   <p><em>Your adventure begins with two friends, Marie and Ando</em></p>
   <button id="start-game" onClick="startGame()">New Game, Click Here</button>
-  <button id="continue" onClick="">Continue</button>
+  <button id="continue" onClick="load()" hidden>Continue</button>
 </div>
 <!-- Menu System below -->
 <div id="main-menu" hidden>
   <button id="open-menu" onClick="openMenu()" hidden>Menu</button>
-  <button id="save-button" hidden>Save</button>
+  <button id="save-button" hidden onClick="save()">Save</button>
   <button id="inventory-button" hidden onClick="showInventory()">Inventory</button>
   <button id="show-stats" onClick="showStats(currentParty)" hidden>Party Status</button>
   <button id="close-menu" onClick="closeMenu()" hidden>Close Menu</button>
   <hr>
+</div>
+<div id="save-menu" hidden>
+  <p>You saved your game!</p>
 </div>
 <div id="inventory-menu" hidden>
   <h3>Inventory</h3>
@@ -37,8 +40,7 @@
   <ul id="menu-items"></ul>
   <hr  id="stats-line"hidden>
   </div>
-<div id="save-menu">
-</div>
+
 <!--Level Up Menu-->
 <div id="level-up" hidden>
   <h3>Congrats, you've leveled up!</h3>
@@ -51,8 +53,11 @@
   <button id="close-shop" onClick="closeShop()">Close Shop</button>
   <p>Your money:</p>
   <p id="money"></p>
-  <h2>Welcome to the shop!</h2>
-  <p>We sell all sorts of items here!</p>
+  <h2>Shop</h2>
+  <p>We sell all sorts of items here! When you purchase something your inventory will automatically open. To close, hit "close menu"</p>
+  <p id="purchased"></p>
+  <h2 id="broke" hidden>Not enough money!</h2>
+  <div id="shop-items"></div>
   <hr>
 <!-- My idea for the shop is to have an array of buttons created containing the items.. It's kind of bold, but we'll see!-->
 </div>
@@ -67,11 +72,11 @@
   </div>
   <div id="info"></div>
   <div id="commands">
-    <button id="attack">Attack</button>
-    <button"skill-">Skills</button>
-    <button>Item</button>
-    <button hidden>Close Skills</button>
-    <button hidden>Close Items</button>
+    <div id="p-com"></div>
+    <button id="back-battle">Back</button>
+    <button hidden onclick="">Close Skills</button>
+    <button hidden onclick="">Close Items</button>
+    <button hidden onclick="">Next Phase</button>
   </div>
   <div id="end"></div>
   <hr>
@@ -100,7 +105,7 @@
       <p>There are enemies near it!</p>
       <p>Will you fight?</p>
       <button onClick="move(1)">Go Back</button>
-      <button onClick="battle([iceman], 1)">Fight</button>
+      <button onClick="battle([iceman, iceman], 1)">Fight</button>
     </div>
     <div id="forest-1-3" hidden>
       <h2>The Large Tree - 2</h2>
@@ -111,7 +116,8 @@
       <button onClick="">Move Forward</button>
     </div>
 </div>
-
+<!-- simple storage -->
+<script src="https://cdn.jsdelivr.net/npm/simplestorage.js@0.2.1/simpleStorage.min.js"></script>
 <script src="script.js"></script>
   </body>
 </html>

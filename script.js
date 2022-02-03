@@ -117,7 +117,7 @@ const iceSlash = {
   des: "Deals phsyical and ice damage to 1 enemy",
   element: iceEl,
   pow: 1
-}
+  };
 //======================================
 //Items go here
 const potion = {
@@ -287,6 +287,7 @@ const change = document.getElementById("p-com");
 let pStats = document.getElementById("p-stats");
 let itemSlot = document.getElementById("item-slot");
 let skillSlot = document.getElementById("skill-slot");
+let choice = 0;
 //calcs go above battle func
 // targetting functions go above the battle selectors
 function checkWin(){
@@ -301,6 +302,7 @@ function backBtn (x){
     change.appendChild(back);
   };
 function targetBtn(partymem, target, flow, skill){
+  debugger;
 //  change.innerHTML = "";
   //flow will decide where attackcalc takes you
  if (enemyParty.length === 1){
@@ -325,6 +327,7 @@ function targetBtn(partymem, target, flow, skill){
         let btn2 = document.createElement("button");
         btn2.innerHTML = enemyParty[1].name;
         btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
+        change.appendChild(btn2);
           let btn3 = document.createElement("button");
           btn3.innerHTML = enemyParty[2].name;
           btn3.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
@@ -526,7 +529,7 @@ function battleMove(x ,loc) {
         info.appendChild(p4);
       let atkbtn = document.createElement("button");
       atkbtn.innerHTML = "Attack";
-      atkbtn.addEventListener('click', function (){battleMove(2); let choice = 0;});
+      atkbtn.addEventListener('click', function (){battleMove(2); choice = 0;});
       let skl = document.createElement("button");
       //sets up skill menu/closing buttons.
       skl.innerHTML = "Skills";
@@ -552,12 +555,13 @@ function battleMove(x ,loc) {
       targetBtn(currentParty[0], enHp, 3);
       backBtn(1); 
     }
+    /*
     let p4 = document.createElement("p");
     p4.innerHTML = "Who will you target?";
     info.appendChild(p4);
     targetBtn(currentParty[0], enHp, 3);
     backBtn(1); 
-    
+    */
   };
   //p1 damage calculation phase, will include a button to flow to the next part.
   if (x === 3){

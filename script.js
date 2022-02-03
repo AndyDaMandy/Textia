@@ -300,8 +300,8 @@ function backBtn (x){
     back.addEventListener('click', function (y) {y = x; info.innerHTML = ""; change.innerHTML = ""; battleMove(y)});
     change.appendChild(back);
   };
-function targetBtn(partymem, target, skill, flow){
-  change.innerHTML = "";
+function targetBtn(partymem, target, flow, skill){
+//  change.innerHTML = "";
   //flow will decide where attackcalc takes you
  if (enemyParty.length === 1){
    let btn1 = document.createElement("button");
@@ -549,13 +549,13 @@ function battleMove(x ,loc) {
       let p4 = document.createElement("p");
       p4.innerHTML = "Who will you target?";
       info.appendChild(p4);
-      targetBtn(currentParty[0], enHp);
+      targetBtn(currentParty[0], enHp, 3);
       backBtn(1); 
     }
     let p4 = document.createElement("p");
     p4.innerHTML = "Who will you target?";
     info.appendChild(p4);
-    targetBtn(currentParty[0], enHp);
+    targetBtn(currentParty[0], enHp, 3);
     backBtn(1); 
     
   };
@@ -596,7 +596,7 @@ function battleMove(x ,loc) {
     let p4 = document.createElement("p");
     p4.innerHTML = "Who will you target?";
     info.appendChild(p4);
-    targetBtn(currentParty[1]);
+    targetBtn(currentParty[1], enHp, 5);
     backBtn(5); 
   } if (x === 6){
     //removes previous buttons

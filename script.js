@@ -285,6 +285,8 @@ const info = document.getElementById("info");
 const end = document.getElementById("end");
 const change = document.getElementById("p-com");
 let pStats = document.getElementById("p-stats");
+let itemSlot = document.getElementById("item-slot");
+let skillSlot = document.getElementById("skill-slot");
 //calcs go above battle func
 // targetting functions go above the battle selectors
 function checkWin(){
@@ -336,7 +338,7 @@ function attackCalc (char, target, skill, flow){
   //branch for skill
     if (skill != undefined){
       if (skill.type === "Magic"){
-        let pa = char.mAtk + skill.pow = enemyParty[target].mDef;
+        let pa = char.mAtk + skill.pow + enemyParty[target].mDef;
         let thp = enHp[target];
         let damage = pa - 2;
         if (final <= 0) {
@@ -351,7 +353,7 @@ function attackCalc (char, target, skill, flow){
           battleMove(3)
           console.log(enemyParty);
       } if (skill.type === "Physical"){
-          let pa = char.pAtk + skill.pow = enemyParty[target].pDef;
+          let pa = char.pAtk + skill.pow + enemyParty[target].pDef;
           let thp = enHp[target];
           let damage = pa - 2;
             if (final <= 0) {
@@ -365,6 +367,8 @@ function attackCalc (char, target, skill, flow){
               enHp.splice(target, 1);
               battleMove(3)
               console.log(enemyParty);
+              }
+          }
       }
     }
   let pa = char.pAtk + char.weapon.pow - enemyParty[target].pDef;
@@ -394,6 +398,41 @@ function attackCalc (char, target, skill, flow){
 
   };
 function enemCalc (enem, char){
+
+  };
+function skillTarget(){};
+function skillBtnGen(partymem, skill, target, flow) {
+  skillSlot.innerHTML = "";
+  itemSlot.innerHTML = "";
+  let closer1 = document.createElement("button");
+  closer1.innerHTML = "Close Skill List";
+  closer1.addEventListener('click', function () {skillSlot.innerHTML = "";});
+  skillSlot.appendChild(closer1);
+  function pusher (skill) {
+  let btn1 = document.createElement("button");
+  btn1.innerHTML = skill.name + " - Effect: " + skill.des;
+  btn1.addEventListener('click', function (x) {x = skill; skillTarget();});
+  skillSlot.appendChild(btn1);
+  };
+  partymem.skills.forEach(pusher);
+  };
+function itemTarget (){
+  };
+
+function itemBtnGen (partymem, flow){
+  skillSlot.innerHTML = "";
+  itemSlot.innerHTML = "";
+  let closer = document.createElement("button");
+  closer.innerHTML = "Close Item List";
+  closer.addEventListener('click', function () {itemSlot.innerHTML = "";});
+  itemSlot.appendChild(closer);
+  function pusher (item) {
+  let btn = document.createElement("button");
+  btn.innerHTML = item.name + " - Effect: " + item.des;
+  btn.addEventListener('click', function (x) {x =item; inventory.splice(item, 1); itemTarget();});
+  itemSlot.appendChild(btn);
+  };
+  inventory.forEach(pusher);
 
 };
 function levelUp(char){};
@@ -469,7 +508,7 @@ function battle(en, location) {
   //choice will hold the choice of skill as 1
   //choice will hold the choice of item as 2
  // endBattle(location);
-};
+  };
 let target = 0;
 function battleMove(x ,loc) {
   if (x === 0){
@@ -491,10 +530,11 @@ function battleMove(x ,loc) {
       let skl = document.createElement("button");
       //sets up skill menu/closing buttons.
       skl.innerHTML = "Skills";
-
+        skl.addEventListener('click', function () {skillBtnGen(currentParty[0])});
       //adds open menu branch
       let itm = document.createElement("button");
-      itm.innerHTML = "Items";
+        itm.innerHTML = "Items";
+      itm.addEventListener('click', function (){itemBtnGen();})
         change.appendChild(atkbtn);
         change.appendChild(skl);
         change.appendChild(itm);

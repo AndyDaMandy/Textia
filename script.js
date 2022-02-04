@@ -508,13 +508,22 @@ function skillBtnGen(partymem, flow) {
   }
   partymem.skills.forEach(pusher);
   };
-function itemTarget (partymem, item, loc){
+function itemTarget (party, item){
   //selects target
-  //if (item.type === "Healing"){}
+  //generates targeting buttons, for party memebers.
+  //flows to target phase which is hardcoded as: 9
+  /*battleMove(9);
+  if (item.type === "Healing"){
+    item.effect(partymem)
+    if (partymem.chp > partymem.hp){
+      partymem.chp = partymem.hp;
+    }
+   }
+   */
   //goes to next battle move
   // function that gets launched once you pick an item button.
   };
-
+let itemChoice;
 function itemBtnGen (party, flow){
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
@@ -525,7 +534,7 @@ function itemBtnGen (party, flow){
   function pusher (item) {
   let btn = document.createElement("button");
   btn.innerHTML = item.name;
-  btn.addEventListener('click', function (x) {x =item; inventory.splice(item, 1); itemTarget();});
+  btn.addEventListener('click', function (x) {x = item; itemChoice = x;battleMove(9);});
   itemSlot.appendChild(btn);
   };
   inventory.forEach(pusher);
@@ -714,7 +723,6 @@ function battleMove(x) {
         loadEnemyInfo();
         loadPartyInfo();
         checkWin();
-
     }
   };
   //starts p2 phase
@@ -800,12 +808,22 @@ function battleMove(x) {
   } 
   //load item targeting, then moves to 10 for item calculation
   if (x === 9){
-    //needs if branch based on party length
-    //
+    //needs if branch based on party length 
+      let p4 = document.createElement("p");
+      p4.innerHTML = "Who will you target?";
+      info.appendChild(p4);
+      itemTarget(currentParty, itemChoice);
+      itemSlot.innerHTML = "";
+      backBtn(1); 
   }
   //calculates item and shows results and then moves to next phase or enemy phase....
   if (x === 10){
-
+    change.innerHTML = "";
+    info.innerHTML = "";
+    //let p4 = document.createElement("p");
+     // p4.innerHTML = "";
+     // info.appendChild(p4);
+     battleMove(2);
   }
   //after this I need to bake in a p3 phase and test that accordingly.
 }

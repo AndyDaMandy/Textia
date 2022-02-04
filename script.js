@@ -128,14 +128,14 @@ const potion = {
   name: "Potion",
   type: "Healing",
   des: "Heals 5 points of HP.",
-  effect: function (x) {x + 5;},
+  effect: function (x) {x.chp + 5;},
   cost: 5
   };
 const magicPotion = {
   name: "Magic Potion",
   type: "Healing",
   des: "Heals 5 points of MP.",
-  effect: function (x) {x + 5},
+  effect: function (x) {x.cmp + 5},
   cost: 5
   };
 //=======================================
@@ -351,6 +351,7 @@ function targetBtn(partymem, target, flow, skill,){
 
 function attackCalc (char, target, skill, flow, cost){
   //flow passes from targetBtn
+  // the overall calculations need work.
   info.innerHTML = "";
   //branch for skill
     if (skill != undefined){
@@ -507,13 +508,14 @@ function skillBtnGen(partymem, flow) {
   }
   partymem.skills.forEach(pusher);
   };
-function itemTarget (partymem, loc){
+function itemTarget (partymem, item, loc){
   //selects target
+  //if (item.type === "Healing"){}
   //goes to next battle move
   // function that gets launched once you pick an item button.
   };
 
-function itemBtnGen (partymem, flow){
+function itemBtnGen (party, flow){
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
   let closer = document.createElement("button");
@@ -665,7 +667,7 @@ function battleMove(x) {
       //adds open menu branch
       let itm = document.createElement("button");
         itm.innerHTML = "Items";
-      itm.addEventListener('click', function (){itemBtnGen();})
+        itm.addEventListener('click', function (){itemBtnGen(currentParty, 9);})
         change.appendChild(atkbtn);
         change.appendChild(skl);
         change.appendChild(itm);
@@ -783,7 +785,9 @@ function battleMove(x) {
         fwd.innerHTML = "Next";
         fwd.addEventListener('click', function (){checkLose();});
         change.appendChild(fwd);
-  } if (x === 8) {
+  } 
+  //game over
+  if (x === 8) {
     change.innerHTML = "";
     info.innerHTML = "";
     let p = document.createElement("p");
@@ -793,7 +797,17 @@ function battleMove(x) {
     reload.innerHTML = "Reload previous save";
     reload.addEventListener('click', function (){load()});
     change.appendChild(reload);
+  } 
+  //load item targeting, then moves to 10 for item calculation
+  if (x === 9){
+    //needs if branch based on party length
+    //
   }
+  //calculates item and shows results and then moves to next phase or enemy phase....
+  if (x === 10){
+
+  }
+  //after this I need to bake in a p3 phase and test that accordingly.
 }
 //=====================================
 // Area 1

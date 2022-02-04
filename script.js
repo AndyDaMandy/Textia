@@ -112,7 +112,7 @@ const basher = {
   type: "Physical",
   des: "Deals phsyical damage to 1 enemy",
   pow: 2,
-  cost: 1
+  cost: 3
   };
 const iceSlash = {
   name: "Ice Slash",
@@ -543,12 +543,12 @@ function clearBattle() {
   marie.chp = marie.hp;
   marie.chp = marie.hp;
 };
+let statePost = 0;
 function endBattle(loc) {
  // if (enemyParty.length === 0) {};
- debugger;
  let endButton = document.createElement("button");
  endButton.innerHTML = "End Battle";
- endButton.addEventListener('click', function (x) {x = loc; clearBattle(); move(x)});
+ endButton.addEventListener('click', function (x) {x = loc; clearBattle(); move(statePost)});
  end.appendChild(endButton);
 };
 //atm battle mode will hold the location value for endBattle;
@@ -635,10 +635,9 @@ function battle(en, location) {
   //Choice will hold the choice of attack as 0
   //choice will hold the choice of skill as 1
   //choice will hold the choice of item as 2
- // endBattle(location);
   };
 let target = 0;
-function battleMove(x ,loc) {
+function battleMove(x) {
   if (x === 0){
     change.innerHTML = "";
     info.innerHTML = "";
@@ -647,7 +646,7 @@ function battleMove(x ,loc) {
     let win = document.createElement("p");
     win.innerHTML = "All enemies defeated! Congrats!";
     info.appendChild(win);
-    endBattle(loc);
+    endBattle();
   };
   //player 1 turn
   if (x === 1){

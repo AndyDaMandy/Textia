@@ -2,7 +2,6 @@
 //simple storage documentation above
 //Things that need to be done:
 //Finish battle system
-//adjust targetting system to select an enemy....perhaps cloning the enemy party?
 //treasure system
 //level-up system.
 // skill menu and item menu
@@ -11,6 +10,7 @@ let ando = {
   name: "Ando",
   level: 1,
   hp: 10,
+  chp: 10,
   mp: 5,
   cmp: 5,
   pAtk: 10,
@@ -25,11 +25,12 @@ let marie = {
   name: "Marie",
   level: 1,
   hp: 8,
-  mp: 10,
+  chp: 8,
   cmp: 10,
+  mp: 10,
   pAtk: 5,
   pDef: 2,
-  mAtk: 6,
+  mAtk: 10,
   mDef: 5,
   skills: [],
   weapon: "Test",
@@ -103,20 +104,23 @@ const fire = {
   type: "Magic",
   element: fireEl,
   des: "Hits enemy with magic-based fire damage",
-  pow: 2
+  pow: 2,
+  cost: 3
   };
 const basher = {
   name: "Basher",
   type: "Physical",
   des: "Deals phsyical damage to 1 enemy",
-  pow: 2
+  pow: 2,
+  cost: 1
   };
 const iceSlash = {
   name: "Ice Slash",
   type: "Physical",
   des: "Deals phsyical and ice damage to 1 enemy",
   element: iceEl,
-  pow: 1
+  pow: 1,
+  cost: 2
   };
 //======================================
 //Items go here
@@ -246,7 +250,6 @@ function closeShop() {
 //=======================================
 //======================================
 //Menu functionality, must go below each menu item
-
 let menu = document.getElementById("open-menu");
 function openMenu(){
   document.getElementById("save-button").hidden = false;
@@ -277,6 +280,8 @@ A gamestate value will be assigned to each area/location, thus allowing the trav
 let battleState = 0;
 //global variable that holds enemy hp for targetting
 let enHp = [];
+let pHp = [];
+let pMp = [];
 const battleMode = document.getElementById("battle-mode");
 const commands = document.getElementById("commands");
 const enemyPlace = document.getElementById("enemies");
@@ -290,6 +295,11 @@ let skillSlot = document.getElementById("skill-slot");
 let choice = 0;
 //calcs go above battle func
 // targetting functions go above the battle selectors
+function checkLose(){
+  if (currentParty.length < 1){
+    battleMove(8);
+  } 
+  };
 function checkWin(){
   if (enemyParty.length < 1){
     battleMove(0);
@@ -301,50 +311,57 @@ function backBtn (x){
     back.addEventListener('click', function (y) {y = x; info.innerHTML = ""; change.innerHTML = ""; battleMove(y)});
     change.appendChild(back);
   };
-function targetBtn(partymem, target, flow, skill){
-  debugger;
-//  change.innerHTML = "";
+function targetBtn(partymem, target, flow, skill,){
+  //  change.innerHTML = "";
   //flow will decide where attackcalc takes you
  if (enemyParty.length === 1){
    let btn1 = document.createElement("button");
     btn1.innerHTML = enemyParty[0].name;
-    btn1.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
+    btn1.addEventListener('click', function (pl, y, skill1, flow1, pos) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
     change.appendChild(btn1);
- } if (enemyParty.length === 2){
+  } 
+ if (enemyParty.length === 2){
     let btn1 = document.createElement("button");
       btn1.innerHTML = enemyParty[0].name;
       btn1.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
       change.appendChild(btn1);
         let btn2 = document.createElement("button");
         btn2.innerHTML = enemyParty[1].name;
-        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
+        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 1, skill1, flow1)});
         change.appendChild(btn2);
-      } if (enemyParty.length === 3){
+      } 
+  if (enemyParty.length === 3){
       let btn1 = document.createElement("button");
       btn1.innerHTML = enemyParty[0].name;
-      btn1.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
+      btn1.addEventListener('click', function () { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
       change.appendChild(btn1);
         let btn2 = document.createElement("button");
         btn2.innerHTML = enemyParty[1].name;
-        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
+        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 1, skill1, flow1)});
         change.appendChild(btn2);
           let btn3 = document.createElement("button");
           btn3.innerHTML = enemyParty[2].name;
-          btn3.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
+          btn3.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 2, skill1, flow1)});
           change.appendChild(btn3);
-      }
+    }
   };
 
-function attackCalc (char, target, skill, flow){
+function attackCalc (char, target, skill, flow, cost){
   //flow passes from targetBtn
   info.innerHTML = "";
   //branch for skill
     if (skill != undefined){
+      char.cmp -= skill.cost;
+      console.log(char);
       if (skill.type === "Magic"){
-        let pa = char.mAtk + skill.pow + enemyParty[target].mDef;
+        let pa = char.mAtk + skill.pow - enemyParty[target].mDef;
         let thp = enHp[target];
         let damage = pa - 2;
+        let final = thp - damage ;
         if (final <= 0) {
+          let p3 = document.createElement("p");
+          p3.innerHTML = char.name + " cast " + skill.name + "!"
+          info.appendChild(p3)
           let p = document.createElement("p");
           p.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
           info.appendChild(p);
@@ -353,13 +370,28 @@ function attackCalc (char, target, skill, flow){
           info.appendChild(p2);
           enemyParty.splice(target, 1);
           enHp.splice(target, 1);
-          battleMove(3)
+          battleMove(flow)
           console.log(enemyParty);
+          } else {
+                let p6 = document.createElement("p");
+                p6.innerHTML = char.name + " cast " + skill.name + "!"
+                info.appendChild(p6);
+                let p3 = document.createElement("p");
+                enHp[target] = thp - damage;
+                p3.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
+                info.appendChild(p3);
+                battleMove(flow)
+                console.log(enHp)
+              }
       } if (skill.type === "Physical"){
-          let pa = char.pAtk + skill.pow + enemyParty[target].pDef;
+          let pa = char.pAtk + skill.pow - enemyParty[target].pDef;
           let thp = enHp[target];
           let damage = pa - 2;
+          let final = thp - damage ;
             if (final <= 0) {
+              let p6 = document.createElement("p");
+              p6.innerHTML = char.name + " used " + skill.name + "!"
+              info.appendChild(p6);
               let p = document.createElement("p");
               p.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
               info.appendChild(p);
@@ -368,58 +400,102 @@ function attackCalc (char, target, skill, flow){
               info.appendChild(p2);
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
-              battleMove(3)
+              battleMove(flow)
               console.log(enemyParty);
-              }
-          }
-      }
-    }
-  let pa = char.pAtk + char.weapon.pow - enemyParty[target].pDef;
-  let thp = enHp[target];
-  let damage = pa - 2;
-  //if (target.weakness === char.weapon.el) {};
-  let final = thp - damage ;
-  if (final <= 0) {
-    let p = document.createElement("p");
-      p.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
-      info.appendChild(p);
-    let p2 = document.createElement("p");
-      p2.innerHTML = enemyParty[target].name + "'s has been defeated!";
-      info.appendChild(p2);
-      enemyParty.splice(target, 1);
-      enHp.splice(target, 1);
-      battleMove(flow)
-      console.log(enemyParty);
-  } else {
-    let p3 = document.createElement("p");
-      enHp[target] = thp - damage;
-      p3.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
-      info.appendChild(p3);
-      battleMove(flow)
-      console.log(enHp)
+              } else {
+                let p6 = document.createElement("p");
+                p6.innerHTML = char.name + " used " + skill.name + "!"
+                info.appendChild(p6);
+                let p3 = document.createElement("p");
+                enHp[target] = thp - damage;
+                p3.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
+                info.appendChild(p3);
+                battleMove(flow)
+                console.log(enHp)
+                  }
+          } 
   }
-
+  else {
+          let pa = char.pAtk + char.weapon.pow - enemyParty[target].pDef;
+          let thp = enHp[target];
+          let damage = pa - 2;
+          let final = thp - damage ;
+          if (final <= 0) {
+            let p = document.createElement("p");
+              p.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
+              info.appendChild(p);
+            let p2 = document.createElement("p");
+              p2.innerHTML = enemyParty[target].name + "'s has been defeated!";
+              info.appendChild(p2);
+              enemyParty.splice(target, 1);
+              enHp.splice(target, 1);
+              battleMove(flow)
+              console.log(enemyParty);
+            } else {
+                let p3 = document.createElement("p");
+                enHp[target] = thp - damage;
+                p3.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
+                info.appendChild(p3);
+                battleMove(flow)
+                console.log(enHp)
+                }
+            }
+    };
+function enemCalc (){
+  debugger;
+  function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+    }
+    
+  let enPow = [];
+  let teamLength = currentParty.length;
+    function pusher1 (x){enPow.push(x.pAtk)};
+    enemyParty.forEach(pusher1);
+    let enLength = enPow.length;
+    console.log(enPow);
+    for (let i = 0; i < enPow.length; i++){
+      let target = currentParty[getRandomInt(teamLength)];
+      let attacker = enemyParty[getRandomInt(enLength)];
+      let attackerDam = attacker.pAtk;
+      let damage = target.pDef - attackerDam + 2;
+      target.chp = target.chp - damage;
+      let damageRes = document.createElement("p");
+      damageRes.innerHTML = target.name + " was hit by " + attacker.name + " for " + damage + " damage!";
+      info.appendChild(damageRes);
+    }
+    if (currentParty[0].chp <= 0){
+      currentParty.splice(0, 1);
+      console.log(currentParty);
+    }
   };
-function enemCalc (enem, char){
-
-  };
-function skillTarget(){};
-function skillBtnGen(partymem, skill, target, flow) {
+let skillChoice;
+function skillBtnGen(partymem, flow) {
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
+  let pBad = document.createElement("p");
+    pBad.innerHTML = "Not enough MP!";
   let closer1 = document.createElement("button");
-  closer1.innerHTML = "Close Skill List";
-  closer1.addEventListener('click', function () {skillSlot.innerHTML = "";});
+    closer1.innerHTML = "Close Skill List";
+    closer1.addEventListener('click', function () {skillSlot.innerHTML = "";});
   skillSlot.appendChild(closer1);
   function pusher (skill) {
   let btn1 = document.createElement("button");
-  btn1.innerHTML = skill.name + " - Effect: " + skill.des;
-  btn1.addEventListener('click', function (x) {x = skill; skillTarget();});
+  btn1.innerHTML = skill.name + " - Cost: " + skill.cost;
+  if (skill.cost > partymem.cmp){
+    btn1.addEventListener('click', function (){
+    info.appendChild(pBad)})
+    skillSlot.appendChild(btn1);
+  } else {
+  btn1.addEventListener('click', function (x) {x = skill; skillChoice = x; battleMove(flow);});
   skillSlot.appendChild(btn1);
-  };
+      }
+  }
   partymem.skills.forEach(pusher);
   };
-function itemTarget (){
+function itemTarget (partymem, loc){
+  //selects target
+  //goes to next battle move
+  // function that gets launched once you pick an item button.
   };
 
 function itemBtnGen (partymem, flow){
@@ -431,20 +507,24 @@ function itemBtnGen (partymem, flow){
   itemSlot.appendChild(closer);
   function pusher (item) {
   let btn = document.createElement("button");
-  btn.innerHTML = item.name + " - Effect: " + item.des;
+  btn.innerHTML = item.name;
   btn.addEventListener('click', function (x) {x =item; inventory.splice(item, 1); itemTarget();});
   itemSlot.appendChild(btn);
   };
   inventory.forEach(pusher);
 
-};
+  };
 function levelUp(char){};
 function clearBattle() {
   adv.hidden = false;
   battleState = 0;
   battleMode.hidden = true;
   mainMenu.hidden = false;
-  //I think this needs a better way of deciding where to go after a battle....
+  currentParty = [ando, marie];
+  ando.chp = ando.hp;
+  ando.cmp = ando.mp;
+  marie.chp = marie.hp;
+  marie.chp = marie.hp;
 };
 function endBattle(loc) {
  // if (enemyParty.length === 0) {};
@@ -463,6 +543,8 @@ function battle(en, location) {
   mainMenu.hidden = true;
   enemyParty = en;
   enHP = [];
+  pHp = [];
+  pMp = [];
   change.innerHTML = "";
   info.innerHTML = "";
   enemyPlace.innerHTML = "";
@@ -496,6 +578,11 @@ function battle(en, location) {
   partyPlace.appendChild(p2);
     let partystat = document.createElement("li");
     partystat.innerHTML = "P1 HP: " + currentParty[0].hp + "P2 HP: " + currentParty[1].hp;
+    if (currentParty.length === 1){pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);}
+    if (currentParty.length === 2) {pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);pHp.push(currentParty[1].hp); pMp.push(currentParty[1].mp);}
+    if (currentParty.length === 3) {pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);pHp.push(currentParty[1].hp); pMp.push(currentParty[1].mp);pHp.push(currentParty[2].hp); pMp.push(currentParty[2].mp);}
+    console.log(pHp);
+    console.log(pMp);
   // start phase
   let p3 = document.createElement("p");
   p3.innerHTML = enemyParty.length + " enemies appeared!"
@@ -524,6 +611,8 @@ function battleMove(x ,loc) {
   };
   //player 1 turn
   if (x === 1){
+      change.innerHTML = "";
+      info.innerHTML = "";
       let p4 = document.createElement("p");
         p4.innerHTML = currentParty[0].name + "'s turn. " + "Please select a command: ";
         info.appendChild(p4);
@@ -533,7 +622,7 @@ function battleMove(x ,loc) {
       let skl = document.createElement("button");
       //sets up skill menu/closing buttons.
       skl.innerHTML = "Skills";
-        skl.addEventListener('click', function () {skillBtnGen(currentParty[0])});
+        skl.addEventListener('click', function () {skillBtnGen(currentParty[0], 2); choice = 1;});
       //adds open menu branch
       let itm = document.createElement("button");
         itm.innerHTML = "Items";
@@ -553,6 +642,13 @@ function battleMove(x ,loc) {
       p4.innerHTML = "Who will you target?";
       info.appendChild(p4);
       targetBtn(currentParty[0], enHp, 3);
+      backBtn(1); 
+    } if (choice === 1){
+      let p4 = document.createElement("p");
+      p4.innerHTML = "Who will you target?";
+      info.appendChild(p4);
+      targetBtn(currentParty[0], enHp, 3, skillChoice);
+      skillSlot.innerHTML = "";
       backBtn(1); 
     }
     /*
@@ -587,6 +683,7 @@ function battleMove(x ,loc) {
       atkbtn.addEventListener('click', function (){battleMove(5); let choice = 0;});
       let skl = document.createElement("button");
       skl.innerHTML = "Skills";
+      skl.addEventListener('click', function () {skillBtnGen(currentParty[1], 5); choice = 1;});
       let itm = document.createElement("button");
       itm.innerHTML = "Items";
         change.appendChild(atkbtn);
@@ -595,22 +692,57 @@ function battleMove(x ,loc) {
   }
   //target phase
   if (x === 5){
-     change.innerHTML = "";
+  change.innerHTML = "";
+  info.innerHTML = "";
+    if (choice === 0){
+    change.innerHTML = "";
     info.innerHTML = "";
     let p4 = document.createElement("p");
     p4.innerHTML = "Who will you target?";
     info.appendChild(p4);
-    targetBtn(currentParty[1], enHp, 5);
-    backBtn(5); 
+    targetBtn(currentParty[1], enHp, 6);
+    backBtn(4); 
+    } 
+    if (choice === 1){
+      let p4 = document.createElement("p");
+      p4.innerHTML = "Who will you target?";
+      info.appendChild(p4);
+      targetBtn(currentParty[1], enHp, 6, skillChoice);
+      skillSlot.innerHTML = "";
+      backBtn(4); 
+    }
   } if (x === 6){
     //removes previous buttons
     change.innerHTML = "";
-    //creates foward button and displays the info from the calculator
+    //creates foward button and displays the info from the calculator, checks if battle is won.
         let fwd = document.createElement("button");
         fwd.innerHTML = "Next";
         fwd.addEventListener('click', function (){battleMove(7)});
         change.appendChild(fwd);
         checkWin();
+  } if (x === 7) {
+    //begins enemy phase, enemy 1
+    //needs to only use next buttons based on enemy party size. Needs a "check loss" funciton.
+    change.innerHTML = "";
+    info.innerHTML = "";
+    let p4 = document.createElement("p");
+        p4.innerHTML =  "Enemy turn!";
+        info.appendChild(p4);
+        enemCalc();
+        checkLose();
+    let fwd = document.createElement("button");
+        fwd.innerHTML = "Player Turn";
+        fwd.addEventListener('click', function (){battleMove(1)});
+        change.appendChild(fwd);
+  } if (x === 8) {
+    change.innerHTML = "";
+    info.innerHTML = "";
+    let p = document.createElement("p");
+    p.innerHTML = "The party has been defeated. Reload?";
+    let reload = document.createElement("button");
+    reload.innerHTML = "Reload previous save";
+    reload.addEventListener('click', function (){load()});
+    change.appendChild(reload);
   }
 }
 //=====================================
@@ -742,5 +874,4 @@ function load(){
   gameCheck = simpleStorage.get("gamecheck", gameCheck);
   if (gameCheck  === true)
   document.getElementById("continue").hidden = false;
-   
   };

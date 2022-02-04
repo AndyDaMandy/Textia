@@ -10,7 +10,7 @@ let ando = {
   name: "Ando",
   level: 1,
   hp: 10,
-  chp: 10,
+  chp: 20,
   mp: 5,
   cmp: 5,
   pAtk: 10,
@@ -466,6 +466,9 @@ function enemCalc (){
     if (currentParty[0].chp <= 0){
       currentParty.splice(0, 1);
       console.log(currentParty);
+    } if (currentParty[1].chp <= 0){
+      currentParty.splice(1, 1);
+      console.log(currentParty);
     }
   };
 let skillChoice;
@@ -739,6 +742,7 @@ function battleMove(x ,loc) {
     info.innerHTML = "";
     let p = document.createElement("p");
     p.innerHTML = "The party has been defeated. Reload?";
+    info.appendChild(p);
     let reload = document.createElement("button");
     reload.innerHTML = "Reload previous save";
     reload.addEventListener('click', function (){load()});

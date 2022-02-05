@@ -144,6 +144,14 @@ const iceSlash = {
   pow: 1,
   cost: 2
   };
+const waterArrow = {
+  name: "Water Arrow",
+  type: "Physical",
+  des: "Deals phsyical and water damage to 1 enemy",
+  element: watEl,
+  pow: 1,
+  cost: 2
+  };
 //======================================
 //Items go here
 const potion = {
@@ -175,6 +183,13 @@ const woodStaff = {
   type: "Staff",
   des: "A basic Staff",
   atr: "Magical",
+  pow: 1
+  };
+const woodBow = {
+  name: "Wooden Bow",
+  type: "Bow",
+  des: "A basic Bow and Arrow set",
+  atr: "Physical",
   pow: 1
   };
 //======================================
@@ -473,7 +488,10 @@ function enemCalc (){
   function getRandomInt(max) {
   return Math.floor(Math.random() * max);
     }
-    
+    /*function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+    }
+    */
   let enPow = [];
   let teamLength = currentParty.length;
     function pusher1 (x){enPow.push(x.pAtk)};
@@ -693,7 +711,7 @@ function loadPartyInfo(){
     pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);pHp.push(currentParty[1].hp); pMp.push(currentParty[1].mp);
   } if (currentParty.length === 3){
     let p3 = document.createElement("h4");
-    p3.innerHTML = "Party: " + currentParty[0].name + ", " + currentParty[1].name;
+    p3.innerHTML = "Party: " + currentParty[0].name + ", " + currentParty[1].name + ", " + currentParty[2].name;
     partyPlace.appendChild(p3);
     let partystat = document.createElement("li");
     partystat.innerHTML = currentParty[0].name + " HP: " + currentParty[0].chp + "/" + currentParty[0].hp + " - MP: " + currentParty[0].cmp + "/" + currentParty[0].mp;
@@ -744,7 +762,6 @@ function battle(en, location) {
   };
 let target = 0;
 function battleMove(x) {
-  debugger;
   if (x === 0){
    change.innerHTML = "";
    // info.innerHTML = "";
@@ -880,6 +897,7 @@ function battleMove(x) {
         change.appendChild(fwd);
         loadEnemyInfo();
         loadPartyInfo();
+        checkWin();
     } else {
         let fwd = document.createElement("button");
         fwd.innerHTML = "Next";
@@ -1021,7 +1039,7 @@ function battleMove(x) {
   } if (x === 15){
     //removes previous buttons
     change.innerHTML = "";
-    //creates foward button and displays the info from the calculator, checks if battle is won.
+    //creates foward button and displays the info from the calculator, checks if battle is won. will end phase since player 3.
         let fwd = document.createElement("button");
         fwd.innerHTML = "Next";
         fwd.addEventListener('click', function (){battleMove(7)});
@@ -1030,7 +1048,7 @@ function battleMove(x) {
         loadPartyInfo();
         checkWin();
   }
-//p3 items
+  //p3 items
   if (x === 16){
     change.innerHTML = "";
     itemSlot.innerHTML = "";
@@ -1039,6 +1057,7 @@ function battleMove(x) {
       info.appendChild(p4);
       itemTarget(itemChoice, 17);
   } 
+  //p3 item check, will end phase.
   if (x === 17) {
     change.innerHTML = "";
     info.innerHTML = "";
@@ -1050,7 +1069,7 @@ function battleMove(x) {
         loadEnemyInfo();
         loadPartyInfo();
   }
-};
+  };
 //=====================================
 // Area 1
 const townOne = document.getElementById("town-1");
@@ -1142,8 +1161,8 @@ function shopFlow (){
 //==================================
 // all testing goes below
 currentParty = [ando, marie, julie];
-julie.skills.push(basher);
-julie.weapon = woodSword;
+julie.skills.push(waterArrow);
+julie.weapon = woodBow;
 ando.skills.push(basher);
 marie.skills.push(fire);
 ando.skills.push(iceSlash);

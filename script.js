@@ -1,5 +1,6 @@
 //https://github.com/ZaDarkSide/simpleStorage
 //simple storage documentation above
+//simple storage seems broken...
 //Things that need to be done:
 //Finish battle system
 //treasure system
@@ -128,14 +129,14 @@ const potion = {
   name: "Potion",
   type: "Healing",
   des: "Heals 5 points of HP.",
-  effect: function (x) {x.chp + 5;},
+  effect: 5,
   cost: 5
   };
 const magicPotion = {
   name: "Magic Potion",
-  type: "Healing",
+  type: "mHealing",
   des: "Heals 5 points of MP.",
-  effect: function (x) {x.cmp + 5},
+  effect: 5,
   cost: 5
   };
 //=======================================
@@ -282,6 +283,8 @@ let battleState = 0;
 let enHp = [];
 let pHp = [];
 let pMp = [];
+//dead party global variable
+let deadTeam = [];
 const battleMode = document.getElementById("battle-mode");
 const commands = document.getElementById("commands");
 const enemyPlace = document.getElementById("enemies");
@@ -466,7 +469,6 @@ function enemCalc (){
       damageRes.innerHTML = target.name + " was hit by " + attacker.name + " for " + damage + " damage!";
       info.appendChild(damageRes);
     }
-    let deadTeam = [];
     if (currentParty.length > 1 && currentParty[1].chp <= 0 && currentParty[0].chp <= 0){
      let playerD = currentParty.splice(1, 1);
      let player0 =  currentParty.splice(0, 1);
@@ -508,23 +510,73 @@ function skillBtnGen(partymem, flow) {
   }
   partymem.skills.forEach(pusher);
   };
-function itemTarget (party, item){
+function itemTarget (item, flow){
   //selects target
-  //generates targeting buttons, for party memebers.
-  //flows to target phase which is hardcoded as: 9
-  /*battleMove(9);
-  if (item.type === "Healing"){
-    item.effect(partymem)
-    if (partymem.chp > partymem.hp){
-      partymem.chp = partymem.hp;
+  debugger;
+  change.innerHTML = "";
+  itemSlot.innerHTML = "";
+ if (currentParty.length === 1){
+  let btn = document.createElement("button");
+  btn.innerHTML = currentParty[0].name;
+  btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; 
+  //battleMove(y); 
+  itemCalc(z, x, y);})
+  itemSlot.appendChild(btn);
+  }
+    if (currentParty.length === 2) {
+  let btn = document.createElement("button");
+  btn.innerHTML = currentParty[0].name;
+  btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+  itemSlot.appendChild(btn);
+    let btn1 = document.createElement("button");
+    btn1.innerHTML = currentParty[1].name;
+    btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; 
+    //battleMove(y); 
+    itemCalc(z, x, y);})
+    itemSlot.appendChild(btn1);
     }
    }
-   */
+function itemCalc(partymem, item, flow){
+  info.innerHTML = "";
+  itemSlot.innerHTML = "";
+if (item.type === "Healing"){
+   partymem.chp += item.effect;
+    if (partymem.chp > partymem.hp){
+      partymem.chp = partymem.hp;
+      let pheal = document.createElement("p")
+      pheal.innerHTML = partymem.name + "'s HP was fully healed! Their HP is now full";
+      info.appendChild(pheal);
+      loadPartyInfo();
+     // battleMove(flow);
+    } else {
+      let pheal = document.createElement("p")
+      pheal.innerHTML = partymem.name + "'s HP is now: " + partymem.chp + "/" + partymem.hp;
+      info.appendChild(pheal);
+      loadPartyInfo();
+     // battleMove(flow);
+    }
+} if (item.type === "mHealing"){
+  partymem.cmp += item.effect;
+    if (partymem.cmp > partymem.mp){
+      partymem.cmp = partymem.mp;
+      let pheal = document.createElement("p")
+      pheal.innerHTML = partymem.name + "'s MP was fully healed! Their MP is now full";
+      info.appendChild(pheal);
+      loadPartyInfo();
+     battleMove(flow);
+    } else {
+      let pheal = document.createElement("p")
+      pheal.innerHTML = partymem.name + "'s MP is now: " + partymem.cmp + "/" + partymem.mp;
+      info.appendChild(pheal);
+      loadPartyInfo();
+     // battleMove(flow); 
+    }
+}
   //goes to next battle move
   // function that gets launched once you pick an item button.
   };
 let itemChoice;
-function itemBtnGen (party, flow){
+function itemBtnGen (){
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
   let closer = document.createElement("button");
@@ -650,8 +702,8 @@ function battle(en, location) {
 let target = 0;
 function battleMove(x) {
   if (x === 0){
-    change.innerHTML = "";
-    info.innerHTML = "";
+   change.innerHTML = "";
+   // info.innerHTML = "";
     holder.innerHTML = "";
     partyPlace.innerHTML = "";
     let win = document.createElement("p");
@@ -741,6 +793,7 @@ function battleMove(x) {
       skl.addEventListener('click', function () {skillBtnGen(currentParty[1], 5); choice = 1;});
       let itm = document.createElement("button");
       itm.innerHTML = "Items";
+      itm.addEventListener('click', function (){itemBtnGen(currentParty, 11);})
         change.appendChild(atkbtn);
         change.appendChild(skl);
         change.appendChild(itm);
@@ -806,26 +859,48 @@ function battleMove(x) {
     reload.addEventListener('click', function (){load()});
     change.appendChild(reload);
   } 
-  //load item targeting, then moves to 10 for item calculation
+  //load item targeting, then moves to 10 for item calculation, p1 item choice
   if (x === 9){
     //needs if branch based on party length 
+     change.innerHTML = "";
+     itemSlot.innerHTML = "";
       let p4 = document.createElement("p");
       p4.innerHTML = "Who will you target?";
       info.appendChild(p4);
-      itemTarget(currentParty, itemChoice);
-      itemSlot.innerHTML = "";
-      backBtn(1); 
+      itemTarget(itemChoice, 10);      
   }
-  //calculates item and shows results and then moves to next phase or enemy phase....
+  //calculates item and shows results and then moves to next phase or enemy phase....P1
   if (x === 10){
     change.innerHTML = "";
     info.innerHTML = "";
-    //let p4 = document.createElement("p");
-     // p4.innerHTML = "";
-     // info.appendChild(p4);
-     battleMove(2);
+    //creates foward button and displays the info from the calculator, checks if battle is won.
+        let fwd = document.createElement("button");
+        fwd.innerHTML = "Next";
+        fwd.addEventListener('click', function (){battleMove(4)});
+        change.appendChild(fwd);
+        loadEnemyInfo();
+        loadPartyInfo();
   }
-  //after this I need to bake in a p3 phase and test that accordingly.
+  //after this 11/12 will be a p2 version
+  if (x === 11){
+    change.innerHTML = "";
+    itemSlot.innerHTML = "";
+      let p4 = document.createElement("p");
+      p4.innerHTML = "Who will you target?";
+      info.appendChild(p4);
+          itemTarget(itemChoice, 12);
+  } if (x === 12) {
+    change.innerHTML = "";
+    info.innerHTML = "";
+     let fwd = document.createElement("button");
+      fwd.innerHTML = "Next";
+      //temporarily moves to enemy phase, will add branch if 3rd party member is there
+        fwd.addEventListener('click', function (){battleMove(7)});
+        change.appendChild(fwd);
+        loadEnemyInfo();
+        loadPartyInfo();
+  }
+  //p3 will take up battlemoves 15-20ish.
 }
 //=====================================
 // Area 1

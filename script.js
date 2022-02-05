@@ -39,8 +39,8 @@ let marie = {
   weapon: "Test",
   type: "player"
   };
-let jeff = {
-  name: "Jeff",
+let julie = {
+  name: "Julie",
   level: 1,
   hp: 11,
   chp: 11,
@@ -550,6 +550,19 @@ function itemTarget (item, flow){
     btn1.innerHTML = currentParty[1].name;
     btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
     itemSlot.appendChild(btn1);
+    } if (currentParty.length === 3){
+      let btn = document.createElement("button");
+        btn.innerHTML = currentParty[0].name;
+        btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+        itemSlot.appendChild(btn);
+    let btn1 = document.createElement("button");
+    btn1.innerHTML = currentParty[1].name;
+    btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+    itemSlot.appendChild(btn1);
+    let btn2 = document.createElement("button");
+    btn2.innerHTML = currentParty[2].name;
+    btn2.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[2]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+    itemSlot.appendChild(btn2);
     }
    };
 function itemCalc(partymem, item, flow){
@@ -569,7 +582,7 @@ function itemCalc(partymem, item, flow){
       info.appendChild(pheal);
       loadPartyInfo();
     }
-} if (item.type === "mHealing"){
+  } if (item.type === "mHealing"){
   partymem.cmp += item.effect;
     if (partymem.cmp > partymem.mp){
       partymem.cmp = partymem.mp;
@@ -583,7 +596,7 @@ function itemCalc(partymem, item, flow){
       info.appendChild(pheal);
       loadPartyInfo();
     }
-}
+  }
   inventory.splice(itemPos - 1, 1);
   };
 let itemChoice;
@@ -614,7 +627,7 @@ function clearBattle() {
   battleState = 0;
   battleMode.hidden = true;
   mainMenu.hidden = false;
-  currentParty = [ando, marie, jeff];
+  currentParty = [ando, marie, julie];
   ando.chp = ando.hp;
   ando.cmp = ando.mp;
   marie.chp = marie.hp;
@@ -659,7 +672,7 @@ function loadEnemyInfo(){
 function loadPartyInfo(){
   partyPlace.innerHTML = "";
   holder.innerHTML = "";
-  if (currentParty.length < 2){
+  if (currentParty.length === 1){
     let p2 = document.createElement("h4");
     p2.innerHTML = "Party: " + currentParty[0].name;
     partyPlace.appendChild(p2);
@@ -667,7 +680,7 @@ function loadPartyInfo(){
     partystat.innerHTML = currentParty[0].name + " HP: " + currentParty[0].chp + "/" + currentParty[0].hp + " - MP: " + currentParty[0].cmp + "/" + currentParty[0].mp;
     holder.appendChild(partystat);
     pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);
-  } else {
+  } if (currentParty.length === 2) {
   let p2 = document.createElement("h4");
   p2.innerHTML = "Party: " + currentParty[0].name + ", " + currentParty[1].name;
   partyPlace.appendChild(p2);
@@ -677,10 +690,21 @@ function loadPartyInfo(){
     let partystat1 = document.createElement("li");
     partystat1.innerHTML = currentParty[1].name + " HP: " + currentParty[1].chp + "/" + currentParty[1].hp + " - MP: " + currentParty[1].cmp + "/" + currentParty[1].mp;
     holder.appendChild(partystat1);
-    if (currentParty.length === 2) {pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);pHp.push(currentParty[1].hp); pMp.push(currentParty[1].mp);}
-    if (currentParty.length === 3) {pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);pHp.push(currentParty[1].hp); pMp.push(currentParty[1].mp);pHp.push(currentParty[2].hp); pMp.push(currentParty[2].mp);}
-    console.log(pHp);
-    console.log(pMp);
+    pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);pHp.push(currentParty[1].hp); pMp.push(currentParty[1].mp);
+  } if (currentParty.length === 3){
+    let p3 = document.createElement("h4");
+    p3.innerHTML = "Party: " + currentParty[0].name + ", " + currentParty[1].name;
+    partyPlace.appendChild(p3);
+    let partystat = document.createElement("li");
+    partystat.innerHTML = currentParty[0].name + " HP: " + currentParty[0].chp + "/" + currentParty[0].hp + " - MP: " + currentParty[0].cmp + "/" + currentParty[0].mp;
+    holder.appendChild(partystat);
+    let partystat1 = document.createElement("li");
+    partystat1.innerHTML = currentParty[1].name + " HP: " + currentParty[1].chp + "/" + currentParty[1].hp + " - MP: " + currentParty[1].cmp + "/" + currentParty[1].mp;
+    holder.appendChild(partystat1);
+    let partystat2 = document.createElement("li");
+    partystat2.innerHTML = currentParty[2].name + " HP: " + currentParty[2].chp + "/" + currentParty[2].hp + " - MP: " + currentParty[2].cmp + "/" + currentParty[2].mp;
+    holder.appendChild(partystat2);
+      pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);pHp.push(currentParty[1].hp); pMp.push(currentParty[1].mp);pHp.push(currentParty[2].hp); pMp.push(currentParty[2].mp);
   }
   };
 let expGain = 0;
@@ -849,6 +873,14 @@ function battleMove(x) {
     //removes previous buttons
     change.innerHTML = "";
     //creates foward button and displays the info from the calculator, checks if battle is won.
+    if (currentParty.length === 3){
+       let fwd = document.createElement("button");
+        fwd.innerHTML = "Next";
+        fwd.addEventListener('click', function (){battleMove(13)});
+        change.appendChild(fwd);
+        loadEnemyInfo();
+        loadPartyInfo();
+    } else {
         let fwd = document.createElement("button");
         fwd.innerHTML = "Next";
         fwd.addEventListener('click', function (){battleMove(7)});
@@ -856,7 +888,7 @@ function battleMove(x) {
         loadEnemyInfo();
         loadPartyInfo();
         checkWin();
-
+    }
   } if (x === 7) {
     //begins enemy phase
     //needs to only use next buttons based on enemy party size. Needs a "check loss" funciton.
@@ -900,14 +932,14 @@ function battleMove(x) {
     change.innerHTML = "";
     info.innerHTML = "";
     //creates foward button and displays the info from the calculator, checks if battle is won.
-      if (currentParty.length === 2){
-        let fwd = document.createElement("button");
+    if (currentParty.length === 3 || currentParty.length === 2){
+      let fwd = document.createElement("button");
         fwd.innerHTML = "Next";
         fwd.addEventListener('click', function (){battleMove(4)});
         change.appendChild(fwd);
         loadEnemyInfo();
         loadPartyInfo();
-      } else if (currentParty.length === 1){
+    } else if (currentParty.length === 1){
         let fwd = document.createElement("button");
         fwd.innerHTML = "Next";
         fwd.addEventListener('click', function (){battleMove(7)});
@@ -930,13 +962,95 @@ function battleMove(x) {
      let fwd = document.createElement("button");
       fwd.innerHTML = "Next";
       //temporarily moves to enemy phase, will add branch if 3rd party member is there
+      if (currentParty.length === 3){
+        fwd.addEventListener('click', function (){battleMove(13)});
+        change.appendChild(fwd);
+        loadEnemyInfo();
+        loadPartyInfo();
+      } else {
+        fwd.addEventListener('click', function (){battleMove(7)});
+        change.appendChild(fwd);
+        loadEnemyInfo();
+        loadPartyInfo();
+      }
+  }
+  //p3 will take up battlemoves 15-20ish.
+  if (x === 13){
+    skillSlot.innerHTML = "";
+    itemSlot.innerHTML = "";
+    change.innerHTML = "";
+    info.innerHTML = "";
+    choice = 0;
+    let p4 = document.createElement("p");
+        p4.innerHTML = currentParty[2].name + "'s turn. " + "Please select a command: ";
+        info.appendChild(p4);
+      let atkbtn = document.createElement("button");
+      atkbtn.innerHTML = "Attack";
+      atkbtn.addEventListener('click', function (){battleMove(14); let choice = 0;});
+      let skl = document.createElement("button");
+      skl.innerHTML = "Skills";
+      skl.addEventListener('click', function () {skillBtnGen(currentParty[2], 14); choice = 1;});
+      let itm = document.createElement("button");
+      itm.innerHTML = "Items";
+      itm.addEventListener('click', function (){itemBtnGen(16);})
+        change.appendChild(atkbtn);
+        change.appendChild(skl);
+        change.appendChild(itm);
+  }
+  //target phase if party has 3 members
+  if (x === 14){
+  change.innerHTML = "";
+  info.innerHTML = "";
+    if (choice === 0){
+    change.innerHTML = "";
+    info.innerHTML = "";
+    let p4 = document.createElement("p");
+    p4.innerHTML = "Who will you target?";
+    info.appendChild(p4);
+    targetBtn(currentParty[2], enHp, 15);
+    backBtn(13); 
+    } 
+    if (choice === 1){
+      let p4 = document.createElement("p");
+      p4.innerHTML = "Who will you target?";
+      info.appendChild(p4);
+      targetBtn(currentParty[2], enHp, 15, skillChoice);
+      skillSlot.innerHTML = "";
+      backBtn(13); 
+    }
+  } if (x === 15){
+    //removes previous buttons
+    change.innerHTML = "";
+    //creates foward button and displays the info from the calculator, checks if battle is won.
+        let fwd = document.createElement("button");
+        fwd.innerHTML = "Next";
+        fwd.addEventListener('click', function (){battleMove(7)});
+        change.appendChild(fwd);
+        loadEnemyInfo();
+        loadPartyInfo();
+        checkWin();
+  }
+//p3 items
+  if (x === 16){
+    change.innerHTML = "";
+    itemSlot.innerHTML = "";
+      let p4 = document.createElement("p");
+      p4.innerHTML = "Who will you target?";
+      info.appendChild(p4);
+      itemTarget(itemChoice, 17);
+  } 
+  if (x === 17) {
+    change.innerHTML = "";
+    info.innerHTML = "";
+     let fwd = document.createElement("button");
+      fwd.innerHTML = "Next";
+      //because the max party is 3, it MUST take you to the calc phase.
         fwd.addEventListener('click', function (){battleMove(7)});
         change.appendChild(fwd);
         loadEnemyInfo();
         loadPartyInfo();
   }
-  //p3 will take up battlemoves 15-20ish.
-}
+};
 //=====================================
 // Area 1
 const townOne = document.getElementById("town-1");
@@ -1027,9 +1141,9 @@ function shopFlow (){
 }
 //==================================
 // all testing goes below
-currentParty = [ando, marie, jeff];
-jeff.skills.push(basher);
-jeff.weapon = woodSword;
+currentParty = [ando, marie, julie];
+julie.skills.push(basher);
+julie.weapon = woodSword;
 ando.skills.push(basher);
 marie.skills.push(fire);
 ando.skills.push(iceSlash);
@@ -1066,7 +1180,7 @@ function load(){
  currentParty = simpleStorage.get("currentParty", currentParty);
  currentParty.push(ando);
  currentParty.push(marie);
- currentParty.push(jeff);
+ currentParty.push(julie);
   inventory =  simpleStorage.get("inventory", inventory);
   money =  simpleStorage.get("money", money);
  gameState = simpleStorage.get("gamestate", gameState);

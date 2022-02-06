@@ -7,6 +7,7 @@
 //Finish battle system
 //level-up system.
 //need to add new levels of course
+//renamed project to textia
 // skill menu and item menu
 //Characters go here. chp and chmp are "current hp and mp" respectively
 let ando = {

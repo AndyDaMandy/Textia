@@ -92,7 +92,7 @@
     <p>"To access the menu, click the "Menu" button above. You can check your items, party, skills, etc."</p>
     <p>"If you'd like to move on, click below, or click the shop button above"</p>
     <button onClick="move(1);">Enter Forest</button>
-  </div>
+    </div>
   <div id="forest-1" hidden>
     <div id="forest-1-1">
       <h2>The Forest</h2>
@@ -100,7 +100,7 @@
       <p>You're worried the danger might be too high, maybe you should head back to town?</p>
       <button onClick="move(0)">Back to Town</button>
       <button onClick="move(2)">To the Large Tree</button>
-    </div>
+      </div>
     <div id="forest-1-2" hidden>
       <h2>The Large Tree</h2>
       <p>You've found a large tree!</p>
@@ -108,15 +108,21 @@
       <p>Will you fight?</p>
       <button onClick="move(1)">Go Back</button>
       <button onClick="battle([iceman, goblin, potatoThief]); statePost = 3;">Fight</button>
-    </div>
+      </div>
     <div id="forest-1-3" hidden>
       <h2>The Large Tree - 2</h2>
       <p>After defeating the enemies you can now approach the tree.</p>
       <p>there you find a treasure chest.</p>
       <p>Will you open it?</p>
-      <button id="chest-1">Open Chest</button>
-      <button onClick="">Move Forward</button>
-    </div>
+      <button id="chest-1" onclick="openChest(potion, this.id)">Open Chest</button>
+      <button onclick="">Move Forward</button>
+      </div>
+    <div id="forest-1-4" hidden>
+      <h2>The Light in the Darkness</h2>
+      <p>Despite the darkness, you glimpse a small light ahead.</p>
+      <p>You see an enemy ahead, it looks tough.</p>
+      <p>Will you forge ahead?</p>
+      </div>
 </div>
    <!-- simple storage -->
     <script src="https://cdn.jsdelivr.net/npm/simplestorage.js@0.2.1/simpleStorage.min.js"></script>

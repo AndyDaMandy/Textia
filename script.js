@@ -20,6 +20,7 @@ let ando = {
   mDef: 2,
   exp: 0,
   skills: [],
+  support: [],
   weapon: "Test",
   type: "player"
   };
@@ -36,6 +37,7 @@ let marie = {
   mDef: 5,
   exp: 0,
   skills: [],
+  support: [],
   weapon: "Test",
   type: "player"
   };
@@ -52,6 +54,7 @@ let julie = {
   mDef: 1,
   exp: 0,
   skills: [],
+  support: [],
   weapon: "Test",
   type: "player"
   };
@@ -101,6 +104,7 @@ const goblin = {
   pDef: 1,
   mAtk: 1,
   mDef: 1,
+  weakness: watEl,
   exp: 1,
   eSkills: [],
   type: "enemy"
@@ -150,6 +154,14 @@ const waterArrow = {
   des: "Deals phsyical and water damage to 1 enemy",
   element: watEl,
   pow: 1,
+  cost: 2
+  };
+const cure = {
+  name: "Cure",
+  type: "Healing",
+  des: "Heals target character for 5 HP",
+  element: watEl,
+  pow: 5,
   cost: 2
   };
 //======================================
@@ -204,7 +216,7 @@ function showStats (x) {
   
   statsLog.innerHTML = "";
   }
-  stats.innerHTML ="Your current party: " + x[0].name + ", " + x[1].name;
+  stats.innerHTML ="Your current party: " + x[0].name + ", " + x[1].name + ", " + x[2].name;
   document.getElementById("line-1").innerHTML = "Here are their stats:";
   for (let i = 0; i < currentParty.length; i++){
     let li = document.createElement("li");
@@ -333,6 +345,7 @@ let pStats = document.getElementById("p-stats");
 let itemSlot = document.getElementById("item-slot");
 let skillSlot = document.getElementById("skill-slot");
 let choice = 0;
+//all those variables are id selectors.
 //calcs go above battle func
 // targetting functions go above the battle selectors
 function checkLose(){
@@ -395,7 +408,6 @@ function attackCalc (char, target, skill, flow, cost){
   //branch for skill
     if (skill != undefined){
       char.cmp -= skill.cost;
-      console.log(char);
       if (skill.type === "Magic"){
         let pa = char.mAtk + skill.pow - enemyParty[target].mDef;
         let thp = enHp[target];
@@ -414,7 +426,6 @@ function attackCalc (char, target, skill, flow, cost){
           enemyParty.splice(target, 1);
           enHp.splice(target, 1);
           battleMove(flow)
-          console.log(enemyParty);
           } else {
                 let p6 = document.createElement("p");
                 p6.innerHTML = char.name + " cast " + skill.name + "!"
@@ -424,7 +435,6 @@ function attackCalc (char, target, skill, flow, cost){
                 p3.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
                 info.appendChild(p3);
                 battleMove(flow)
-                console.log(enHp)
               }
       } if (skill.type === "Physical"){
           let pa = char.pAtk + skill.pow - enemyParty[target].pDef;
@@ -444,7 +454,6 @@ function attackCalc (char, target, skill, flow, cost){
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
               battleMove(flow)
-              console.log(enemyParty);
               } else {
                 let p6 = document.createElement("p");
                 p6.innerHTML = char.name + " used " + skill.name + "!"
@@ -454,7 +463,6 @@ function attackCalc (char, target, skill, flow, cost){
                 p3.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
                 info.appendChild(p3);
                 battleMove(flow)
-                console.log(enHp)
                   }
           } 
   }
@@ -473,14 +481,12 @@ function attackCalc (char, target, skill, flow, cost){
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
               battleMove(flow)
-              console.log(enemyParty);
             } else {
                 let p3 = document.createElement("p");
                 enHp[target] = thp - damage;
                 p3.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
                 info.appendChild(p3);
                 battleMove(flow)
-                console.log(enHp)
                 }
             }
     };
@@ -497,7 +503,6 @@ function enemCalc (){
     function pusher1 (x){enPow.push(x.pAtk)};
     enemyParty.forEach(pusher1);
     let enLength = enPow.length;
-    console.log(enPow);
     for (let i = 0; i < enPow.length; i++){
       let target = currentParty[getRandomInt(teamLength)];
       let attacker = enemyParty[getRandomInt(enLength)];
@@ -507,7 +512,9 @@ function enemCalc (){
       let damageRes = document.createElement("p");
       damageRes.innerHTML = target.name + " was hit by " + attacker.name + " for " + damage + " damage!";
       info.appendChild(damageRes);
-    }
+    } 
+//need to set up DEATH system for p3
+    //if (currentParty.length > 2 && currentParty[2].chp <= 0 )
     if (currentParty.length > 1 && currentParty[1].chp <= 0 && currentParty[0].chp <= 0){
      let playerD = currentParty.splice(1, 1);
      let player0 =  currentParty.splice(0, 1);
@@ -526,6 +533,7 @@ function enemCalc (){
     }
   };
 let skillChoice;
+let supportChoice;
 function skillBtnGen(partymem, flow) {
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
@@ -535,6 +543,26 @@ function skillBtnGen(partymem, flow) {
     closer1.innerHTML = "Close Skill List";
     closer1.addEventListener('click', function () {skillSlot.innerHTML = "";});
   skillSlot.appendChild(closer1);
+//healing branch, makes use of the item battle-flow for targeting and then uses a heal calc function. 
+//I should copy the item branch...IDEA use new SkillBtnGen for sup skills
+//both functions would activate when skills are picked.
+//likewise, when attack items are pick, the regular targetting tree is picked.
+//attack items will be their own class of item as well.
+  /*  if (partymem.support.length > 0){
+      if (party.length === 3){
+        function pusher (skill) {
+      let btn2 = document.createElement("button");
+      btn2.innerHTML = skill.name + " - Cost: " + skill.cost;
+      if (skill.cost > partymem.cmp){
+      btn2.addEventListener('click', function (){
+      info.appendChild(pBad)})
+      skillSlot.appendChild(btn1);
+      } else {
+  btn1.addEventListener('click', function (x) {x = skill; skillChoice = x; battleMove(flow);});
+  skillSlot.appendChild(btn1);
+      }
+    }
+    */
   function pusher (skill) {
   let btn1 = document.createElement("button");
   btn1.innerHTML = skill.name + " - Cost: " + skill.cost;
@@ -650,7 +678,7 @@ function clearBattle() {
   ando.cmp = ando.mp;
   marie.chp = marie.hp;
   marie.chp = marie.hp;
-};
+  };
 let statePost = 0;
 function endBattle(loc) {
  // if (enemyParty.length === 0) {};
@@ -1070,7 +1098,9 @@ function battleMove(x) {
         loadPartyInfo();
   }
   };
-//=====================================
+
+//===================================
+
 // Area 1
 const townOne = document.getElementById("town-1");
 //Forest 1, Forest 1-1, 1-2
@@ -1091,6 +1121,13 @@ let money;
 let gameState;
 let shopState;
 //===================================
+//Open chest and stuff
+//==================================
+function openChest(item, id){
+  inventory.push(item);
+  document.getElementById(id).hidden = true;
+};
+//needs a way of showing what item was received....
 //Game State and game flow will go here:
 function gameFlow (state) {
 //Area 1
@@ -1166,6 +1203,7 @@ julie.weapon = woodBow;
 ando.skills.push(basher);
 marie.skills.push(fire);
 ando.skills.push(iceSlash);
+marie.support.push(cure);
 
 //======================================
 // Start Game , must go below everything else

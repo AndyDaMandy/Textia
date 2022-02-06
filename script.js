@@ -534,7 +534,7 @@ function enemCalc (){
   };
 let skillChoice;
 let supportChoice;
-function skillBtnGen(partymem, flow) {
+function skillBtnGen(partymem, flow, supflow) {
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
   let pBad = document.createElement("p");
@@ -543,26 +543,24 @@ function skillBtnGen(partymem, flow) {
     closer1.innerHTML = "Close Skill List";
     closer1.addEventListener('click', function () {skillSlot.innerHTML = "";});
   skillSlot.appendChild(closer1);
-//healing branch, makes use of the item battle-flow for targeting and then uses a heal calc function. 
-//I should copy the item branch...IDEA use new SkillBtnGen for sup skills
-//both functions would activate when skills are picked.
-//likewise, when attack items are pick, the regular targetting tree is picked.
-//attack items will be their own class of item as well.
-  /*  if (partymem.support.length > 0){
-      if (party.length === 3){
-        function pusher (skill) {
+  //healing branch, makes use of the item battle-flow for targeting and then uses a heal calc function. 
+    //Support flow added here
+  //attack items will be their own class of item as well.
+  if (partymem.support.length > 0){
+        function pusher2 (sup) {
       let btn2 = document.createElement("button");
-      btn2.innerHTML = skill.name + " - Cost: " + skill.cost;
-      if (skill.cost > partymem.cmp){
+      btn2.innerHTML = sup.name + " - Cost: " + sup.cost;
+      if (sup.cost > partymem.cmp){
       btn2.addEventListener('click', function (){
       info.appendChild(pBad)})
-      skillSlot.appendChild(btn1);
+      skillSlot.appendChild(btn2);
       } else {
-  btn1.addEventListener('click', function (x) {x = skill; skillChoice = x; battleMove(flow);});
-  skillSlot.appendChild(btn1);
+        btn2.addEventListener('click', function (x) {x = sup; supportChoice = x; battleMove(supflow);});
+        skillSlot.appendChild(btn2);
       }
     }
-    */
+    partymem.support.forEach(pusher2);
+  }
   function pusher (skill) {
   let btn1 = document.createElement("button");
   btn1.innerHTML = skill.name + " - Cost: " + skill.cost;
@@ -577,6 +575,60 @@ function skillBtnGen(partymem, flow) {
   }
   partymem.skills.forEach(pusher);
   };
+function supTarget ( sup, supflow){
+  change.innerHTML = "";
+  skillSlot.innerHTML = "";
+  //pulls target MP away atm
+  if (currentParty.length === 1){
+  let btn = document.createElement("button");
+  btn.innerHTML = currentParty[0].name;
+  btn.addEventListener('click', function (x, y, z){x = sup; y = supflow;z = currentParty[0]; supportChoice = x; battleMove(y); supCalc(z, x, y);})
+  skillSlot.appendChild(btn);
+  }
+    if (currentParty.length === 2) {
+  let btn = document.createElement("button");
+  btn.innerHTML = currentParty[0].name;
+  btn.addEventListener('click', function (x, y, z){x = sup; y = supflow;z = currentParty[0]; supportChoice = x; battleMove(y); supCalc(z, x, y);})
+  skillSlot.appendChild(btn);
+    let btn1 = document.createElement("button");
+    btn1.innerHTML = currentParty[1].name;
+    btn1.addEventListener('click', function (x, y, z){x = sup; y = supflow;z = currentParty[1]; supportChoice = x; battleMove(y); supCalc(z, x, y);})
+    skillSlot.appendChild(btn1);
+    } if (currentParty.length === 3){
+      let btn = document.createElement("button");
+        btn.innerHTML = currentParty[0].name;
+        btn.addEventListener('click', function (x, y, z){x = sup; y = supflow;z = currentParty[0]; supportChoice = x; battleMove(y); supCalc(z, x, y);})
+        skillSlot.appendChild(btn);
+    let btn1 = document.createElement("button");
+    btn1.innerHTML = currentParty[1].name;
+    btn1.addEventListener('click', function (x, y, z){x = sup; y = supflow;z = currentParty[1]; supportChoice = x; battleMove(y); supCalc(z, x, y);})
+    skillSlot.appendChild(btn1);
+    let btn2 = document.createElement("button");
+    btn2.innerHTML = currentParty[2].name;
+    btn2.addEventListener('click', function (x, y, z){x = sup; y = supflow;z = currentParty[2]; supportChioice = x; battleMove(y); supCalc(z, x, y);})
+    skillSlot.appendChild(btn2);
+    }
+  };
+function supCalc(caster, partymem, sup, supflow){
+  info.innerHTML = "";
+  skillSlot.innerHTML = "";
+  caster.cmp -= sup.cost;
+  if (sup.type === "Healing"){
+    partymem.chp += sup.pow;
+      if (partymem.chp > partymem.hp){
+      partymem.chp = partymem.hp;
+      let pheal = document.createElement("p")
+      pheal.innerHTML = partymem.name + "'s HP was fully healed! Their HP is now full";
+      info.appendChild(pheal);
+      loadPartyInfo();
+    } else {
+      let pheal = document.createElement("p")
+      pheal.innerHTML = partymem.name + "'s HP is now: " + partymem.chp + "/" + partymem.hp;
+      info.appendChild(pheal);
+      loadPartyInfo();
+    }
+  }
+};
 function itemTarget (item, flow){
   //selects target
   change.innerHTML = "";
@@ -816,7 +868,7 @@ function battleMove(x) {
       let skl = document.createElement("button");
       //sets up skill menu/closing buttons.
       skl.innerHTML = "Skills";
-        skl.addEventListener('click', function () {skillBtnGen(currentParty[0], 2); choice = 1;});
+        skl.addEventListener('click', function () {skillBtnGen(currentParty[0], 2, 9); choice = 1;});
       //adds open menu branch
       let itm = document.createElement("button");
         itm.innerHTML = "Items";
@@ -885,7 +937,7 @@ function battleMove(x) {
       atkbtn.addEventListener('click', function (){battleMove(5); let choice = 0;});
       let skl = document.createElement("button");
       skl.innerHTML = "Skills";
-      skl.addEventListener('click', function () {skillBtnGen(currentParty[1], 5); choice = 1;});
+      skl.addEventListener('click', function () {skillBtnGen(currentParty[1], 5, 11); choice = 1;});
       let itm = document.createElement("button");
       itm.innerHTML = "Items";
       itm.addEventListener('click', function (){itemBtnGen(11);})
@@ -1001,7 +1053,11 @@ function battleMove(x) {
       let p4 = document.createElement("p");
       p4.innerHTML = "Who will you target?";
       info.appendChild(p4);
+      if (choice === 1){
+        supTarget(supportChoice, 12);
+      } else {
       itemTarget(itemChoice, 12);
+      }
   } if (x === 12) {
     change.innerHTML = "";
     info.innerHTML = "";
@@ -1035,7 +1091,7 @@ function battleMove(x) {
       atkbtn.addEventListener('click', function (){battleMove(14); let choice = 0;});
       let skl = document.createElement("button");
       skl.innerHTML = "Skills";
-      skl.addEventListener('click', function () {skillBtnGen(currentParty[2], 14); choice = 1;});
+      skl.addEventListener('click', function () {skillBtnGen(currentParty[2], 14, 16); choice = 1;});
       let itm = document.createElement("button");
       itm.innerHTML = "Items";
       itm.addEventListener('click', function (){itemBtnGen(16);})
@@ -1097,6 +1153,8 @@ function battleMove(x) {
         loadEnemyInfo();
         loadPartyInfo();
   }
+  // 3 new battleflow states needed per party memeber for healing skills. Can't just use item target...
+  //or I'll need to find a way to have it differentiate based on that OH WAIT. If choice = 1!
   };
 
 //===================================

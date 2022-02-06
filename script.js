@@ -2,9 +2,11 @@
 //simple storage documentation above
 //simple storage seems broken...
 //Things that need to be done:
+//fix support skills parameter passing
+//support skills need a caster in the calc passed to them to remove mp.
 //Finish battle system
-//treasure system
 //level-up system.
+//need to add new levels of course
 // skill menu and item menu
 //Characters go here. chp and chmp are "current hp and mp" respectively
 let ando = {
@@ -575,9 +577,10 @@ function skillBtnGen(partymem, flow, supflow) {
   }
   partymem.skills.forEach(pusher);
   };
-function supTarget ( sup, supflow){
+function supTarget (caster, sup, supflow){
   change.innerHTML = "";
   skillSlot.innerHTML = "";
+  //needs a caster parameter based on the battleflow?
   //pulls target MP away atm
   if (currentParty.length === 1){
   let btn = document.createElement("button");
@@ -1184,6 +1187,7 @@ let shopState;
 function openChest(item, id){
   inventory.push(item);
   document.getElementById(id).hidden = true;
+  alert("You found: " + item.name + " - in the chest!");
 };
 //needs a way of showing what item was received....
 //Game State and game flow will go here:

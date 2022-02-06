@@ -4,7 +4,8 @@
 //Things that need to be done:
 //fix support skills parameter passing
 //support skills need a caster in the calc passed to them to remove mp.
-//Finish battle system
+//fix calculators
+//adjust damage
 //level-up system.
 //need to add new levels of course
 //renamed project to textia
@@ -298,7 +299,7 @@ function openShop(){
   };
 function closeShop() {
   shop.hidden = true;
-};
+  };
 //=======================================
 //======================================
 //Menu functionality, must go below each menu item
@@ -516,7 +517,7 @@ function enemCalc (){
       damageRes.innerHTML = target.name + " was hit by " + attacker.name + " for " + damage + " damage!";
       info.appendChild(damageRes);
     } 
-//need to set up DEATH system for p3
+  //need to set up DEATH system for p3
     //if (currentParty.length > 2 && currentParty[2].chp <= 0 )
     if (currentParty.length > 1 && currentParty[1].chp <= 0 && currentParty[0].chp <= 0){
      let playerD = currentParty.splice(1, 1);
@@ -632,7 +633,7 @@ function supCalc(caster, partymem, sup, supflow){
       loadPartyInfo();
     }
   }
-};
+  };
 function itemTarget (item, flow){
   //selects target
   change.innerHTML = "";
@@ -721,7 +722,24 @@ function itemBtnGen (flow){
   inventory.forEach(pusher);
 
   };
-function levelUp(char){};
+function levelUp(char){
+  //at the moment this simply checks if you hit 3 exp. More level intervals will be needed. Adds stats accordingly.
+  if (char.exp >= 3 && char.exp < 6){
+    char.level += 1;
+    char.hp += 1;
+    char.chp += 1;
+    char.mp += 1;
+    char.pDef += 1;
+    char.mDef += 1;
+    char.pAtk += 1;
+    char.mAtk += 1;
+    char.pDef += 1;
+    char.mDef += 1;
+    let leveluptext = document.createElement("p");
+    leveluptext.innerHTML = char.name + " leveled up! Their level is now: " + char.level + "!" ;
+    info.appendChild(leveluptext);
+  }
+  };
 function clearBattle() {
   partyPlace.innerHTML = "";
   holder.innerHTML = "";
@@ -742,7 +760,7 @@ function endBattle(loc) {
  endButton.innerHTML = "End Battle";
  endButton.addEventListener('click', function (x) {x = loc; clearBattle(); move(statePost)});
  end.appendChild(endButton);
-};
+  };
 //atm battle mode will hold the location value for endBattle;
 function loadEnemyInfo(){
   //loads enemy info dynamically updating.
@@ -854,6 +872,14 @@ function battleMove(x) {
     let win = document.createElement("p");
     win.innerHTML = "All enemies defeated! Congrats!";
     info.appendChild(win);
+    let expInfo = document.createElement("p");
+    expInfo.innerHTML = "All allies gained +" + expGain + " experience points!";
+    info.appendChild(expInfo);
+      function expGainer(x){
+        x.exp += expGain;
+      };
+    currentParty.forEach(expGainer);
+    currentParty.forEach(levelUp);
     endBattle();
   };
   //player 1 turn

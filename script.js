@@ -168,6 +168,20 @@ const cure = {
   pow: 5,
   cost: 2
   };
+const atkBoost = {
+  name: "Attack Boost",
+  type: "Attack Buff",
+  des: "Boosts attack for 1 turn.",
+  pow: 2,
+  cost: 2
+  };
+const defBoost = {
+  name: "Defense Boost",
+  type: "Defense Buff",
+  des: "Boosts attack for 1 turn.",
+  pow: 2,
+  cost: 2
+  };
 //======================================
 //Items go here
 const potion = {
@@ -587,34 +601,35 @@ function supTarget (caster, sup, supflow){
   if (currentParty.length === 1){
   let btn = document.createElement("button");
   btn.innerHTML = currentParty[0].name;
-  btn.addEventListener('click', function (x, y, z){x = sup; y = supflow;z = currentParty[0]; supportChoice = x; battleMove(y); supCalc(z, x, y);})
+  btn.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = currentParty[0]; supportChoice = x; battleMove(y); a = caster; supCalc(a, z, x, y);})
   skillSlot.appendChild(btn);
   }
     if (currentParty.length === 2) {
   let btn = document.createElement("button");
   btn.innerHTML = currentParty[0].name;
-  btn.addEventListener('click', function (x, y, z){x = sup; y = supflow;z = currentParty[0]; supportChoice = x; battleMove(y); supCalc(z, x, y);})
+  btn.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = currentParty[0]; supportChoice = x; battleMove(y); a = caster; supCalc(a, z, x, y);})
   skillSlot.appendChild(btn);
     let btn1 = document.createElement("button");
     btn1.innerHTML = currentParty[1].name;
-    btn1.addEventListener('click', function (x, y, z){x = sup; y = supflow;z = currentParty[1]; supportChoice = x; battleMove(y); supCalc(z, x, y);})
+    btn1.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = currentParty[1]; supportChoice = x; battleMove(y); a = caster; supCalc(a, z, x, y);;})
     skillSlot.appendChild(btn1);
     } if (currentParty.length === 3){
       let btn = document.createElement("button");
         btn.innerHTML = currentParty[0].name;
-        btn.addEventListener('click', function (x, y, z){x = sup; y = supflow;z = currentParty[0]; supportChoice = x; battleMove(y); supCalc(z, x, y);})
+        btn.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = currentParty[0]; supportChoice = x; battleMove(y); a = caster; supCalc(a, z, x, y);})
         skillSlot.appendChild(btn);
     let btn1 = document.createElement("button");
     btn1.innerHTML = currentParty[1].name;
-    btn1.addEventListener('click', function (x, y, z){x = sup; y = supflow;z = currentParty[1]; supportChoice = x; battleMove(y); supCalc(z, x, y);})
+    btn1.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = currentParty[1]; supportChoice = x; battleMove(y); a = caster; supCalc(a, z, x, y);})
     skillSlot.appendChild(btn1);
     let btn2 = document.createElement("button");
     btn2.innerHTML = currentParty[2].name;
-    btn2.addEventListener('click', function (x, y, z){x = sup; y = supflow;z = currentParty[2]; supportChioice = x; battleMove(y); supCalc(z, x, y);})
+    btn2.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = currentParty[2]; supportChioice = x; battleMove(y); a = caster; supCalc(a, z, x, y);;})
     skillSlot.appendChild(btn2);
     }
   };
 function supCalc(caster, partymem, sup, supflow){
+  debugger;
   info.innerHTML = "";
   skillSlot.innerHTML = "";
   caster.cmp -= sup.cost;
@@ -626,13 +641,25 @@ function supCalc(caster, partymem, sup, supflow){
       pheal.innerHTML = partymem.name + "'s HP was fully healed! Their HP is now full";
       info.appendChild(pheal);
       loadPartyInfo();
-    } else {
-      let pheal = document.createElement("p")
-      pheal.innerHTML = partymem.name + "'s HP is now: " + partymem.chp + "/" + partymem.hp;
-      info.appendChild(pheal);
-      loadPartyInfo();
+        } else {
+        let pheal = document.createElement("p")
+        pheal.innerHTML = partymem.name + "'s HP is now: " + partymem.chp + "/" + partymem.hp;
+        info.appendChild(pheal);
+        loadPartyInfo();
+        }
+    } if (sup.type === "Attack Buff"){
+        partymem.pAtk += sup.pow;
+        let pbuff = document.createElement("p")
+        pbuff.innerHTML = partymem.name + "'s Attack has been boosted!";
+        info.appendChild(pbuff);
+        loadPartyInfo();
+    } if (sup.type === "Defense Buff") {
+        partymem.pDef += sup.pow;
+        let pbuff = document.createElement("p")
+        pbuff.innerHTML = partymem.name + "'s Defense has been boosted!";
+        info.appendChild(pbuff);
+        loadPartyInfo();
     }
-  }
   };
 function itemTarget (item, flow){
   //selects target
@@ -1053,7 +1080,11 @@ function battleMove(x) {
       let p4 = document.createElement("p");
       p4.innerHTML = "Who will you target?";
       info.appendChild(p4);
-      itemTarget(itemChoice, 10);      
+      if (choice === 1){
+        supTarget(currentParty[0], supportChoice, 10);
+      } else {
+      itemTarget(itemChoice, 10); 
+        }    
   }
   //calculates item and shows results and then moves to next phase or enemy phase....P1
   if (x === 10){
@@ -1076,7 +1107,7 @@ function battleMove(x) {
         loadPartyInfo();
       }
   }
-  // P2 item slot
+  // P2 item slot/support slot. NEEDS TO BE APPLIED TO REST
   if (x === 11){
     change.innerHTML = "";
     itemSlot.innerHTML = "";
@@ -1084,7 +1115,7 @@ function battleMove(x) {
       p4.innerHTML = "Who will you target?";
       info.appendChild(p4);
       if (choice === 1){
-        supTarget(supportChoice, 12);
+        supTarget(currentParty[1], supportChoice, 12);
       } else {
       itemTarget(itemChoice, 12);
       }
@@ -1169,7 +1200,11 @@ function battleMove(x) {
       let p4 = document.createElement("p");
       p4.innerHTML = "Who will you target?";
       info.appendChild(p4);
+      if (choice === 1){
+        supTarget(currentParty[2], supportChoice, 17);
+      } else {
       itemTarget(itemChoice, 17);
+        }
   } 
   //p3 item check, will end phase.
   if (x === 17) {
@@ -1293,6 +1328,9 @@ ando.skills.push(basher);
 marie.skills.push(fire);
 ando.skills.push(iceSlash);
 marie.support.push(cure);
+marie.support.push(defBoost);
+ando.support.push(defBoost);
+julie.support.push(atkBoost);
 
 //======================================
 // Start Game , must go below everything else

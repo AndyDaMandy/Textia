@@ -932,6 +932,7 @@ function battle(en, location) {
   };
 let target = 0;
 function battleMove(x) {
+  debugger;
   if (x === 0){
    change.innerHTML = "";
    // info.innerHTML = "";

@@ -126,6 +126,19 @@ const potatoThief = {
   eSkills: [],
   type: "enemy"
   };
+const livingTree = {
+  name: "Living Tree",
+  level: 1,
+  hp: 60,
+  mp: 5,
+  pAtk: 3,
+  pDef: 3,
+  mAtk: 1,
+  mDef: 1,
+  exp: 15,
+  eSkills: [],
+  type: "enemy"
+  };
 //============================
 //Skills
 //===========================
@@ -222,6 +235,13 @@ const woodBow = {
   atr: "Physical",
   pow: 1
   };
+const ironSword = {
+  name: "Iron Sword",
+  type: "Sword",
+  des: "An iron sword",
+  atr: "Physical",
+  pow: 3
+};
 //======================================
 //Menu items
 function showStats (x) {
@@ -807,22 +827,22 @@ function loadEnemyInfo(){
     let p = document.createElement("h4");
     p.innerHTML = "Enemies: " + enemyParty[0].name;
     enemyPlace.appendChild(p);
-    enHp.push(enemyParty[0].hp);
+  //  enHp.push(enemyParty[0].hp);
     };
     if (enemyParty.length === 2) {
        let p = document.createElement("h4");
         p.innerHTML = "Enemies: " + enemyParty[0].name + ", " + enemyParty[1].name;
         enemyPlace.appendChild(p);
-        enHp.push(enemyParty[0].hp);
-        enHp.push(enemyParty[1].hp);
+      //  enHp.push(enemyParty[0].hp);
+      //  enHp.push(enemyParty[1].hp);
       };
     if (enemyParty.length === 3) {
        let p = document.createElement("h4");
         p.innerHTML = "Enemies: " + enemyParty[0].name + ", " + enemyParty[1].name + ", " + enemyParty[2].name;
         enemyPlace.appendChild(p);
-        enHp.push(enemyParty[0].hp);
-        enHp.push(enemyParty[1].hp);
-        enHp.push(enemyParty[2].hp);
+      //  enHp.push(enemyParty[0].hp);
+      //  enHp.push(enemyParty[1].hp);
+      //  enHp.push(enemyParty[2].hp);
       };
       console.log(enHp);
   };
@@ -867,7 +887,6 @@ function loadPartyInfo(){
 let expGain = 0;
 function battle(en, location) {
   //battleState controls battle flow and button creation.
-  // 0 = battle off, 1 == player 1 phase buttons created. 2 == target selected, damage calculated, buttons removed. Then repeat 2 == player 2 phase. 3 == enemy 1 phase, 4 = enemy 2 phase, 3 == enemy 4 phase, 5 == turn end.
   adv.hidden = true;
   battleState = 1;
   battleMode.hidden = false;
@@ -878,6 +897,18 @@ function battle(en, location) {
   pMp = [];
   change.innerHTML = "";
   info.innerHTML = "";
+  if (enemyParty.length === 1){
+    enHp.push(enemyParty[0].hp);
+    };
+    if (enemyParty.length === 2) {
+        enHp.push(enemyParty[0].hp);
+        enHp.push(enemyParty[1].hp);
+      };
+    if (enemyParty.length === 3) {
+        enHp.push(enemyParty[0].hp);
+        enHp.push(enemyParty[1].hp);
+        enHp.push(enemyParty[2].hp);
+      };
   loadEnemyInfo();
   loadPartyInfo();
   for (let i = 0; i < en.length; i++){
@@ -1241,12 +1272,16 @@ function battleMove(x) {
 //===================================
 
 // Area 1
-const townOne = document.getElementById("town-1");
+  const townOne = document.getElementById("town-1");
 //Forest 1, Forest 1-1, 1-2
-const forestOne = document.getElementById("forest-1");
-const forestOneOne = document.getElementById("forest-1-1");
-const forestOneTwo = document.getElementById("forest-1-2");
-const forestOneThree = document.getElementById("forest-1-3");
+  const forestOne = document.getElementById("forest-1");
+  const forestOneOne = document.getElementById("forest-1-1");
+  const forestOneTwo = document.getElementById("forest-1-2");
+  const forestOneThree = document.getElementById("forest-1-3");
+  const forestOneFour = document.getElementById("forest-1-4");
+  const forestOneFive = document.getElementById("forest-1-5");
+//Town 2
+  const townTwo = document.getElementById("town-2");
 
 //=====================================
 let inventory = [];
@@ -1267,6 +1302,11 @@ function openChest(item, id){
   document.getElementById(id).hidden = true;
   alert("You found: " + item.name + " - in the chest!");
 };
+function openWeapon(weapon, id){
+  weaponsOwned.push(weapon);
+  document.getElementById(id).hidden = true;
+  alert("You found: " + weapon.name + " - in the chest!");
+}
 //needs a way of showing what item was received....
 //Game State and game flow will go here:
 function gameFlow (state) {
@@ -1283,6 +1323,8 @@ function gameFlow (state) {
   forestOne.hidden = false;
   forestOneOne.hidden = false;
   forestOneTwo.hidden = true;
+  forestOneFive.hidden = true;
+  townTwo.hidden = true;
   shopButton.hidden = true;
   closeShop();
   };
@@ -1291,15 +1333,56 @@ function gameFlow (state) {
     forestOne.hidden = false;
     forestOneOne.hidden = true;
     forestOneTwo.hidden = false;
+    forestOneThree.hidden = true;
+    forestOneFour.hidden = true;
+    forestOneFive.hidden = true;
+    townTwo.hidden = true;
     shopButton.hidden = true;
-  } if (state === 3){
+  } 
+  //Forest 1-3  
+    if (state === 3){
       townOne.hidden = true;
       forestOne.hidden = false;
       forestOneOne.hidden = true;
       forestOneTwo.hidden = true;
       forestOneThree.hidden = false;
+      forestOneFour.hidden = true;
+      forestOneFive.hidden = true;
+      townTwo.hidden = true;
       shopButton.hidden = true;
-  }
+    } 
+  //Forest 1-4 
+    if (state === 4){
+      townOne.hidden = true;
+      forestOne.hidden = false;
+      forestOneOne.hidden = true;
+      forestOneTwo.hidden = true;
+      forestOneThree.hidden = true;
+      forestOneFour.hidden = false;
+      forestOneFive.hidden = true;
+      townTwo.hidden = true;
+      shopButton.hidden = true;
+    }
+  // Forest 1-5
+    if (state === 5) {
+      townOne.hidden = true;
+      forestOne.hidden = false;
+      forestOneOne.hidden = true;
+      forestOneTwo.hidden = true;
+      forestOneThree.hidden = true;
+      forestOneFour.hidden = true;
+      forestOneFive.hidden = false;
+      townTwo.hidden = true;
+      shopButton.hidden = true;
+    }
+  // Town 2 - Magnolia Town
+    if (state == 6){
+      townOne.hidden = true;
+      forestOne.hidden = true;
+      shopButton.hidden = false;
+      townTwo.hidden = false;
+      shopState = 0;
+    }
 };
 function move (state) {
   gameState = state;

@@ -115,18 +115,33 @@
       <p>there you find a treasure chest.</p>
       <p>Will you open it?</p>
       <button id="chest-1" onclick="openChest(potion, this.id)">Open Chest</button>
-      <button onclick="">Move Forward</button>
+      <button onclick="move(4)">Move Forward</button>
       </div>
     <div id="forest-1-4" hidden>
       <h2>The Light in the Darkness</h2>
-      <p>Despite the darkness, you glimpse a small light ahead.</p>
-      <p>You see an enemy ahead, it looks tough.</p>
-      <p>Will you forge ahead?</p>
+      <p>Despite the darkness, you glimpse a small light coming through the trees.</p>
+      <p>You see an enemy ahead, it looks tough. There are two chests on the ground nearby, will you open it?</p>
+      <p>You have no choice but to move ahead.</p>
+      <button id="chest-2" onclick="openChest(potion, this.id)">Open Chest</button>
+      <button id="chest-3" onclick="openChest(magicPotion, this.id)">Open Chest</button>
+      <button onclick="battle([livingTree]); statePost = 5;">Move Forward</button>     
       </div>
+    <div id="forest-1-5" hidden>
+      <h2>The End of the Forest</h2>
+      <p>You've defeated living tree!</p>
+      <p>The living tree dropped a chest, Will you open it?</p>
+      <p>Now that the exit is ahead, it's time for you to move on</p>
+      <button onclick="move(6)">Move Foward</button>
+    </div>
+  </div>
+  <div id="town-2" hidden>
+    <h2>Magnolia Town</h2>
+    <p>This is as far as we go.</p>
+  <div>
+<!-- Adv mode Div -->
 </div>
-   <!-- simple storage -->
+    <script src="script.js"></script>
+       <!-- simple storage --> 
     <script src="https://cdn.jsdelivr.net/npm/simplestorage.js@0.2.1/simpleStorage.min.js"></script>
-    <script src="script.js"></script> 
- 
   </body>
 </html>

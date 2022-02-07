@@ -423,13 +423,17 @@ function attackCalc (char, target, skill, flow, cost){
   //flow passes from targetBtn
   // the overall calculations need work.
   info.innerHTML = "";
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+    }
   //branch for skill
     if (skill != undefined){
       char.cmp -= skill.cost;
       if (skill.type === "Magic"){
         let pa = char.mAtk + skill.pow - enemyParty[target].mDef;
+        let minpa = pa - 3;
         let thp = enHp[target];
-        let damage = pa - 2;
+        let damage = clamp(pa, minpa, pa);
         let final = thp - damage ;
         if (final <= 0) {
           let p3 = document.createElement("p");
@@ -457,7 +461,8 @@ function attackCalc (char, target, skill, flow, cost){
       } if (skill.type === "Physical"){
           let pa = char.pAtk + skill.pow - enemyParty[target].pDef;
           let thp = enHp[target];
-          let damage = pa - 2;
+          let minpa = pa - 3;
+          let damage = clamp(pa, minpa, pa);
           let final = thp - damage ;
             if (final <= 0) {
               let p6 = document.createElement("p");
@@ -487,7 +492,8 @@ function attackCalc (char, target, skill, flow, cost){
   else {
           let pa = char.pAtk + char.weapon.pow - enemyParty[target].pDef;
           let thp = enHp[target];
-          let damage = pa - 2;
+          let minpa = pa - 3;
+          let damage = clamp(pa, minpa, pa);
           let final = thp - damage ;
           if (final <= 0) {
             let p = document.createElement("p");
@@ -512,10 +518,9 @@ function enemCalc (){
   function getRandomInt(max) {
   return Math.floor(Math.random() * max);
     }
-    /*function clamp(value, min, max) {
+    function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
     }
-    */
   let enPow = [];
   let teamLength = currentParty.length;
     function pusher1 (x){enPow.push(x.pAtk)};
@@ -526,7 +531,8 @@ function enemCalc (){
       let attacker = enemyParty[getRandomInt(enLength)];
       let attackerDam = attacker.pAtk;
       let damage = target.pDef - attackerDam + 2;
-      target.chp = target.chp - damage;
+      let damageRange = clamp(damage, damage-1, damage);
+      target.chp = target.chp - damageRange;
       let damageRes = document.createElement("p");
       damageRes.innerHTML = target.name + " was hit by " + attacker.name + " for " + damage + " damage!";
       info.appendChild(damageRes);

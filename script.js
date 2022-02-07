@@ -1,9 +1,8 @@
 //https://github.com/ZaDarkSide/simpleStorage
-//simple storage documentation above
-//simple storage seems broken...
 //Things that need to be done:
 //fix support skills parameter passing
-//support skills need a caster in the calc passed to them to remove mp.
+//skills not activating.
+//BATTLE SYSTEM ISSUE. If skills are clicked, then ATTACK is picked, it reverts back to a skills choice. If skills isn't selected, then it needs to go with choice 1.
 //fix calculators
 //adjust damage
 //level-up system.
@@ -131,8 +130,8 @@ const livingTree = {
   level: 1,
   hp: 60,
   mp: 5,
-  pAtk: 3,
-  pDef: 3,
+  pAtk: 7,
+  pDef: 4,
   mAtk: 1,
   mDef: 1,
   exp: 15,
@@ -311,8 +310,9 @@ function showInventory() {
   document.getElementById("close-menu").hidden = false;
   };
 function save () {
-  simpleStorage.set("ando", ando);
-  simpleStorage.set("marie", marie);
+  simpleStorage.set("ando",  JSON.stringify(ando));
+  simpleStorage.set("marie", JSON.stringify(marie));
+  simpleStorage.set("julie", JSON.stringify(julie));
   simpleStorage.set("currentParty", currentParty);
   simpleStorage.set("inventory", inventory);
   simpleStorage.set("money", money);
@@ -602,7 +602,7 @@ function skillBtnGen(partymem, flow, supflow) {
       info.appendChild(pBad)})
       skillSlot.appendChild(btn2);
       } else {
-        btn2.addEventListener('click', function (x) {x = sup; supportChoice = x; battleMove(supflow);});
+        btn2.addEventListener('click', function (x) {x = sup; supportChoice = x; choice = 1; battleMove(supflow);});
         skillSlot.appendChild(btn2);
       }
     }
@@ -616,7 +616,7 @@ function skillBtnGen(partymem, flow, supflow) {
     info.appendChild(pBad)})
     skillSlot.appendChild(btn1);
   } else {
-  btn1.addEventListener('click', function (x) {x = skill; skillChoice = x; battleMove(flow);});
+  btn1.addEventListener('click', function (x) {x = skill; skillChoice = x; battleMove(flow); choice = 1;});
   skillSlot.appendChild(btn1);
       }
   }
@@ -630,7 +630,7 @@ function supTarget (caster, sup, supflow){
   if (currentParty.length === 1){
   let btn = document.createElement("button");
   btn.innerHTML = currentParty[0].name;
-  btn.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = currentParty[0]; supportChoice = x; battleMove(y); a = caster; supCalc(a, z, x, y);})
+  btn.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = currentParty[0]; supportChoice = x; battleMove(y); a = caster; supCalc(a, z, x, y); choice = 1;})
   skillSlot.appendChild(btn);
   }
     if (currentParty.length === 2) {
@@ -697,35 +697,34 @@ function itemTarget (item, flow){
  if (currentParty.length === 1){
   let btn = document.createElement("button");
   btn.innerHTML = currentParty[0].name;
-  btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+  btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);choice = 2;})
   itemSlot.appendChild(btn);
   }
     if (currentParty.length === 2) {
   let btn = document.createElement("button");
   btn.innerHTML = currentParty[0].name;
-  btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+  btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y); choice = 2;})
   itemSlot.appendChild(btn);
     let btn1 = document.createElement("button");
     btn1.innerHTML = currentParty[1].name;
-    btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+    btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y); choice = 2;})
     itemSlot.appendChild(btn1);
     } if (currentParty.length === 3){
       let btn = document.createElement("button");
         btn.innerHTML = currentParty[0].name;
-        btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+        btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y); choice = 2;})
         itemSlot.appendChild(btn);
     let btn1 = document.createElement("button");
     btn1.innerHTML = currentParty[1].name;
-    btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+    btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y); choice = 2;})
     itemSlot.appendChild(btn1);
     let btn2 = document.createElement("button");
     btn2.innerHTML = currentParty[2].name;
-    btn2.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[2]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+    btn2.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[2]; itemChoice = x; battleMove(y); itemCalc(z, x, y); choice = 2;})
     itemSlot.appendChild(btn2);
     }
    };
 function itemCalc(partymem, item, flow){
-  debugger;
   info.innerHTML = "";
   itemSlot.innerHTML = "";
   if (item.type === "Healing"){
@@ -967,7 +966,7 @@ function battleMove(x) {
       let skl = document.createElement("button");
       //sets up skill menu/closing buttons.
       skl.innerHTML = "Skills";
-        skl.addEventListener('click', function () {skillBtnGen(currentParty[0], 2, 9); choice = 1;});
+        skl.addEventListener('click', function () {skillBtnGen(currentParty[0], 2, 9);});
       //adds open menu branch
       let itm = document.createElement("button");
         itm.innerHTML = "Items";
@@ -981,6 +980,8 @@ function battleMove(x) {
   if (x === 2){
     change.innerHTML = "";
     info.innerHTML = "";
+    itemSlot.innerHTML = "";
+    skillSlot.innerHTML = "";
     if (choice === 0){
       let p4 = document.createElement("p");
       p4.innerHTML = "Who will you target?";
@@ -992,7 +993,6 @@ function battleMove(x) {
       p4.innerHTML = "Who will you target?";
       info.appendChild(p4);
       targetBtn(currentParty[0], enHp, 3, skillChoice);
-      skillSlot.innerHTML = "";
       backBtn(1); 
     }
   };
@@ -1000,6 +1000,8 @@ function battleMove(x) {
   if (x === 3){
     //removes previous buttons
     change.innerHTML = "";
+    itemSlot.innerHTML = "";
+    skillSlot.innerHTML = "";
     if (currentParty.length === 1){
       let fwd = document.createElement("button");
         fwd.innerHTML = "Next";
@@ -1033,10 +1035,10 @@ function battleMove(x) {
         info.appendChild(p4);
       let atkbtn = document.createElement("button");
       atkbtn.innerHTML = "Attack";
-      atkbtn.addEventListener('click', function (){battleMove(5); let choice = 0;});
+      atkbtn.addEventListener('click', function (){battleMove(5); choice = 0;});
       let skl = document.createElement("button");
       skl.innerHTML = "Skills";
-      skl.addEventListener('click', function () {skillBtnGen(currentParty[1], 5, 11); choice = 1;});
+      skl.addEventListener('click', function () {skillBtnGen(currentParty[1], 5, 11);});
       let itm = document.createElement("button");
       itm.innerHTML = "Items";
       itm.addEventListener('click', function (){itemBtnGen(11);})
@@ -1048,12 +1050,15 @@ function battleMove(x) {
   if (x === 5){
   change.innerHTML = "";
   info.innerHTML = "";
+  itemSlot.innerHTML = "";
+  skillSlot.innerHTML = "";
     if (choice === 0){
     change.innerHTML = "";
     info.innerHTML = "";
     let p4 = document.createElement("p");
     p4.innerHTML = "Who will you target?";
     info.appendChild(p4);
+    skillSlot.innerHTML = "";
     targetBtn(currentParty[1], enHp, 6);
     backBtn(4); 
     } 
@@ -1068,6 +1073,8 @@ function battleMove(x) {
   } if (x === 6){
     //removes previous buttons
     change.innerHTML = "";
+    itemSlot.innerHTML = "";
+    skillSlot.innerHTML = "";
     //creates foward button and displays the info from the calculator, checks if battle is won.
     if (currentParty.length === 3){
        let fwd = document.createElement("button");
@@ -1091,6 +1098,8 @@ function battleMove(x) {
     //needs to only use next buttons based on enemy party size. Needs a "check loss" funciton.
     change.innerHTML = "";
     info.innerHTML = "";
+    itemSlot.innerHTML = "";
+    skillSlot.innerHTML = "";
     let p4 = document.createElement("p");
         p4.innerHTML =  "Enemy turn!";
         info.appendChild(p4);
@@ -1106,6 +1115,8 @@ function battleMove(x) {
   if (x === 8) {
     change.innerHTML = "";
     info.innerHTML = "";
+    itemSlot.innerHTML = "";
+    skillSlot.innerHTML = "";
     let p = document.createElement("p");
     p.innerHTML = "The party has been defeated. Reload?";
     info.appendChild(p);
@@ -1119,6 +1130,7 @@ function battleMove(x) {
     //needs if branch based on party length 
      change.innerHTML = "";
      itemSlot.innerHTML = "";
+     skillSlot.innerHTML = "";
       let p4 = document.createElement("p");
       p4.innerHTML = "Who will you target?";
       info.appendChild(p4);
@@ -1134,6 +1146,8 @@ function battleMove(x) {
   if (x === 10){
     change.innerHTML = "";
     info.innerHTML = "";
+    itemSlot.innerHTML = "";
+    skillSlot.innerHTML = "";
     //creates foward button and displays the info from the calculator, checks if battle is won.
     if (currentParty.length === 3 || currentParty.length === 2){
       let fwd = document.createElement("button");
@@ -1151,10 +1165,12 @@ function battleMove(x) {
         loadPartyInfo();
       }
   }
-  // P2 item slot/support slot. NEEDS TO BE APPLIED TO REST
+  // P2 item slot/support slot.
   if (x === 11){
     change.innerHTML = "";
     itemSlot.innerHTML = "";
+    skillSlot.innerHTML = "";
+    info.innerHTML = "";
       let p4 = document.createElement("p");
       p4.innerHTML = "Who will you target?";
       info.appendChild(p4);
@@ -1168,6 +1184,8 @@ function battleMove(x) {
   } if (x === 12) {
     change.innerHTML = "";
     info.innerHTML = "";
+    itemSlot.innerHTML = "";
+    skillSlot.innerHTML = "";
      let fwd = document.createElement("button");
       fwd.innerHTML = "Next";
       //temporarily moves to enemy phase, will add branch if 3rd party member is there
@@ -1195,10 +1213,10 @@ function battleMove(x) {
         info.appendChild(p4);
       let atkbtn = document.createElement("button");
       atkbtn.innerHTML = "Attack";
-      atkbtn.addEventListener('click', function (){battleMove(14); let choice = 0;});
+      atkbtn.addEventListener('click', function (){battleMove(14); choice = 0;});
       let skl = document.createElement("button");
       skl.innerHTML = "Skills";
-      skl.addEventListener('click', function () {skillBtnGen(currentParty[2], 14, 16); choice = 1;});
+      skl.addEventListener('click', function () {skillBtnGen(currentParty[2], 14, 16);});
       let itm = document.createElement("button");
       itm.innerHTML = "Items";
       itm.addEventListener('click', function (){itemBtnGen(16);})
@@ -1210,6 +1228,8 @@ function battleMove(x) {
   if (x === 14){
   change.innerHTML = "";
   info.innerHTML = "";
+  skillSlot.innerHTML = "";
+  itemSlot.innerHTML = "";
     if (choice === 0){
     change.innerHTML = "";
     info.innerHTML = "";
@@ -1224,7 +1244,6 @@ function battleMove(x) {
       p4.innerHTML = "Who will you target?";
       info.appendChild(p4);
       targetBtn(currentParty[2], enHp, 15, skillChoice);
-      skillSlot.innerHTML = "";
       backBtn(13); 
     }
   } if (x === 15){
@@ -1243,6 +1262,7 @@ function battleMove(x) {
   if (x === 16){
     change.innerHTML = "";
     itemSlot.innerHTML = "";
+    skillSlot.innerHTML = "";
       let p4 = document.createElement("p");
       p4.innerHTML = "Who will you target?";
       info.appendChild(p4);
@@ -1258,6 +1278,8 @@ function battleMove(x) {
   if (x === 17) {
     change.innerHTML = "";
     info.innerHTML = "";
+    itemSlot.innerHTML = "";
+    skillSlot.innerHTML = "";
      let fwd = document.createElement("button");
       fwd.innerHTML = "Next";
       //because the max party is 3, it MUST take you to the calc phase.
@@ -1300,7 +1322,7 @@ let shopState;
 //==================================
 function openChest(item, id){
   inventory.push(item);
-  document.getElementById(id).hidden = true;
+  document.getElementById(id).remove();
   alert("You found: " + item.name + " - in the chest!");
 };
 function openWeapon(weapon, id){
@@ -1459,12 +1481,11 @@ function startGame(){
   gameCheck = true;
   };
 function load(){
- ando = simpleStorage.get("ando", ando);
- marie = simpleStorage.get("marie", marie);
+ ando = JSON.parse(simpleStorage.get("ando", ando));
+ 
+ marie = JSON.parse(simpleStorage.get("marie", marie));
+  julie = JSON.parse(simpleStorage.get("julie", julie));
  currentParty = simpleStorage.get("currentParty", currentParty);
- currentParty.push(ando);
- currentParty.push(marie);
- currentParty.push(julie);
   inventory =  simpleStorage.get("inventory", inventory);
   money =  simpleStorage.get("money", money);
  gameState = simpleStorage.get("gamestate", gameState);

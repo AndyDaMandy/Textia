@@ -431,7 +431,8 @@ function attackCalc (char, target, skill, flow, cost){
       char.cmp -= skill.cost;
       if (skill.type === "Magic"){
         let pa = char.mAtk + skill.pow - enemyParty[target].mDef;
-        let minpa = pa - 3;
+        pa -= 2;
+        let minpa = pa - 4;
         let thp = enHp[target];
         let damage = clamp(pa, minpa, pa);
         let final = thp - damage ;
@@ -461,7 +462,8 @@ function attackCalc (char, target, skill, flow, cost){
       } if (skill.type === "Physical"){
           let pa = char.pAtk + skill.pow - enemyParty[target].pDef;
           let thp = enHp[target];
-          let minpa = pa - 3;
+          pa -= 2;
+          let minpa = pa - 4;
           let damage = clamp(pa, minpa, pa);
           let final = thp - damage ;
             if (final <= 0) {
@@ -492,7 +494,8 @@ function attackCalc (char, target, skill, flow, cost){
   else {
           let pa = char.pAtk + char.weapon.pow - enemyParty[target].pDef;
           let thp = enHp[target];
-          let minpa = pa - 3;
+          let minpa = pa - 4;
+          pa -= 2;
           let damage = clamp(pa, minpa, pa);
           let final = thp - damage ;
           if (final <= 0) {

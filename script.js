@@ -1,8 +1,10 @@
 //https://github.com/ZaDarkSide/simpleStorage
 //Things that need to be done:
 //fix support skills parameter passing
-//skills not activating.
+//skills activating, but sometimes the flow is breaking.
 //BATTLE SYSTEM ISSUE. If skills are clicked, then ATTACK is picked, it reverts back to a skills choice. If skills isn't selected, then it needs to go with choice 1.
+// The battle system issue is an issue with the back button. Perhaps it needs to reset better?
+//The global skill issue is still persistent
 //fix calculators
 //adjust damage
 //level-up system.
@@ -405,38 +407,70 @@ function backBtn (x){
     change.appendChild(back);
   };
 function targetBtn(partymem, target, flow, skill,){
-  //  change.innerHTML = "";
-  //flow will decide where attackcalc takes you
- if (enemyParty.length === 1){
-   let btn1 = document.createElement("button");
-    btn1.innerHTML = enemyParty[0].name;
-    btn1.addEventListener('click', function (pl, y, skill1, flow1, pos) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
-    change.appendChild(btn1);
-  } 
+ change.innerHTML = "";
+  if (skill != undefined){
+    if (enemyParty.length === 1){
+    let btn1 = document.createElement("button");
+      btn1.innerHTML = enemyParty[0].name;
+     btn1.addEventListener('click', function (pl, y, skill1, flow1, pos) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1); choice = 1;});
+      change.appendChild(btn1);
+  1} 
  if (enemyParty.length === 2){
     let btn1 = document.createElement("button");
       btn1.innerHTML = enemyParty[0].name;
-      btn1.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
+      btn1.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1); choice = 1;});
       change.appendChild(btn1);
         let btn2 = document.createElement("button");
         btn2.innerHTML = enemyParty[1].name;
-        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 1, skill1, flow1)});
+        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 1, skill1, flow1); choice = 1;});
         change.appendChild(btn2);
       } 
   if (enemyParty.length === 3){
       let btn1 = document.createElement("button");
       btn1.innerHTML = enemyParty[0].name;
-      btn1.addEventListener('click', function () { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1)});
+      btn1.addEventListener('click', function () { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1); choice = 1;});
       change.appendChild(btn1);
         let btn2 = document.createElement("button");
         btn2.innerHTML = enemyParty[1].name;
-        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 1, skill1, flow1)});
+        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 1, skill1, flow1); choice = 1;});
         change.appendChild(btn2);
           let btn3 = document.createElement("button");
           btn3.innerHTML = enemyParty[2].name;
-          btn3.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 2, skill1, flow1)});
+          btn3.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 2, flow1); choice = 1;});
           change.appendChild(btn3);
     }
+  } else {
+ if (enemyParty.length === 1){
+   let btn1 = document.createElement("button");
+    btn1.innerHTML = enemyParty[0].name;
+    btn1.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1); choice = 0;});
+    change.appendChild(btn1);
+  } 
+ if (enemyParty.length === 2){
+    let btn1 = document.createElement("button");
+      btn1.innerHTML = enemyParty[0].name;
+      btn1.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1); choice = 0;});
+      change.appendChild(btn1);
+        let btn2 = document.createElement("button");
+        btn2.innerHTML = enemyParty[1].name;
+        btn2.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 1, flow1); choice = 0;});
+        change.appendChild(btn2);
+      } 
+  if (enemyParty.length === 3){
+      let btn1 = document.createElement("button");
+      btn1.innerHTML = enemyParty[0].name;
+      btn1.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1); choice = 0;});
+      change.appendChild(btn1);
+        let btn2 = document.createElement("button");
+        btn2.innerHTML = enemyParty[1].name;
+        btn2.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 1, flow1); choice = 0;});
+        change.appendChild(btn2);
+          let btn3 = document.createElement("button");
+          btn3.innerHTML = enemyParty[2].name;
+          btn3.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 2, flow1); choice = 0;});
+          change.appendChild(btn3);
+    }
+  }
   };
 
 function attackCalc (char, target, skill, flow, cost){
@@ -595,12 +629,12 @@ function skillBtnGen(partymem, flow, supflow) {
   //attack items will be their own class of item as well.
   if (partymem.support.length > 0){
         function pusher2 (sup) {
-      let btn2 = document.createElement("button");
-      btn2.innerHTML = sup.name + " - Cost: " + sup.cost;
-      if (sup.cost > partymem.cmp){
-      btn2.addEventListener('click', function (){
-      info.appendChild(pBad)})
-      skillSlot.appendChild(btn2);
+          let btn2 = document.createElement("button");
+          btn2.innerHTML = sup.name + " - Cost: " + sup.cost;
+          if (sup.cost > partymem.cmp){
+          btn2.addEventListener('click', function (){
+          info.appendChild(pBad)})
+          skillSlot.appendChild(btn2);
       } else {
         btn2.addEventListener('click', function (x) {x = sup; supportChoice = x; choice = 1; battleMove(supflow);});
         skillSlot.appendChild(btn2);
@@ -956,13 +990,14 @@ function battleMove(x) {
       info.innerHTML = ""
       skillSlot.innerHTML = "";
       itemSlot.innerHTML = "";
-      choice = 0;
+      skillChoice = "";
+      supportChoice = "";
       let p4 = document.createElement("p");
       p4.innerHTML = currentParty[0].name + "'s turn. " + "Please select a command: ";
       info.appendChild(p4);
       let atkbtn = document.createElement("button");
       atkbtn.innerHTML = "Attack";
-      atkbtn.addEventListener('click', function (){battleMove(2); choice = 0;});
+      atkbtn.addEventListener('click', function (){battleMove(2);});
       let skl = document.createElement("button");
       //sets up skill menu/closing buttons.
       skl.innerHTML = "Skills";
@@ -1029,13 +1064,14 @@ function battleMove(x) {
     itemSlot.innerHTML = "";
     change.innerHTML = "";
     info.innerHTML = "";
-    choice = 0;
+    skillChoice = "";
+    supportChoice = "";
     let p4 = document.createElement("p");
         p4.innerHTML = currentParty[1].name + "'s turn. " + "Please select a command: ";
         info.appendChild(p4);
       let atkbtn = document.createElement("button");
       atkbtn.innerHTML = "Attack";
-      atkbtn.addEventListener('click', function (){battleMove(5); choice = 0;});
+      atkbtn.addEventListener('click', function (){battleMove(5);});
       let skl = document.createElement("button");
       skl.innerHTML = "Skills";
       skl.addEventListener('click', function () {skillBtnGen(currentParty[1], 5, 11);});
@@ -1207,13 +1243,14 @@ function battleMove(x) {
     itemSlot.innerHTML = "";
     change.innerHTML = "";
     info.innerHTML = "";
-    choice = 0;
+    skillChoice = "";
+    supportChoice = "";
     let p4 = document.createElement("p");
         p4.innerHTML = currentParty[2].name + "'s turn. " + "Please select a command: ";
         info.appendChild(p4);
       let atkbtn = document.createElement("button");
       atkbtn.innerHTML = "Attack";
-      atkbtn.addEventListener('click', function (){battleMove(14); choice = 0;});
+      atkbtn.addEventListener('click', function (){battleMove(14);});
       let skl = document.createElement("button");
       skl.innerHTML = "Skills";
       skl.addEventListener('click', function () {skillBtnGen(currentParty[2], 14, 16);});

@@ -3,6 +3,7 @@
 //fix support skills parameter passing
 //skills activating, but sometimes the flow is breaking.
 //BATTLE SYSTEM ISSUE. If skills are clicked, then ATTACK is picked, it reverts back to a skills choice. If skills isn't selected, then it needs to go with choice 1.
+//the bug is that it keeps trying to select a skill even if there isn't one....
 // The battle system issue is an issue with the back button. Perhaps it needs to reset better?
 //The global skill issue is still persistent
 //fix calculators
@@ -403,11 +404,13 @@ function checkWin(){
 function backBtn (x){
   let back = document.createElement("button");
     back.innerHTML = "Back";
-    back.addEventListener('click', function (y) {y = x; info.innerHTML = ""; change.innerHTML = ""; battleMove(y)});
+    back.addEventListener('click', function (y) {y = x; info.innerHTML = ""; change.innerHTML = ""; skillSlot.innerHTML = "";
+  itemSlot.innerHTML = ""; battleMove(y)});
     change.appendChild(back);
   };
 function targetBtn(partymem, target, flow, skill,){
- change.innerHTML = "";
+  skillSlot.innerHTML = "";
+  itemSlot.innerHTML = "";
   if (skill != undefined){
     if (enemyParty.length === 1){
     let btn1 = document.createElement("button");
@@ -659,6 +662,7 @@ function skillBtnGen(partymem, flow, supflow) {
 function supTarget (caster, sup, supflow){
   change.innerHTML = "";
   skillSlot.innerHTML = "";
+  itemSlot.innerHTML = "";
   //needs a caster parameter based on the battleflow?
   //pulls target MP away atm
   if (currentParty.length === 1){
@@ -692,7 +696,6 @@ function supTarget (caster, sup, supflow){
     }
   };
 function supCalc(caster, partymem, sup, supflow){
-  debugger;
   info.innerHTML = "";
   skillSlot.innerHTML = "";
   caster.cmp -= sup.cost;
@@ -728,6 +731,7 @@ function itemTarget (item, flow){
   //selects target
   change.innerHTML = "";
   itemSlot.innerHTML = "";
+  skillSlot.innerHTML = "";
  if (currentParty.length === 1){
   let btn = document.createElement("button");
   btn.innerHTML = currentParty[0].name;
@@ -805,7 +809,7 @@ function itemBtnGen (flow){
   function pusher (item) {
   let btn = document.createElement("button");
   btn.innerHTML = item.name;
-  btn.addEventListener('click', function (x, y, z) {x = item; itemChoice = x; y = flow; z = count; itemPos = z; battleMove(y)});
+  btn.addEventListener('click', function (x, y, z) {x = item; itemChoice = x; y = flow; z = count; itemPos = z; battleMove(y); choice = 3;});
   itemSlot.appendChild(btn);
   count++;
   };

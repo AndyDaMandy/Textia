@@ -705,6 +705,7 @@ function itemTarget (item, flow){
     }
    };
 function itemCalc(partymem, item, flow){
+  debugger;
   info.innerHTML = "";
   itemSlot.innerHTML = "";
   if (item.type === "Healing"){
@@ -736,7 +737,7 @@ function itemCalc(partymem, item, flow){
       loadPartyInfo();
     }
   }
-  inventory.splice(itemPos - 1, 1);
+  inventory.splice(itemPos -= 2, 1);
   };
 let itemChoice;
 let itemPos;
@@ -1091,8 +1092,10 @@ function battleMove(x) {
       info.appendChild(p4);
       if (choice === 1){
         supTarget(currentParty[0], supportChoice, 10);
+        backBtn(1);
       } else {
       itemTarget(itemChoice, 10); 
+      backBtn(1);
         }    
   }
   //calculates item and shows results and then moves to next phase or enemy phase....P1
@@ -1125,8 +1128,10 @@ function battleMove(x) {
       info.appendChild(p4);
       if (choice === 1){
         supTarget(currentParty[1], supportChoice, 12);
+        backBtn(4);
       } else {
       itemTarget(itemChoice, 12);
+      backBtn(4);
       }
   } if (x === 12) {
     change.innerHTML = "";
@@ -1211,8 +1216,10 @@ function battleMove(x) {
       info.appendChild(p4);
       if (choice === 1){
         supTarget(currentParty[2], supportChoice, 17);
+        backBtn(13);
       } else {
       itemTarget(itemChoice, 17);
+      backBtn(13);
         }
   } 
   //p3 item check, will end phase.

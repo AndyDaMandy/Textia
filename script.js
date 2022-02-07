@@ -2,9 +2,6 @@
 //Things that need to be done:
 //fix support skills parameter passing
 //skills activating, but sometimes the flow is breaking.
-//BATTLE SYSTEM ISSUE. If skills are clicked, then ATTACK is picked, it reverts back to a skills choice. If skills isn't selected, then it needs to go with choice 1.
-//the bug is that it keeps trying to select a skill even if there isn't one....
-// The battle system issue is an issue with the back button. Perhaps it needs to reset better?
 //The global skill issue is still persistent
 //fix calculators
 //adjust damage
@@ -404,81 +401,82 @@ function checkWin(){
 function backBtn (x){
   let back = document.createElement("button");
     back.innerHTML = "Back";
-    back.addEventListener('click', function (y) {y = x; info.innerHTML = ""; change.innerHTML = ""; skillSlot.innerHTML = "";
-  itemSlot.innerHTML = ""; battleMove(y)});
+    back.addEventListener('click', function (y) {y = x; info.innerHTML = ""; battleMove(y)});
     change.appendChild(back);
   };
 function targetBtn(partymem, target, flow, skill,){
+  change.innerHTML = "";
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
   if (skill != undefined){
     if (enemyParty.length === 1){
     let btn1 = document.createElement("button");
       btn1.innerHTML = enemyParty[0].name;
-     btn1.addEventListener('click', function (pl, y, skill1, flow1, pos) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1); choice = 1;});
+     btn1.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, flow1, skill1);});
       change.appendChild(btn1);
-  1} 
- if (enemyParty.length === 2){
+      } 
+    if (enemyParty.length === 2){
     let btn1 = document.createElement("button");
       btn1.innerHTML = enemyParty[0].name;
-      btn1.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1); choice = 1;});
+      btn1.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, flow1, skill1);});
       change.appendChild(btn1);
         let btn2 = document.createElement("button");
         btn2.innerHTML = enemyParty[1].name;
-        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 1, skill1, flow1); choice = 1;});
+        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, flow1, skill1);});
         change.appendChild(btn2);
       } 
-  if (enemyParty.length === 3){
+    if (enemyParty.length === 3){
       let btn1 = document.createElement("button");
       btn1.innerHTML = enemyParty[0].name;
-      btn1.addEventListener('click', function () { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, skill1, flow1); choice = 1;});
+      btn1.addEventListener('click', function () { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, flow1, skill1);});
       change.appendChild(btn1);
         let btn2 = document.createElement("button");
         btn2.innerHTML = enemyParty[1].name;
-        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 1, skill1, flow1); choice = 1;});
+        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, flow1, skill1);});
         change.appendChild(btn2);
           let btn3 = document.createElement("button");
           btn3.innerHTML = enemyParty[2].name;
-          btn3.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 2, flow1); choice = 1;});
+          btn3.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; flow1 = flow;attackCalc(partymem, 0, flow1, skill1);});
           change.appendChild(btn3);
-    }
+      }
   } else {
  if (enemyParty.length === 1){
    let btn1 = document.createElement("button");
     btn1.innerHTML = enemyParty[0].name;
-    btn1.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1); choice = 0;});
+    btn1.addEventListener('click', function (pl, y, flow1) {choice = 0; pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1);});
     change.appendChild(btn1);
   } 
  if (enemyParty.length === 2){
     let btn1 = document.createElement("button");
       btn1.innerHTML = enemyParty[0].name;
-      btn1.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1); choice = 0;});
+      btn1.addEventListener('click', function (pl, y, flow1) {choice = 0; pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1);});
       change.appendChild(btn1);
         let btn2 = document.createElement("button");
         btn2.innerHTML = enemyParty[1].name;
-        btn2.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 1, flow1); choice = 0;});
+        btn2.addEventListener('click', function (pl, y, flow1) {choice = 0; pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 1, flow1);});
         change.appendChild(btn2);
       } 
   if (enemyParty.length === 3){
       let btn1 = document.createElement("button");
       btn1.innerHTML = enemyParty[0].name;
-      btn1.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1); choice = 0;});
+      btn1.addEventListener('click', function (pl, y, flow1) {choice = 0; pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1);});
       change.appendChild(btn1);
         let btn2 = document.createElement("button");
         btn2.innerHTML = enemyParty[1].name;
-        btn2.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 1, flow1); choice = 0;});
+        btn2.addEventListener('click', function (pl, y, flow1) {choice = 0; pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 1, flow1);});
         change.appendChild(btn2);
           let btn3 = document.createElement("button");
           btn3.innerHTML = enemyParty[2].name;
-          btn3.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 2, flow1); choice = 0;});
+          btn3.addEventListener('click', function (pl, y, flow1) {choice = 0; pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 2, flow1);});
           change.appendChild(btn3);
     }
   }
   };
 
-function attackCalc (char, target, skill, flow, cost){
+function attackCalc (char, target, flow, skill, cost){
   //flow passes from targetBtn
   // the overall calculations need work.
+  debugger;
   info.innerHTML = "";
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
@@ -1001,15 +999,15 @@ function battleMove(x) {
       info.appendChild(p4);
       let atkbtn = document.createElement("button");
       atkbtn.innerHTML = "Attack";
-      atkbtn.addEventListener('click', function (){battleMove(2);});
+      atkbtn.addEventListener('click', function (){choice = 0; battleMove(2);});
       let skl = document.createElement("button");
       //sets up skill menu/closing buttons.
       skl.innerHTML = "Skills";
-        skl.addEventListener('click', function () {skillBtnGen(currentParty[0], 2, 9);});
+        skl.addEventListener('click', function () {choice = 1; skillBtnGen(currentParty[0], 2, 9);});
       //adds open menu branch
       let itm = document.createElement("button");
         itm.innerHTML = "Items";
-        itm.addEventListener('click', function (){itemBtnGen(9);})
+        itm.addEventListener('click', function (){choice = 2; itemBtnGen(9);})
         change.appendChild(atkbtn);
         change.appendChild(skl);
         change.appendChild(itm);
@@ -1075,13 +1073,13 @@ function battleMove(x) {
         info.appendChild(p4);
       let atkbtn = document.createElement("button");
       atkbtn.innerHTML = "Attack";
-      atkbtn.addEventListener('click', function (){battleMove(5);});
+      atkbtn.addEventListener('click', function (){choice = 0; battleMove(5);});
       let skl = document.createElement("button");
       skl.innerHTML = "Skills";
-      skl.addEventListener('click', function () {skillBtnGen(currentParty[1], 5, 11);});
+      skl.addEventListener('click', function () {choice = 1; skillBtnGen(currentParty[1], 5, 11);});
       let itm = document.createElement("button");
       itm.innerHTML = "Items";
-      itm.addEventListener('click', function (){itemBtnGen(11);})
+      itm.addEventListener('click', function (){choice = 2; itemBtnGen(11);})
         change.appendChild(atkbtn);
         change.appendChild(skl);
         change.appendChild(itm);
@@ -1254,13 +1252,13 @@ function battleMove(x) {
         info.appendChild(p4);
       let atkbtn = document.createElement("button");
       atkbtn.innerHTML = "Attack";
-      atkbtn.addEventListener('click', function (){battleMove(14);});
+      atkbtn.addEventListener('click', function (){choice = 0; battleMove(14); });
       let skl = document.createElement("button");
       skl.innerHTML = "Skills";
-      skl.addEventListener('click', function () {skillBtnGen(currentParty[2], 14, 16);});
+      skl.addEventListener('click', function () {choice = 1; skillBtnGen(currentParty[2], 14, 16);});
       let itm = document.createElement("button");
       itm.innerHTML = "Items";
-      itm.addEventListener('click', function (){itemBtnGen(16);})
+      itm.addEventListener('click', function (){choice = 2; itemBtnGen(16);})
         change.appendChild(atkbtn);
         change.appendChild(skl);
         change.appendChild(itm);

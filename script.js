@@ -212,6 +212,13 @@ const magicPotion = {
   effect: 5,
   cost: 5
   };
+const revivalPotion = {
+  name: "Revival Potion",
+  type: "Revival",
+  des: "Revives ally with 5 points of hp.",
+  effect: 5,
+  cost: 5
+  };
 //=======================================
 // Weapons go here
 const woodSword = {
@@ -890,7 +897,7 @@ function itemBtnGen (flow){
   };
 function levelUp(char){
   //at the moment this simply checks if you hit 3 exp. More level intervals will be needed. Adds stats accordingly.
-  if (char.exp >= 3 && char.level > 2){
+  if (char.exp >= 3 && char.level < 2){
     char.level += 1;
     char.hp += 1;
     char.chp += 1;
@@ -904,7 +911,7 @@ function levelUp(char){
     let leveluptext = document.createElement("p");
     leveluptext.innerHTML = char.name + " leveled up! Their level is now: " + char.level + "!" ;
     info.appendChild(leveluptext);
-  } if (char.exp >= 20 && char.level > 3){
+  } if (char.exp >= 20 && char.level < 3){
     char.level += 1;
     char.hp += 1;
     char.chp += 1;
@@ -919,7 +926,7 @@ function levelUp(char){
     leveluptext.innerHTML = char.name + " leveled up! Their level is now: " + char.level + "!" ;
     info.appendChild(leveluptext);
   }
-  if (char.exp >= 40 && char.level > 4){
+  if (char.exp >= 40 && char.level < 4){
     char.level += 1;
     char.hp += 1;
     char.chp += 1;

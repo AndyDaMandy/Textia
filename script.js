@@ -1,14 +1,12 @@
 //https://github.com/ZaDarkSide/simpleStorage
 //Things that need to be done:
-//fix support skills parameter passing
-//skills activating, but sometimes the flow is breaking.
-//The global skill issue is still persistent
-//fix calculators
-//adjust damage
+//inventory stays open when you start battle mode...
 //level-up system.
+//unable to select and properly remove last item...
+//items do not get removed properly from inventory
+//Enemies can do negative damage if your hp is too high.
 //need to add new levels of course
-//renamed project to textia
-// skill menu and item menu
+//skills need to show support abilities.
 //Characters go here. chp and chmp are "current hp and mp" respectively
 let ando = {
   name: "Ando",
@@ -128,9 +126,9 @@ const potatoThief = {
 const livingTree = {
   name: "Living Tree",
   level: 1,
-  hp: 60,
+  hp: 65,
   mp: 5,
-  pAtk: 7,
+  pAtk: 8,
   pDef: 4,
   mAtk: 1,
   mDef: 1,
@@ -184,14 +182,14 @@ const atkBoost = {
   name: "Attack Boost",
   type: "Attack Buff",
   des: "Boosts attack for 1 turn.",
-  pow: 2,
+  pow: 1,
   cost: 2
   };
 const defBoost = {
   name: "Defense Boost",
   type: "Defense Buff",
   des: "Boosts attack for 1 turn.",
-  pow: 2,
+  pow: 1,
   cost: 2
   };
 //======================================
@@ -476,7 +474,6 @@ function targetBtn(partymem, target, flow, skill,){
 function attackCalc (char, target, flow, skill, cost){
   //flow passes from targetBtn
   // the overall calculations need work.
-  debugger;
   info.innerHTML = "";
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
@@ -572,6 +569,77 @@ function attackCalc (char, target, flow, skill, cost){
                 }
             }
     };
+function deathCheck(){
+    //death
+  //all 3 dead
+    if (currentParty.length === 3 && currentParty[2].chp <= 0 && currentParty[1].chp <= 0 && currentParty[0].chp <= 0){
+      let playerD = currentParty.splice(1, 1);
+      let player0 =  currentParty.splice(0, 1);
+      let player3 = currentParty.splice(2, 1);
+      deadTeam.push(player3)
+      deadTeam.push(playerD);
+      deadTeam.push(player0);
+    } 
+    //just p3 and p2 die.
+    else if (currentParty.length === 3 && currentParty[2].chp <= 0 && currentParty[1].chp <= 0){
+      let player3 = currentParty.splice(2, 1);
+       let playerD = currentParty.splice(1, 1);
+      deadTeam.push(playerD)
+      deadTeam.push(player3)
+    }
+    //just p3 and p1
+    else if (currentParty.length === 3 && currentParty[2].chp <= 0 && currentParty[0].chp <= 0){
+      let player3 = currentParty.splice(2, 1);
+       let player0 = currentParty.splice(0, 1);
+      deadTeam.push(player0)
+      deadTeam.push(player3)
+    }
+    //just p2 and p1 die
+    else if (currentParty.length === 3 && currentParty[0].chp <= 0 && currentParty[1].chp <= 0){
+      let player0 = currentParty.splice(0, 1);
+       let playerD = currentParty.splice(1, 1);
+      deadTeam.push(playerD)
+      deadTeam.push(player0)
+    }
+    //just p1 dies 
+    else if (currentParty.length === 3 && currentParty[0].chp <= 0) {
+        let player0 = currentParty.splice(0, 1);
+      deadTeam.push(player0);
+    }
+    //just p2 dies
+    else if (currentParty.length === 3 && currentParty[1].chp <= 0) {
+        let playerD = currentParty.splice(1, 1);
+      deadTeam.push(playerD);
+    }
+    //just p3 dies
+    else if (currentParty.length === 3 && currentParty[2].chp <= 0){
+      let player3 = currentParty.splice(2, 1);
+      deadTeam.push(player3)
+    }
+    //if party has two left and both die.
+    else if (currentParty.length === 2 && currentParty[1].chp <= 0 && currentParty[0].chp <= 0){
+     let playerD = currentParty.splice(1, 1);
+     let player0 =  currentParty.splice(0, 1);
+      deadTeam.push(playerD);
+      deadTeam.push(player0);
+    }
+    // if party is two and p1 dies.
+     else if (currentParty.length === 2 && currentParty[1].chp <= 0){
+      let playerD =  currentParty.splice(1, 1);
+      deadTeam.push(playerD);
+    } 
+    //if party is two and p1 dies.
+    else if (currentParty.length === 2 && currentParty[0].chp <= 0){
+      let playerD =  currentParty.splice(0, 1);
+    }
+    // if p1 dies
+    else if (currentParty.length === 1 && currentParty[0].chp <= 0){
+    let playerD =  currentParty.splice(0, 1);
+    deadTeam.push(playerD);
+    }
+    console.log(currentParty);
+    console.log(deadTeam);
+  };
 function enemCalc (){
   function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -589,30 +657,13 @@ function enemCalc (){
       let attacker = enemyParty[getRandomInt(enLength)];
       let attackerDam = attacker.pAtk;
       let damage = target.pDef - attackerDam + 2;
-      let damageRange = clamp(damage, damage-1, damage);
+      let damageRange = clamp(damage, damage, damage+1);
       target.chp = target.chp - damageRange;
       let damageRes = document.createElement("p");
       damageRes.innerHTML = target.name + " was hit by " + attacker.name + " for " + damage + " damage!";
       info.appendChild(damageRes);
-    } 
-  //need to set up DEATH system for p3
-    //if (currentParty.length > 2 && currentParty[2].chp <= 0 )
-    if (currentParty.length > 1 && currentParty[1].chp <= 0 && currentParty[0].chp <= 0){
-     let playerD = currentParty.splice(1, 1);
-     let player0 =  currentParty.splice(0, 1);
-      deadTeam.push(playerD);
-      deadTeam.push(player0);
-      console.log(currentParty)
-      console.log(deadTeam);
-    } else if (currentParty.length > 1 && currentParty[1].chp <= 0){
-      let playerD =  currentParty.splice(1, 1);
-      deadTeam.push(playerD);
-      console.log(currentParty);
-    } else if (currentParty[0].chp <= 0){
-    let playerD =  currentParty.splice(0, 1);
-    deadTeam.push(playerD);
-      console.log(currentParty);
     }
+    deathCheck();
   };
 let skillChoice;
 let supportChoice;
@@ -733,30 +784,30 @@ function itemTarget (item, flow){
  if (currentParty.length === 1){
   let btn = document.createElement("button");
   btn.innerHTML = currentParty[0].name;
-  btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);choice = 2;})
+  btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
   itemSlot.appendChild(btn);
   }
     if (currentParty.length === 2) {
   let btn = document.createElement("button");
   btn.innerHTML = currentParty[0].name;
-  btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y); choice = 2;})
+  btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
   itemSlot.appendChild(btn);
     let btn1 = document.createElement("button");
     btn1.innerHTML = currentParty[1].name;
-    btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y); choice = 2;})
+    btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
     itemSlot.appendChild(btn1);
     } if (currentParty.length === 3){
       let btn = document.createElement("button");
         btn.innerHTML = currentParty[0].name;
-        btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y); choice = 2;})
+        btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
         itemSlot.appendChild(btn);
     let btn1 = document.createElement("button");
     btn1.innerHTML = currentParty[1].name;
-    btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y); choice = 2;})
+    btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
     itemSlot.appendChild(btn1);
     let btn2 = document.createElement("button");
     btn2.innerHTML = currentParty[2].name;
-    btn2.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[2]; itemChoice = x; battleMove(y); itemCalc(z, x, y); choice = 2;})
+    btn2.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[2]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
     itemSlot.appendChild(btn2);
     }
    };
@@ -792,7 +843,7 @@ function itemCalc(partymem, item, flow){
       loadPartyInfo();
     }
   }
-  inventory.splice(itemPos -= 2, 1);
+  inventory.splice(itemPos-1, 1);
   };
 let itemChoice;
 let itemPos;
@@ -807,7 +858,7 @@ function itemBtnGen (flow){
   function pusher (item) {
   let btn = document.createElement("button");
   btn.innerHTML = item.name;
-  btn.addEventListener('click', function (x, y, z) {x = item; itemChoice = x; y = flow; z = count; itemPos = z; battleMove(y); choice = 3;});
+  btn.addEventListener('click', function (x, y, z) {x = item; itemChoice = x; y = flow; z = count; itemPos = z; battleMove(y);});
   itemSlot.appendChild(btn);
   count++;
   };

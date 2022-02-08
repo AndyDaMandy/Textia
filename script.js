@@ -509,7 +509,7 @@ function attackCalc (char, target, flow, skill){
     if (skill != undefined){
       char.cmp -= skill.cost;
       if (skill.type === "Magic"){ 
-        if (enemyParty[target].weakness = skill.element) {
+        if (enemyParty[target].weakness === skill.element) {
           elementalBoost += 2;
         }
         let pa = char.mAtk + skill.pow + elementalBoost - enemyParty[target].mDef;
@@ -522,7 +522,7 @@ function attackCalc (char, target, flow, skill){
           let p3 = document.createElement("p");
           p3.innerHTML = char.name + " cast " + skill.name + "!"
           info.appendChild(p3);
-          if (enemyParty[target].weakness = skill.element) {
+          if (enemyParty[target].weakness === skill.element) {
             let pEl = document.createElement("p");
             pEl.innerHTML = enemyParty[target].name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
             info.appendChild(pEl);
@@ -541,7 +541,7 @@ function attackCalc (char, target, flow, skill){
                 p6.innerHTML = char.name + " cast " + skill.name + "!"
                 info.appendChild(p6);
                 let p3 = document.createElement("p");
-                if (enemyParty[target].weakness = skill.element) {
+                if (enemyParty[target].weakness === skill.element) {
                 let pEl = document.createElement("p");
                 pEl.innerHTML = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                 info.appendChild(pEl);
@@ -552,7 +552,7 @@ function attackCalc (char, target, flow, skill){
                 battleMove(flow)
               }
       } if (skill.type === "Physical"){
-        if (enemyParty[target].weakness = skill.element) {
+        if (enemyParty[target].weakness === skill.element) {
           elementalBoost += 2;
             }
           let pa = char.pAtk + char.buff[0].pow + skill.pow + elementalBoost - enemyParty[target].pDef;
@@ -565,7 +565,7 @@ function attackCalc (char, target, flow, skill){
               let p6 = document.createElement("p");
               p6.innerHTML = char.name + " used " + skill.name + "!"
               info.appendChild(p6);      
-              if (enemyParty[target].weakness = skill.element) {
+              if (enemyParty[target].weakness === skill.element) {
                 let pEl = document.createElement("p");
                 pEl.innerHTML = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                 info.appendChild(pEl);
@@ -585,7 +585,7 @@ function attackCalc (char, target, flow, skill){
                 info.appendChild(p6);
                 let p3 = document.createElement("p");
                 let pEl = document.createElement("p");
-                if (enemyParty[target].weakness = skill.element) {
+                if (enemyParty[target].weakness === skill.element) {
                 pEl.innerHTML = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                 info.appendChild(pEl);
                   }

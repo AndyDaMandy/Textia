@@ -2,6 +2,7 @@
 //Things that need to be done:
 //inventory stays open when you start battle mode...
 //level-up system.
+//Again for some reason Marie cast fire and it just used attack...Unsure why
 //unable to select and properly remove last item...
 //items do not get removed properly from inventory
 //Enemies can do negative damage if your hp is too high.
@@ -20,6 +21,7 @@ let ando = {
   mAtk: 1,
   mDef: 2,
   exp: 0,
+  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
   support: [],
   weapon: "Test",
@@ -37,6 +39,7 @@ let marie = {
   mAtk: 10,
   mDef: 5,
   exp: 0,
+  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
   support: [],
   weapon: "Test",
@@ -54,6 +57,7 @@ let julie = {
   mAtk: 1,
   mDef: 1,
   exp: 0,
+  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
   support: [],
   weapon: "Test",
@@ -126,9 +130,9 @@ const potatoThief = {
 const livingTree = {
   name: "Living Tree",
   level: 1,
-  hp: 65,
+  hp: 70,
   mp: 5,
-  pAtk: 8,
+  pAtk: 9,
   pDef: 4,
   mAtk: 1,
   mDef: 1,
@@ -238,7 +242,7 @@ const ironSword = {
   des: "An iron sword",
   atr: "Physical",
   pow: 3
-};
+  };
 //======================================
 //Menu items
 function showStats (x) {
@@ -318,10 +322,10 @@ function save () {
   simpleStorage.set("gamecheck", gameCheck);
   document.getElementById("save-menu").hidden = false;
   };
-
-let shop = document.getElementById("shop");
-let moneyShow = document.getElementById("money");
-let shopButton = document.getElementById("shop-button");
+//Global shop variables
+  let shop = document.getElementById("shop");
+  let moneyShow = document.getElementById("money");
+  let shopButton = document.getElementById("shop-button");
 function openShop(){
   moneyShow.innerHTML = "$" + money;
   shop.hidden = false;
@@ -358,8 +362,8 @@ function closeMenu() {
   document.getElementById("close-menu").hidden = true;
   };
 /*
-The game flow will be simple. The game will go through "Areas", each one being a div. Each Div will be a town/level or pass through. By toggling the hidden property in html we can hide the divs as necessary. The progression will be linear, at least for now....
-A gamestate value will be assigned to each area/location, thus allowing the travel function to take you through each level. Battles will need to be manually accessed I think...
+The game will go through "Areas", each one being a div. Each Div will be a town/level or pass through. By toggling the hidden property in html we can hide the divs as necessary. The progression will be linear, at least for now....
+A gamestate value will be assigned to each area/location, thus allowing the travel function to take you through each level. Battles will include a statepost variable which decides where the battle takes you afterward.
 */
 //Battle Mode
 let battleState = 0;
@@ -512,7 +516,7 @@ function attackCalc (char, target, flow, skill, cost){
                 battleMove(flow)
               }
       } if (skill.type === "Physical"){
-          let pa = char.pAtk + skill.pow - enemyParty[target].pDef;
+          let pa = char.pAtk + char.buff[0].pow + skill.pow - enemyParty[target].pDef;
           let thp = enHp[target];
           pa -= 2;
           let minpa = pa - 4;
@@ -544,7 +548,7 @@ function attackCalc (char, target, flow, skill, cost){
           } 
   }
   else {
-          let pa = char.pAtk + char.weapon.pow - enemyParty[target].pDef;
+          let pa = char.pAtk + char.buff[0].pow + char.weapon.pow - enemyParty[target].pDef;
           let thp = enHp[target];
           let minpa = pa - 4;
           pa -= 2;
@@ -656,7 +660,8 @@ function enemCalc (){
       let target = currentParty[getRandomInt(teamLength)];
       let attacker = enemyParty[getRandomInt(enLength)];
       let attackerDam = attacker.pAtk;
-      let damage = target.pDef - attackerDam + 2;
+      //if buff is off, then buff = 0, thus not changing much.
+      let damage = target.pDef + target.buff[1].pow - attackerDam + 2;
       let damageRange = clamp(damage, damage, damage+1);
       target.chp = target.chp - damageRange;
       let damageRes = document.createElement("p");
@@ -763,21 +768,37 @@ function supCalc(caster, partymem, sup, supflow){
         loadPartyInfo();
         }
     } if (sup.type === "Attack Buff"){
-        partymem.pAtk += sup.pow;
+      if (partymem.buff[0].on === false){
+        partymem.buff[0].pow += sup.pow;
+        partymem.buff[0].on = true;
         let pbuff = document.createElement("p")
         pbuff.innerHTML = partymem.name + "'s Attack has been boosted!";
         info.appendChild(pbuff);
         loadPartyInfo();
+        } else {
+          let pbuff = document.createElement("p")
+          pbuff.innerHTML = partymem.name + "'s Attack has already been boosted! It had no effect.";
+          info.appendChild(pbuff);
+        }
     } if (sup.type === "Defense Buff") {
-        partymem.pDef += sup.pow;
+       if (partymem.buff[1].on === false){
+        partymem.buff[1].pow += sup.pow;
+        partymem.buff[1].on = true; 
         let pbuff = document.createElement("p")
         pbuff.innerHTML = partymem.name + "'s Defense has been boosted!";
         info.appendChild(pbuff);
         loadPartyInfo();
+       } else {
+         let pbuff = document.createElement("p")
+        pbuff.innerHTML = partymem.name + "'s Defense has already been boosted! It had no effect.";
+        info.appendChild(pbuff);
+        loadPartyInfo();
+       }
     }
   };
 function itemTarget (item, flow){
   //selects target
+  debugger;
   change.innerHTML = "";
   itemSlot.innerHTML = "";
   skillSlot.innerHTML = "";
@@ -812,6 +833,7 @@ function itemTarget (item, flow){
     }
    };
 function itemCalc(partymem, item, flow){
+  debugger;
   info.innerHTML = "";
   itemSlot.innerHTML = "";
   if (item.type === "Healing"){
@@ -848,6 +870,7 @@ function itemCalc(partymem, item, flow){
 let itemChoice;
 let itemPos;
 function itemBtnGen (flow){
+  debugger;
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
   let closer = document.createElement("button");
@@ -867,7 +890,36 @@ function itemBtnGen (flow){
   };
 function levelUp(char){
   //at the moment this simply checks if you hit 3 exp. More level intervals will be needed. Adds stats accordingly.
-  if (char.exp >= 3 && char.exp < 6){
+  if (char.exp >= 3 && char.level > 2){
+    char.level += 1;
+    char.hp += 1;
+    char.chp += 1;
+    char.mp += 1;
+    char.pDef += 1;
+    char.mDef += 1;
+    char.pAtk += 1;
+    char.mAtk += 1;
+    char.pDef += 1;
+    char.mDef += 1;
+    let leveluptext = document.createElement("p");
+    leveluptext.innerHTML = char.name + " leveled up! Their level is now: " + char.level + "!" ;
+    info.appendChild(leveluptext);
+  } if (char.exp >= 20 && char.level > 3){
+    char.level += 1;
+    char.hp += 1;
+    char.chp += 1;
+    char.mp += 1;
+    char.pDef += 1;
+    char.mDef += 1;
+    char.pAtk += 1;
+    char.mAtk += 1;
+    char.pDef += 1;
+    char.mDef += 1;
+    let leveluptext = document.createElement("p");
+    leveluptext.innerHTML = char.name + " leveled up! Their level is now: " + char.level + "!" ;
+    info.appendChild(leveluptext);
+  }
+  if (char.exp >= 40 && char.level > 4){
     char.level += 1;
     char.hp += 1;
     char.chp += 1;
@@ -894,7 +946,21 @@ function clearBattle() {
   ando.chp = ando.hp;
   ando.cmp = ando.mp;
   marie.chp = marie.hp;
-  marie.chp = marie.hp;
+  marie.cmp = marie.mp;
+  julie.cmp = julie.mp;
+  julie.chp = julie.mp;
+  ando.buff[0].pow = 0;
+  marie.buff[0].pow = 0;
+  julie.buff[0].pow = 0;
+  ando.buff[0].on = false;
+  marie.buff[0].on = false;
+  julie.buff[0].on = false;
+  ando.buff[1].pow = 0;
+  marie.buff[1].pow = 0;
+  julie.buff[1].pow = 0;
+  ando.buff[1].on = false;
+  marie.buff[1].on = false;
+  julie.buff[1].on = false;
   };
 let statePost = 0;
 function endBattle(loc) {
@@ -1018,7 +1084,6 @@ function battle(en, location) {
   };
 let target = 0;
 function battleMove(x) {
-  debugger;
   if (x === 0){
    change.innerHTML = "";
    // info.innerHTML = "";

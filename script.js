@@ -1,9 +1,12 @@
 //https://github.com/ZaDarkSide/simpleStorage
 //Things that need to be done:
-//Again for some reason Marie cast fire and it just used attack...Unsure why, seems semi-random.
-//Enemies can do negative damage if your hp is too high? Not sure what's happening there.
 //need to add in revival potion and test that.
 //need to add new levels of course, up to 10 I think would be good.
+//need to set up some randomness to attack damage.
+//new enemies needed, new branching paths as well.
+//new places to fight enemies.
+//new items, shop etc.
+//clean up battle selection functions a bit, make them less chunky.
 //Characters go here. chp and chmp are "current hp and mp" respectively
 let ando = {
   name: "Ando",
@@ -87,7 +90,7 @@ const iceman = {
   level: 1,
   hp: 8,
   mp: 5,
-  pAtk: 1,
+  pAtk: 5,
   pDef: 1,
   mAtk: 1,
   mDef: 1,
@@ -102,7 +105,7 @@ const goblin = {
   level: 1,
   hp: 8,
   mp: 5,
-  pAtk: 1,
+  pAtk: 5,
   pDef: 1,
   mAtk: 1,
   mDef: 1,
@@ -117,7 +120,7 @@ const potatoThief = {
   level: 1,
   hp: 10,
   mp: 5,
-  pAtk: 1,
+  pAtk: 5,
   pDef: 1,
   mAtk: 1,
   mDef: 1,
@@ -131,11 +134,13 @@ const livingTree = {
   level: 1,
   hp: 70,
   mp: 5,
-  pAtk: 9,
+  pAtk: 8,
   pDef: 4,
   mAtk: 1,
   mDef: 1,
+  weakness: fireEl,
   exp: 15,
+  money: 20,
   eSkills: [],
   type: "enemy"
   };
@@ -316,6 +321,9 @@ function showInventory() {
   
     inventorySlot.innerHTML = "";
   }
+  let cash = document.createElement("p");
+  cash.innerHTML = "Money: $"+ money;
+  inventorySlot.appendChild(cash);
   let inventoryMenu = document.getElementById("inventory-menu");
   let pusher = function (item) { 
     let li = document.createElement("li");
@@ -340,6 +348,8 @@ function save () {
   let shop = document.getElementById("shop");
   let moneyShow = document.getElementById("money");
   let shopButton = document.getElementById("shop-button");
+  //initializes money earlier;
+  let money;
 function openShop(){
   moneyShow.innerHTML = "$" + money;
   shop.hidden = false;
@@ -438,7 +448,7 @@ function targetBtn(partymem, target, flow, skill,){
       change.appendChild(btn1);
         let btn2 = document.createElement("button");
         btn2.innerHTML = enemyParty[1].name;
-        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, flow1, skill1);});
+        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 1, flow1, skill1);});
         change.appendChild(btn2);
       } 
     if (enemyParty.length === 3){
@@ -448,28 +458,28 @@ function targetBtn(partymem, target, flow, skill,){
       change.appendChild(btn1);
         let btn2 = document.createElement("button");
         btn2.innerHTML = enemyParty[1].name;
-        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, flow1, skill1);});
+        btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 1, flow1, skill1);});
         change.appendChild(btn2);
           let btn3 = document.createElement("button");
           btn3.innerHTML = enemyParty[2].name;
-          btn3.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; flow1 = flow;attackCalc(partymem, 0, flow1, skill1);});
+          btn3.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 2, flow1, skill1);});
           change.appendChild(btn3);
       }
   } else {
  if (enemyParty.length === 1){
    let btn1 = document.createElement("button");
     btn1.innerHTML = enemyParty[0].name;
-    btn1.addEventListener('click', function (pl, y, flow1) {choice = 0; pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1);});
+    btn1.addEventListener('click', function (pl, y, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1);});
     change.appendChild(btn1);
   } 
  if (enemyParty.length === 2){
     let btn1 = document.createElement("button");
       btn1.innerHTML = enemyParty[0].name;
-      btn1.addEventListener('click', function (pl, y, flow1) {choice = 0; pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1);});
+      btn1.addEventListener('click', function (pl, y, flow1) {pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 0, flow1);});
       change.appendChild(btn1);
         let btn2 = document.createElement("button");
         btn2.innerHTML = enemyParty[1].name;
-        btn2.addEventListener('click', function (pl, y, flow1) {choice = 0; pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 1, flow1);});
+        btn2.addEventListener('click', function (pl, y, flow1) {pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 1, flow1);});
         change.appendChild(btn2);
       } 
   if (enemyParty.length === 3){
@@ -489,18 +499,20 @@ function targetBtn(partymem, target, flow, skill,){
   }
   };
 
-function attackCalc (char, target, flow, skill, cost){
-  //flow passes from targetBtn
-  // the overall calculations need work.
+function attackCalc (char, target, flow, skill){
   info.innerHTML = "";
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
     }
   //branch for skill
+  let elementalBoost = 0;
     if (skill != undefined){
       char.cmp -= skill.cost;
-      if (skill.type === "Magic"){
-        let pa = char.mAtk + skill.pow - enemyParty[target].mDef;
+      if (skill.type === "Magic"){ 
+        if (enemyParty[target].weakness = skill.element) {
+          elementalBoost += 2;
+        }
+        let pa = char.mAtk + skill.pow + elementalBoost - enemyParty[target].mDef;
         pa -= 2;
         let minpa = pa - 4;
         let thp = enHp[target];
@@ -509,7 +521,12 @@ function attackCalc (char, target, flow, skill, cost){
         if (final <= 0) {
           let p3 = document.createElement("p");
           p3.innerHTML = char.name + " cast " + skill.name + "!"
-          info.appendChild(p3)
+          info.appendChild(p3);
+          if (enemyParty[target].weakness = skill.element) {
+            let pEl = document.createElement("p");
+            pEl.innerHTML = enemyParty[target].name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
+            info.appendChild(pEl);
+              }
           let p = document.createElement("p");
           p.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
           info.appendChild(p);
@@ -524,13 +541,21 @@ function attackCalc (char, target, flow, skill, cost){
                 p6.innerHTML = char.name + " cast " + skill.name + "!"
                 info.appendChild(p6);
                 let p3 = document.createElement("p");
+                if (enemyParty[target].weakness = skill.element) {
+                let pEl = document.createElement("p");
+                pEl.innerHTML = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
+                info.appendChild(pEl);
+                  }
                 enHp[target] = thp - damage;
                 p3.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
                 info.appendChild(p3);
                 battleMove(flow)
               }
       } if (skill.type === "Physical"){
-          let pa = char.pAtk + char.buff[0].pow + skill.pow - enemyParty[target].pDef;
+        if (enemyParty[target].weakness = skill.element) {
+          elementalBoost += 2;
+            }
+          let pa = char.pAtk + char.buff[0].pow + skill.pow + elementalBoost - enemyParty[target].pDef;
           let thp = enHp[target];
           pa -= 2;
           let minpa = pa - 4;
@@ -539,8 +564,13 @@ function attackCalc (char, target, flow, skill, cost){
             if (final <= 0) {
               let p6 = document.createElement("p");
               p6.innerHTML = char.name + " used " + skill.name + "!"
-              info.appendChild(p6);
-              let p = document.createElement("p");
+              info.appendChild(p6);      
+              if (enemyParty[target].weakness = skill.element) {
+                let pEl = document.createElement("p");
+                pEl.innerHTML = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
+                info.appendChild(pEl);
+                  }
+              let p = document.createElement("p");    
               p.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
               info.appendChild(p);
               let p2 = document.createElement("p");
@@ -554,6 +584,11 @@ function attackCalc (char, target, flow, skill, cost){
                 p6.innerHTML = char.name + " used " + skill.name + "!"
                 info.appendChild(p6);
                 let p3 = document.createElement("p");
+                let pEl = document.createElement("p");
+                if (enemyParty[target].weakness = skill.element) {
+                pEl.innerHTML = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
+                info.appendChild(pEl);
+                  }
                 enHp[target] = thp - damage;
                 p3.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
                 info.appendChild(p3);
@@ -675,7 +710,7 @@ function enemCalc (){
       let attacker = enemyParty[getRandomInt(enLength)];
       let attackerDam = attacker.pAtk;
       //if buff is off, then buff = 0, thus not changing much.
-      let damage = target.pDef + target.buff[1].pow - attackerDam + 2;
+      let damage = attackerDam - target.pDef + target.buff[1].pow;
       let damageRange = clamp(damage, damage, damage+1);
       target.chp = target.chp - damageRange;
       let damageRes = document.createElement("p");
@@ -887,24 +922,12 @@ function itmChooser(x){
   itemPos = x;
 };
 function itemBtnGen (flow){
-  debugger;
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
   let closer = document.createElement("button");
   closer.innerHTML = "Close Item List";
   closer.addEventListener('click', function () {itemSlot.innerHTML = "";});
   itemSlot.appendChild(closer);
-  //count will be the array length which is useless...
- /* let count = 0;
-  function pusher (item) {
-  let btn = document.createElement("button");
-  btn.innerHTML = item.name;
-  btn.addEventListener('click', function (x, y, z) {x = item; itemChoice = x; y = flow; itmChooser(count); battleMove(y);});
-  itemSlot.appendChild(btn);
-  count++;
-  }
-  inventory.forEach(pusher);
-  */
  for (let i = 0; i < inventory.length; i++){
     let btn = document.createElement("button");
   btn.innerHTML = inventory[i].name;
@@ -974,7 +997,7 @@ function clearBattle() {
   marie.chp = marie.hp;
   marie.cmp = marie.mp;
   julie.cmp = julie.mp;
-  julie.chp = julie.mp;
+  julie.chp = julie.hp;
   ando.buff[0].pow = 0;
   marie.buff[0].pow = 0;
   julie.buff[0].pow = 0;
@@ -1062,6 +1085,7 @@ function loadPartyInfo(){
       pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);pHp.push(currentParty[1].hp); pMp.push(currentParty[1].mp);pHp.push(currentParty[2].hp); pMp.push(currentParty[2].mp);
   }
   };
+let winMon = 0;
 let expGain = 0;
 function battle(en, location) {
   //battleState controls battle flow and button creation.
@@ -1071,6 +1095,7 @@ function battle(en, location) {
   mainMenu.hidden = true;
   closeMenu();
   enemyParty = en;
+  winMon = 0;
   enHP = [];
   pHp = [];
   pMp = [];
@@ -1092,8 +1117,8 @@ function battle(en, location) {
   loadPartyInfo();
   for (let i = 0; i < en.length; i++){
     expGain += en[i].exp;
+    winMon += en[i].money;
   };
-  console.log(expGain);
   // start phase
   let p3 = document.createElement("p");
   p3.innerHTML = enemyParty.length + " enemies appeared!"
@@ -1115,6 +1140,7 @@ function battleMove(x) {
    change.innerHTML = "";
    // info.innerHTML = "";
     holder.innerHTML = "";
+    money += winMon;
     partyPlace.innerHTML = "";
     let win = document.createElement("p");
     win.innerHTML = "All enemies defeated! Congrats!";
@@ -1122,9 +1148,13 @@ function battleMove(x) {
     let expInfo = document.createElement("p");
     expInfo.innerHTML = "All allies gained +" + expGain + " experience points!";
     info.appendChild(expInfo);
+    let monInfo = document.createElement("p");
+    monInfo.innerHTML = "The party gained +$" + winMon + " money!";
+    info.appendChild(monInfo);
       function expGainer(x){
         x.exp += expGain;
       };
+    
     currentParty.forEach(expGainer);
     currentParty.forEach(levelUp);
     endBattle();
@@ -1496,7 +1526,6 @@ let accesoriesOwned = [];
 let keyItems = [];
 let enemyParty = [];
 let currentParty = [];
-let money;
 let gameState;
 let shopState;
 //===================================
@@ -1663,8 +1692,7 @@ function startGame(){
   gameCheck = true;
   };
 function load(){
- ando = JSON.parse(simpleStorage.get("ando", ando));
- 
+ ando = JSON.parse(simpleStorage.get("ando", ando)); 
  marie = JSON.parse(simpleStorage.get("marie", marie));
   julie = JSON.parse(simpleStorage.get("julie", julie));
  currentParty = simpleStorage.get("currentParty", currentParty);

@@ -1,13 +1,11 @@
 //https://github.com/ZaDarkSide/simpleStorage
 //Things that need to be done:
-//inventory stays open when you start battle mode...
-//level-up system.
-//Again for some reason Marie cast fire and it just used attack...Unsure why
+//Again for some reason Marie cast fire and it just used attack...Unsure why, seems semi-random.
 //unable to select and properly remove last item...
 //items do not get removed properly from inventory
-//Enemies can do negative damage if your hp is too high.
-//need to add new levels of course
-//skills need to show support abilities.
+//Enemies can do negative damage if your hp is too high? Not sure what's happening there.
+//need to add in revival potion and test that.
+//need to add new levels of course, up to 10 I think would be good.
 //Characters go here. chp and chmp are "current hp and mp" respectively
 let ando = {
   name: "Ando",
@@ -293,12 +291,20 @@ function showStats (x) {
     li.innerHTML = "Magic Defense: " + x[i].mDef;
      statsLog.appendChild(li);
       li = document.createElement("li");
-  let skillsList = [];
+    let skillsList = [];
     for (let b = 0; b < x[i].skills.length; b++){
       skillsList.push(x[i].skills[b].name);
     };
-   let joined = skillsList.join(", ");
+    let joined = skillsList.join(", ");
     li.innerHTML = "Skills: " + joined;       
+    statsLog.appendChild(li);
+    li = document.createElement("li");
+    let supportList = [];
+    for (let b = 0; b < x[i].support.length; b++){
+      supportList.push(x[i].support[b].name);
+    };
+   let joined2 = supportList.join(", ");
+    li.innerHTML = "Support Skills: " + joined2;       
     statsLog.appendChild(li);
   };
   statsLine.hidden = false;
@@ -1050,6 +1056,7 @@ function battle(en, location) {
   battleState = 1;
   battleMode.hidden = false;
   mainMenu.hidden = true;
+  closeMenu();
   enemyParty = en;
   enHP = [];
   pHp = [];

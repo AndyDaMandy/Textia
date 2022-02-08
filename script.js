@@ -1,9 +1,6 @@
 //https://github.com/ZaDarkSide/simpleStorage
 //Things that need to be done:
 //Again for some reason Marie cast fire and it just used attack...Unsure why, seems semi-random.
-//unable to select and properly remove last item...
-//items do not get removed properly from inventory
-//the inventory issue is that COUNT is equal to 
 //Enemies can do negative damage if your hp is too high? Not sure what's happening there.
 //need to add in revival potion and test that.
 //need to add new levels of course, up to 10 I think would be good.
@@ -96,6 +93,7 @@ const iceman = {
   mDef: 1,
   weakness: fireEl,
   exp: 1,
+  money: 1,
   eSkills: [],
   type: "enemy"
   };
@@ -110,6 +108,7 @@ const goblin = {
   mDef: 1,
   weakness: watEl,
   exp: 1,
+  money: 1,
   eSkills: [],
   type: "enemy"
   };
@@ -123,6 +122,7 @@ const potatoThief = {
   mAtk: 1,
   mDef: 1,
   exp: 1,
+  money: 2,
   eSkills: [],
   type: "enemy"
   };
@@ -878,10 +878,14 @@ function itemCalc(partymem, item, flow){
       loadPartyInfo();
     }
   }
-  inventory.splice(itemPos-1, 1);
+  inventory.splice(itemPos, 1);
   };
 let itemChoice;
 let itemPos;
+function itmChooser(x){
+  debugger;
+  itemPos = x;
+};
 function itemBtnGen (flow){
   debugger;
   skillSlot.innerHTML = "";
@@ -891,24 +895,24 @@ function itemBtnGen (flow){
   closer.addEventListener('click', function () {itemSlot.innerHTML = "";});
   itemSlot.appendChild(closer);
   //count will be the array length which is useless...
-  let count = 0;
+ /* let count = 0;
   function pusher (item) {
   let btn = document.createElement("button");
   btn.innerHTML = item.name;
-  btn.addEventListener('click', function (x, y, z) {x = item; itemChoice = x; y = flow; itemPos = count; battleMove(y);});
+  btn.addEventListener('click', function (x, y, z) {x = item; itemChoice = x; y = flow; itmChooser(count); battleMove(y);});
   itemSlot.appendChild(btn);
   count++;
   }
   inventory.forEach(pusher);
- /* for (let i = 0; i < inventory.length; i++){
-    let count = 0;
+  */
+ for (let i = 0; i < inventory.length; i++){
     let btn = document.createElement("button");
   btn.innerHTML = inventory[i].name;
-  btn.addEventListener('click', function (x, y, z) {x = inventory[i]; itemChoice = x; y = flow; itemPos = count; battleMove(y);});
+  btn.addEventListener('click', function (x, y, z) {x = inventory[i]; itemChoice = x; y = flow; itmChooser(i); battleMove(y);});
   itemSlot.appendChild(btn);
-  count++;
+ // count++;
   }
-  */
+  
 };
 function levelUp(char){
   //at the moment this simply checks if you hit 3 exp. More level intervals will be needed. Adds stats accordingly.

@@ -3,6 +3,7 @@
 //Again for some reason Marie cast fire and it just used attack...Unsure why, seems semi-random.
 //unable to select and properly remove last item...
 //items do not get removed properly from inventory
+//the inventory issue is that COUNT is equal to 
 //Enemies can do negative damage if your hp is too high? Not sure what's happening there.
 //need to add in revival potion and test that.
 //need to add new levels of course, up to 10 I think would be good.
@@ -811,7 +812,6 @@ function supCalc(caster, partymem, sup, supflow){
   };
 function itemTarget (item, flow){
   //selects target
-  debugger;
   change.innerHTML = "";
   itemSlot.innerHTML = "";
   skillSlot.innerHTML = "";
@@ -890,17 +890,26 @@ function itemBtnGen (flow){
   closer.innerHTML = "Close Item List";
   closer.addEventListener('click', function () {itemSlot.innerHTML = "";});
   itemSlot.appendChild(closer);
+  //count will be the array length which is useless...
   let count = 0;
   function pusher (item) {
   let btn = document.createElement("button");
   btn.innerHTML = item.name;
-  btn.addEventListener('click', function (x, y, z) {x = item; itemChoice = x; y = flow; z = count; itemPos = z; battleMove(y);});
+  btn.addEventListener('click', function (x, y, z) {x = item; itemChoice = x; y = flow; itemPos = count; battleMove(y);});
   itemSlot.appendChild(btn);
   count++;
-  };
+  }
   inventory.forEach(pusher);
-
-  };
+ /* for (let i = 0; i < inventory.length; i++){
+    let count = 0;
+    let btn = document.createElement("button");
+  btn.innerHTML = inventory[i].name;
+  btn.addEventListener('click', function (x, y, z) {x = inventory[i]; itemChoice = x; y = flow; itemPos = count; battleMove(y);});
+  itemSlot.appendChild(btn);
+  count++;
+  }
+  */
+};
 function levelUp(char){
   //at the moment this simply checks if you hit 3 exp. More level intervals will be needed. Adds stats accordingly.
   if (char.exp >= 3 && char.level < 2){

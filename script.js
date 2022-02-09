@@ -10,6 +10,29 @@
 //new items, shop etc.
 //clean up battle selection functions a bit, make them less chunky.
 //Characters go here. chp and chmp are "current hp and mp" respectively
+class Player {
+  constructor(name, level, hp, chp, mp, cmp, pAtk, pDef, mAtk, mDef, exp, buff, skills, support, weapon, type) {
+    this.name = name;
+    this.level = level;
+    this.hp = hp;
+    this.chp = chp;
+    this.mp = mp;
+    this.cmp = cmp;
+    this.pAtk = pAtk;
+    this.pDef = pDef;
+    this.mAtk = mAtk;
+    this.mDef = mDef;
+    this.exp = exp;
+    this.buff = buff;
+    this.skills = skills;
+    this.support = support;
+    this.weapon = weapon;
+    this.type = type;
+  }
+}
+let ari = new Player('Ari', 1, 10, 10, 6, 6, 2, 2, 11, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
+let ando = new Player('Ando', 1, 10, 10, 5, 5, 10, 5, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
+/*
 let ando = {
   name: "Ando",
   level: 1,
@@ -28,6 +51,7 @@ let ando = {
   weapon: "Test",
   type: "player"
   };
+  */
 let marie = {
   name: "Marie",
   level: 1,
@@ -1680,6 +1704,9 @@ marie.support.push(cure);
 marie.support.push(defBoost);
 ando.support.push(defBoost);
 weaponsOwned.push(ironSword);
+ari.weapon = sparkBow;
+ari.skills.push(fire);
+
 
 //======================================
 // Start Game , must go below everything else

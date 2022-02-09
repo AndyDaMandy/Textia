@@ -22,7 +22,7 @@
 <div id="main-menu" hidden>
   <button id="open-menu" onClick="openMenu()" hidden>Menu</button>
   <button id="save-button" hidden onClick="save()">Save</button>
-  <button id="equip-screen" hidden onClick="">Equip</button>
+  <button id="equip-button" hidden onClick="">Equip</button>
   <button id="inventory-button" hidden onClick="showInventory()">Inventory</button>
   <button id="show-stats" onClick="showStats(currentParty)" hidden>Party Status</button>
   <button id="close-menu" onClick="closeMenu()" hidden>Close Menu</button>
@@ -31,6 +31,12 @@
 <div id="save-menu" hidden>
   <p>You saved your game!</p>
 </div>
+  <div id="equip-screen" hidden>
+      <h3>Equipment</h3>
+      <p>Party:</p>
+      <div id="equip-party"></div>
+      <div id="equipment"></div>
+  </div>
 <div id="inventory-menu" hidden>
   <h3>Inventory</h3>
   <ul id="inventory-items"></ul>

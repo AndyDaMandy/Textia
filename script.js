@@ -1,7 +1,6 @@
 //https://github.com/ZaDarkSide/simpleStorage
 //Things that need to be done:
 //need to add in revival potion and test that.
-//need to add new levels of course, up to 10 I think would be good.
 //Need way to equip items
 //Need way to learn a skill (easy I think, add to the levelup function);
 //need to set up some randomness to attack damage.
@@ -29,86 +28,22 @@ class Player {
     this.weapon = weapon;
     this.type = type;
   }
-}
-let ari = new Player('Ari', 1, 10, 10, 6, 6, 2, 2, 11, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
+  };
 let ando = new Player('Ando', 1, 10, 10, 5, 5, 10, 5, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
-/*
-let ando = {
-  name: "Ando",
-  level: 1,
-  hp: 10,
-  chp: 10,
-  mp: 5,
-  cmp: 5,
-  pAtk: 10,
-  pDef: 5,
-  mAtk: 1,
-  mDef: 2,
-  exp: 0,
-  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
-  skills: [],
-  support: [],
-  weapon: "Test",
-  type: "player"
-  };
-  */
-let marie = {
-  name: "Marie",
-  level: 1,
-  hp: 8,
-  chp: 8,
-  mp: 12,
-  cmp: 12,
-  pAtk: 5,
-  pDef: 2,
-  mAtk: 10,
-  mDef: 5,
-  exp: 0,
-  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
-  skills: [],
-  support: [],
-  weapon: "Test",
-  type: "player"
-  };
-let julie = {
-  name: "Julie",
-  level: 1,
-  hp: 11,
-  chp: 11,
-  mp: 6,
-  cmp: 6,
-  pAtk: 10,
-  pDef: 2,
-  mAtk: 1,
-  mDef: 1,
-  exp: 0,
-  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
-  skills: [],
-  support: [],
-  weapon: "Test",
-  type: "player"
-  };
-//===================================
-/*
-Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
-*/
-//==================================
-const iceEl = {
-  element: "Ice",
-  des: "Ice Element, strong against Fire"
-  };
-const fireEl = {
-  element: "Fire",
-  des: "Fire Element, strong against Ice."
-  };
-const thunEl = {
-  element: "Thunder",
-  des: "Thunder Element, strong against Water."
-  };
-const watEl = {
-  element: "Water",
-  des: "Water Element, strong against Thunder"
-  };
+let marie = new Player('Marie', 1, 8, 8, 12, 12, 5, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+let julie = new Player('Julie', 1, 9, 9, 6, 6, 8, 3, 6, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+let ari = new Player('Ari', 1, 10, 10, 6, 6, 2, 2, 11, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
+//Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
+class Element {
+  constructor(element, des){
+    this.element = element;
+    this.des - des;
+  }
+}
+const iceEl = new Element('Ice', 'Ice Element, strong against Fire');
+const fireEl = new Element('Fire', 'Fire Element, strong against Ice.');
+const thunEl = new Element('Thunder', 'Thunder Element, strong against Water.');
+const watEl = new Element('Water', 'Water Element, strong against Thunder.');
 //========================================
 //enemies go here
 const iceman = {
@@ -117,7 +52,7 @@ const iceman = {
   hp: 8,
   mp: 5,
   pAtk: 5,
-  pDef: 1,
+  pDef: 2,
   mAtk: 1,
   mDef: 1,
   weakness: fireEl,
@@ -132,7 +67,7 @@ const goblin = {
   hp: 8,
   mp: 5,
   pAtk: 5,
-  pDef: 1,
+  pDef: 2,
   mAtk: 1,
   mDef: 1,
   weakness: watEl,
@@ -147,9 +82,10 @@ const potatoThief = {
   hp: 10,
   mp: 5,
   pAtk: 5,
-  pDef: 1,
+  pDef: 2,
   mAtk: 1,
   mDef: 1,
+  weakness: "None",
   exp: 1,
   money: 2,
   eSkills: [],
@@ -160,7 +96,7 @@ const livingTree = {
   level: 1,
   hp: 60,
   mp: 5,
-  pAtk: 8,
+  pAtk: 9,
   pDef: 4,
   mAtk: 1,
   mDef: 1,
@@ -185,7 +121,7 @@ const basher = {
   name: "Basher",
   type: "Physical",
   des: "Deals phsyical damage to 1 enemy",
-  pow: 2,
+  pow: 4,
   cost: 3
   };
 const iceSlash = {
@@ -297,13 +233,12 @@ const ironSword = {
 //======================================
 //Menu items
 function showStats (x) {
-  const element = document.getElementById("stats-menu");
+  const statsMenu = document.getElementById("stats-menu");
   let stats = document.getElementById("party-status")
   let statsLog = document.getElementById("menu-items");
   let statsLine = document.getElementById("stats-line");
   //checks if this has been run before and clears the content ahead of it.
-  if (statsLog != ""){
-  
+  if (statsLog != ""){ 
   statsLog.innerHTML = "";
   }
   stats.innerHTML ="Your current party: " + x[0].name + ", " + x[1].name + ", " + x[2].name;
@@ -367,25 +302,45 @@ function showInventory() {
   let inventoryMenu = document.getElementById("inventory-menu");
   let pusher = function (item) { 
     if (item.type === "Weapon"){
-      let li = document.createElement("li");
-      li.innerHTML = item.name + ": " + "Type: " + item.type + " - " + item.pow + " - " + item.des;
-      inventorySlot.appendChild(li)
-  }
+      let li2 = document.createElement("li");
+      li2.innerHTML = item.name + ": " + "Type: " + item.type + " - " + item.pow + " - " + item.des;
+      inventorySlot.appendChild(li2)
+  } else {
     let li = document.createElement("li");
     li.innerHTML = item.name + ": " + "Type: " + item.type + " - " + item.des;
     inventorySlot.appendChild(li)
+    }
   };
     inventory.forEach(pusher);
     weaponsOwned.forEach(pusher);
   inventoryMenu.hidden = false;
   document.getElementById("close-menu").hidden = false;
   };
+function equip (){
+  let checker = function (weapon){
+    
+  }
+  let pusher = function (name){
+    let button = document.createElement("button");
+    button.innerHTML = name.name;
+    //function needs to branch based on the character....
+    if (name.name === "ando"){
+      
+    }
+    button.addEventListener('click', function (){})
+    document.getElementById("equip-party").appendChild(button);
+  }
+  currentParty.forEach(pusher);
+  document.getElementById("close-menu").hidden = false;
+}
 function save () {
   simpleStorage.set("ando",  JSON.stringify(ando));
   simpleStorage.set("marie", JSON.stringify(marie));
   simpleStorage.set("julie", JSON.stringify(julie));
+  simpleStorage.set("ari", JSON.stringify(ari));
   simpleStorage.set("currentParty", currentParty);
   simpleStorage.set("inventory", inventory);
+  simpleStorage.set("weaponsOwned", weaponsOwned);
   simpleStorage.set("money", money);
   simpleStorage.set("gamestate", gameState);
   simpleStorage.set("gamecheck", gameCheck);
@@ -509,7 +464,7 @@ function targetBtn(partymem, target, flow, skill,){
         change.appendChild(btn2);
           let btn3 = document.createElement("button");
           btn3.innerHTML = enemyParty[2].name;
-          btn3.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; flow1 = flow; attackCalc(partymem, 2, flow1, skill1);});
+          btn3.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 2, flow1, skill1);});
           change.appendChild(btn3);
       }
   } else {
@@ -1739,6 +1694,8 @@ function load(){
  ando = JSON.parse(simpleStorage.get("ando", ando)); 
  marie = JSON.parse(simpleStorage.get("marie", marie));
   julie = JSON.parse(simpleStorage.get("julie", julie));
+  ari = JSON.parse(simpleStorage.get("ari", ari));
+ weaponsOwned = simpleStorage.get("weaponsOwned", weaponsOwned);
  currentParty = simpleStorage.get("currentParty", currentParty);
   inventory =  simpleStorage.get("inventory", inventory);
   money =  simpleStorage.get("money", money);

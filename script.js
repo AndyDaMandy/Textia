@@ -2,6 +2,8 @@
 //Things that need to be done:
 //need to add in revival potion and test that.
 //need to add new levels of course, up to 10 I think would be good.
+//Need way to equip items
+//Need way to learn a skill (easy I think, add to the levelup function);
 //need to set up some randomness to attack damage.
 //new enemies needed, new branching paths as well.
 //new places to fight enemies.
@@ -31,8 +33,8 @@ let marie = {
   level: 1,
   hp: 8,
   chp: 8,
-  mp: 10,
-  cmp: 10,
+  mp: 12,
+  cmp: 12,
   pAtk: 5,
   pDef: 2,
   mAtk: 10,
@@ -49,10 +51,10 @@ let julie = {
   level: 1,
   hp: 11,
   chp: 11,
-  mp: 3,
-  cmp: 3,
+  mp: 6,
+  cmp: 6,
   pAtk: 10,
-  pDef: 1,
+  pDef: 2,
   mAtk: 1,
   mDef: 1,
   exp: 0,
@@ -132,7 +134,7 @@ const potatoThief = {
 const livingTree = {
   name: "Living Tree",
   level: 1,
-  hp: 70,
+  hp: 60,
   mp: 5,
   pAtk: 8,
   pDef: 4,
@@ -209,6 +211,13 @@ const potion = {
   effect: 5,
   cost: 5
   };
+const highpotion = {
+    name: "High Potion",
+    type: "Healing",
+    des: "Heals 10 points of HP.",
+    effect: 10,
+    cost: 10
+    };
 const magicPotion = {
   name: "Magic Potion",
   type: "mHealing",
@@ -326,10 +335,15 @@ function showInventory() {
   inventorySlot.appendChild(cash);
   let inventoryMenu = document.getElementById("inventory-menu");
   let pusher = function (item) { 
+    if (item.type === "Weapon"){
+      let li = document.createElement("li");
+    li.innerHTML = item.name + ": " + "Type: " + item.type + " " + item.pow + " - " + item.des;
+    inventorySlot.appendChild(li)};
     let li = document.createElement("li");
     li.innerHTML = item.name + ": " + "Type: " + item.type + " - " + item.des;
     inventorySlot.appendChild(li)};
     inventory.forEach(pusher);
+    weaponsOwned.forEach(pusher);
   inventoryMenu.hidden = false;
   document.getElementById("close-menu").hidden = false;
   };
@@ -498,7 +512,6 @@ function targetBtn(partymem, target, flow, skill,){
     }
   }
   };
-
 function attackCalc (char, target, flow, skill){
   info.innerHTML = "";
   function clamp(value, min, max) {
@@ -881,7 +894,6 @@ function itemTarget (item, flow){
     }
    };
 function itemCalc(partymem, item, flow){
-  debugger;
   info.innerHTML = "";
   itemSlot.innerHTML = "";
   if (item.type === "Healing"){
@@ -915,12 +927,17 @@ function itemCalc(partymem, item, flow){
   }
   inventory.splice(itemPos, 1);
   };
+function deadTarget(item, flow){
+
+};
 let itemChoice;
 let itemPos;
+/*
 function itmChooser(x){
   debugger;
   itemPos = x;
 };
+*/
 function itemBtnGen (flow){
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
@@ -928,14 +945,13 @@ function itemBtnGen (flow){
   closer.innerHTML = "Close Item List";
   closer.addEventListener('click', function () {itemSlot.innerHTML = "";});
   itemSlot.appendChild(closer);
- for (let i = 0; i < inventory.length; i++){
+  for (let i = 0; i < inventory.length; i++){
     let btn = document.createElement("button");
   btn.innerHTML = inventory[i].name;
-  btn.addEventListener('click', function (x, y, z) {x = inventory[i]; itemChoice = x; y = flow; itmChooser(i); battleMove(y);});
+  btn.addEventListener('click', function (x, y, z) {x = inventory[i]; itemChoice = x; y = flow; battleMove(y);});
   itemSlot.appendChild(btn);
  // count++;
-  }
-  
+  } 
 };
 function levelUp(char){
   //at the moment this simply checks if you hit 3 exp. More level intervals will be needed. Adds stats accordingly.
@@ -1688,6 +1704,7 @@ function startGame(){
   inventory.push(potion);
   inventory.push(potion);
   inventory.push(magicPotion);
+  inventory.push(highpotion);
   simpleStorage.flush();
   gameCheck = true;
   };

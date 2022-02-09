@@ -239,7 +239,6 @@ const woodSword = {
   type: "Sword",
   des: "A basic wooden sword",
   atr: "Physical",
-  el: fireEl,
   pow: 1
   };
 const woodStaff = {
@@ -263,6 +262,14 @@ const ironSword = {
   atr: "Physical",
   pow: 3
   };
+  const sparkBow = {
+    name: "Spark Bow",
+    type: "Bow",
+    des: "A weak bow imbued with Thunder",
+    atr: "Physical",
+    element: thunEl,
+    pow: 2
+    };
 //======================================
 //Menu items
 function showStats (x) {
@@ -337,11 +344,13 @@ function showInventory() {
   let pusher = function (item) { 
     if (item.type === "Weapon"){
       let li = document.createElement("li");
-    li.innerHTML = item.name + ": " + "Type: " + item.type + " " + item.pow + " - " + item.des;
-    inventorySlot.appendChild(li)};
+      li.innerHTML = item.name + ": " + "Type: " + item.type + " - " + item.pow + " - " + item.des;
+      inventorySlot.appendChild(li)
+  }
     let li = document.createElement("li");
     li.innerHTML = item.name + ": " + "Type: " + item.type + " - " + item.des;
-    inventorySlot.appendChild(li)};
+    inventorySlot.appendChild(li)
+  };
     inventory.forEach(pusher);
     weaponsOwned.forEach(pusher);
   inventoryMenu.hidden = false;
@@ -953,53 +962,44 @@ function itemBtnGen (flow){
  // count++;
   } 
 };
+function statBoost(char){
+  char.level += 1;
+  char.hp += 1;
+  char.chp += 1;
+  char.mp += 1;
+  char.pDef += 1;
+  char.mDef += 1;
+  char.pAtk += 1;
+  char.mAtk += 1;
+  char.pDef += 1;
+  char.mDef += 1;
+  let leveluptext = document.createElement("p");
+  leveluptext.innerHTML = char.name + " leveled up! Their level is now: " + char.level + "!" ;
+  info.appendChild(leveluptext);
+};
 function levelUp(char){
-  //at the moment this simply checks if you hit 3 exp. More level intervals will be needed. Adds stats accordingly.
-  if (char.exp >= 3 && char.level < 2){
-    char.level += 1;
-    char.hp += 1;
-    char.chp += 1;
-    char.mp += 1;
-    char.pDef += 1;
-    char.mDef += 1;
-    char.pAtk += 1;
-    char.mAtk += 1;
-    char.pDef += 1;
-    char.mDef += 1;
-    let leveluptext = document.createElement("p");
-    leveluptext.innerHTML = char.name + " leveled up! Their level is now: " + char.level + "!" ;
-    info.appendChild(leveluptext);
-  } if (char.exp >= 20 && char.level < 3){
-    char.level += 1;
-    char.hp += 1;
-    char.chp += 1;
-    char.mp += 1;
-    char.pDef += 1;
-    char.mDef += 1;
-    char.pAtk += 1;
-    char.mAtk += 1;
-    char.pDef += 1;
-    char.mDef += 1;
-    let leveluptext = document.createElement("p");
-    leveluptext.innerHTML = char.name + " leveled up! Their level is now: " + char.level + "!" ;
-    info.appendChild(leveluptext);
+    if (char.exp >= 3 && char.level < 2){
+      statBoost(char);
+       if (julie.level === 2) {
+          julie.support.push(atkBoost);
+        let learnedSkill = document.createElement("p");
+        learnedSkill.innerHTML = julie.name + " learned " + atkBoost.name + "!";
+        info.appendChild(learnedSkill);
+        }
+      }  
+    if (char.exp >= 20 && char.level < 3){
+      statBoost(char);
+    }
+    if (char.exp >= 40 && char.level < 4){
+      statBoost(char);
+    }
+    if (char.exp >= 100 && char.level < 5){
+      statBoost(char);
+    }
+  if (char.exp >= 200 && char.level < 6){
+    statBoost(char);
   }
-  if (char.exp >= 40 && char.level < 4){
-    char.level += 1;
-    char.hp += 1;
-    char.chp += 1;
-    char.mp += 1;
-    char.pDef += 1;
-    char.mDef += 1;
-    char.pAtk += 1;
-    char.mAtk += 1;
-    char.pDef += 1;
-    char.mDef += 1;
-    let leveluptext = document.createElement("p");
-    leveluptext.innerHTML = char.name + " leveled up! Their level is now: " + char.level + "!" ;
-    info.appendChild(leveluptext);
-  }
-  };
+};
 function clearBattle() {
   partyPlace.innerHTML = "";
   holder.innerHTML = "";
@@ -1679,7 +1679,7 @@ ando.skills.push(iceSlash);
 marie.support.push(cure);
 marie.support.push(defBoost);
 ando.support.push(defBoost);
-julie.support.push(atkBoost);
+weaponsOwned.push(ironSword);
 
 //======================================
 // Start Game , must go below everything else

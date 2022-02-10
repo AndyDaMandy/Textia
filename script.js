@@ -281,6 +281,8 @@ const sparkBow = {
     element: thunEl,
     pow: 2,
     };
+const ironSpear = new Weapon('Iron Spear', 'Spear', 'A simple spear with an iron tip', 'Physical', null, 3);
+const iceSpear= new Weapon('Ice Spear', 'Spear', 'A spear imbued with Ice Magic', 'Physical', iceEl, 3);
 
 //======================================
 //Menu items
@@ -378,13 +380,20 @@ function equipSelect(char, weapon){
   if (document.getElementById("equip-party").innerHTML 
   != ""){
     document.getElementById("equip-party").innerHTML = "";
+    
+  }
+  if (document.getElementById("equipped-text").innerHTML != ""){
+    document.getElementById("equipped-text").innerHTML = "";
   }
   let btn = document.createElement("button");
     btn.innerHTML = char.name + " - Equipped: " + char.weapon.name;
     btn.addEventListener('click', function(){
       weaponsOwned.push(char.weapon);
+      let equipped = document.createElement("p");
+      equipped.innerHTML = char.name + " equipped " +  weapon.name + "!"
+      document.getElementById("equipped-text").appendChild(equipped);
       char.weapon = weapon;
-      weaponsOwned.splice(weapon, 1);
+      weaponsOwned.splice(weaponsOwned.indexOf(weapon), 1);
       equip();
     });
     document.getElementById("equip-party").appendChild(btn);
@@ -402,10 +411,6 @@ function equip (){
         button.innerHTML = weapon.name;
         button.addEventListener('click', () => { equipSelect(ando, weapon); });
         document.getElementById("equipment").appendChild(button);
-        let button2 = document.createElement("button");
-        button2.innerHTML = weapon.name;
-        button2.addEventListener('click', () => { equipSelect(ari, weapon); });
-        document.getElementById("equipment").appendChild(button2);
       }
       if (weapon.type === "Staff"){
         let button4 = document.createElement("button");
@@ -418,6 +423,12 @@ function equip (){
         button3.innerHTML = weapon.name;
         button3.addEventListener('click', () => { equipSelect(julie, weapon); });
         document.getElementById("equipment").appendChild(button3);
+      }
+      if (weapon.type === "Spear"){
+        let button2 = document.createElement("button");
+        button2.innerHTML = weapon.name;
+        button2.addEventListener('click', () => {equipSelect(ari, weapon); });
+        document.getElementById("equipment").appendChild(button2);
       }
   }
  weaponsOwned.forEach(checker);
@@ -1768,7 +1779,8 @@ weaponsOwned.push(ironSword);
 weaponsOwned.push(woodBow);
 weaponsOwned.push(flameSword);
 weaponsOwned.push(sparkBow);
-ari.weapon = flameSword;
+weaponsOwned.push(iceSpear);
+ari.weapon = ironSpear;
 ari.skills.push(fire);
 
 

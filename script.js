@@ -3,8 +3,8 @@
 //need to add in revival potion and test that.
 //Need a way to swap party members
 //need to refactor the status screen to toggling buttons.
-//Skill leveling bugged, since the skill function re-activates due to the looping nature of the level up.
 //need to set up some randomness to attack damage.
+//Need to create an armor system! Maybe....
 //new enemies needed, new branching paths as well.
 //new places to fight enemies.
 //new items, shop etc.
@@ -34,7 +34,7 @@ class Player {
 let ando = new Player('Ando', 1, 10, 10, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
 let marie = new Player('Marie', 1, 8, 8, 12, 12, 5, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
 let julie = new Player('Julie', 1, 9, 9, 6, 6, 8, 3, 6, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
-let ari = new Player('Ari', 1, 10, 10, 6, 6, 2, 2, 11, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
+let ari = new Player('Ari', 1, 10, 10, 6, 6, 10, 2, 7, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
 //Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
 class Element {
   constructor(element, des){
@@ -288,65 +288,117 @@ const iceSpear= new Weapon('Ice Spear', 'Spear', 'A spear imbued with Ice Magic'
 
 //======================================
 //Menu items
-function showStats (x) {
+//showStats needs to be refactored to generate buttons
+
+//new menu for swapping party members
+function swapChars(){
+  document.getElementById("swap-menu").hidden = false;
+  document.getElementById("reserve-chars").innerHTML = "";
+  document.getElementById("main-chars").innerHTML = "";
+  let btnGen = (char) => {
+    let btn = document.createElement("button");
+    btn.innerHTML = char.name;
+    btn.addEventListener('click', () => {swapper(char)});
+    document.getElementById("reserve-chars").appendChild(btn);
+  }
+  if (reserveParty.length > 0) {
+    reserveParty.forEach(btnGen);
+  } else {
+    document.getElementById("reserve-chars").innerHTML = "There are no reserve characters availabe to swap. How did you find this button?";
+  }
+};
+const swapper = (char) => {
+  document.getElementById("reserve-chars").innerHTML = "";
+  document.getElementById("main-chars").innerHTML = "";
+  let arr
+  let newarr;
+  let btnGen = (old) => {
+    let btn = document.createElement("button");
+    btn.innerHTML = old.name;
+    btn.addEventListener('click', () => {
+      debugger;
+      document.getElementById("main-chars").innerHTML = old.name + " has been swapped with " + char.name;
+      arr = currentParty.splice(currentParty.indexOf(old), 1);
+      newarr = reserveParty.splice(reserveParty.indexOf(char), 1);
+      reserveParty.push(arr[0]);
+      currentParty.push(newarr[0]);
+    });
+    document.getElementById("main-chars").appendChild(btn);
+  }
+  currentParty.forEach(btnGen);
+}
+function showStats(){
   document.getElementById("stats-menu").hidden = false;
-  let stats = document.getElementById("party-status")
+  let partyStats = document.getElementById("party-status");
   let statsLog = document.getElementById("menu-items");
-  let newLine = document.createElement("h4");
-  //checks if this has been run before and clears the content ahead of it.
+  let partyBtns = document.getElementById("party-btns");
+  partyBtns.innerHTML = "";
+  partyStats.innerHTML ="Your current party: ";
+  document.getElementById("line-1").innerHTML = "Here are their stats:";
+  if (statsLog != ""){ 
+    statsLog.innerHTML = "";
+    }
+  let btnGen = (char) => {
+    let btn = document.createElement("button");
+    btn.innerHTML = char.name;
+    btn.addEventListener('click', () => {showStatus(char)});
+    partyBtns.appendChild(btn);
+  }
+  currentParty.forEach(btnGen);
+  if (reserveParty.length >= 1){
+    reserveParty.forEach(btnGen);
+  }
+}
+function showStatus (x) {
+  document.getElementById("stats-menu").hidden = false;
+  let statsLog = document.getElementById("menu-items");
   if (statsLog != ""){ 
   statsLog.innerHTML = "";
   }
-  stats.innerHTML ="Your current party: " + x[0].name + ", " + x[1].name + ", " + x[2].name;
-  document.getElementById("line-1").innerHTML = "Here are their stats:";
-  for (let i = 0; i < currentParty.length; i++){
-    let li = document.createElement("li");
-    li.innerHTML = "Name: " + x[i].name;
-      statsLog.appendChild(li);
-      li = document.createElement("li");
-    li.innerHTML = "Level: " + x[i].level;
-      statsLog.appendChild(li);
-      li = document.createElement("li");
-    li.innerHTML = "Weapon: " + x[i].weapon.name + " - " + "Type: " + x[i].weapon.type + " - " + "Attribute: " + x[i].weapon.atr + " - " + x[i].weapon.des + " Power: " + x[i].weapon.pow;
-      statsLog.appendChild(li);
-      li = document.createElement("li");
-    li.innerHTML = "HP: " + x[i].hp;
-      statsLog.appendChild(li);
-      li = document.createElement("li");
-    li.innerHTML = "MP: " + x[i].mp;
-      statsLog.appendChild(li);
-      li = document.createElement("li")
-    li.innerHTML = "Physical Attack: " + x[i].pAtk;
-     statsLog.appendChild(li);
-      li = document.createElement("li")
-    li.innerHTML = "Physical Defense: " + x[i].pDef;
-     statsLog.appendChild(li);
-      li = document.createElement("li")
-    li.innerHTML = "Magic Attack: " + x[i].mAtk;
-     statsLog.appendChild(li);
-      li = document.createElement("li")
-    li.innerHTML = "Magic Defense: " + x[i].mDef;
-     statsLog.appendChild(li);
-      li = document.createElement("li");
-    let skillsList = [];
-    for (let b = 0; b < x[i].skills.length; b++){
-      skillsList.push(x[i].skills[b].name);
-    };
-    let joined = skillsList.join(", ");
-    li.innerHTML = "Skills: " + joined;       
+  let li = document.createElement("li");
+  li.innerHTML = "Name: " + x.name;
     statsLog.appendChild(li);
     li = document.createElement("li");
-    let supportList = [];
-    for (let b = 0; b < x[i].support.length; b++){
-      supportList.push(x[i].support[b].name);
-    };
-   let joined2 = supportList.join(", ");
-    li.innerHTML = "Support Skills: " + joined2;       
+  li.innerHTML = "Level: " + x.level;
     statsLog.appendChild(li);
+    li = document.createElement("li");
+  li.innerHTML = "Weapon: " + x.weapon.name + " - " + "Type: " + x.weapon.type + " - " + "Attribute: " + x.weapon.atr + " - " + x.weapon.des + " Power: " + x.weapon.pow;
+    statsLog.appendChild(li);
+    li = document.createElement("li");
+  li.innerHTML = "HP: " + x.hp;
+    statsLog.appendChild(li);
+    li = document.createElement("li");
+  li.innerHTML = "MP: " + x.mp;
+    statsLog.appendChild(li);
+    li = document.createElement("li")
+  li.innerHTML = "Physical Attack: " + x.pAtk;
+   statsLog.appendChild(li);
+    li = document.createElement("li")
+  li.innerHTML = "Physical Defense: " + x.pDef;
+   statsLog.appendChild(li);
+    li = document.createElement("li")
+  li.innerHTML = "Magic Attack: " + x.mAtk;
+   statsLog.appendChild(li);
+    li = document.createElement("li")
+  li.innerHTML = "Magic Defense: " + x.mDef;
+   statsLog.appendChild(li);
+    li = document.createElement("li");
+  let skillsList = [];
+  for (let b = 0; b < x.skills.length; b++){
+    skillsList.push(x.skills[b].name);
   };
-  newLine.innerHTML = "Your Reserve Party: " + reserveParty[0].name;
-  statsLog.appendChild(newLine);
+  let joined = skillsList.join(", ");
+  li.innerHTML = "Skills: " + joined;       
+  statsLog.appendChild(li);
+  li = document.createElement("li");
+  let supportList = [];
+  for (let b = 0; b < x.support.length; b++){
+    supportList.push(x.support[b].name);
   };
+ let joined2 = supportList.join(", ");
+  li.innerHTML = "Support Skills: " + joined2;       
+  statsLog.appendChild(li);
+};
 function showInventory() {
   let inventorySlot = document.getElementById("inventory-items");
   if (inventorySlot != ""){
@@ -471,6 +523,7 @@ function openMenu(){
   document.getElementById("save-button").hidden = false;
   document.getElementById("equip-button").hidden = false;
   document.getElementById("inventory-button").hidden = false;
+  if (reserveParty.length > 0) {document.getElementById("swap-team").hidden = false}
   document.getElementById("show-stats").hidden = false;
   document.getElementById("close-menu").hidden = false;
   };
@@ -494,6 +547,9 @@ function closeMenu() {
   //hide save
   document.getElementById("save-menu").hidden = true;
   document.getElementById("close-menu").hidden = true;
+  //hide swap
+  document.getElementById("swap-team").hidden = true;
+  document.getElementById("swap-menu").hidden = true;
   };
 /*
 The game will go through "Areas", each one being a div. Each Div will be a town/level or pass through. By toggling the hidden property in html we can hide the divs as necessary. The progression will be linear, at least for now....
@@ -1068,20 +1124,20 @@ function levelUp(char){
   debugger;
     if (char.exp >= 3 && char.level < 2){
       statBoost(char);
-     /*  if (julie.level === 2) {
+      if (char.level === 2 && char.name === "Julie") {
           julie.support.push(atkBoost);
         let learnedSkill = document.createElement("p");
         learnedSkill.innerHTML = julie.name + " learned " + atkBoost.name + "!";
         info.appendChild(learnedSkill);
         }
         
-        if (marie.level === 2) {
+        if (char.level === 2 && char.name === "Marie") {
           marie.support.push(thunder);
         let learnedSkill2 = document.createElement("p");
         learnedSkill2.innerHTML = marie.name + " learned " + thunder.name + "!";
         info.appendChild(learnedSkill2);
         }
-        */
+        
       }  
     if (char.exp >= 20 && char.level < 3){
       statBoost(char);

@@ -1121,7 +1121,6 @@ function statBoost(char){
   info.appendChild(leveluptext);
 };
 function levelUp(char){
-  debugger;
     if (char.exp >= 3 && char.level < 2){
       statBoost(char);
       if (char.level === 2 && char.name === "Julie") {
@@ -1132,7 +1131,7 @@ function levelUp(char){
         }
         
         if (char.level === 2 && char.name === "Marie") {
-          marie.support.push(thunder);
+          marie.skills.push(thunder);
         let learnedSkill2 = document.createElement("p");
         learnedSkill2.innerHTML = marie.name + " learned " + thunder.name + "!";
         info.appendChild(learnedSkill2);
@@ -1159,25 +1158,16 @@ function clearBattle() {
   battleState = 0;
   battleMode.hidden = true;
   mainMenu.hidden = false;
-  currentParty = [ando, marie, julie];
-  ando.chp = ando.hp;
-  ando.cmp = ando.mp;
-  marie.chp = marie.hp;
-  marie.cmp = marie.mp;
-  julie.cmp = julie.mp;
-  julie.chp = julie.hp;
-  ando.buff[0].pow = 0;
-  marie.buff[0].pow = 0;
-  julie.buff[0].pow = 0;
-  ando.buff[0].on = false;
-  marie.buff[0].on = false;
-  julie.buff[0].on = false;
-  ando.buff[1].pow = 0;
-  marie.buff[1].pow = 0;
-  julie.buff[1].pow = 0;
-  ando.buff[1].on = false;
-  marie.buff[1].on = false;
-  julie.buff[1].on = false;
+  loadParty();
+  function healer(x){
+    x.chp = x.hp;
+    x.cmp = x.mp;
+    x.buff[0].pow = 0;
+    x.buff[0].on = false;
+    x.buff[1].pow = 0;
+    x.buff[1].on = false;
+  }
+  currentParty.forEach(healer);
   };
 let statePost = 0;
 function endBattle(loc) {
@@ -1255,12 +1245,19 @@ function loadPartyInfo(){
   };
 let winMon = 0;
 let expGain = 0;
+function saveParty (){
+  savedParty = currentParty;
+}
+function loadParty(){
+  currentParty = savedParty;
+}
 function battle(en) {
   //battleState controls battle flow and button creation.
   adv.hidden = true;
   battleState = 1;
   battleMode.hidden = false;
   mainMenu.hidden = true;
+  saveParty();
   closeMenu();
   enemyParty = en;
   winMon = 0;
@@ -1825,6 +1822,7 @@ function shopFlow (){
 // all testing goes below
 currentParty = [ando, marie, julie];
 reserveParty = [ari];
+let savedParty = currentParty;
 ando.weapon = flameSword;
 julie.skills.push(waterArrow);
 julie.weapon = woodBow;

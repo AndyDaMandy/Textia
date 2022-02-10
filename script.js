@@ -1,8 +1,9 @@
 //https://github.com/ZaDarkSide/simpleStorage
 //Things that need to be done:
 //need to add in revival potion and test that.
-//Need way to equip items
-//Need way to learn a skill (easy I think, add to the levelup function);
+//Need a way to swap party members
+//need to refactor the status screen to toggling buttons.
+//Skill leveling bugged, since the skill function re-activates due to the looping nature of the level up.
 //need to set up some randomness to attack damage.
 //new enemies needed, new branching paths as well.
 //new places to fight enemies.
@@ -29,7 +30,8 @@ class Player {
     this.type = type;
   }
   };
-let ando = new Player('Ando', 1, 10, 10, 5, 5, 10, 5, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
+  //name, level, hp, chp, mp, cmp, pAtk, pDef, mAtk, mDef, exp, buff, skills, support, weapon, type
+let ando = new Player('Ando', 1, 10, 10, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
 let marie = new Player('Marie', 1, 8, 8, 12, 12, 5, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
 let julie = new Player('Julie', 1, 9, 9, 6, 6, 8, 3, 6, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
 let ari = new Player('Ari', 1, 10, 10, 6, 6, 2, 2, 11, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
@@ -290,7 +292,6 @@ function showStats (x) {
   document.getElementById("stats-menu").hidden = false;
   let stats = document.getElementById("party-status")
   let statsLog = document.getElementById("menu-items");
-  let statsLine = document.getElementById("stats-line");
   let newLine = document.createElement("h4");
   //checks if this has been run before and clears the content ahead of it.
   if (statsLog != ""){ 
@@ -1064,20 +1065,23 @@ function statBoost(char){
   info.appendChild(leveluptext);
 };
 function levelUp(char){
+  debugger;
     if (char.exp >= 3 && char.level < 2){
       statBoost(char);
-       if (julie.level === 2) {
+     /*  if (julie.level === 2) {
           julie.support.push(atkBoost);
         let learnedSkill = document.createElement("p");
         learnedSkill.innerHTML = julie.name + " learned " + atkBoost.name + "!";
         info.appendChild(learnedSkill);
         }
+        
         if (marie.level === 2) {
           marie.support.push(thunder);
-        let learnedSkill = document.createElement("p");
-        learnedSkill.innerHTML = marie.name + " learned " + thunder.name + "!";
-        info.appendChild(learnedSkill);
+        let learnedSkill2 = document.createElement("p");
+        learnedSkill2.innerHTML = marie.name + " learned " + thunder.name + "!";
+        info.appendChild(learnedSkill2);
         }
+        */
       }  
     if (char.exp >= 20 && char.level < 3){
       statBoost(char);
@@ -1774,11 +1778,10 @@ ando.skills.push(iceSlash);
 marie.support.push(cure);
 marie.support.push(defBoost);
 weaponsOwned.push(ironSword);
-weaponsOwned.push(woodBow);
 weaponsOwned.push(flameSword);
 weaponsOwned.push(sparkBow);
 weaponsOwned.push(iceSpear);
-weaponsOwned.push(ironSpear);
+weaponsOwned.push(iceStaff);
 ari.weapon = ironSpear;
 ari.skills.push(fire);
 

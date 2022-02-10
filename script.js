@@ -129,7 +129,7 @@ const livingTree = {
 //Skills
 //===========================
 
-/*class Skills = {
+class Skills {
   constructor(name, type, element, des, pow, cost){
     this.name = name;
     this.type = type;
@@ -139,7 +139,7 @@ const livingTree = {
     this.cost = cost;
   }
 };
-*/
+
 const fire = {
   name: "Fire",
   type: "Magic",
@@ -225,6 +225,27 @@ const revivalPotion = {
   };
 //=======================================
 // Weapons go here
+class Weapon {
+  constructor(name, type, des, atr, element, pow, char){
+    this.name = name;
+    this.type = type;
+    this.des = des;
+    this.atr = atr;
+    this.element = element;
+    this.pow = pow;
+    this.char = char;
+  }
+}
+const iceStaff = new Weapon('Ice Staff', 'Staff', 'A basic staff imbued with Ice Magic', iceEl, 2, ['Marie', 'Julie']);
+const flameSword = {
+  name: "Flame Sword",
+  type: "Sword",
+  des: "A basic sword imbued with Fire Magic",
+  atr: "Physical",
+  ele: fireEl,
+  pow: 3,
+  char: ["Ando","Ari"]
+}
 const woodSword = {
   name: "Wooden Sword",
   type: "Sword",
@@ -232,6 +253,13 @@ const woodSword = {
   atr: "Physical",
   pow: 1
   };
+const ironSword = {
+    name: "Iron Sword",
+    type: "Sword",
+    des: "An iron sword",
+    atr: "Physical",
+    pow: 3
+    };
 const woodStaff = {
   name: "Wooden Staff",
   type: "Staff",
@@ -246,14 +274,7 @@ const woodBow = {
   atr: "Physical",
   pow: 1
   };
-const ironSword = {
-  name: "Iron Sword",
-  type: "Sword",
-  des: "An iron sword",
-  atr: "Physical",
-  pow: 3
-  };
-  const sparkBow = {
+const sparkBow = {
     name: "Spark Bow",
     type: "Bow",
     des: "A weak bow imbued with Thunder",
@@ -261,6 +282,7 @@ const ironSword = {
     element: thunEl,
     pow: 2
     };
+
 //======================================
 //Menu items
 function showStats (x) {
@@ -1552,6 +1574,7 @@ let accesoriesOwned = [];
 let keyItems = [];
 let enemyParty = [];
 let currentParty = [];
+let reserveParty = [];
 let gameState;
 let shopState;
 //===================================
@@ -1681,6 +1704,8 @@ function shopFlow (){
 //==================================
 // all testing goes below
 currentParty = [ando, marie, julie];
+reserveParty = [ari];
+ando.weapon = flameSword;
 julie.skills.push(waterArrow);
 julie.weapon = woodBow;
 ando.skills.push(basher);
@@ -1688,9 +1713,8 @@ marie.skills.push(fire);
 ando.skills.push(iceSlash);
 marie.support.push(cure);
 marie.support.push(defBoost);
-ando.support.push(defBoost);
 weaponsOwned.push(ironSword);
-ari.weapon = sparkBow;
+ari.weapon = flameSword;
 ari.skills.push(fire);
 
 

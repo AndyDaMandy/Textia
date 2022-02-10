@@ -129,7 +129,7 @@ const livingTree = {
 //Skills
 //===========================
 
-class Skills {
+class Skill {
   constructor(name, type, element, des, pow, cost){
     this.name = name;
     this.type = type;
@@ -139,7 +139,7 @@ class Skills {
     this.cost = cost;
   }
 };
-
+const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with magic-based thunder damage', 4, 5);
 const fire = {
   name: "Fire",
   type: "Magic",
@@ -225,18 +225,18 @@ const revivalPotion = {
   };
 //=======================================
 // Weapons go here
+//characters can only equip certain types of weapons, enforced by the equip screen.
 class Weapon {
-  constructor(name, type, des, atr, element, pow, char){
+  constructor(name, type, des, atr, element, pow){
     this.name = name;
     this.type = type;
     this.des = des;
     this.atr = atr;
     this.element = element;
     this.pow = pow;
-    this.char = char;
   }
 }
-const iceStaff = new Weapon('Ice Staff', 'Staff', 'A basic staff imbued with Ice Magic', iceEl, 2, ['Marie', 'Julie']);
+const iceStaff = new Weapon('Ice Staff', 'Staff', 'A basic staff imbued with Ice Magic', iceEl, 2);
 const flameSword = {
   name: "Flame Sword",
   type: "Sword",
@@ -244,35 +244,34 @@ const flameSword = {
   atr: "Physical",
   ele: fireEl,
   pow: 3,
-  char: ["Ando","Ari"]
 }
 const woodSword = {
   name: "Wooden Sword",
   type: "Sword",
   des: "A basic wooden sword",
   atr: "Physical",
-  pow: 1
+  pow: 1,
   };
 const ironSword = {
     name: "Iron Sword",
     type: "Sword",
     des: "An iron sword",
     atr: "Physical",
-    pow: 3
+    pow: 3,
     };
 const woodStaff = {
   name: "Wooden Staff",
   type: "Staff",
   des: "A basic Staff",
   atr: "Magical",
-  pow: 1
+  pow: 1,
   };
 const woodBow = {
   name: "Wooden Bow",
   type: "Bow",
   des: "A basic Bow and Arrow set",
   atr: "Physical",
-  pow: 1
+  pow: 1,
   };
 const sparkBow = {
     name: "Spark Bow",
@@ -280,16 +279,17 @@ const sparkBow = {
     des: "A weak bow imbued with Thunder",
     atr: "Physical",
     element: thunEl,
-    pow: 2
+    pow: 2,
     };
 
 //======================================
 //Menu items
 function showStats (x) {
-  const statsMenu = document.getElementById("stats-menu");
+  document.getElementById("stats-menu").hidden = false;
   let stats = document.getElementById("party-status")
   let statsLog = document.getElementById("menu-items");
   let statsLine = document.getElementById("stats-line");
+  let newLine = document.createElement("h4");
   //checks if this has been run before and clears the content ahead of it.
   if (statsLog != ""){ 
   statsLog.innerHTML = "";
@@ -341,6 +341,9 @@ function showStats (x) {
     li.innerHTML = "Support Skills: " + joined2;       
     statsLog.appendChild(li);
   };
+  newLine.innerHTML = "Your Reserve Party: " + reserveParty[0].name;
+  statsLog.appendChild(newLine);
+
   statsLine.hidden = false;
   };
 function showInventory() {
@@ -369,21 +372,55 @@ function showInventory() {
   inventoryMenu.hidden = false;
   document.getElementById("close-menu").hidden = false;
   };
-function equip (){
-  let checker = function (weapon){
+function equipSelect(char, weapon){
+  //clears equip items, only shows characters/ creates a back button...
+  //needs to swap the items.
+  if (document.getElementById("equip-party").innerHTML 
+  != ""){
+    document.getElementById("equip-party").innerHTML = "";
+  }
+  let btn = document.createElement("button");
+    btn.innerHTML = char.name + " - Equipped: " + char.weapon.name;
+    btn.addEventListener('click', function(){
+      weaponsOwned.push(char.weapon);
+      char.weapon = weapon;
+      weaponsOwned.splice(weapon, 1);
+      equip();
+    });
+    document.getElementById("equip-party").appendChild(btn);
     
+
+}
+function equip (){
+  document.getElementById("equip-screen").hidden = false;
+  document.getElementById("equipment").innerHTML = "";
+  document.getElementById("equip-party").innerHTML = "";
+  let checker = function (weapon){
+   // function needs to branch based on the character...
+      if (weapon.type === "Sword"){
+        let button = document.createElement("button");
+        button.innerHTML = weapon.name;
+        button.addEventListener('click', () => { equipSelect(ando, weapon); });
+        document.getElementById("equipment").appendChild(button);
+        let button2 = document.createElement("button");
+        button2.innerHTML = weapon.name;
+        button2.addEventListener('click', () => { equipSelect(ari, weapon); });
+        document.getElementById("equipment").appendChild(button2);
+      }
+      if (weapon.type === "Staff"){
+        let button4 = document.createElement("button");
+        button4.innerHTML = weapon.name;
+        button4.addEventListener('click', () => { equipSelect(marie, weapon); });
+        document.getElementById("equipment").appendChild(button4);
+      }
+      if (weapon.type === "Bow"){
+        let button3 = document.createElement("button");
+        button3.innerHTML = weapon.name;
+        button3.addEventListener('click', () => { equipSelect(julie, weapon); });
+        document.getElementById("equipment").appendChild(button3);
+      }
   }
-  let pusher = function (name){
-    let button = document.createElement("button");
-    button.innerHTML = name.name;
-    //function needs to branch based on the character....
-    if (name.name === "ando"){
-      
-    }
-    button.addEventListener('click', function (){})
-    document.getElementById("equip-party").appendChild(button);
-  }
-  currentParty.forEach(pusher);
+ weaponsOwned.forEach(checker);
   document.getElementById("close-menu").hidden = false;
 }
 function save () {
@@ -392,6 +429,7 @@ function save () {
   simpleStorage.set("julie", JSON.stringify(julie));
   simpleStorage.set("ari", JSON.stringify(ari));
   simpleStorage.set("currentParty", currentParty);
+  simpleStorage.set("reserveParty", reserveParty);
   simpleStorage.set("inventory", inventory);
   simpleStorage.set("weaponsOwned", weaponsOwned);
   simpleStorage.set("money", money);
@@ -421,17 +459,24 @@ function closeShop() {
 let menu = document.getElementById("open-menu");
 function openMenu(){
   document.getElementById("save-button").hidden = false;
+  document.getElementById("equip-button").hidden = false;
   document.getElementById("inventory-button").hidden = false;
   document.getElementById("show-stats").hidden = false;
   document.getElementById("close-menu").hidden = false;
   };
 function closeMenu() {
   document.getElementById("save-button").hidden = true;
+  //equip
+  document.getElementById("equip-button").hidden = true;
+  document.getElementById("equip-screen").hidden = true;
+  document.getElementById("equipment").innerHTML = "";
+  document.getElementById("equip-party").innerHTML = "";
   //inventory
   document.getElementById("inventory-button").hidden = true;
   document.getElementById("inventory-menu").hidden = true;
   document.getElementById("inventory-items").innerHTML = "";
   //party stats
+  document.getElementById("stats-menu").hidden = true;
     document.getElementById("show-stats").hidden = true;
     document.getElementById("party-status").innerHTML = "";
     document.getElementById("line-1").innerHTML = "";
@@ -1018,6 +1063,12 @@ function levelUp(char){
         learnedSkill.innerHTML = julie.name + " learned " + atkBoost.name + "!";
         info.appendChild(learnedSkill);
         }
+        if (marie.level === 2) {
+          marie.support.push(thunder);
+        let learnedSkill = document.createElement("p");
+        learnedSkill.innerHTML = marie.name + " learned " + thunder.name + "!";
+        info.appendChild(learnedSkill);
+        }
       }  
     if (char.exp >= 20 && char.level < 3){
       statBoost(char);
@@ -1135,7 +1186,7 @@ function loadPartyInfo(){
   };
 let winMon = 0;
 let expGain = 0;
-function battle(en, location) {
+function battle(en) {
   //battleState controls battle flow and button creation.
   adv.hidden = true;
   battleState = 1;
@@ -1714,6 +1765,9 @@ ando.skills.push(iceSlash);
 marie.support.push(cure);
 marie.support.push(defBoost);
 weaponsOwned.push(ironSword);
+weaponsOwned.push(woodBow);
+weaponsOwned.push(flameSword);
+weaponsOwned.push(sparkBow);
 ari.weapon = flameSword;
 ari.skills.push(fire);
 
@@ -1750,6 +1804,7 @@ function load(){
  marie = JSON.parse(simpleStorage.get("marie", marie));
   julie = JSON.parse(simpleStorage.get("julie", julie));
   ari = JSON.parse(simpleStorage.get("ari", ari));
+  reserveParty = simpleStorage.get("reserveParty", reserveParty);
  weaponsOwned = simpleStorage.get("weaponsOwned", weaponsOwned);
  currentParty = simpleStorage.get("currentParty", currentParty);
   inventory =  simpleStorage.get("inventory", inventory);

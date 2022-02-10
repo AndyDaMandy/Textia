@@ -292,9 +292,24 @@ const iceSpear= new Weapon('Ice Spear', 'Spear', 'A spear imbued with Ice Magic'
 
 //new menu for swapping party members
 function swapChars(){
-  document.getElementById("swap-menu").hidden = false;
+  //equip
+  document.getElementById("equip-screen").hidden = true;
+  document.getElementById("equipment").innerHTML = "";
+  document.getElementById("equip-party").innerHTML = "";
+  //inventory
+  document.getElementById("inventory-menu").hidden = true;
+  document.getElementById("inventory-items").innerHTML = "";
+  //party stats
+  document.getElementById("stats-menu").hidden = true;
+    document.getElementById("party-status").innerHTML = "";
+    document.getElementById("line-1").innerHTML = "";
+    document.getElementById("menu-items").innerHTML = "";
+  //save remove
+  document.getElementById("save-menu").hidden = true;
+  //start next
   document.getElementById("reserve-chars").innerHTML = "";
   document.getElementById("main-chars").innerHTML = "";
+  document.getElementById("swap-menu").hidden = false;
   let btnGen = (char) => {
     let btn = document.createElement("button");
     btn.innerHTML = char.name;
@@ -328,6 +343,20 @@ const swapper = (char) => {
   currentParty.forEach(btnGen);
 }
 function showStats(){
+  //equip
+  document.getElementById("equip-screen").hidden = true;
+  document.getElementById("equipment").innerHTML = "";
+  document.getElementById("equip-party").innerHTML = "";
+  //save remove
+  document.getElementById("save-menu").hidden = true;
+  //inventory
+  document.getElementById("inventory-menu").hidden = true;
+  document.getElementById("inventory-items").innerHTML = "";
+  //hide swap
+  document.getElementById("swap-menu").hidden = true;
+    //save remove
+    document.getElementById("save-menu").hidden = true;
+
   document.getElementById("stats-menu").hidden = false;
   let partyStats = document.getElementById("party-status");
   let statsLog = document.getElementById("menu-items");
@@ -400,6 +429,20 @@ function showStatus (x) {
   statsLog.appendChild(li);
 };
 function showInventory() {
+  //equip
+  document.getElementById("equip-screen").hidden = true;
+  document.getElementById("equipment").innerHTML = "";
+  document.getElementById("equip-party").innerHTML = "";
+  //party stats
+  document.getElementById("stats-menu").hidden = true;
+    document.getElementById("party-status").innerHTML = "";
+    document.getElementById("line-1").innerHTML = "";
+    document.getElementById("menu-items").innerHTML = "";
+  //hide swap
+  document.getElementById("swap-menu").hidden = true;
+    //save remove
+    document.getElementById("save-menu").hidden = true;
+    
   let inventorySlot = document.getElementById("inventory-items");
   if (inventorySlot != ""){
   
@@ -455,6 +498,18 @@ function equip (){
   document.getElementById("equip-screen").hidden = false;
   document.getElementById("equipment").innerHTML = "";
   document.getElementById("equip-party").innerHTML = "";
+  //inventory
+  document.getElementById("inventory-menu").hidden = true;
+  document.getElementById("inventory-items").innerHTML = "";
+  //party stats
+  document.getElementById("stats-menu").hidden = true;
+    document.getElementById("party-status").innerHTML = "";
+    document.getElementById("line-1").innerHTML = "";
+    document.getElementById("menu-items").innerHTML = "";
+  //hide save
+  document.getElementById("save-menu").hidden = true;
+  //hide swap
+  document.getElementById("swap-menu").hidden = true;
   let checker = function (weapon){
    // function needs to branch based on the character...
       if (weapon.type === "Sword"){

@@ -345,8 +345,6 @@ function showStats (x) {
   };
   newLine.innerHTML = "Your Reserve Party: " + reserveParty[0].name;
   statsLog.appendChild(newLine);
-
-  statsLine.hidden = false;
   };
 function showInventory() {
   let inventorySlot = document.getElementById("inventory-items");
@@ -1780,6 +1778,7 @@ weaponsOwned.push(woodBow);
 weaponsOwned.push(flameSword);
 weaponsOwned.push(sparkBow);
 weaponsOwned.push(iceSpear);
+weaponsOwned.push(ironSpear);
 ari.weapon = ironSpear;
 ari.skills.push(fire);
 

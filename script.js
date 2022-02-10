@@ -46,7 +46,25 @@ const thunEl = new Element('Thunder', 'Thunder Element, strong against Water.');
 const watEl = new Element('Water', 'Water Element, strong against Thunder.');
 //========================================
 //enemies go here
-const iceman = {
+class Enemy {
+  constructor(name, level, hp, mp, pAtk, pDef, mAtk, mDef, weakness, exp, money, eSkills, type){
+    this.name = name;
+    this.level = level;
+    this.hp = hp,
+    this.mp = mp;
+    this.pAtk = pAtk,
+    this.pDef = pDef,
+    this.mAtk = mAtk,
+    this.mDef = mDef,
+    this.weakness = weakness;
+    this.exp = exp;
+    this.money = money;
+    this.eSkills = eSkills,
+    this.type = type;
+  }
+};
+const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'enemy');
+/*const iceman = {
   name: "Ice Man",
   level: 1,
   hp: 8,
@@ -61,6 +79,7 @@ const iceman = {
   eSkills: [],
   type: "enemy"
   };
+  */
 const goblin = {
   name: "Goblin",
   level: 1,
@@ -109,6 +128,18 @@ const livingTree = {
 //============================
 //Skills
 //===========================
+
+/*class Skills = {
+  constructor(name, type, element, des, pow, cost){
+    this.name = name;
+    this.type = type;
+    this.element = element;
+    this.des = des;
+    this.pow = pow;
+    this.cost = cost;
+  }
+};
+*/
 const fire = {
   name: "Fire",
   type: "Magic",

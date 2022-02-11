@@ -1,11 +1,10 @@
 //https://github.com/ZaDarkSide/simpleStorage
 //Things that need to be done:
 //need to add in revival potion and test that.
-//Need a way to swap party members
-//need to refactor the status screen to toggling buttons.
 //need to set up some randomness to attack damage.
 //Need to create an armor system! Maybe....
 //new enemies needed, new branching paths as well.
+//need to set up a proper clamp function for battle calculation.
 //new places to fight enemies.
 //new items, shop etc.
 //clean up battle selection functions a bit, make them less chunky.
@@ -34,7 +33,7 @@ class Player {
 let ando = new Player('Ando', 1, 10, 10, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
 let marie = new Player('Marie', 1, 8, 8, 12, 12, 2, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
 let julie = new Player('Julie', 1, 9, 9, 6, 6, 8, 2, 6, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
-let ari = new Player('Ari', 1, 10, 10, 6, 6, 10, 2, 7, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
+let ari = new Player('Ari', 1, 8, 8, 6, 6, 10, 2, 7, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
 //Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
 class Element {
   constructor(element, des){
@@ -65,7 +64,9 @@ class Enemy {
     this.type = type;
   }
 };
-const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'enemy');
+const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
+//if an enemy is flying, bows hit for extra damage.
+const bat = new Enemy('Bat', 1,7, 3, 4, 2, 1, 1, "None", 1, 1, [], 'Flying');
 /*const iceman = {
   name: "Ice Man",
   level: 1,
@@ -132,16 +133,19 @@ const livingTree = {
 //===========================
 
 class Skill {
-  constructor(name, type, element, des, pow, cost){
+  constructor(name, type, element, des, pow, cost, target){
     this.name = name;
     this.type = type;
     this.element = element;
     this.des = des;
     this.pow = pow;
     this.cost = cost;
+    this.target = target;
   }
 };
-const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with magic-based thunder damage', 4, 5);
+const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with magic-based thunder damage', 4, 5, 'Single');
+//need a way to show a skill hits all or not....
+const water = new Skill('Water','Magic', watEl, 'Hits enemy with magic-based water damage', 3, 4, 'All');
 const fire = {
   name: "Fire",
   type: "Magic",
@@ -155,7 +159,8 @@ const basher = {
   type: "Physical",
   des: "Deals phsyical damage to 1 enemy",
   pow: 4,
-  cost: 3
+  cost: 3,
+  target: 'single'
   };
 const iceSlash = {
   name: "Ice Slash",
@@ -229,22 +234,22 @@ const revivalPotion = {
 // Weapons go here
 //characters can only equip certain types of weapons, enforced by the equip screen.
 class Weapon {
-  constructor(name, type, des, atr, element, pow){
+  constructor(name, type, des, atr, pow, element){
     this.name = name;
     this.type = type;
     this.des = des;
     this.atr = atr;
-    this.element = element;
     this.pow = pow;
+    this.element = element;
   }
 }
-const iceStaff = new Weapon('Ice Staff', 'Staff', 'A basic staff imbued with Ice Magic', iceEl, 2);
+const iceStaff = new Weapon('Ice Staff', 'Staff', 'A basic staff imbued with Ice Magic','Magical', 2, iceEl);
 const flameSword = {
   name: "Flame Sword",
   type: "Sword",
   des: "A basic sword imbued with Fire Magic",
   atr: "Physical",
-  ele: fireEl,
+  element: fireEl,
   pow: 3,
 }
 const woodSword = {
@@ -283,8 +288,9 @@ const sparkBow = {
     element: thunEl,
     pow: 2,
     };
-const ironSpear = new Weapon('Iron Spear', 'Spear', 'A simple spear with an iron tip', 'Physical', null, 3);
-const iceSpear= new Weapon('Ice Spear', 'Spear', 'A spear imbued with Ice Magic', 'Physical', iceEl, 3);
+const ironSpear = new Weapon('Iron Spear', 'Spear', 'A simple spear with an iron tip', 'Physical', 3);
+const iceSpear = new Weapon('Ice Spear', 'Spear', 'A spear imbued with Ice Magic', 'Physical', 3, iceEl);
+const excalibur = new Weapon('Excalibur', 'Sword','The most powerful blade in the world','Physical',1000);
 
 //======================================
 //Menu items
@@ -1897,6 +1903,7 @@ weaponsOwned.push(iceSpear);
 weaponsOwned.push(iceStaff);
 ari.weapon = ironSpear;
 ari.skills.push(fire);
+weaponsOwned.push(excalibur);
 
 
 //======================================

@@ -442,7 +442,7 @@ function showInventory() {
   document.getElementById("swap-menu").hidden = true;
     //save remove
     document.getElementById("save-menu").hidden = true;
-    
+
   let inventorySlot = document.getElementById("inventory-items");
   if (inventorySlot != ""){
   
@@ -737,6 +737,7 @@ function attackCalc (char, target, flow, skill){
         let minpa = pa - 4;
         let thp = enHp[target];
         let damage = clamp(pa, minpa, pa);
+        if (damage <= 0){damage = 0};
         let final = thp - damage ;
         if (final <= 0) {
           let p3 = document.createElement("p");
@@ -780,6 +781,7 @@ function attackCalc (char, target, flow, skill){
           pa -= 2;
           let minpa = pa - 4;
           let damage = clamp(pa, minpa, pa);
+          if (damage <= 0){damage = 0};
           let final = thp - damage ;
             if (final <= 0) {
               let p6 = document.createElement("p");
@@ -822,6 +824,7 @@ function attackCalc (char, target, flow, skill){
           let minpa = pa - 4;
           pa -= 2;
           let damage = clamp(pa, minpa, pa);
+          if (damage <= 0){damage = 0};
           let final = thp - damage ;
           if (final <= 0) {
             let p = document.createElement("p");
@@ -932,6 +935,7 @@ function enemCalc (){
       //if buff is off, then buff = 0, thus not changing much.
       let damage = attackerDam - target.pDef + target.buff[1].pow;
       let damageRange = clamp(damage, damage, damage+1);
+      if (damageRange <= 0){damageRange = 0};
       target.chp = target.chp - damageRange;
       let damageRes = document.createElement("p");
       damageRes.innerHTML = target.name + " was hit by " + attacker.name + " for " + damage + " damage!";

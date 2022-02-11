@@ -307,7 +307,6 @@ function swapChars(){
   document.getElementById("inventory-items").innerHTML = "";
   //party stats
   document.getElementById("stats-menu").hidden = true;
-    document.getElementById("party-status").innerHTML = "";
     document.getElementById("line-1").innerHTML = "";
     document.getElementById("menu-items").innerHTML = "";
   //save remove
@@ -364,12 +363,10 @@ function showStats(){
     document.getElementById("save-menu").hidden = true;
 
   document.getElementById("stats-menu").hidden = false;
-  let partyStats = document.getElementById("party-status");
   let statsLog = document.getElementById("menu-items");
   let partyBtns = document.getElementById("party-btns");
   partyBtns.innerHTML = "";
-  partyStats.innerHTML ="Your current party: ";
-  document.getElementById("line-1").innerHTML = "Here are their stats:";
+ // partyStats.innerHTML ="Your current party: ";
   if (statsLog != ""){ 
     statsLog.innerHTML = "";
     }
@@ -441,7 +438,6 @@ function showInventory() {
   document.getElementById("equip-party").innerHTML = "";
   //party stats
   document.getElementById("stats-menu").hidden = true;
-    document.getElementById("party-status").innerHTML = "";
     document.getElementById("line-1").innerHTML = "";
     document.getElementById("menu-items").innerHTML = "";
   //hide swap
@@ -509,7 +505,6 @@ function equip (){
   document.getElementById("inventory-items").innerHTML = "";
   //party stats
   document.getElementById("stats-menu").hidden = true;
-    document.getElementById("party-status").innerHTML = "";
     document.getElementById("line-1").innerHTML = "";
     document.getElementById("menu-items").innerHTML = "";
   //hide save
@@ -602,7 +597,6 @@ function closeMenu() {
   //party stats
   document.getElementById("stats-menu").hidden = true;
     document.getElementById("show-stats").hidden = true;
-    document.getElementById("party-status").innerHTML = "";
     document.getElementById("line-1").innerHTML = "";
     document.getElementById("menu-items").innerHTML = "";
   //hide save
@@ -1847,6 +1841,9 @@ function gameFlow (state) {
       shopButton.hidden = false;
       townTwo.hidden = false;
       shopState = 0;
+    } if (state == 7){
+      townTwo.hidden = false;
+      document.getElementById("town-2-1").hidden = false;
     }
 };
 function move (state) {

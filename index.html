@@ -47,7 +47,8 @@
   <hr>
 </div>
 <div id="stats-menu" hidden>
-  <h3 id="party-status"></h3>
+  <h3 id="party-status">Your current party: </h3>
+  <p><em>Click a character name to view their stats.</em></p>
   <div id="party-btns"></div>
   <h4 id="line-1"></h4>
   <ul id="menu-items"></ul>
@@ -55,7 +56,7 @@
   </div>
 <div id="swap-menu" hidden>
   <h3>Swap Team:</h3>
-  <p>Which reserve member will you swap into your party?</p>
+  <p><em>Which reserve member will you swap into your party?</em></p>
   <div id="reserve-chars"></div>
   <div id="main-chars"></div>  
   <hr>
@@ -107,6 +108,8 @@
     <h2>Area Town</h2>
     <p>Shaman: "Hello Ando and Marie, I hope you are well."</p>
     <p>"Allow me to explain the mission you're on and how you can move forward on your journey"</p>
+    <p>"A little bit of info about you two. Ando specializes in Physical skills, while Marie specializes in Magic"</p>
+    <p>"Be sure sure to keep that in mind when you're fighting enemies!"</p>
     <p>"To access the menu, click the "Menu" button above. You can check your items, party, skills, etc."</p>
     <p>"If you'd like to move on, click below, or click the shop button above"</p>
     <button onclick="move(1);">Enter Forest</button>
@@ -154,8 +157,13 @@
     </div>
   </div>
   <div id="town-2" hidden>
-    <h2>Magnolia Town</h2>
-    <p>This is as far as we go.</p>
+    <div id="town-2-1">
+      <h2>Magnolia Town</h2>
+      <p>Here we can find plenty of shops and townspeople.</p>
+      <p>You see a man handing out what appears to be a newspaper</p>
+      <p></p>
+    </div>
+    
   <div>
 <!-- Adv mode Div -->
 </div>

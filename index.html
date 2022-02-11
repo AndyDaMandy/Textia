@@ -128,7 +128,7 @@
       <p>There are enemies near it!</p>
       <p>Will you fight?</p>
       <button onclick="move(1)">Go Back</button>
-      <button onclick="battle([iceman, goblin, potatoThief]); statePost = 3;">Fight</button>
+      <button onclick="battle([goblin, potatoThief, goblin]); statePost = 3;">Fight</button>
       </div>
     <div id="forest-1-3" hidden>
       <h2>The Large Tree - 2</h2>
@@ -161,7 +161,20 @@
       <h2>Magnolia Town</h2>
       <p>Here we can find plenty of shops and townspeople.</p>
       <p>You see a man handing out what appears to be a newspaper</p>
-      <p></p>
+      <p>Will you take one?</p>
+      <button id="newspaper-1" onclick="alertOne()">Read Paper</button>
+      <button onclick="move(7)">Go to Chapel</button>
+      <button>Go further into town</button>
+    </div>
+    <div id="town-2-chapel">
+      <h2>Chapel</h2>
+      <p>You see a shaman, you approach him.</p>
+      <p>"Hello there! I see you're adventurers! The enemies out there are powerful, it'd be in your best interest to prepare yourself"</p>
+      <p>"I can summon a creature for you to practice on"</p>
+      <p>"While there's no money in this, I can keep summoning creatures until you feel comfortable"</p>
+      <p>"I've held enough funerals for adventurers....I want to help."</p>
+      <button onclick="move(6)">Go Back</button>
+      <button onclick="battle([familiar, familiar,]); statePost = 6;">Summon Familar</button>
     </div>
     
   <div>

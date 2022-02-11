@@ -67,6 +67,7 @@ class Enemy {
 const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
 //if an enemy is flying, bows hit for extra damage.
 const bat = new Enemy('Bat', 1,7, 3, 4, 2, 1, 1, "None", 1, 1, [], 'Flying');
+const familiar = new Enemy('Familiar', 1, 25, 3, 3, 4, 0, 2, null, 1, 0, [], 'Familiar');
 /*const iceman = {
   name: "Ice Man",
   level: 1,
@@ -1766,6 +1767,12 @@ function openWeapon(weapon, id){
   document.getElementById(id).hidden = true;
   alert("You found: " + weapon.name + " - in the chest!");
 }
+
+//alerts and misc dialogue
+function alertOne(){
+  alert("There's a Shaman that helps adventurers at our chapel! He's training them to be strong enough to take on the outside world! Adventurers, come train here!");
+};
+
 //needs a way of showing what item was received....
 //Game State and game flow will go here:
 function gameFlow (state) {
@@ -1840,10 +1847,14 @@ function gameFlow (state) {
       forestOne.hidden = true;
       shopButton.hidden = false;
       townTwo.hidden = false;
-      shopState = 0;
-    } if (state == 7){
+      document.getElementById("town-2-chapel").hidden = true;
+      shopState = 1;
+    } 
+  //Chapel
+    if (state == 7){
       townTwo.hidden = false;
       document.getElementById("town-2-1").hidden = false;
+      document.getElementById("town-2-chapel.hidden") = false;
     }
 };
 function move (state) {

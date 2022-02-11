@@ -32,8 +32,8 @@ class Player {
   };
   //name, level, hp, chp, mp, cmp, pAtk, pDef, mAtk, mDef, exp, buff, skills, support, weapon, type
 let ando = new Player('Ando', 1, 10, 10, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
-let marie = new Player('Marie', 1, 8, 8, 12, 12, 5, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
-let julie = new Player('Julie', 1, 9, 9, 6, 6, 8, 3, 6, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+let marie = new Player('Marie', 1, 8, 8, 12, 12, 2, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+let julie = new Player('Julie', 1, 9, 9, 6, 6, 8, 2, 6, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
 let ari = new Player('Ari', 1, 10, 10, 6, 6, 10, 2, 7, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
 //Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
 class Element {

@@ -5,4 +5,4 @@ The game contains an "adventure" mode, where you go through and explore the worl
 
 It's a work in progress at the moment, but the fundamental battle system is working and is playable.
 
-Version 0.01, alpha build.
+Version 0.04, alpha build.

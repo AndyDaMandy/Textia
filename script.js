@@ -836,7 +836,7 @@ function attackCalc (char, target, flow, skill){
               p.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
               info.appendChild(p);
             let p2 = document.createElement("p");
-              p2.innerHTML = enemyParty[target].name + "'s has been defeated!";
+              p2.innerHTML = enemyParty[target].name + " has been defeated!";
               info.appendChild(p2);
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
@@ -1222,6 +1222,7 @@ function clearBattle() {
   battleState = 0;
   battleMode.hidden = true;
   mainMenu.hidden = false;
+  expGain = 0;
   loadParty();
   function healer(x){
     x.chp = x.hp;

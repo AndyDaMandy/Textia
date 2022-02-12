@@ -32,9 +32,9 @@ class Player {
   }
   };
   //name, level, hp, chp, mp, cmp, pAtk, pDef, mAtk, mDef, exp, buff, skills, support, weapon, type
-let ando = new Player('Ando', 1, 10, 1, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
-let marie = new Player('Marie', 1, 8, 1, 12, 12, 2, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
-let julie = new Player('Julie', 1, 9, 1, 6, 6, 8, 2, 6, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+let ando = new Player('Ando', 1, 10, 10, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
+let marie = new Player('Marie', 1, 8, 8, 12, 12, 2, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+let julie = new Player('Julie', 1, 9, 9, 6, 6, 8, 2, 6, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
 let ari = new Player('Ari', 1, 8, 8, 6, 6, 10, 2, 7, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
 //Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
 class Element {
@@ -224,14 +224,14 @@ const magicPotion = {
   type: "mHealing",
   des: "Heals 5 points of MP.",
   effect: 5,
-  cost: 5
+  cost: 8
   };
 const revivalPotion = {
   name: "Revival Potion",
   type: "Rev",
   des: "Revives ally with 5 points of hp.",
   effect: 5,
-  cost: 5
+  cost: 15
   };
 //=======================================
 // Weapons go here
@@ -641,6 +641,7 @@ function openShop(){
   };
 function closeShop() {
   shop.hidden = true;
+  closeMenu();
   };
 //=======================================
 //======================================
@@ -1959,6 +1960,7 @@ function gameFlow (state) {
       townOne.hidden = true;
       forestOne.hidden = true;
       townTwo.hidden = false;
+      shopButton.hidden = true;
       document.getElementById("town-2-1").hidden = false;
       document.getElementById("town-2-chapel").hidden = true;
       document.getElementById("town-2-2").hidden = true;
@@ -1967,6 +1969,7 @@ function gameFlow (state) {
   //Chapel
     if (state == 7){
       townTwo.hidden = false;
+      shopButton.hidden = true;
       document.getElementById("town-2-1").hidden = true;
       document.getElementById("town-2-chapel").hidden = false;
       document.getElementById("town-2-2").hidden = true;
@@ -2014,19 +2017,17 @@ function shopFlow (){
     shopOne.forEach(pusher);
     }
     if (shopState === 1){
-      let shopTwo = [potion, magicPotion, highpotion];
+      let shopTwo = [potion, magicPotion, highpotion, revivalPotion];
       shopTwo.forEach(pusher);
     }
 
 }
 //==================================
 // all testing goes below
-currentParty = [ando, marie, julie];
+currentParty = [ando, marie];
 let savedParty = currentParty;
 ando.weapon = woodSword;
 julie.skills.push(waterArrow);
-inventory.push(revivalPotion);
-inventory.push(revivalPotion);
 julie.weapon = woodBow;
 ando.skills.push(basher);
 marie.skills.push(fire);
@@ -2062,6 +2063,8 @@ function startGame(){
   inventory.push(potion);
   inventory.push(magicPotion);
   inventory.push(highpotion);
+  inventory.push(revivalPotion);
+  inventory.push(revivalPotion);
   simpleStorage.flush();
   gameCheck = true;
   };

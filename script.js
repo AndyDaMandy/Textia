@@ -355,15 +355,63 @@ const swapper = (char) => {
 }
 
 function partyFormation(){
+  document.getElementById("equip-screen").hidden = true;
+  document.getElementById("equipment").innerHTML = "";
+  document.getElementById("equip-party").innerHTML = "";
+  //save remove
+  document.getElementById("save-menu").hidden = true;
+  //formation
+  document.getElementById("formation-menu").hidden = true;
+  //inventory
+  document.getElementById("inventory-menu").hidden = true;
+  document.getElementById("inventory-items").innerHTML = "";
+  //hide swap
+  //party stats
+  document.getElementById("stats-menu").hidden = true;
+    document.getElementById("line-1").innerHTML = "";
+    document.getElementById("menu-items").innerHTML = "";
+  document.getElementById("swap-menu").hidden = true;
+    //save remove
+    document.getElementById("save-menu").hidden = true;
   //repeats for how many party members are available
-  
-  let newArr = [];
-  for (let i = 0; i < currentParty.length; i++){
+  document.getElementById("print-party").innerHTML = "";
+  document.getElementById("select-party").innerHTML = "";
+  document.getElementById("formation-menu").hidden = false;
+  let partyClone = [];
+  currentParty.map((x) =>{partyClone.push(x)});
+  let final = [];
+  //const index = partyClone.map(object => object.name).indexOf(partymem.name);
+    let pusher = (x) => {final.push(x)};
+  for (let i = 0; i < partyClone.length; i++){
     let btn = document.createElement("button");
-    btn.textContent = currentParty[i].name;
-    
+    btn.textContent = partyClone[i].name;
+    btn.addEventListener('click', () => {
+      pusher(partyClone[i]); 
+    let update = document.createElement("p");
+    update.innerText = partyClone[i].name + " has been added!";
+    document.getElementById("print-party").appendChild(update);
+    btn.hidden = true;
+    });
+    document.getElementById("select-party").appendChild(btn);
+  };
+  function finalCheck(){
+    document.getElementById("print-party").innerHTML = "";
+    if (final.length != partyClone.length){
+      alert("Sorry, you can't make your party smaller! Finish selecting please!")
+    } else {
+    currentParty = final;
+    let names = currentParty.map((x) => x.name);
+    let finalOutput = document.createElement("p");
+    finalOutput.innerText = "Your final party order: " + names.join(", ");
+    document.getElementById("print-party").appendChild(finalOutput);
+    }
   }
+ let finish = document.createElement("button");
+finish.innerHTML = "Finish Selection";
+finish.addEventListener('click', () => {finalCheck();})
+document.getElementById("select-party").appendChild(finish);
 }
+
 function showStats(){
   //equip
   document.getElementById("equip-screen").hidden = true;
@@ -372,7 +420,7 @@ function showStats(){
   //save remove
   document.getElementById("save-menu").hidden = true;
   //formation
-  document.getElementById.("formation-menu").hidden = true;
+  document.getElementById("formation-menu").hidden = true;
   //inventory
   document.getElementById("inventory-menu").hidden = true;
   document.getElementById("inventory-items").innerHTML = "";
@@ -604,6 +652,7 @@ function openMenu(){
   document.getElementById("inventory-button").hidden = false;
   if (reserveParty.length > 0) {document.getElementById("swap-team").hidden = false}
   document.getElementById("show-stats").hidden = false;
+  document.getElementById("formation-button").hidden = false;
   document.getElementById("close-menu").hidden = false;
   };
 function closeMenu() {

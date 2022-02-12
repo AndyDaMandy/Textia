@@ -23,8 +23,8 @@
   <button id="open-menu" onclick="openMenu()" hidden>Menu</button>
   <button id="save-button" hidden onclick="save()">Save</button>
   <button id="equip-button" hidden onclick="equip()">Equip</button>
-  <button id="swap-team" hidden onclick="swapChars()">Swap Team</button>
-  <button id="formation-button" hidden onclic="">Formation</button>
+ <button id="swap-team" hidden onclick="swapChars()">Swap Team</button>
+  <button id="formation-button" hidden onclick="partyFormation()">Formation</button>
   <button id="inventory-button" hidden onclick="showInventory()">Inventory</button>
   <button id="show-stats" onclick="showStats()" hidden>Party Status</button>
   <button id="close-menu" onclick="closeMenu()" hidden>Close Menu</button>
@@ -64,7 +64,7 @@
 </div>
 <div id="formation-menu" hidden>
   <h3>Formation:</h3>
-  <p><em>Click to establish your party's formation.</em></p>
+  <p><em>Click to establish your party's formation. Once you've selected all your characters hit "Finish Selection" or your party will go back to the previous order</em></p>
   <div id="party-loc"></div>
   <div id="print-party"></div>
   <div id="select-party"></div> 

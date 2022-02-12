@@ -7,6 +7,9 @@
 //need to set up a proper clamp function for battle calculation.
 //new places to fight enemies.
 //new items, shop etc.
+//items in inventory don't show weapons properly
+//mysterious bug, thunder Element doesn't work but fire and water does?
+//shop needs to have branch for weapons, possibly armor
 //clean up battle selection functions a bit, make them less chunky.
 //Characters go here. chp and chmp are "current hp and mp" respectively
 class Player {
@@ -67,7 +70,7 @@ class Enemy {
 const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
 //if an enemy is flying, bows hit for extra damage.
 const bat = new Enemy('Bat', 1,7, 3, 4, 2, 1, 1, "None", 1, 1, [], 'Flying');
-const familiar = new Enemy('Familiar', 1, 25, 3, 3, 4, 0, 2, null, 1, 0, [], 'Familiar');
+const familiar = new Enemy('Familiar', 1, 50, 3, 10, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
 /*const iceman = {
   name: "Ice Man",
   level: 1,
@@ -721,6 +724,7 @@ function targetBtn(partymem, target, flow, skill,){
   }
   };
 function attackCalc (char, target, flow, skill){
+  debugger;
   info.innerHTML = "";
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
@@ -753,7 +757,7 @@ function attackCalc (char, target, flow, skill){
           p.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
           info.appendChild(p);
           let p2 = document.createElement("p");
-          p2.innerHTML = enemyParty[target].name + "'s has been defeated!";
+          p2.innerHTML = enemyParty[target].name + " has been defeated!";
           info.appendChild(p2);
           enemyParty.splice(target, 1);
           enHp.splice(target, 1);
@@ -797,7 +801,7 @@ function attackCalc (char, target, flow, skill){
               p.innerHTML = enemyParty[target].name + " was hit for " + damage + " damage!";
               info.appendChild(p);
               let p2 = document.createElement("p");
-              p2.innerHTML = enemyParty[target].name + "'s has been defeated!";
+              p2.innerHTML = enemyParty[target].name + " has been defeated!";
               info.appendChild(p2);
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
@@ -939,7 +943,7 @@ function enemCalc (){
       if (damageRange <= 0){damageRange = 0};
       target.chp = target.chp - damageRange;
       let damageRes = document.createElement("p");
-      damageRes.innerHTML = target.name + " was hit by " + attacker.name + " for " + damage + " damage!";
+      damageRes.innerHTML = target.name + " was hit by " + attacker.name + " for " + damageRange + " damage!";
       info.appendChild(damageRes);
     }
     deathCheck();
@@ -1845,16 +1849,26 @@ function gameFlow (state) {
     if (state == 6){
       townOne.hidden = true;
       forestOne.hidden = true;
-      shopButton.hidden = false;
       townTwo.hidden = false;
+      document.getElementById("town-2-1").hidden = false;
       document.getElementById("town-2-chapel").hidden = true;
-      shopState = 1;
+      document.getElementById("town-2-2").hidden = true;
+      
     } 
   //Chapel
     if (state == 7){
       townTwo.hidden = false;
-      document.getElementById("town-2-1").hidden = false;
-      document.getElementById("town-2-chapel.hidden") = false;
+      document.getElementById("town-2-1").hidden = true;
+      document.getElementById("town-2-chapel").hidden = false;
+      document.getElementById("town-2-2").hidden = true;
+    }
+    if (state === 8){
+      shopState = 1;
+      shopButton.hidden = false;
+      townTwo.hidden = false;
+      document.getElementById("town-2-1").hidden = true;
+      document.getElementById("town-2-chapel").hidden = true;
+      document.getElementById("town-2-2").hidden = false;
     }
 };
 function move (state) {
@@ -1862,6 +1876,7 @@ function move (state) {
   gameFlow(gameState);
 };
 //shop functions
+//shop functions need to refactor to include weapons
 function purchaser (itemVal){
   if (money >= itemVal.cost) {
     document.getElementById("broke").hidden = true;
@@ -1889,28 +1904,26 @@ function shopFlow (){
     let shopOne = [potion, magicPotion];
     shopOne.forEach(pusher);
     }
+    if (shopState === 1){
+      let shopTwo = [potion, magicPotion, highpotion];
+      shopTwo.forEach(pusher);
+    }
 
 }
 //==================================
 // all testing goes below
-currentParty = [ando, marie, julie];
-reserveParty = [ari];
+currentParty = [ando, marie];
 let savedParty = currentParty;
-ando.weapon = flameSword;
+ando.weapon = woodSword;
 julie.skills.push(waterArrow);
 julie.weapon = woodBow;
 ando.skills.push(basher);
 marie.skills.push(fire);
 ando.skills.push(iceSlash);
 marie.support.push(cure);
-marie.support.push(defBoost);
-weaponsOwned.push(ironSword);
-weaponsOwned.push(flameSword);
-weaponsOwned.push(sparkBow);
-weaponsOwned.push(iceSpear);
-weaponsOwned.push(iceStaff);
+//marie.support.push(defBoost);
 ari.weapon = ironSpear;
-ari.skills.push(fire);
+//ari.skills.push(fire);
 weaponsOwned.push(excalibur);
 
 

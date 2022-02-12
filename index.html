@@ -164,7 +164,7 @@
       <p>Will you take one?</p>
       <button id="newspaper-1" onclick="alertOne()">Read Paper</button>
       <button onclick="move(7)">Go to Chapel</button>
-      <button>Go further into town</button>
+      <button onclick="move(8)">Go further into town</button>
     </div>
     <div id="town-2-chapel">
       <h2>Chapel</h2>
@@ -174,7 +174,14 @@
       <p>"While there's no money in this, I can keep summoning creatures until you feel comfortable"</p>
       <p>"I've held enough funerals for adventurers....I want to help."</p>
       <button onclick="move(6)">Go Back</button>
-      <button onclick="battle([familiar, familiar,]); statePost = 6;">Summon Familar</button>
+      <button onclick="battle([familiar]); statePost = 6;">Summon Familar</button>
+    </div>
+    <div id="town-2-2">
+      <h2>Magnolia Town - Town Square</h2>
+      <p>You see a shop nearby, you think it might be good to stock up on items.</p>
+      <p>There's a fountain ahead, you realize you've never seen so much water in one place</p>
+      <p><em>Ando and Marie take a moment to reflect on how far they've come.</em></p>
+      <button onclick="move(6)">Go Back</button>
     </div>
     
   <div>

@@ -20,10 +20,11 @@
 </div>
 <!-- Menu System below -->
 <div id="main-menu" hidden>
-  <button id="open-menu" onClick="openMenu()" hidden>Menu</button>
+  <button id="open-menu" onclick="openMenu()" hidden>Menu</button>
   <button id="save-button" hidden onclick="save()">Save</button>
   <button id="equip-button" hidden onclick="equip()">Equip</button>
   <button id="swap-team" hidden onclick="swapChars()">Swap Team</button>
+  <button id="formation-button" hidden onclic="">Formation</button>
   <button id="inventory-button" hidden onclick="showInventory()">Inventory</button>
   <button id="show-stats" onclick="showStats()" hidden>Party Status</button>
   <button id="close-menu" onclick="closeMenu()" hidden>Close Menu</button>
@@ -61,12 +62,13 @@
   <div id="main-chars"></div>  
   <hr>
 </div>
-
-<!--Level Up Menu-->
-<div id="level-up" hidden>
-  <h3>Congrats, you've leveled up!</h3>
-  <p>Please select a stat to level up below:</p>
-  <button></button>
+<div id="formation-menu" hidden>
+  <h3>Formation:</h3>
+  <p><em>Click to establish your party's formation.</em></p>
+  <div id="party-loc"></div>
+  <div id="print-party"></div>
+  <div id="select-party"></div> 
+  <hr>
 </div>
 <!--Gameplay Elements Below -->
 <button id="shop-button" onclick="openShop()" hidden>Shop</button>

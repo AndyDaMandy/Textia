@@ -8,7 +8,6 @@
 //new places to fight enemies.
 //new items, shop etc.
 //items in inventory don't show weapons properly
-//mysterious bug, thunder Element doesn't work but fire and water does?
 //shop needs to have branch for weapons, possibly armor
 //clean up battle selection functions a bit, make them less chunky.
 //Characters go here. chp and chmp are "current hp and mp" respectively
@@ -33,9 +32,9 @@ class Player {
   }
   };
   //name, level, hp, chp, mp, cmp, pAtk, pDef, mAtk, mDef, exp, buff, skills, support, weapon, type
-let ando = new Player('Ando', 1, 10, 10, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
-let marie = new Player('Marie', 1, 8, 8, 12, 12, 2, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
-let julie = new Player('Julie', 1, 9, 9, 6, 6, 8, 2, 6, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+let ando = new Player('Ando', 1, 10, 1, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
+let marie = new Player('Marie', 1, 8, 1, 12, 12, 2, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+let julie = new Player('Julie', 1, 9, 1, 6, 6, 8, 2, 6, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
 let ari = new Player('Ari', 1, 8, 8, 6, 6, 10, 2, 7, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
 //Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
 class Element {
@@ -96,16 +95,16 @@ const goblin = {
   pDef: 2,
   mAtk: 1,
   mDef: 1,
-  weakness: watEl,
+  weakness: iceEl,
   exp: 1,
   money: 1,
   eSkills: [],
-  type: "enemy"
+  type: "Goblin"
   };
 const potatoThief = {
   name: "Potato Thief",
   level: 1,
-  hp: 10,
+  hp: 12,
   mp: 5,
   pAtk: 5,
   pDef: 2,
@@ -115,7 +114,7 @@ const potatoThief = {
   exp: 1,
   money: 2,
   eSkills: [],
-  type: "enemy"
+  type: "Goblin"
   };
 const livingTree = {
   name: "Living Tree",
@@ -229,7 +228,7 @@ const magicPotion = {
   };
 const revivalPotion = {
   name: "Revival Potion",
-  type: "Revival",
+  type: "Rev",
   des: "Revives ally with 5 points of hp.",
   effect: 5,
   cost: 5
@@ -313,9 +312,12 @@ function swapChars(){
   document.getElementById("stats-menu").hidden = true;
     document.getElementById("line-1").innerHTML = "";
     document.getElementById("menu-items").innerHTML = "";
+    //formation menu
+    document.getElementById("formation-menu").hidden = true;
   //save remove
   document.getElementById("save-menu").hidden = true;
   //start next
+  
   document.getElementById("reserve-chars").innerHTML = "";
   document.getElementById("main-chars").innerHTML = "";
   document.getElementById("swap-menu").hidden = false;
@@ -351,6 +353,17 @@ const swapper = (char) => {
   }
   currentParty.forEach(btnGen);
 }
+
+function partyFormation(){
+  //repeats for how many party members are available
+  
+  let newArr = [];
+  for (let i = 0; i < currentParty.length; i++){
+    let btn = document.createElement("button");
+    btn.textContent = currentParty[i].name;
+    
+  }
+}
 function showStats(){
   //equip
   document.getElementById("equip-screen").hidden = true;
@@ -358,6 +371,8 @@ function showStats(){
   document.getElementById("equip-party").innerHTML = "";
   //save remove
   document.getElementById("save-menu").hidden = true;
+  //formation
+  document.getElementById.("formation-menu").hidden = true;
   //inventory
   document.getElementById("inventory-menu").hidden = true;
   document.getElementById("inventory-items").innerHTML = "";
@@ -440,6 +455,8 @@ function showInventory() {
   document.getElementById("equip-screen").hidden = true;
   document.getElementById("equipment").innerHTML = "";
   document.getElementById("equip-party").innerHTML = "";
+  //formation
+  document.getElementById("formation-menu").hidden = true;
   //party stats
   document.getElementById("stats-menu").hidden = true;
     document.getElementById("line-1").innerHTML = "";
@@ -504,6 +521,8 @@ function equip (){
   document.getElementById("equip-screen").hidden = false;
   document.getElementById("equipment").innerHTML = "";
   document.getElementById("equip-party").innerHTML = "";
+  //formation
+  document.getElementById("formation-menu").hidden = true;
   //inventory
   document.getElementById("inventory-menu").hidden = true;
   document.getElementById("inventory-items").innerHTML = "";
@@ -594,6 +613,9 @@ function closeMenu() {
   document.getElementById("equip-screen").hidden = true;
   document.getElementById("equipment").innerHTML = "";
   document.getElementById("equip-party").innerHTML = "";
+  //formation
+  document.getElementById("formation-button").hidden = true;
+  document.getElementById("formation-menu").hidden = true;
   //inventory
   document.getElementById("inventory-button").hidden = true;
   document.getElementById("inventory-menu").hidden = true;
@@ -724,7 +746,6 @@ function targetBtn(partymem, target, flow, skill,){
   }
   };
 function attackCalc (char, target, flow, skill){
-  debugger;
   info.innerHTML = "";
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
@@ -857,66 +878,67 @@ function deathCheck(){
       let playerD = currentParty.splice(1, 1);
       let player0 =  currentParty.splice(0, 1);
       let player3 = currentParty.splice(2, 1);
-      deadTeam.push(player3)
-      deadTeam.push(playerD);
-      deadTeam.push(player0);
+      deadTeam.push(player3[0])
+      deadTeam.push(playerD[0]);
+      deadTeam.push(player0[0]);
     } 
     //just p3 and p2 die.
     else if (currentParty.length === 3 && currentParty[2].chp <= 0 && currentParty[1].chp <= 0){
       let player3 = currentParty.splice(2, 1);
        let playerD = currentParty.splice(1, 1);
-      deadTeam.push(playerD)
-      deadTeam.push(player3)
+      deadTeam.push(playerD[0])
+      deadTeam.push(player3[0])
     }
     //just p3 and p1
     else if (currentParty.length === 3 && currentParty[2].chp <= 0 && currentParty[0].chp <= 0){
       let player3 = currentParty.splice(2, 1);
        let player0 = currentParty.splice(0, 1);
-      deadTeam.push(player0)
-      deadTeam.push(player3)
+      deadTeam.push(player0[0])
+      deadTeam.push(player3[0])
     }
     //just p2 and p1 die
     else if (currentParty.length === 3 && currentParty[0].chp <= 0 && currentParty[1].chp <= 0){
       let player0 = currentParty.splice(0, 1);
        let playerD = currentParty.splice(1, 1);
-      deadTeam.push(playerD)
-      deadTeam.push(player0)
+      deadTeam.push(playerD[0])
+      deadTeam.push(player0[0])
     }
-    //just p1 dies 
+    //just p1 dies in 3 party
     else if (currentParty.length === 3 && currentParty[0].chp <= 0) {
         let player0 = currentParty.splice(0, 1);
-      deadTeam.push(player0);
+      deadTeam.push(player0[0]);
     }
-    //just p2 dies
+    //just p2 dies in 3 party
     else if (currentParty.length === 3 && currentParty[1].chp <= 0) {
         let playerD = currentParty.splice(1, 1);
-      deadTeam.push(playerD);
+      deadTeam.push(playerD[0]);
     }
-    //just p3 dies
+    //just p3 dies in 3 party
     else if (currentParty.length === 3 && currentParty[2].chp <= 0){
       let player3 = currentParty.splice(2, 1);
-      deadTeam.push(player3)
+      deadTeam.push(player3[0])
     }
     //if party has two left and both die.
     else if (currentParty.length === 2 && currentParty[1].chp <= 0 && currentParty[0].chp <= 0){
      let playerD = currentParty.splice(1, 1);
      let player0 =  currentParty.splice(0, 1);
-      deadTeam.push(playerD);
-      deadTeam.push(player0);
+      deadTeam.push(playerD[0]);
+      deadTeam.push(player0[0]);
     }
     // if party is two and p1 dies.
      else if (currentParty.length === 2 && currentParty[1].chp <= 0){
       let playerD =  currentParty.splice(1, 1);
-      deadTeam.push(playerD);
+      deadTeam.push(playerD[0]);
     } 
     //if party is two and p1 dies.
     else if (currentParty.length === 2 && currentParty[0].chp <= 0){
       let playerD =  currentParty.splice(0, 1);
+      deadTeam.push(playerD[0]);
     }
     // if p1 dies
     else if (currentParty.length === 1 && currentParty[0].chp <= 0){
     let playerD =  currentParty.splice(0, 1);
-    deadTeam.push(playerD);
+    deadTeam.push(playerD[0]);
     }
     console.log(currentParty);
     console.log(deadTeam);
@@ -935,6 +957,8 @@ function enemCalc (){
     let enLength = enPow.length;
     for (let i = 0; i < enPow.length; i++){
       let target = currentParty[getRandomInt(teamLength)];
+      //NEW BRANCH FOR MAGIC ENEMIES GOES HERE!!!!! IT CHECKS IF THE ATTACKER HAS MORE MAGIC ATTACK THAN ATTACK
+      //enemies can then use skills....?
       let attacker = enemyParty[getRandomInt(enLength)];
       let attackerDam = attacker.pAtk;
       //if buff is off, then buff = 0, thus not changing much.
@@ -1076,16 +1100,32 @@ function supCalc(caster, partymem, sup, supflow){
   };
 function itemTarget (item, flow){
   //selects target
+  //target branch needed for dead party members 1 > 2. There can only be 2 dead max.
   change.innerHTML = "";
   itemSlot.innerHTML = "";
   skillSlot.innerHTML = "";
- if (currentParty.length === 1){
+  if (item.type === "Rev" && deadTeam.length === 1){
+    let btn = document.createElement("button");
+  btn.innerHTML = deadTeam[0].name;
+  btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = deadTeam[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+  itemSlot.appendChild(btn);
+  } else if (item.type === "Rev" && deadTeam.length === 2){
+    let btn = document.createElement("button");
+  btn.innerHTML = deadTeam[0].name;
+  btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = deadTeam[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+  itemSlot.appendChild(btn);
+  let btn1 = document.createElement("button");
+    btn1.innerHTML = deadTeam[1].name;
+    btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = deadTeam[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
+    itemSlot.appendChild(btn1);
+  }
+ else if (currentParty.length === 1){
   let btn = document.createElement("button");
   btn.innerHTML = currentParty[0].name;
   btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
   itemSlot.appendChild(btn);
   }
-    if (currentParty.length === 2) {
+   else if (currentParty.length === 2) {
   let btn = document.createElement("button");
   btn.innerHTML = currentParty[0].name;
   btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
@@ -1094,7 +1134,7 @@ function itemTarget (item, flow){
     btn1.innerHTML = currentParty[1].name;
     btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
     itemSlot.appendChild(btn1);
-    } if (currentParty.length === 3){
+    } else if (currentParty.length === 3){
       let btn = document.createElement("button");
         btn.innerHTML = currentParty[0].name;
         btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
@@ -1141,11 +1181,21 @@ function itemCalc(partymem, item, flow){
       loadPartyInfo();
     }
   }
+    if (item.type == "Rev"){
+      const index = deadTeam.map(object => object.name).indexOf(partymem.name);
+     let a = deadTeam.splice(index, 1);
+    // deadArr.push(a[0]);
+    // let b = deadArr.indexOf(partymem);
+     partymem.chp = item.effect;
+     currentParty.push(a[0]);
+     let pheal = document.createElement("p")
+     pheal.innerHTML = partymem.name + " has been revived!";
+     info.appendChild(pheal);
+     loadPartyInfo();
+    }
+  
   inventory.splice(itemPos, 1);
   };
-function deadTarget(item, flow){
-
-};
 let itemChoice;
 let itemPos;
 /*
@@ -1223,7 +1273,13 @@ function clearBattle() {
   battleMode.hidden = true;
   mainMenu.hidden = false;
   expGain = 0;
-  loadParty();
+ // loadParty();
+ if (deadTeam.length >= 1){
+   for (let i = 0; i < deadTeam.length; i++){
+     currentParty.push(deadTeam[i]);
+   }
+ }
+  console.log(currentParty);
   function healer(x){
     x.chp = x.hp;
     x.cmp = x.mp;
@@ -1312,17 +1368,20 @@ let winMon = 0;
 let expGain = 0;
 function saveParty (){
   savedParty = currentParty;
+  console.log(savedParty);
 }
-function loadParty(){
+/*function loadParty(){
+  console.log(savedParty);
   currentParty = savedParty;
 }
+*/
 function battle(en) {
   //battleState controls battle flow and button creation.
   adv.hidden = true;
   battleState = 1;
   battleMode.hidden = false;
   mainMenu.hidden = true;
-  saveParty();
+ // saveParty();
   closeMenu();
   enemyParty = en;
   winMon = 0;
@@ -1913,10 +1972,12 @@ function shopFlow (){
 }
 //==================================
 // all testing goes below
-currentParty = [ando, marie];
+currentParty = [ando, marie, julie];
 let savedParty = currentParty;
 ando.weapon = woodSword;
 julie.skills.push(waterArrow);
+inventory.push(revivalPotion);
+inventory.push(revivalPotion);
 julie.weapon = woodBow;
 ando.skills.push(basher);
 marie.skills.push(fire);

@@ -323,14 +323,14 @@ function swapChars(){
   document.getElementById("swap-menu").hidden = false;
   let btnGen = (char) => {
     let btn = document.createElement("button");
-    btn.innerHTML = char.name;
+    btn.textContent = char.name;
     btn.addEventListener('click', () => {swapper(char)});
     document.getElementById("reserve-chars").appendChild(btn);
   }
   if (reserveParty.length > 0) {
     reserveParty.forEach(btnGen);
   } else {
-    document.getElementById("reserve-chars").innerHTML = "There are no reserve characters availabe to swap. How did you find this button?";
+    document.getElementById("reserve-chars").textContent = "There are no reserve characters availabe to swap. How did you find this button?";
   }
 };
 const swapper = (char) => {
@@ -343,7 +343,7 @@ const swapper = (char) => {
     btn.innerHTML = old.name;
     btn.addEventListener('click', () => {
       debugger;
-      document.getElementById("main-chars").innerHTML = old.name + " has been swapped with " + char.name;
+      document.getElementById("main-chars").textContent = old.name + " has been swapped with " + char.name;
       arr = currentParty.splice(currentParty.indexOf(old), 1);
       newarr = reserveParty.splice(reserveParty.indexOf(char), 1);
       reserveParty.push(arr[0]);
@@ -407,7 +407,7 @@ function partyFormation(){
     }
   }
  let finish = document.createElement("button");
-finish.innerHTML = "Finish Selection";
+finish.textContent = "Finish Selection";
 finish.addEventListener('click', () => {finalCheck();})
 document.getElementById("select-party").appendChild(finish);
 }
@@ -455,31 +455,31 @@ function showStatus (x) {
   statsLog.innerHTML = "";
   }
   let li = document.createElement("li");
-  li.innerHTML = "Name: " + x.name;
+  li.textContent = "Name: " + x.name;
     statsLog.appendChild(li);
     li = document.createElement("li");
-  li.innerHTML = "Level: " + x.level;
+  li.textContent = "Level: " + x.level;
     statsLog.appendChild(li);
     li = document.createElement("li");
-  li.innerHTML = "Weapon: " + x.weapon.name + " - " + "Type: " + x.weapon.type + " - " + "Attribute: " + x.weapon.atr + " - " + x.weapon.des + " Power: " + x.weapon.pow;
+  li.textContent = "Weapon: " + x.weapon.name + " - " + "Type: " + x.weapon.type + " - " + "Attribute: " + x.weapon.atr + " - " + x.weapon.des + " Power: " + x.weapon.pow;
     statsLog.appendChild(li);
     li = document.createElement("li");
-  li.innerHTML = "HP: " + x.hp;
+  li.textContent = "HP: " + x.hp;
     statsLog.appendChild(li);
     li = document.createElement("li");
-  li.innerHTML = "MP: " + x.mp;
+  li.textContent = "MP: " + x.mp;
     statsLog.appendChild(li);
     li = document.createElement("li")
-  li.innerHTML = "Physical Attack: " + x.pAtk;
+  li.textContent = "Physical Attack: " + x.pAtk;
    statsLog.appendChild(li);
     li = document.createElement("li")
-  li.innerHTML = "Physical Defense: " + x.pDef;
+  li.textContent = "Physical Defense: " + x.pDef;
    statsLog.appendChild(li);
     li = document.createElement("li")
-  li.innerHTML = "Magic Attack: " + x.mAtk;
+  li.textContent = "Magic Attack: " + x.mAtk;
    statsLog.appendChild(li);
     li = document.createElement("li")
-  li.innerHTML = "Magic Defense: " + x.mDef;
+  li.textContent = "Magic Defense: " + x.mDef;
    statsLog.appendChild(li);
     li = document.createElement("li");
   let skillsList = [];
@@ -487,7 +487,7 @@ function showStatus (x) {
     skillsList.push(x.skills[b].name);
   };
   let joined = skillsList.join(", ");
-  li.innerHTML = "Skills: " + joined;       
+  li.textContent = "Skills: " + joined;       
   statsLog.appendChild(li);
   li = document.createElement("li");
   let supportList = [];
@@ -495,7 +495,7 @@ function showStatus (x) {
     supportList.push(x.support[b].name);
   };
  let joined2 = supportList.join(", ");
-  li.innerHTML = "Support Skills: " + joined2;       
+  li.textContent = "Support Skills: " + joined2;       
   statsLog.appendChild(li);
 };
 function showInventory() {
@@ -520,17 +520,17 @@ function showInventory() {
     inventorySlot.innerHTML = "";
   }
   let cash = document.createElement("p");
-  cash.innerHTML = "Money: $"+ money;
+  cash.textContent = "Money: $"+ money;
   inventorySlot.appendChild(cash);
   let inventoryMenu = document.getElementById("inventory-menu");
   let pusher = function (item) { 
     if (item.type === "Weapon"){
       let li2 = document.createElement("li");
-      li2.innerHTML = item.name + ": " + "Type: " + item.type + " - " + item.pow + " - " + item.des;
+      li2.textContent = item.name + ": " + "Type: " + item.type + " - " + item.pow + " - " + item.des;
       inventorySlot.appendChild(li2)
   } else {
     let li = document.createElement("li");
-    li.innerHTML = item.name + ": " + "Type: " + item.type + " - " + item.des;
+    li.textContent = item.name + ": " + "Type: " + item.type + " - " + item.des;
     inventorySlot.appendChild(li)
     }
   };
@@ -551,11 +551,11 @@ function equipSelect(char, weapon){
     document.getElementById("equipped-text").innerHTML = "";
   }
   let btn = document.createElement("button");
-    btn.innerHTML = char.name + " - Equipped: " + char.weapon.name;
+    btn.textContent = char.name + " - Equipped: " + char.weapon.name;
     btn.addEventListener('click', function(){
       weaponsOwned.push(char.weapon);
       let equipped = document.createElement("p");
-      equipped.innerHTML = char.name + " equipped " +  weapon.name + "!"
+      equipped.textContent = char.name + " equipped " +  weapon.name + "!"
       document.getElementById("equipped-text").appendChild(equipped);
       char.weapon = weapon;
       weaponsOwned.splice(weaponsOwned.indexOf(weapon), 1);
@@ -586,25 +586,25 @@ function equip (){
    // function needs to branch based on the character...
       if (weapon.type === "Sword"){
         let button = document.createElement("button");
-        button.innerHTML = weapon.name;
+        button.textContent = weapon.name;
         button.addEventListener('click', () => { equipSelect(ando, weapon); });
         document.getElementById("equipment").appendChild(button);
       }
       if (weapon.type === "Staff"){
         let button4 = document.createElement("button");
-        button4.innerHTML = weapon.name;
+        button4.textContent = weapon.name;
         button4.addEventListener('click', () => { equipSelect(marie, weapon); });
         document.getElementById("equipment").appendChild(button4);
       }
       if (weapon.type === "Bow"){
         let button3 = document.createElement("button");
-        button3.innerHTML = weapon.name;
+        button3.textContent = weapon.name;
         button3.addEventListener('click', () => { equipSelect(julie, weapon); });
         document.getElementById("equipment").appendChild(button3);
       }
       if (weapon.type === "Spear"){
         let button2 = document.createElement("button");
-        button2.innerHTML = weapon.name;
+        button2.textContent = weapon.name;
         button2.addEventListener('click', () => {equipSelect(ari, weapon); });
         document.getElementById("equipment").appendChild(button2);
       }
@@ -633,7 +633,7 @@ function save () {
   //initializes money earlier;
   let money;
 function openShop(){
-  moneyShow.innerHTML = "$" + money;
+  moneyShow.textContent = "$" + money;
   shop.hidden = false;
   shopFlow();
   openMenu(); 
@@ -1110,12 +1110,12 @@ function supCalc(caster, partymem, sup, supflow){
       if (partymem.chp > partymem.hp){
       partymem.chp = partymem.hp;
       let pheal = document.createElement("p")
-      pheal.innerHTML = partymem.name + "'s HP was fully healed! Their HP is now full";
+      pheal.textContent = partymem.name + "'s HP was fully healed! Their HP is now full";
       info.appendChild(pheal);
       loadPartyInfo();
         } else {
         let pheal = document.createElement("p")
-        pheal.innerHTML = partymem.name + "'s HP is now: " + partymem.chp + "/" + partymem.hp;
+        pheal.textContent = partymem.name + "'s HP is now: " + partymem.chp + "/" + partymem.hp;
         info.appendChild(pheal);
         loadPartyInfo();
         }
@@ -1124,12 +1124,12 @@ function supCalc(caster, partymem, sup, supflow){
         partymem.buff[0].pow += sup.pow;
         partymem.buff[0].on = true;
         let pbuff = document.createElement("p")
-        pbuff.innerHTML = partymem.name + "'s Attack has been boosted!";
+        pbuff.textContent = partymem.name + "'s Attack has been boosted!";
         info.appendChild(pbuff);
         loadPartyInfo();
         } else {
           let pbuff = document.createElement("p")
-          pbuff.innerHTML = partymem.name + "'s Attack has already been boosted! It had no effect.";
+          pbuff.textContent = partymem.name + "'s Attack has already been boosted! It had no effect.";
           info.appendChild(pbuff);
         }
     } if (sup.type === "Defense Buff") {
@@ -1137,12 +1137,12 @@ function supCalc(caster, partymem, sup, supflow){
         partymem.buff[1].pow += sup.pow;
         partymem.buff[1].on = true; 
         let pbuff = document.createElement("p")
-        pbuff.innerHTML = partymem.name + "'s Defense has been boosted!";
+        pbuff.textContent = partymem.name + "'s Defense has been boosted!";
         info.appendChild(pbuff);
         loadPartyInfo();
        } else {
          let pbuff = document.createElement("p")
-        pbuff.innerHTML = partymem.name + "'s Defense has already been boosted! It had no effect.";
+        pbuff.textContent = partymem.name + "'s Defense has already been boosted! It had no effect.";
         info.appendChild(pbuff);
         loadPartyInfo();
        }
@@ -1156,7 +1156,7 @@ function itemTarget (item, flow){
   skillSlot.innerHTML = "";
   if (item.type === "Rev" && deadTeam.length === 1){
     let btn = document.createElement("button");
-  btn.innerHTML = deadTeam[0].name;
+  btn.textContent = deadTeam[0].name;
   btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = deadTeam[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
   itemSlot.appendChild(btn);
   } else if (item.type === "Rev" && deadTeam.length === 2){
@@ -1171,30 +1171,30 @@ function itemTarget (item, flow){
   }
  else if (currentParty.length === 1){
   let btn = document.createElement("button");
-  btn.innerHTML = currentParty[0].name;
+  btn.textContent = currentParty[0].name;
   btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
   itemSlot.appendChild(btn);
   }
    else if (currentParty.length === 2) {
   let btn = document.createElement("button");
-  btn.innerHTML = currentParty[0].name;
+  btn.textContent = currentParty[0].name;
   btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
   itemSlot.appendChild(btn);
     let btn1 = document.createElement("button");
-    btn1.innerHTML = currentParty[1].name;
+    btn1.textContent = currentParty[1].name;
     btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
     itemSlot.appendChild(btn1);
     } else if (currentParty.length === 3){
       let btn = document.createElement("button");
-        btn.innerHTML = currentParty[0].name;
+        btn.textContent = currentParty[0].name;
         btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
         itemSlot.appendChild(btn);
     let btn1 = document.createElement("button");
-    btn1.innerHTML = currentParty[1].name;
+    btn1.textContent = currentParty[1].name;
     btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
     itemSlot.appendChild(btn1);
     let btn2 = document.createElement("button");
-    btn2.innerHTML = currentParty[2].name;
+    btn2.textContent = currentParty[2].name;
     btn2.addEventListener('click', function (x, y, z){x = item; y = flow;z = currentParty[2]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
     itemSlot.appendChild(btn2);
     }
@@ -1207,12 +1207,12 @@ function itemCalc(partymem, item, flow){
     if (partymem.chp > partymem.hp){
       partymem.chp = partymem.hp;
       let pheal = document.createElement("p")
-      pheal.innerHTML = partymem.name + "'s HP was fully healed! Their HP is now full";
+      pheal.textContent = partymem.name + "'s HP was fully healed! Their HP is now full";
       info.appendChild(pheal);
       loadPartyInfo();
     } else {
       let pheal = document.createElement("p")
-      pheal.innerHTML = partymem.name + "'s HP is now: " + partymem.chp + "/" + partymem.hp;
+      pheal.textContent = partymem.name + "'s HP is now: " + partymem.chp + "/" + partymem.hp;
       info.appendChild(pheal);
       loadPartyInfo();
     }
@@ -1221,12 +1221,12 @@ function itemCalc(partymem, item, flow){
     if (partymem.cmp > partymem.mp){
       partymem.cmp = partymem.mp;
       let pheal = document.createElement("p")
-      pheal.innerHTML = partymem.name + "'s MP was fully healed! Their MP is now full";
+      pheal.textContent = partymem.name + "'s MP was fully healed! Their MP is now full";
       info.appendChild(pheal);
       loadPartyInfo();
     } else {
       let pheal = document.createElement("p")
-      pheal.innerHTML = partymem.name + "'s MP is now: " + partymem.cmp + "/" + partymem.mp;
+      pheal.textContent = partymem.name + "'s MP is now: " + partymem.cmp + "/" + partymem.mp;
       info.appendChild(pheal);
       loadPartyInfo();
     }
@@ -1994,7 +1994,7 @@ function purchaser (itemVal){
     document.getElementById("broke").hidden = true;
     inventory.push(itemVal);
     money -= itemVal.cost;
-    document.getElementById("money").innerHTML = "$" + money;
+    document.getElementById("money").textContent = "$" + money;
   } else {
     document.getElementById("broke").hidden = false;
   }
@@ -2007,7 +2007,7 @@ function shopFlow (){
   //additional shops can be added easily
   function pusher (item) {
    let btn = document.createElement("button");
-   btn.innerHTML = item.name + ": cost: " + item.cost;
+   btn.textContent = item.name + ": cost: " + item.cost;
    btn.addEventListener('click', function (x) {x =item ; purchaser(x); openMenu(); showInventory();});
     shopItems.appendChild(btn);
   }

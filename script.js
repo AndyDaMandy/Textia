@@ -1878,7 +1878,7 @@ function openChest(item, id){
 };
 function openWeapon(weapon, id){
   weaponsOwned.push(weapon);
-  document.getElementById(id).hidden = true;
+  document.getElementById(id).remove();
   alert("You found: " + weapon.name + " - in the chest!");
 }
 

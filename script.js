@@ -1161,11 +1161,11 @@ function itemTarget (item, flow){
   itemSlot.appendChild(btn);
   } else if (item.type === "Rev" && deadTeam.length === 2){
     let btn = document.createElement("button");
-  btn.innerHTML = deadTeam[0].name;
+  btn.textContent = deadTeam[0].name;
   btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = deadTeam[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
   itemSlot.appendChild(btn);
   let btn1 = document.createElement("button");
-    btn1.innerHTML = deadTeam[1].name;
+    btn1.textContent = deadTeam[1].name;
     btn1.addEventListener('click', function (x, y, z){x = item; y = flow;z = deadTeam[1]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
     itemSlot.appendChild(btn1);
   }

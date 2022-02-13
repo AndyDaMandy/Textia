@@ -340,7 +340,7 @@ const swapper = (char) => {
   let newarr;
   let btnGen = (old) => {
     let btn = document.createElement("button");
-    btn.innerHTML = old.name;
+    btn.textContent = old.name;
     btn.addEventListener('click', () => {
       debugger;
       document.getElementById("main-chars").textContent = old.name + " has been swapped with " + char.name;
@@ -439,7 +439,7 @@ function showStats(){
     }
   let btnGen = (char) => {
     let btn = document.createElement("button");
-    btn.innerHTML = char.name;
+    btn.textContent = char.name;
     btn.addEventListener('click', () => {showStatus(char)});
     partyBtns.appendChild(btn);
   }
@@ -734,13 +734,13 @@ function targetBtn(partymem, target, flow, skill,){
   if (skill != undefined){
     if (enemyParty.length === 1){
     let btn1 = document.createElement("button");
-      btn1.innerHTML = enemyParty[0].name;
+      btn1.textContent = enemyParty[0].name;
      btn1.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, flow1, skill1);});
       change.appendChild(btn1);
       } 
     if (enemyParty.length === 2){
     let btn1 = document.createElement("button");
-      btn1.innerHTML = enemyParty[0].name;
+      btn1.textContent = enemyParty[0].name;
       btn1.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, flow1, skill1);});
       change.appendChild(btn1);
         let btn2 = document.createElement("button");
@@ -1239,7 +1239,7 @@ function itemCalc(partymem, item, flow){
      partymem.chp = item.effect;
      currentParty.push(a[0]);
      let pheal = document.createElement("p")
-     pheal.innerHTML = partymem.name + " has been revived!";
+     pheal.textContent = partymem.name + " has been revived!";
      info.appendChild(pheal);
      loadPartyInfo();
     }
@@ -1258,12 +1258,12 @@ function itemBtnGen (flow){
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
   let closer = document.createElement("button");
-  closer.innerHTML = "Close Item List";
+  closer.textContent = "Close Item List";
   closer.addEventListener('click', function () {itemSlot.innerHTML = "";});
   itemSlot.appendChild(closer);
   for (let i = 0; i < inventory.length; i++){
     let btn = document.createElement("button");
-  btn.innerHTML = inventory[i].name;
+  btn.textContent = inventory[i].name;
   btn.addEventListener('click', function (x, y, z) {x = inventory[i]; itemChoice = x; y = flow; battleMove(y);});
   itemSlot.appendChild(btn);
  // count++;
@@ -1281,7 +1281,7 @@ function statBoost(char){
   char.pDef += 1;
   char.mDef += 1;
   let leveluptext = document.createElement("p");
-  leveluptext.innerHTML = char.name + " leveled up! Their level is now: " + char.level + "!" ;
+  leveluptext.textContent = char.name + " leveled up! Their level is now: " + char.level + "!" ;
   info.appendChild(leveluptext);
 };
 function levelUp(char){
@@ -1290,14 +1290,14 @@ function levelUp(char){
       if (char.level === 2 && char.name === "Julie") {
           julie.support.push(atkBoost);
         let learnedSkill = document.createElement("p");
-        learnedSkill.innerHTML = julie.name + " learned " + atkBoost.name + "!";
+        learnedSkill.textContent = julie.name + " learned " + atkBoost.name + "!";
         info.appendChild(learnedSkill);
         }
         
         if (char.level === 2 && char.name === "Marie") {
           marie.skills.push(thunder);
         let learnedSkill2 = document.createElement("p");
-        learnedSkill2.innerHTML = marie.name + " learned " + thunder.name + "!";
+        learnedSkill2.textContent = marie.name + " learned " + thunder.name + "!";
         info.appendChild(learnedSkill2);
         }
         
@@ -1344,7 +1344,7 @@ let statePost = 0;
 function endBattle(loc) {
  // if (enemyParty.length === 0) {};
  let endButton = document.createElement("button");
- endButton.innerHTML = "End Battle";
+ endButton.textContent = "End Battle";
  endButton.addEventListener('click', function (x) {x = loc; clearBattle(); move(statePost)});
  end.appendChild(endButton);
   };
@@ -1355,20 +1355,20 @@ function loadEnemyInfo(){
   end.innerHTML = "";
    if (enemyParty.length === 1){
     let p = document.createElement("h4");
-    p.innerHTML = "Enemies: " + enemyParty[0].name;
+    p.textContent = "Enemies: " + enemyParty[0].name;
     enemyPlace.appendChild(p);
   //  enHp.push(enemyParty[0].hp);
     };
     if (enemyParty.length === 2) {
        let p = document.createElement("h4");
-        p.innerHTML = "Enemies: " + enemyParty[0].name + ", " + enemyParty[1].name;
+        p.textContent = "Enemies: " + enemyParty[0].name + ", " + enemyParty[1].name;
         enemyPlace.appendChild(p);
       //  enHp.push(enemyParty[0].hp);
       //  enHp.push(enemyParty[1].hp);
       };
     if (enemyParty.length === 3) {
        let p = document.createElement("h4");
-        p.innerHTML = "Enemies: " + enemyParty[0].name + ", " + enemyParty[1].name + ", " + enemyParty[2].name;
+        p.textContent = "Enemies: " + enemyParty[0].name + ", " + enemyParty[1].name + ", " + enemyParty[2].name;
         enemyPlace.appendChild(p);
       //  enHp.push(enemyParty[0].hp);
       //  enHp.push(enemyParty[1].hp);
@@ -1381,35 +1381,35 @@ function loadPartyInfo(){
   holder.innerHTML = "";
   if (currentParty.length === 1){
     let p2 = document.createElement("h4");
-    p2.innerHTML = "Party: " + currentParty[0].name;
+    p2.textContent = "Party: " + currentParty[0].name;
     partyPlace.appendChild(p2);
     let partystat = document.createElement("li");
-    partystat.innerHTML = currentParty[0].name + " HP: " + currentParty[0].chp + "/" + currentParty[0].hp + " - MP: " + currentParty[0].cmp + "/" + currentParty[0].mp;
+    partystat.textContent = currentParty[0].name + " HP: " + currentParty[0].chp + "/" + currentParty[0].hp + " - MP: " + currentParty[0].cmp + "/" + currentParty[0].mp;
     holder.appendChild(partystat);
     pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);
   } if (currentParty.length === 2) {
   let p2 = document.createElement("h4");
-  p2.innerHTML = "Party: " + currentParty[0].name + ", " + currentParty[1].name;
+  p2.textContent = "Party: " + currentParty[0].name + ", " + currentParty[1].name;
   partyPlace.appendChild(p2);
     let partystat = document.createElement("li");
-    partystat.innerHTML = currentParty[0].name + " HP: " + currentParty[0].chp + "/" + currentParty[0].hp + " - MP: " + currentParty[0].cmp + "/" + currentParty[0].mp;
+    partystat.textContent = currentParty[0].name + " HP: " + currentParty[0].chp + "/" + currentParty[0].hp + " - MP: " + currentParty[0].cmp + "/" + currentParty[0].mp;
     holder.appendChild(partystat);
     let partystat1 = document.createElement("li");
-    partystat1.innerHTML = currentParty[1].name + " HP: " + currentParty[1].chp + "/" + currentParty[1].hp + " - MP: " + currentParty[1].cmp + "/" + currentParty[1].mp;
+    partystat1.textContent = currentParty[1].name + " HP: " + currentParty[1].chp + "/" + currentParty[1].hp + " - MP: " + currentParty[1].cmp + "/" + currentParty[1].mp;
     holder.appendChild(partystat1);
     pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);pHp.push(currentParty[1].hp); pMp.push(currentParty[1].mp);
   } if (currentParty.length === 3){
     let p3 = document.createElement("h4");
-    p3.innerHTML = "Party: " + currentParty[0].name + ", " + currentParty[1].name + ", " + currentParty[2].name;
+    p3.textContent = "Party: " + currentParty[0].name + ", " + currentParty[1].name + ", " + currentParty[2].name;
     partyPlace.appendChild(p3);
     let partystat = document.createElement("li");
-    partystat.innerHTML = currentParty[0].name + " HP: " + currentParty[0].chp + "/" + currentParty[0].hp + " - MP: " + currentParty[0].cmp + "/" + currentParty[0].mp;
+    partystat.textContent = currentParty[0].name + " HP: " + currentParty[0].chp + "/" + currentParty[0].hp + " - MP: " + currentParty[0].cmp + "/" + currentParty[0].mp;
     holder.appendChild(partystat);
     let partystat1 = document.createElement("li");
-    partystat1.innerHTML = currentParty[1].name + " HP: " + currentParty[1].chp + "/" + currentParty[1].hp + " - MP: " + currentParty[1].cmp + "/" + currentParty[1].mp;
+    partystat1.textContent = currentParty[1].name + " HP: " + currentParty[1].chp + "/" + currentParty[1].hp + " - MP: " + currentParty[1].cmp + "/" + currentParty[1].mp;
     holder.appendChild(partystat1);
     let partystat2 = document.createElement("li");
-    partystat2.innerHTML = currentParty[2].name + " HP: " + currentParty[2].chp + "/" + currentParty[2].hp + " - MP: " + currentParty[2].cmp + "/" + currentParty[2].mp;
+    partystat2.textContent = currentParty[2].name + " HP: " + currentParty[2].chp + "/" + currentParty[2].hp + " - MP: " + currentParty[2].cmp + "/" + currentParty[2].mp;
     holder.appendChild(partystat2);
       pHp.push(currentParty[0].hp); pMp.push(currentParty[0].mp);pHp.push(currentParty[1].hp); pMp.push(currentParty[1].mp);pHp.push(currentParty[2].hp); pMp.push(currentParty[2].mp);
   }
@@ -1460,7 +1460,7 @@ function battle(en) {
   };
   // start phase
   let p3 = document.createElement("p");
-  p3.innerHTML = enemyParty.length + " enemies appeared!"
+  p3.textContent = enemyParty.length + " enemies appeared!"
   info.appendChild(p3);
   battleMove(battleState);
   // Phase 1
@@ -1482,13 +1482,13 @@ function battleMove(x) {
     money += winMon;
     partyPlace.innerHTML = "";
     let win = document.createElement("p");
-    win.innerHTML = "All enemies defeated! Congrats!";
+    win.textContent = "All enemies defeated! Congrats!";
     info.appendChild(win);
     let expInfo = document.createElement("p");
-    expInfo.innerHTML = "All allies gained +" + expGain + " experience points!";
+    expInfo.textContent = "All allies gained +" + expGain + " experience points!";
     info.appendChild(expInfo);
     let monInfo = document.createElement("p");
-    monInfo.innerHTML = "The party gained +$" + winMon + " money!";
+    monInfo.textContent = "The party gained +$" + winMon + " money!";
     info.appendChild(monInfo);
       function expGainer(x){
         x.exp += expGain;
@@ -1507,18 +1507,18 @@ function battleMove(x) {
       skillChoice = "";
       supportChoice = "";
       let p4 = document.createElement("p");
-      p4.innerHTML = currentParty[0].name + "'s turn. " + "Please select a command: ";
+      p4.textContent = currentParty[0].name + "'s turn. " + "Please select a command: ";
       info.appendChild(p4);
       let atkbtn = document.createElement("button");
-      atkbtn.innerHTML = "Attack";
+      atkbtn.textContent = "Attack";
       atkbtn.addEventListener('click', function (){choice = 0; battleMove(2);});
       let skl = document.createElement("button");
       //sets up skill menu/closing buttons.
-      skl.innerHTML = "Skills";
+      skl.textContent = "Skills";
         skl.addEventListener('click', function () {choice = 1; skillBtnGen(currentParty[0], 2, 9);});
       //adds open menu branch
       let itm = document.createElement("button");
-        itm.innerHTML = "Items";
+        itm.textContent = "Items";
         itm.addEventListener('click', function (){choice = 2; itemBtnGen(9);})
         change.appendChild(atkbtn);
         change.appendChild(skl);
@@ -1533,13 +1533,13 @@ function battleMove(x) {
     skillSlot.innerHTML = "";
     if (choice === 0){
       let p4 = document.createElement("p");
-      p4.innerHTML = "Who will you target?";
+      p4.textContent = "Who will you target?";
       info.appendChild(p4);
       targetBtn(currentParty[0], enHp, 3);
       backBtn(1); 
     } if (choice === 1){
       let p4 = document.createElement("p");
-      p4.innerHTML = "Who will you target?";
+      p4.textContent = "Who will you target?";
       info.appendChild(p4);
       targetBtn(currentParty[0], enHp, 3, skillChoice);
       backBtn(1); 
@@ -1553,7 +1553,7 @@ function battleMove(x) {
     skillSlot.innerHTML = "";
     if (currentParty.length === 1){
       let fwd = document.createElement("button");
-        fwd.innerHTML = "Next";
+        fwd.textContent = "Next";
         fwd.addEventListener('click', function (){battleMove(6);});
         change.appendChild(fwd);
         loadEnemyInfo();
@@ -1563,7 +1563,7 @@ function battleMove(x) {
     } else {
     //creates foward button and displays the info from the calculator
         let fwd = document.createElement("button");
-        fwd.innerHTML = "Next";
+        fwd.textContent = "Next";
         fwd.addEventListener('click', function (){battleMove(4);});
         change.appendChild(fwd);
         loadEnemyInfo();
@@ -1581,16 +1581,16 @@ function battleMove(x) {
     skillChoice = "";
     supportChoice = "";
     let p4 = document.createElement("p");
-        p4.innerHTML = currentParty[1].name + "'s turn. " + "Please select a command: ";
+        p4.textContent = currentParty[1].name + "'s turn. " + "Please select a command: ";
         info.appendChild(p4);
       let atkbtn = document.createElement("button");
-      atkbtn.innerHTML = "Attack";
+      atkbtn.textContent = "Attack";
       atkbtn.addEventListener('click', function (){choice = 0; battleMove(5);});
       let skl = document.createElement("button");
-      skl.innerHTML = "Skills";
+      skl.textContent = "Skills";
       skl.addEventListener('click', function () {choice = 1; skillBtnGen(currentParty[1], 5, 11);});
       let itm = document.createElement("button");
-      itm.innerHTML = "Items";
+      itm.textContent = "Items";
       itm.addEventListener('click', function (){choice = 2; itemBtnGen(11);})
         change.appendChild(atkbtn);
         change.appendChild(skl);
@@ -1614,7 +1614,7 @@ function battleMove(x) {
     } 
     if (choice === 1){
       let p4 = document.createElement("p");
-      p4.innerHTML = "Who will you target?";
+      p4.textContent = "Who will you target?";
       info.appendChild(p4);
       targetBtn(currentParty[1], enHp, 6, skillChoice);
       skillSlot.innerHTML = "";
@@ -1628,7 +1628,7 @@ function battleMove(x) {
     //creates foward button and displays the info from the calculator, checks if battle is won.
     if (currentParty.length === 3){
        let fwd = document.createElement("button");
-        fwd.innerHTML = "Next";
+        fwd.textContent = "Next";
         fwd.addEventListener('click', function (){battleMove(13)});
         change.appendChild(fwd);
         loadEnemyInfo();
@@ -1636,7 +1636,7 @@ function battleMove(x) {
         checkWin();
     } else {
         let fwd = document.createElement("button");
-        fwd.innerHTML = "Next";
+        fwd.textContent = "Next";
         fwd.addEventListener('click', function (){battleMove(7)});
         change.appendChild(fwd);
         loadEnemyInfo();
@@ -1651,13 +1651,13 @@ function battleMove(x) {
     itemSlot.innerHTML = "";
     skillSlot.innerHTML = "";
     let p4 = document.createElement("p");
-        p4.innerHTML =  "Enemy turn!";
+        p4.textContent =  "Enemy turn!";
         info.appendChild(p4);
         enemCalc();
         loadEnemyInfo();
         loadPartyInfo();    
     let fwd = document.createElement("button");
-        fwd.innerHTML = "Next";
+        fwd.textContent = "Next";
         fwd.addEventListener('click', function (){checkLose();});
         change.appendChild(fwd);
   } 
@@ -1668,10 +1668,10 @@ function battleMove(x) {
     itemSlot.innerHTML = "";
     skillSlot.innerHTML = "";
     let p = document.createElement("p");
-    p.innerHTML = "The party has been defeated. Reload?";
+    p.textContent = "The party has been defeated. Reload?";
     info.appendChild(p);
     let reload = document.createElement("button");
-    reload.innerHTML = "Reload previous save";
+    reload.textContent = "Reload previous save";
     reload.addEventListener('click', function (){load()});
     change.appendChild(reload);
   } 
@@ -1682,7 +1682,7 @@ function battleMove(x) {
      itemSlot.innerHTML = "";
      skillSlot.innerHTML = "";
       let p4 = document.createElement("p");
-      p4.innerHTML = "Who will you target?";
+      p4.textContent = "Who will you target?";
       info.appendChild(p4);
       if (choice === 1){
         supTarget(currentParty[0], supportChoice, 10);
@@ -1701,14 +1701,14 @@ function battleMove(x) {
     //creates foward button and displays the info from the calculator, checks if battle is won.
     if (currentParty.length === 3 || currentParty.length === 2){
       let fwd = document.createElement("button");
-        fwd.innerHTML = "Next";
+        fwd.textContent = "Next";
         fwd.addEventListener('click', function (){battleMove(4)});
         change.appendChild(fwd);
         loadEnemyInfo();
         loadPartyInfo();
     } else if (currentParty.length === 1){
         let fwd = document.createElement("button");
-        fwd.innerHTML = "Next";
+        fwd.textContent = "Next";
         fwd.addEventListener('click', function (){battleMove(7)});
         change.appendChild(fwd);
         loadEnemyInfo();
@@ -1722,7 +1722,7 @@ function battleMove(x) {
     skillSlot.innerHTML = "";
     info.innerHTML = "";
       let p4 = document.createElement("p");
-      p4.innerHTML = "Who will you target?";
+      p4.textContent = "Who will you target?";
       info.appendChild(p4);
       if (choice === 1){
         supTarget(currentParty[1], supportChoice, 12);
@@ -1737,7 +1737,7 @@ function battleMove(x) {
     itemSlot.innerHTML = "";
     skillSlot.innerHTML = "";
      let fwd = document.createElement("button");
-      fwd.innerHTML = "Next";
+      fwd.textContent = "Next";
       //temporarily moves to enemy phase, will add branch if 3rd party member is there
       if (currentParty.length === 3){
         fwd.addEventListener('click', function (){battleMove(13)});
@@ -1760,16 +1760,16 @@ function battleMove(x) {
     skillChoice = "";
     supportChoice = "";
     let p4 = document.createElement("p");
-        p4.innerHTML = currentParty[2].name + "'s turn. " + "Please select a command: ";
+        p4.textContent = currentParty[2].name + "'s turn. " + "Please select a command: ";
         info.appendChild(p4);
       let atkbtn = document.createElement("button");
-      atkbtn.innerHTML = "Attack";
+      atkbtn.textContent = "Attack";
       atkbtn.addEventListener('click', function (){choice = 0; battleMove(14); });
       let skl = document.createElement("button");
-      skl.innerHTML = "Skills";
+      skl.textContent = "Skills";
       skl.addEventListener('click', function () {choice = 1; skillBtnGen(currentParty[2], 14, 16);});
       let itm = document.createElement("button");
-      itm.innerHTML = "Items";
+      itm.textContent = "Items";
       itm.addEventListener('click', function (){choice = 2; itemBtnGen(16);})
         change.appendChild(atkbtn);
         change.appendChild(skl);
@@ -1785,14 +1785,14 @@ function battleMove(x) {
     change.innerHTML = "";
     info.innerHTML = "";
     let p4 = document.createElement("p");
-    p4.innerHTML = "Who will you target?";
+    p4.textContent = "Who will you target?";
     info.appendChild(p4);
     targetBtn(currentParty[2], enHp, 15);
     backBtn(13); 
     } 
     if (choice === 1){
       let p4 = document.createElement("p");
-      p4.innerHTML = "Who will you target?";
+      p4.textContent = "Who will you target?";
       info.appendChild(p4);
       targetBtn(currentParty[2], enHp, 15, skillChoice);
       backBtn(13); 
@@ -1802,7 +1802,7 @@ function battleMove(x) {
     change.innerHTML = "";
     //creates foward button and displays the info from the calculator, checks if battle is won. will end phase since player 3.
         let fwd = document.createElement("button");
-        fwd.innerHTML = "Next";
+        fwd.textContent = "Next";
         fwd.addEventListener('click', function (){battleMove(7)});
         change.appendChild(fwd);
         loadEnemyInfo();
@@ -1815,7 +1815,7 @@ function battleMove(x) {
     itemSlot.innerHTML = "";
     skillSlot.innerHTML = "";
       let p4 = document.createElement("p");
-      p4.innerHTML = "Who will you target?";
+      p4.textContent = "Who will you target?";
       info.appendChild(p4);
       if (choice === 1){
         supTarget(currentParty[2], supportChoice, 17);
@@ -1832,7 +1832,7 @@ function battleMove(x) {
     itemSlot.innerHTML = "";
     skillSlot.innerHTML = "";
      let fwd = document.createElement("button");
-      fwd.innerHTML = "Next";
+      fwd.textContent = "Next";
       //because the max party is 3, it MUST take you to the calc phase.
         fwd.addEventListener('click', function (){battleMove(7)});
         change.appendChild(fwd);

@@ -622,7 +622,7 @@ function save () {
   simpleStorage.set("inventory", inventory);
   simpleStorage.set("weaponsOwned", weaponsOwned);
   simpleStorage.set("money", money);
-  simpleStorage.set("opened", opened);
+ // simpleStorage.set("opened", opened);
   simpleStorage.set("gamestate", gameState);
   simpleStorage.set("gamecheck", gameCheck);
  // simpleStorage.set("chest", chests.hidden = true);
@@ -1881,7 +1881,7 @@ function openChest(item, id){
   document.getElementById(id).hidden = true;
   document.getElementById(id).classList.add("opened");
   alert("You found: " + item.name + " - in the chest!");
-  simpleStorage.set("opened", opened);
+//  simpleStorage.set("opened", opened);
 };
 function openWeapon(weapon, id){
   weaponsOwned.push(weapon);
@@ -2107,9 +2107,11 @@ function load(){
   document.getElementById("continue").hidden = false;
   }
 };
-function toggleChests(){
+/*function toggleChests(){
   opened = simpleStorage.get("opened", opened);
   if (opened === true){
     opened.hidden = true;
   }
 };
+window.onload = toggleChests();
+*/

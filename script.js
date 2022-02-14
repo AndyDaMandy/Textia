@@ -622,6 +622,7 @@ function save () {
   simpleStorage.set("inventory", inventory);
   simpleStorage.set("weaponsOwned", weaponsOwned);
   simpleStorage.set("money", money);
+  simpleStorage.set("opened", JSON.stringify(document.getElementsByClassName("opened")));
  // simpleStorage.set("opened", opened);
   simpleStorage.set("gamestate", gameState);
   simpleStorage.set("gamecheck", gameCheck);
@@ -810,7 +811,7 @@ function attackCalc (char, target, flow, skill){
         if (enemyParty[target].weakness === skill.element) {
           elementalBoost += 2;
         }
-        let pa = char.mAtk + skill.pow + elementalBoost - enemyParty[target].mDef;
+        let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].mDef;
         pa -= 2;
         let minpa = pa - 4;
         let thp = enHp[target];
@@ -854,7 +855,7 @@ function attackCalc (char, target, flow, skill){
         if (enemyParty[target].weakness === skill.element) {
           elementalBoost += 2;
             }
-          let pa = char.pAtk + char.buff[0].pow + skill.pow + elementalBoost - enemyParty[target].pDef;
+          let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].pDef;
           let thp = enHp[target];
           pa -= 2;
           let minpa = pa - 4;
@@ -1868,10 +1869,9 @@ let keyItems = [];
 let enemyParty = [];
 let currentParty = [];
 let reserveParty = [];
+let opened = [];
 let gameState;
 let shopState;
-let opened = document.getElementsByClassName("opened");
-opened.hidden = true;
 //===================================
 //Open chest and stuff
 //==================================
@@ -1879,14 +1879,16 @@ opened.hidden = true;
 function openChest(item, id){
   inventory.push(item);
   document.getElementById(id).hidden = true;
-  document.getElementById(id).classList.add("opened");
+ // opened.push(document.getElementById(id).data);
+ // document.getElementById(id).classList.add("opened");
+//  document.getElementsByClassName("opened").hidden = true;
   alert("You found: " + item.name + " - in the chest!");
-//  simpleStorage.set("opened", opened);
+  
 };
 function openWeapon(weapon, id){
   weaponsOwned.push(weapon);
   document.getElementById(id).hidden = true;
-  document.getElementById(id).classList.add("opened");
+ // document.getElementById(id).classList.add("opened");
   alert("You found: " + weapon.name + " - in the chest!");
 }
 
@@ -2087,7 +2089,7 @@ function load(){
   inventory =  simpleStorage.get("inventory", inventory);
   money =  simpleStorage.get("money", money);
  gameState = simpleStorage.get("gamestate", gameState);
- //chests = simpleStorage.get("chest", chests.hidden);
+// JSON.parse(simpleStorage.get("opened", document.getElementsByClassName("opened")));
   move(gameState);
   adv.hidden = false;
   mainMenu.hidden = false;
@@ -2107,11 +2109,7 @@ function load(){
   document.getElementById("continue").hidden = false;
   }
 };
-/*function toggleChests(){
-  opened = simpleStorage.get("opened", opened);
-  if (opened === true){
+function toggleChests(){
     opened.hidden = true;
-  }
 };
-window.onload = toggleChests();
-*/
+//window.onload = toggleChests();

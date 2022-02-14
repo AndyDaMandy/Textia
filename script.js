@@ -622,8 +622,10 @@ function save () {
   simpleStorage.set("inventory", inventory);
   simpleStorage.set("weaponsOwned", weaponsOwned);
   simpleStorage.set("money", money);
+  simpleStorage.set("opened", opened);
   simpleStorage.set("gamestate", gameState);
   simpleStorage.set("gamecheck", gameCheck);
+ // simpleStorage.set("chest", chests.hidden = true);
   document.getElementById("save-menu").hidden = false;
   };
 //Global shop variables
@@ -1868,17 +1870,23 @@ let currentParty = [];
 let reserveParty = [];
 let gameState;
 let shopState;
+let opened = document.getElementsByClassName("opened");
+opened.hidden = true;
 //===================================
 //Open chest and stuff
 //==================================
+//chest variables get saved?
 function openChest(item, id){
   inventory.push(item);
-  document.getElementById(id).remove();
+  document.getElementById(id).hidden = true;
+  document.getElementById(id).classList.add("opened");
   alert("You found: " + item.name + " - in the chest!");
+  simpleStorage.set("opened", opened);
 };
 function openWeapon(weapon, id){
   weaponsOwned.push(weapon);
-  document.getElementById(id).remove();
+  document.getElementById(id).hidden = true;
+  document.getElementById(id).classList.add("opened");
   alert("You found: " + weapon.name + " - in the chest!");
 }
 
@@ -2079,6 +2087,7 @@ function load(){
   inventory =  simpleStorage.get("inventory", inventory);
   money =  simpleStorage.get("money", money);
  gameState = simpleStorage.get("gamestate", gameState);
+ //chests = simpleStorage.get("chest", chests.hidden);
   move(gameState);
   adv.hidden = false;
   mainMenu.hidden = false;
@@ -2094,6 +2103,13 @@ function load(){
   };
  function check() {
   gameCheck = simpleStorage.get("gamecheck", gameCheck);
-  if (gameCheck  === true)
+  if (gameCheck  === true) {
   document.getElementById("continue").hidden = false;
-  };
+  }
+};
+function toggleChests(){
+  opened = simpleStorage.get("opened", opened);
+  if (opened === true){
+    opened.hidden = true;
+  }
+};

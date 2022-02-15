@@ -623,7 +623,7 @@ function save () {
   simpleStorage.set("weaponsOwned", weaponsOwned);
   simpleStorage.set("money", money);
   simpleStorage.set("opened", JSON.stringify(document.getElementsByClassName("opened")));
- // simpleStorage.set("opened", opened);
+  simpleStorage.set("opened", opened);
   simpleStorage.set("gamestate", gameState);
   simpleStorage.set("gamecheck", gameCheck);
  // simpleStorage.set("chest", chests.hidden = true);
@@ -1879,19 +1879,21 @@ let shopState;
 function openChest(item, id){
   inventory.push(item);
   document.getElementById(id).hidden = true;
- // opened.push(document.getElementById(id).data);
- // document.getElementById(id).classList.add("opened");
-//  document.getElementsByClassName("opened").hidden = true;
-  alert("You found: " + item.name + " - in the chest!");
-  
+  opened.push(id);
+  alert("You found: " + item.name + " - in the chest!"); 
 };
 function openWeapon(weapon, id){
   weaponsOwned.push(weapon);
   document.getElementById(id).hidden = true;
- // document.getElementById(id).classList.add("opened");
+  opened.push(id);
   alert("You found: " + weapon.name + " - in the chest!");
 }
-
+function applyOpened () {
+ function apply(arr) {
+   document.getElementById(arr).hidden = true;
+ } 
+  opened.map(apply);
+};
 //alerts and misc dialogue
 function alertOne(){
   alert("There's a Shaman that helps adventurers at our chapel! He's training them to be strong enough to take on the outside world! Adventurers, come train here!");
@@ -2089,7 +2091,8 @@ function load(){
   inventory =  simpleStorage.get("inventory", inventory);
   money =  simpleStorage.get("money", money);
  gameState = simpleStorage.get("gamestate", gameState);
-// JSON.parse(simpleStorage.get("opened", document.getElementsByClassName("opened")));
+ opened = simpleStorage.get("opened", opened);
+ applyOpened();
   move(gameState);
   adv.hidden = false;
   mainMenu.hidden = false;

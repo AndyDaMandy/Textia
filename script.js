@@ -166,8 +166,16 @@ const basher = {
   des: "Deals phsyical damage to 1 enemy",
   pow: 4,
   cost: 3,
-  target: 'single'
+  target: 'Single'
   };
+const slashAll = {
+    name: "Slash all",
+    type: "Physical",
+    des: "Deals phsyical damage to all enemies",
+    pow: 4,
+    cost: 5,
+    target: 'All'
+    };
 const iceSlash = {
   name: "Ice Slash",
   type: "Physical",
@@ -2048,6 +2056,8 @@ ando.skills.push(basher);
 marie.skills.push(fire);
 ando.skills.push(iceSlash);
 marie.support.push(cure);
+ando.skills.push(slashAll);
+marie.skills.push(water);
 //marie.support.push(defBoost);
 ari.weapon = ironSpear;
 //ari.skills.push(fire);

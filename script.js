@@ -1,10 +1,13 @@
 //https://github.com/ZaDarkSide/simpleStorage
 //Things that need to be done:
-//need to add in revival potion and test that.
+//Adding new skills that target all enemies
+//begin game balancing
+//enmity system? Ando should get hit more.
+//need to add tutorial system - i.e. skills need descriptions.
 //need to set up some randomness to attack damage.
 //Need to create an armor system! Maybe....
 //new enemies needed, new branching paths as well.
-//need to set up a proper clamp function for battle calculation.
+//need to set up a proper random function for battle calculation.
 //new places to fight enemies.
 //new items, shop etc.
 //items in inventory don't show weapons properly
@@ -2049,8 +2052,6 @@ marie.support.push(cure);
 ari.weapon = ironSpear;
 //ari.skills.push(fire);
 weaponsOwned.push(excalibur);
-
-
 //======================================
 // Start Game , must go below everything else
 //======================================

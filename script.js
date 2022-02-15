@@ -746,13 +746,19 @@ function targetBtn(partymem, target, flow, skill,){
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
   if (skill != undefined){
-    if (enemyParty.length === 1){
+    if (skill.target === "All"){
+      let btn1 = document.createElement("button");
+      btn1.textContent = "All";
+     btn1.addEventListener('click', function (pl, skill1, flow1) { pl = partymem; skill1 = skill; flow1 = flow; attackCalc(partymem, flow1, skill1);});
+      change.appendChild(btn1);
+    }
+    else if (enemyParty.length === 1){
     let btn1 = document.createElement("button");
       btn1.textContent = enemyParty[0].name;
      btn1.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, flow1, skill1);});
       change.appendChild(btn1);
       } 
-    if (enemyParty.length === 2){
+   else if (enemyParty.length === 2){
     let btn1 = document.createElement("button");
       btn1.textContent = enemyParty[0].name;
       btn1.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, flow1, skill1);});
@@ -762,7 +768,7 @@ function targetBtn(partymem, target, flow, skill,){
         btn2.addEventListener('click', function (pl, y, skill1, flow1) { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 1, flow1, skill1);});
         change.appendChild(btn2);
       } 
-    if (enemyParty.length === 3){
+   else if (enemyParty.length === 3){
       let btn1 = document.createElement("button");
       btn1.textContent = enemyParty[0].name;
       btn1.addEventListener('click', function () { pl = partymem; y = target; skill1 = skill; flow1 = flow; attackCalc(partymem, 0, flow1, skill1);});
@@ -821,6 +827,74 @@ function attackCalc (char, target, flow, skill){
       if (skill.type === "Magic"){ 
         if (enemyParty[target].weakness === skill.element) {
           elementalBoost += 2;
+        }
+        //the idea here is to create an all target calculation branch in the attack calc for both skills. Needs a lot of code atm
+        //I should consider adding a separate function for all calcs? This is getting a bit bloated.
+        if (skill.target === all){
+          if (enemyParty.length === 1){
+            let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[0].mDef;
+            pa -= 2;
+            let minpa = pa - 4;
+           let thp = enHp[target];
+           let damage = clamp(pa, minpa, pa);
+           if (damage <= 0){damage = 0};
+           let final = thp - damage;
+           if (final <= 0) {
+            let p3 = document.createElement("p");
+            p3.textContent = char.name + " cast " + skill.name + "!"
+            info.appendChild(p3);
+            if (enemyParty[target].weakness === skill.element) {
+              let pEl = document.createElement("p");
+              pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
+              info.appendChild(pEl);
+                }
+            let p = document.createElement("p");
+            p.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
+            info.appendChild(p);
+            let p2 = document.createElement("p");
+            p2.textContent = enemyParty[target].name + " has been defeated!";
+            info.appendChild(p2);
+            enemyParty.splice(target, 1);
+            enHp.splice(target, 1);
+            battleMove(flow)
+            } else {
+                  let p6 = document.createElement("p");
+                  p6.textContent = char.name + " cast " + skill.name + "!"
+                  info.appendChild(p6);
+                  let p3 = document.createElement("p");
+                  if (enemyParty[target].weakness === skill.element) {
+                  let pEl = document.createElement("p");
+                  pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
+                  info.appendChild(pEl);
+                    }
+                  enHp[target] = thp - damage;
+                  p3.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
+                  info.appendChild(p3);
+                  battleMove(flow)
+                }
+          } 
+          // 2 enemy branch.
+          if (enemyParty.length === 2) {
+            let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[0].mDef;
+            pa -= 2;
+            let minpa = pa - 4;
+            let thp = enHp[target];
+            let damage = clamp(pa, minpa, pa);
+            if (damage <= 0){damage = 0};
+            let final = thp - damage;
+            let pa2 = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[1].mDef;
+            pa2 -= 2;
+          } 
+          //3 enemy branch
+          if (enemyParty.length === 3) {
+            let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[0].mDef;
+            pa -= 2;
+            let pa2 = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[1].mDef;
+            pa2 -= 2;
+            let pa3 = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[2].mDef;
+            pa3 -= 2;
+          }
+           
         }
         let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].mDef;
         pa -= 2;

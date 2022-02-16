@@ -830,48 +830,61 @@ function attackCalc (char, target, flow, skill){
         //I should consider adding a separate function for all calcs? This is getting a bit bloated.
         if (skill.target === "All"){
           //placed this above the for loop to prevent casting showing more times.
+          let applyFinal = [];
+          let enemyCopy = enemyParty;
+          let enCopy = enHp;
+          let survivors = [];
+          let survivorHp = [];
           let p3 = document.createElement("p");
           p3.textContent = char.name + " cast " + skill.name + "!"
           info.appendChild(p3);
-          for (let i = 0; i <= enemyParty.length; i++){
-            if (enemyParty[i].weakness === skill.element) {
+          enemyParty.map((en, index) => {
+            if (en.weakness === skill.element) {
               elementalBoost += 2;
                 }
-            let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[i].mDef;
+            let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - en.mDef;
           pa -= 2;
           let minpa = pa - 4;
-          let thp = enHp[i];
+          let thp = enCopy[index];
           let damage = clamp(pa, minpa, pa);
            if (damage <= 0){damage = 0};
           let final = thp - damage ;
+          applyFinal.push(final);
           if (final <= 0) {
-            if (enemyParty[i].weakness === skill.element) {
+            if (en.weakness === skill.element) {
             let pEl = document.createElement("p");
-            pEl.textContent = enemyParty[i].name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
+            pEl.textContent = en.name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
             info.appendChild(pEl);
+         //   enCopy[indexer] = thp - damage;
               }
           let p = document.createElement("p");
-          p.textContent = enemyParty[i].name + " was hit for " + damage + " damage!";
+          p.textContent = en.name + " was hit for " + damage + " damage!";
           info.appendChild(p);
           let p2 = document.createElement("p");
-          p2.textContent = enemyParty[i].name + " has been defeated!";
+          p2.textContent = en.name + " has been defeated!";
           info.appendChild(p2);
-          enemyParty.splice(i, 1);
-          enHp.splice(i, 1);
           } else {
                 let p3 = document.createElement("p");
-                if (enemyParty[i].weakness === skill.element) {
+                if (en.weakness === skill.element) {
                 let pEl = document.createElement("p");
-                pEl.textContent = enemyParty[i].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
+                pEl.textContent = en.name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
                 info.appendChild(pEl);
                   }
-                enHp[i] = thp - damage;
-                p3.textContent = enemyParty[i].name + " was hit for " + damage + " damage!";
+               enCopy[index] = thp - damage;
+                survivorHp.push(enCopy[index]);
+                  survivors.push(enemyCopy[index]);
+                p3.textContent = en.name + " was hit for " + damage + " damage!";
                 info.appendChild(p3);
-              }
-          }
-          battleMove(flow)      
-        }
+            }
+          });
+          enemyParty = survivors;
+          enHp = survivorHp;
+          //first applier finds out who's dead and pushes it into a new array.
+          //applier applies damage to all 3. AH, okay so perhaps it applies the damage regardless, but no splice.
+          //then finalizer will then take that and apply it to the enemycopy arrays.
+          //enemycopy arrays will then overwrite the original arrays.
+          battleMove(flow)
+          }     
       else {
         if (enemyParty[target].weakness === skill.element) {
           elementalBoost += 2;
@@ -924,105 +937,59 @@ function attackCalc (char, target, flow, skill){
               let applyFinal = [];
               let enemyCopy = enemyParty;
               let enCopy = enHp;
+              let survivors = [];
+              let survivorHp = [];
               let p3 = document.createElement("p");
               p3.textContent = char.name + " used " + skill.name + "!"
               info.appendChild(p3);
-              function applier (en){
-               let indexer = enemyParty.indexOf(en)
-                  if (en.weakness === skill.element) {
-                    elementalBoost += 2;
-                      }
-                  let pa = char.pAtk + char.weapon.pow + skill.pow + elementalBoost - en.pDef;
-                pa -= 2;
-                let minpa = pa - 4;
-                let thp = enHp[indexer];
-                let damage = clamp(pa, minpa, pa);
-                 if (damage <= 0){damage = 0};
-                let final = thp - damage ;
-                applyFinal.push(final);
-                if (final <= 0) {
-                  if (en.weakness === skill.element) {
-                  let pEl = document.createElement("p");
-                  pEl.textContent = en.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
-                  info.appendChild(pEl);
-                    }
-                let p = document.createElement("p");
-                p.textContent = en.name + " was hit for " + damage + " damage!";
-                info.appendChild(p);
-                let p2 = document.createElement("p");
-                p2.textContent = en.name + " has been defeated!";
-                info.appendChild(p2);
-                } else {
-                      let p3 = document.createElement("p");
-                      if (en.weakness === skill.element) {
-                      let pEl = document.createElement("p");
-                      pEl.textContent = en.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
-                      info.appendChild(pEl);
-                        }
-                      enHp[indexer] = thp - damage;
-                      p3.textContent = en.name + " was hit for " + damage + " damage!";
-                      info.appendChild(p3);
-                  }
-                }
-              enemyParty.map(applier);
-              //first applier finds out who's dead and pushes it into a new array.
-              //then finalizer will then take that and apply it to the enemycopy arrays.
-              //enemycopy arrays will then overwrite the original arrays.
-              function finalizer (en) {
-                let indexer = applyFinal.indexOf(en);
-                if (en <= 0){
-                  enemyCopy.splice(indexer, 1);
-                  enCopy.splice(indexer, 1);
-                } else {
-                  enCopy[indexer] = en;
-                }
-                    }
-              applyFinal.map(finalizer);
-              enemyParty = enemyCopy;
-              enHp = enCopy;
-              battleMove(flow)
-              }
-              /*
-              for (let i = 0; i <= enemyParty.length; i++){
-                if (enemyParty[i].weakness === skill.element) {
+              enemyParty.map((en, index) => {
+                if (en.weakness === skill.element) {
                   elementalBoost += 2;
                     }
-                let pa = char.pAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[i].pDef;
+                let pa = char.pAtk + char.weapon.pow + skill.pow + elementalBoost - en.pDef;
               pa -= 2;
               let minpa = pa - 4;
-              let thp = enHp[i];
+              let thp = enCopy[index];
               let damage = clamp(pa, minpa, pa);
                if (damage <= 0){damage = 0};
               let final = thp - damage ;
+              applyFinal.push(final);
               if (final <= 0) {
-                if (enemyParty[i].weakness === skill.element) {
+                if (en.weakness === skill.element) {
                 let pEl = document.createElement("p");
-                pEl.textContent = enemyParty[i].name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
+                pEl.textContent = en.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                 info.appendChild(pEl);
+             //   enCopy[indexer] = thp - damage;
                   }
               let p = document.createElement("p");
-              p.textContent = enemyParty[i].name + " was hit for " + damage + " damage!";
+              p.textContent = en.name + " was hit for " + damage + " damage!";
               info.appendChild(p);
               let p2 = document.createElement("p");
-              p2.textContent = enemyParty[i].name + " has been defeated!";
+              p2.textContent = en.name + " has been defeated!";
               info.appendChild(p2);
-              enemyParty.splice(i, 1);
-              enHp.splice(i, 1);
               } else {
                     let p3 = document.createElement("p");
-                    if (enemyParty[i].weakness === skill.element) {
+                    if (en.weakness === skill.element) {
                     let pEl = document.createElement("p");
-                    pEl.textContent = enemyParty[i].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
+                    pEl.textContent = en.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                     info.appendChild(pEl);
                       }
-                    enHp[i] = thp - damage;
-                    p3.textContent = enemyParty[i].name + " was hit for " + damage + " damage!";
+                   enCopy[index] = thp - damage;
+                    survivorHp.push(enCopy[index]);
+                      survivors.push(enemyCopy[index]);
+                    p3.textContent = en.name + " was hit for " + damage + " damage!";
                     info.appendChild(p3);
-                  }
-              }
-              */
-             
-            }
+                }
+              });
+              enemyParty = survivors;
+              enHp = survivorHp;
+              //first applier finds out who's dead and pushes it into a new array.
+              //applier applies damage to all 3. AH, okay so perhaps it applies the damage regardless, but no splice.
+              //then finalizer will then take that and apply it to the enemycopy arrays.
+              //enemycopy arrays will then overwrite the original arrays.
+              battleMove(flow)
+              }        
+            
              else { //regular branch
               if (enemyParty[target].weakness === skill.element) {
                 elementalBoost += 2;
@@ -1070,6 +1037,7 @@ function attackCalc (char, target, flow, skill){
           }
          
   }
+}
   else {
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow - enemyParty[target].pDef;
           let thp = enHp[target];
@@ -2218,8 +2186,6 @@ ando.skills.push(basher);
 marie.skills.push(fire);
 ando.skills.push(iceSlash);
 marie.support.push(cure);
-ando.skills.push(slashAll);
-marie.skills.push(water);
 //marie.support.push(defBoost);
 ari.weapon = ironSpear;
 //ari.skills.push(fire);

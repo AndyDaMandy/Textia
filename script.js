@@ -923,6 +923,7 @@ function attackCalc (char, target, flow, skill){
               //placed this above the for loop to prevent casting showing more times.
               let applyFinal = [];
               let enemyCopy = enemyParty;
+              let enCopy = enHp;
               let p3 = document.createElement("p");
               p3.textContent = char.name + " used " + skill.name + "!"
               info.appendChild(p3);
@@ -964,12 +965,22 @@ function attackCalc (char, target, flow, skill){
                   }
                 }
               enemyParty.map(applier);
+              //first applier finds out who's dead and pushes it into a new array.
+              //then finalizer will then take that and apply it to the enemycopy arrays.
+              //enemycopy arrays will then overwrite the original arrays.
               function finalizer (en) {
-                
-                enemyParty.splice(indexer, 1);
-                enHp.splice(indexer, 1);
+                let indexer = applyFinal.indexOf(en);
+                if (en <= 0){
+                  enemyCopy.splice(indexer, 1);
+                  enCopy.splice(indexer, 1);
+                } else {
+                  enCopy[indexer] = en;
+                }
                     }
-
+              applyFinal.map(finalizer);
+              enemyParty = enemyCopy;
+              enHp = enCopy;
+              battleMove(flow)
               }
               /*
               for (let i = 0; i <= enemyParty.length; i++){
@@ -1010,7 +1021,7 @@ function attackCalc (char, target, flow, skill){
                   }
               }
               */
-              battleMove(flow)
+             
             }
              else { //regular branch
               if (enemyParty[target].weakness === skill.element) {
@@ -1057,7 +1068,7 @@ function attackCalc (char, target, flow, skill){
                 battleMove(flow)
                   }
           }
-        } 
+         
   }
   else {
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow - enemyParty[target].pDef;

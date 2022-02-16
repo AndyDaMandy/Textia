@@ -921,9 +921,57 @@ function attackCalc (char, target, flow, skill){
       } if (skill.type === "Physical"){
             if (skill.target === "All"){
               //placed this above the for loop to prevent casting showing more times.
+              let applyFinal = [];
+              let enemyCopy = enemyParty;
               let p3 = document.createElement("p");
               p3.textContent = char.name + " used " + skill.name + "!"
               info.appendChild(p3);
+              function applier (en){
+               let indexer = enemyParty.indexOf(en)
+                  if (en.weakness === skill.element) {
+                    elementalBoost += 2;
+                      }
+                  let pa = char.pAtk + char.weapon.pow + skill.pow + elementalBoost - en.pDef;
+                pa -= 2;
+                let minpa = pa - 4;
+                let thp = enHp[indexer];
+                let damage = clamp(pa, minpa, pa);
+                 if (damage <= 0){damage = 0};
+                let final = thp - damage ;
+                applyFinal.push(final);
+                if (final <= 0) {
+                  if (en.weakness === skill.element) {
+                  let pEl = document.createElement("p");
+                  pEl.textContent = en.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
+                  info.appendChild(pEl);
+                    }
+                let p = document.createElement("p");
+                p.textContent = en.name + " was hit for " + damage + " damage!";
+                info.appendChild(p);
+                let p2 = document.createElement("p");
+                p2.textContent = en.name + " has been defeated!";
+                info.appendChild(p2);
+                } else {
+                      let p3 = document.createElement("p");
+                      if (en.weakness === skill.element) {
+                      let pEl = document.createElement("p");
+                      pEl.textContent = en.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
+                      info.appendChild(pEl);
+                        }
+                      enHp[indexer] = thp - damage;
+                      p3.textContent = en.name + " was hit for " + damage + " damage!";
+                      info.appendChild(p3);
+                  }
+                }
+              enemyParty.map(applier);
+              function finalizer (en) {
+                
+                enemyParty.splice(indexer, 1);
+                enHp.splice(indexer, 1);
+                    }
+
+              }
+              /*
               for (let i = 0; i <= enemyParty.length; i++){
                 if (enemyParty[i].weakness === skill.element) {
                   elementalBoost += 2;
@@ -961,6 +1009,7 @@ function attackCalc (char, target, flow, skill){
                     info.appendChild(p3);
                   }
               }
+              */
               battleMove(flow)
             }
              else { //regular branch

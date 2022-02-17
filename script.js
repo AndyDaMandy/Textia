@@ -3,14 +3,13 @@
 //Adding new skills that target all enemies
 //begin game balancing
 //enmity system? Ando should get hit more.
-//need to add tutorial system - i.e. skills need descriptions.
+//Item descriptions needed in battle?
 //need to set up some randomness to attack damage.
 //Need to create an armor system! Maybe....
 //new enemies needed, new branching paths as well.
 //need to set up a proper random function for battle calculation.
 //new places to fight enemies.
 //new items, shop etc.
-//items in inventory don't show weapons properly
 //shop needs to have branch for weapons, possibly armor
 //clean up battle selection functions a bit, make them less chunky.
 //Characters go here. chp and chmp are "current hp and mp" respectively
@@ -35,8 +34,8 @@ class Player {
   }
   };
   //name, level, hp, chp, mp, cmp, pAtk, pDef, mAtk, mDef, exp, buff, skills, support, weapon, type
-let ando = new Player('Ando', 1, 10, 10, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
-let marie = new Player('Marie', 1, 8, 8, 12, 12, 2, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+let ando = new Player('Ando', 1, 15, 15, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
+let marie = new Player('Marie', 1, 10, 10, 13, 13, 2, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
 let julie = new Player('Julie', 1, 9, 9, 6, 6, 8, 2, 6, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
 let ari = new Player('Ari', 1, 8, 8, 6, 6, 10, 2, 7, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
 //Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
@@ -72,27 +71,11 @@ class Enemy {
 const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
 //if an enemy is flying, bows hit for extra damage.
 const bat = new Enemy('Bat', 1,7, 3, 4, 2, 1, 1, "None", 1, 1, [], 'Flying');
-const familiar = new Enemy('Familiar', 1, 50, 3, 10, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
-/*const iceman = {
-  name: "Ice Man",
-  level: 1,
-  hp: 8,
-  mp: 5,
-  pAtk: 5,
-  pDef: 2,
-  mAtk: 1,
-  mDef: 1,
-  weakness: fireEl,
-  exp: 1,
-  money: 1,
-  eSkills: [],
-  type: "enemy"
-  };
-  */
+const familiar = new Enemy('Familiar', 1, 55, 3, 10, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
 const goblin = {
   name: "Goblin",
   level: 1,
-  hp: 8,
+  hp: 10,
   mp: 5,
   pAtk: 5,
   pDef: 2,
@@ -107,7 +90,7 @@ const goblin = {
 const potatoThief = {
   name: "Potato Thief",
   level: 1,
-  hp: 12,
+  hp: 15,
   mp: 5,
   pAtk: 5,
   pDef: 2,
@@ -151,7 +134,7 @@ class Skill {
 };
 const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with magic-based thunder damage', 4, 5, 'Single');
 //need a way to show a skill hits all or not....
-const water = new Skill('Water','Magic', watEl, 'Hits enemy with magic-based water damage', 3, 4, 'All');
+const water = new Skill('Water','Magic', watEl, 'Hits enemy with magic-based water damage', 4, 6, 'All');
 const fire = {
   name: "Fire",
   type: "Magic",
@@ -163,15 +146,15 @@ const fire = {
 const basher = {
   name: "Basher",
   type: "Physical",
-  des: "Deals phsyical damage to 1 enemy",
+  des: "Deals physical damage to 1 enemy",
   pow: 4,
   cost: 3,
   target: 'Single'
   };
 const slashAll = {
-    name: "Slash all",
+    name: "Slash All",
     type: "Physical",
-    des: "Deals phsyical damage to all enemies",
+    des: "Deals physical damage to all enemies",
     pow: 4,
     cost: 5,
     target: 'All'
@@ -179,7 +162,7 @@ const slashAll = {
 const iceSlash = {
   name: "Ice Slash",
   type: "Physical",
-  des: "Deals phsyical and ice damage to 1 enemy",
+  des: "Deals physical and ice damage to 1 enemy",
   element: iceEl,
   pow: 1,
   cost: 2
@@ -187,19 +170,22 @@ const iceSlash = {
 const waterArrow = {
   name: "Water Arrow",
   type: "Physical",
-  des: "Deals phsyical and water damage to 1 enemy",
+  des: "Deals physical and water damage to 1 enemy",
   element: watEl,
   pow: 1,
   cost: 2
   };
+//Support Skils
 const cure = {
   name: "Cure",
   type: "Healing",
   des: "Heals target character for 5 HP",
   element: watEl,
   pow: 5,
-  cost: 2
+  cost: 2,
+  target: 'Single'
   };
+const cureAll = new Skill('Cure All', 'Healing', 'None', 'Heals all allies', 5, 5, 'All');
 const atkBoost = {
   name: "Attack Boost",
   type: "Attack Buff",
@@ -472,7 +458,7 @@ function showStatus (x) {
   li.textContent = "Level: " + x.level;
     statsLog.appendChild(li);
     li = document.createElement("li");
-  li.textContent = "Weapon: " + x.weapon.name + " - " + "Type: " + x.weapon.type + " - " + "Attribute: " + x.weapon.atr + " - " + x.weapon.des + " Power: " + x.weapon.pow;
+  li.textContent = "Weapon: " + x.weapon.name + " - " + "Type: " + x.weapon.type + " - " + "Attribute: " + x.weapon.atr + " - " + x.weapon.des + " - Power: " + x.weapon.pow;
     statsLog.appendChild(li);
     li = document.createElement("li");
   li.textContent = "HP: " + x.hp;
@@ -535,9 +521,9 @@ function showInventory() {
   inventorySlot.appendChild(cash);
   let inventoryMenu = document.getElementById("inventory-menu");
   let pusher = function (item) { 
-    if (item.type === "Weapon"){
+    if (item.type === "Sword" || item.type === "Bow" || item.type === "Staff" || item.type === "Spear"){
       let li2 = document.createElement("li");
-      li2.textContent = item.name + ": " + "Type: " + item.type + " - " + item.pow + " - " + item.des;
+      li2.textContent = item.name + ": " + "Type: " + item.type + " - Power: " + item.pow + " - " + item.des;
       inventorySlot.appendChild(li2)
   } else {
     let li = document.createElement("li");
@@ -816,7 +802,6 @@ function targetBtn(partymem, target, flow, skill,){
   }
   };
 function attackCalc (char, target, flow, skill){
-  debugger;
   info.innerHTML = "";
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
@@ -1182,6 +1167,9 @@ function skillBtnGen(partymem, flow, supflow) {
   //attack items will be their own class of item as well.
   if (partymem.support.length > 0){
         function pusher2 (sup) {
+          let description = document.createElement("li");
+          description.innerText = sup.name + " - " + sup.des;
+          skillSlot.appendChild(description);
           let btn2 = document.createElement("button");
           btn2.textContent = sup.name + " - Cost: " + sup.cost;
           if (sup.cost > partymem.cmp){
@@ -1196,6 +1184,9 @@ function skillBtnGen(partymem, flow, supflow) {
     partymem.support.forEach(pusher2);
   }
   function pusher (skill) {
+    let description = document.createElement("li");
+          description.innerText = skill.name + " - " + skill.des;
+          skillSlot.appendChild(description);
   let btn1 = document.createElement("button");
   btn1.textContent = skill.name + " - Cost: " + skill.cost;
   if (skill.cost > partymem.cmp){
@@ -1215,6 +1206,7 @@ function supTarget (caster, sup, supflow){
   itemSlot.innerHTML = "";
   //needs a caster parameter based on the battleflow?
   //pulls target MP away atm
+//  if (sup.target === "All"){}
   if (currentParty.length === 1){
   let btn = document.createElement("button");
   btn.textContent = currentParty[0].name;

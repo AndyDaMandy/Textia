@@ -110,10 +110,13 @@
 <!-- Adventure elements below -->
 <div id="adv-mode">
   <div id="town-1" hidden>
+    <!-- state = 0 -->
     <h2>Area Town</h2>
-    <p>Shaman: "Hello Ando and Marie, I hope you are well."</p>
-    <p>"Allow me to explain the mission you're on and how you can move forward on your journey"</p>
-    <p>"A little bit of info about you two. Ando specializes in Physical skills, while Marie specializes in Magic"</p>
+    <p>Shaman: "Hello Ando and Marie, today is the day of your pilgrimage."</p>
+    <p>"Our town needs a new crystal and you both are going to the Crystal Lake to gather one for us"</p>
+    <p>"Without it we cannot protect ourselves from monsters much longer."</p>
+    <p>"Allow me to provide you with some information on how to proceed from here:"</p>
+    <p>"About you two. Ando specializes in Physical skills, while Marie specializes in Magic"</p>
     <p>"Be sure sure to keep that in mind when you're fighting enemies!"</p>
     <p>"To access the menu, click the "Menu" button above. You can check your items, party, skills, etc."</p>
     <p>"If you'd like to move on, click below, or click the shop button above"</p>
@@ -121,13 +124,15 @@
     </div>
   <div id="forest-1" hidden>
     <div id="forest-1-1">
-      <h2>The Forest</h2>
+      <!-- state = 1 -->
+      <h2>The Forest</h2>   
       <p>You've found yourself in a mysterious forest. It's full of danger at every turn.</p>
       <p>You're worried the danger might be too high, maybe you should head back to town?</p>
       <button onclick="move(0)">Back to Town</button>
       <button onclick="move(2)">To the Large Tree</button>
       </div>
     <div id="forest-1-2" hidden>
+      <!-- state = 2 -->
       <h2>The Large Tree</h2>
       <p>You've found a large tree!</p>
       <p>There are enemies near it!</p>
@@ -136,6 +141,7 @@
       <button onclick="battle([goblin, potatoThief, goblin]); statePost = 3;">Fight</button>
       </div>
     <div id="forest-1-3" hidden>
+      <!-- state = 3 -->
       <h2>The Large Tree - 2</h2>
       <p>After defeating the enemies you can now approach the tree.</p>
       <p>there you find a treasure chest.</p>
@@ -144,6 +150,7 @@
       <button onclick="move(4)">Move Forward</button>
       </div>
     <div id="forest-1-4" hidden>
+      <!-- state = 4 -->
       <h2>The Light in the Darkness</h2>
       <p>Despite the darkness, you glimpse a small light coming through the trees.</p>
       <p>You see an enemy ahead, it looks tough. There are two chests on the ground nearby, will you open it?</p>
@@ -153,6 +160,7 @@
       <button onclick="battle([livingTree]); statePost = 5;">Move Forward</button>     
       </div>
     <div id="forest-1-5" hidden>
+      <!-- state = 5 -->
       <h2>The End of the Forest</h2>
       <p>You've defeated living tree!</p>
       <p>The living tree dropped a chest, Will you open it?</p>
@@ -163,6 +171,7 @@
   </div>
   <div id="town-2" hidden>
     <div id="town-2-1">
+      <!-- state = 6 -->
       <h2>Magnolia Town</h2>
       <p>Here you see plenty of townspeople. Further into town you think you see a shop. Perhaps you should get closer?</p>
       <p>You also see a man handing out what appears to be a newspaper</p>
@@ -172,6 +181,7 @@
       <button onclick="move(8)">Go further into town</button>
     </div>
     <div id="town-2-chapel">
+      <!-- state = 7 -->
       <h2>Chapel</h2>
       <p>You see a shaman, you approach him.</p>
       <p>"Hello there! I see you're adventurers! The enemies out there are powerful, it'd be in your best interest to prepare yourself"</p>
@@ -182,11 +192,24 @@
       <button onclick="battle([familiar]); statePost = 7;">Summon Familar</button>
     </div>
     <div id="town-2-2">
+      <!-- state = 8 -->
       <h2>Magnolia Town - Town Square</h2>
       <p>You see a shop nearby, you think it might be good to stock up on items.</p>
       <p>There's a fountain ahead, you realize you've never seen so much water in one place</p>
       <p><em>Ando and Marie take a moment to reflect on how far they've come.</em></p>
       <button onclick="move(6)">Go Back</button>
+      <button onclick="move(9)">Go to end of Town</button>
+    </div>
+    <div id="town-2-3">
+      <!-- state = 9 -->
+      <h2>The end of Magnolia Town</h2>
+      <p>You've made it to the end of Magonlia Town.</p>
+      <p><em>Marie and Ando see a young woman with a backpack and a bow coming their way</em></p>
+      <p>The woman: "I see you two appear to be on a pilgrimage. My name's Julia, I'm on a pilgrimage for Solar Town"</p>
+      <p>Julia: "Maybe we should team up? It'd be safer if we traveled together."</p>
+      <p>Will you let Julia join you? You may not see her again if your paths diverge here.</p>
+      <button id="add-julie" onclick="addJulie(this.id)">Let Julia Join</button>
+      <button onclick="">Move Forward</button>
     </div>
     
   <div>

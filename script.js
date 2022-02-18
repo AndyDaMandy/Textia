@@ -1,6 +1,6 @@
 //https://github.com/ZaDarkSide/simpleStorage
 //Things that need to be done:
-//Adding new skills that target all enemies
+//Adding all target to items and support skills
 //begin game balancing
 //enmity system? Ando should get hit more.
 //Item descriptions needed in battle?
@@ -36,7 +36,7 @@ class Player {
   //name, level, hp, chp, mp, cmp, pAtk, pDef, mAtk, mDef, exp, buff, skills, support, weapon, type
 let ando = new Player('Ando', 1, 15, 15, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
 let marie = new Player('Marie', 1, 10, 10, 13, 13, 2, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
-let julie = new Player('Julie', 1, 9, 9, 6, 6, 8, 2, 6, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+let julie = new Player('Julie', 3, 14, 14, 7, 7, 10, 5, 3, 6, 30, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
 let ari = new Player('Ari', 1, 8, 8, 6, 6, 10, 2, 7, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
 //Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
 class Element {
@@ -105,7 +105,7 @@ const potatoThief = {
 const livingTree = {
   name: "Living Tree",
   level: 1,
-  hp: 60,
+  hp: 70,
   mp: 5,
   pAtk: 9,
   pDef: 4,
@@ -132,9 +132,10 @@ class Skill {
     this.target = target;
   }
 };
-const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with magic-based thunder damage', 4, 5, 'Single');
+const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with weak magic-based thunder damage', 4, 5, 'Single');
 //need a way to show a skill hits all or not....
-const water = new Skill('Water','Magic', watEl, 'Hits enemy with magic-based water damage', 4, 6, 'All');
+const water = new Skill('Water','Magic', watEl, 'Hits enemy with weak magic-based water damage', 4, 6, 'All');
+const volley = new Skill('Volley', 'Physical', null, 'Hits all enemies with arrows', 3, 6, 'All');
 const fire = {
   name: "Fire",
   type: "Magic",
@@ -1422,14 +1423,7 @@ function statBoost(char){
 };
 function levelUp(char){
     if (char.exp >= 3 && char.level < 2){
-      statBoost(char);
-      if (char.level === 2 && char.name === "Julie") {
-          julie.support.push(atkBoost);
-        let learnedSkill = document.createElement("p");
-        learnedSkill.textContent = julie.name + " learned " + atkBoost.name + "!";
-        info.appendChild(learnedSkill);
-        }
-        
+      statBoost(char);       
         if (char.level === 2 && char.name === "Marie") {
           marie.skills.push(thunder);
         let learnedSkill2 = document.createElement("p");
@@ -1446,6 +1440,12 @@ function levelUp(char){
     }
     if (char.exp >= 100 && char.level < 5){
       statBoost(char);
+      if (char.level === 5 && char.name === "Julie") {
+        julie.support.push(atkBoost);
+      let learnedSkill = document.createElement("p");
+      learnedSkill.textContent = julie.name + " learned " + atkBoost.name + "!";
+      info.appendChild(learnedSkill);
+      }
     }
   if (char.exp >= 200 && char.level < 6){
     statBoost(char);
@@ -2109,7 +2109,7 @@ function gameFlow (state) {
       document.getElementById("town-2-1").hidden = false;
       document.getElementById("town-2-chapel").hidden = true;
       document.getElementById("town-2-2").hidden = true;
-      
+      document.getElementById("town-2-3").hidden = true;
     } 
   //Chapel
     if (state == 7){
@@ -2118,7 +2118,9 @@ function gameFlow (state) {
       document.getElementById("town-2-1").hidden = true;
       document.getElementById("town-2-chapel").hidden = false;
       document.getElementById("town-2-2").hidden = true;
+      document.getElementById("town-2-3").hidden = true;
     }
+  //Town 2-2 Magnolia Town
     if (state === 8){
       shopState = 1;
       shopButton.hidden = false;
@@ -2126,6 +2128,16 @@ function gameFlow (state) {
       document.getElementById("town-2-1").hidden = true;
       document.getElementById("town-2-chapel").hidden = true;
       document.getElementById("town-2-2").hidden = false;
+      document.getElementById("town-2-3").hidden = true;
+    }
+    //Town 2-3 Magnolia Town
+    if (state === 9) {
+      shopButton.hidden = true;
+      townTwo.hidden = false;
+      document.getElementById("town-2-1").hidden = true;
+      document.getElementById("town-2-chapel").hidden = true;
+      document.getElementById("town-2-2").hidden = true;
+      document.getElementById("town-2-3").hidden = false;
     }
 };
 function move (state) {
@@ -2167,13 +2179,24 @@ function shopFlow (){
     }
 
 }
+
+//add party functions
+function addJulie (id){
+  julie.weapon = woodBow;
+  julie.skills.push(waterArrow);
+  julie.skills.push(volley);
+  currentParty.push(julie);
+  alert("Julie joined the party!");
+  document.getElementById(id).hidden = true;
+  //julie button gets treated as a chest to prevent getting Julia more than once.
+  //Julie dialogue trees could get interesting.
+  opened.push(id);
+}
 //==================================
 // all testing goes below
 currentParty = [ando, marie];
 let savedParty = currentParty;
 ando.weapon = woodSword;
-julie.skills.push(waterArrow);
-julie.weapon = woodBow;
 ando.skills.push(basher);
 marie.skills.push(fire);
 ando.skills.push(iceSlash);

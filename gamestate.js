@@ -148,6 +148,8 @@ function gameFlow (state) {
             document.getElementById("plains-1-1").hidden = false;
             document.getElementById("plains-1-2").hidden = true;
             document.getElementById("plains-1-3").hidden = true;
+            document.getElementById("plains-1-4").hidden = true;
+            document.getElementById("plains-1-5").hidden = true;
         }
         //Great Maka Plains 1-2
         if (state === 11) {
@@ -155,6 +157,8 @@ function gameFlow (state) {
             document.getElementById("plains-1-1").hidden = true;
             document.getElementById("plains-1-2").hidden = false;
             document.getElementById("plains-1-3").hidden = true;
+            document.getElementById("plains-1-4").hidden = true;
+            document.getElementById("plains-1-5").hidden = true;
         }
         //Great Maka Plains 1-3
         if (state === 12){
@@ -162,9 +166,29 @@ function gameFlow (state) {
             document.getElementById("plains-1-1").hidden = true;
             document.getElementById("plains-1-2").hidden = true;
             document.getElementById("plains-1-3").hidden = false;
+            document.getElementById("plains-1-4").hidden = true;
+            document.getElementById("plains-1-5").hidden = true;
+        }
+        //Great Maka Plains 1-4
+        if (state === 13){
+            document.getElementById("plains-1").hidden = false;
+            document.getElementById("plains-1-1").hidden = true;
+            document.getElementById("plains-1-2").hidden = true;
+            document.getElementById("plains-1-3").hidden = true;
+            document.getElementById("plains-1-4").hidden = false;
+            document.getElementById("plains-1-5").hidden = true;
+        }
+        //Great maka Plains 1-5
+        if (state === 14){
+            document.getElementById("plains-1").hidden = false;
+            document.getElementById("plains-1-1").hidden = true;
+            document.getElementById("plains-1-2").hidden = true;
+            document.getElementById("plains-1-3").hidden = true;
+            document.getElementById("plains-1-4").hidden = true;
+            document.getElementById("plains-1-5").hidden = false;
         }
     };
-    function move (state) {
+function move (state) {
       gameState = state;
       gameFlow(gameState);
     };   
@@ -207,7 +231,7 @@ function alertOne(){
       shopOne.forEach(pusher);
       }
       if (shopState === 1){
-        let shopTwo = [potion, magicPotion, highpotion, revivalPotion, longBow];
+        let shopTwo = [potion, magicPotion, highPotion, revivalPotion, longBow];
         shopTwo.forEach(pusher);
       }
   

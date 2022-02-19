@@ -243,7 +243,36 @@
   <div id="plains-1-3">
     <!-- state = 12 -->
     <h2>Great Maka Plains - Watering Hole</h2>
-    <p>All done</p>
+    <p>You see a beautiful watering hole.</p>
+    <p>small animals are drinking from it.</p>
+    <p>You see a few chests nearby labeled "supplies for pilgrimages"</p>
+    <p>Will you take a few supplies out of the chests?</p>
+    <button id="chest-5" onclick="openChest(highPotion, this.id)">Open Chest</button>
+    <button id="chest-6" onclick="openChest(revivalPotion, this.id)">Open Chest</button>
+    <button>Go Forward</button>
+  </div>
+  <div id="plains-1-4">
+    <!-- state = 13 -->
+    <h2>Great Maka Plains</h2>
+    <p>You continue into the plains.</p>
+    <p>Again you see a group of enemies, you have no choice but to fight.</p>
+    <button onclick="battle([bat, redGoblin, sparkBison]); statePost = 14;"></button>
+  </div>
+  <div id="plains-1-5">
+    <!-- state = 14 -->
+    <h2>You see two paths ahead.</h2>
+    <p>You sense strong enemies ahead of both paths.</p>
+    <p>To the left you see what appears to be fire. Perhaps something has set the grass on fire?</p>
+    <p>To the right you see what appears to be a snow storm.</p>
+    <p>Both paths appear menacing, but you've made it too far to turn back now.</p>
+    <button onclick="move(15)">Go Left</button>
+    <button onclick="move(16)">Go Right</button>
+  </div>
+  <div id="plains-1-left">
+    <!-- state = 15 -->
+  </div>
+  <div id="plains-1-right">
+    <!-- state = 16 -->
   </div>
   </div>
 <!-- Adv mode Div -->

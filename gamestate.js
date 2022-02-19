@@ -1,3 +1,20 @@
+//Global shop variables
+let shop = document.getElementById("shop");
+let moneyShow = document.getElementById("money");
+let shopButton = document.getElementById("shop-button");
+//initializes money earlier;
+let money;
+function openShop(){
+moneyShow.textContent = "$" + money;
+shop.hidden = false;
+shopFlow();
+openMenu(); 
+showInventory();
+};
+function closeShop() {
+shop.hidden = true;
+closeMenu();
+};
 // Area 1
 const townOne = document.getElementById("town-1");
 //Forest 1, Forest 1-1, 1-2

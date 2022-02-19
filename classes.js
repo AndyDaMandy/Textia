@@ -286,3 +286,18 @@ class Player {
   const iceSpear = new Weapon('Ice Spear', 'Spear', 'A spear imbued with Ice Magic', 'Physical', 3, iceEl);
   const excalibur = new Weapon('Excalibur', 'Sword','The most powerful blade in the world','Physical',1000);
   
+
+  //Enemy Skills - to be pushed into the enemies individually after creating it.
+
+class EnemySkill {
+  constructor(name, type, element, pow, cost, target){
+    this.name = name;
+    this.type = type;
+    this.element = element;
+    this.pow = pow;
+    this.cost = cost;
+    this.target = target;
+  }
+};
+
+const fireBall = new EnemySkill('Fire Ball', 'Magical', fireEl, 5, 5, 'Single');

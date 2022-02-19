@@ -20,8 +20,8 @@ class Player {
     };
     //name, level, hp, chp, mp, cmp, pAtk, pDef, mAtk, mDef, exp, buff, skills, support, weapon, type
   let ando = new Player('Ando', 1, 15, 15, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
-  let marie = new Player('Marie', 1, 10, 10, 13, 13, 2, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
-  let julie = new Player('Julie', 3, 14, 14, 7, 7, 10, 5, 3, 6, 30, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+  let marie = new Player('Marie', 1, 10, 10, 13, 13, 3, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+  let julie = new Player('Julie', 3, 14, 14, 8, 8, 12, 5, 3, 6, 30, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
   let ari = new Player('Ari', 1, 8, 8, 6, 6, 10, 2, 7, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
   //Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
   class Element {
@@ -57,7 +57,7 @@ class Player {
   //if an enemy is flying, bows hit for extra damage.
   const bat = new Enemy('Bat', 1,7, 3, 4, 2, 1, 1, "None", 1, 1, [], 'Flying');
   const familiar = new Enemy('Familiar', 1, 55, 3, 10, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
-  const sparkBison = new Enemy('Spark Bison', 3, 25, 3, 2, 10, 1, 6, watEl, 5, 5, [],'Bison');
+  const sparkBison = new Enemy('Spark Bison', 3, 25, 1, 11, 9, 1, 6, watEl, 5, 5, [],'Bison');
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -221,13 +221,14 @@ class Player {
   // Weapons go here
   //characters can only equip certain types of weapons, enforced by the equip screen.
   class Weapon {
-    constructor(name, type, des, atr, pow, element){
+    constructor(name, type, des, atr, pow, element, cost){
       this.name = name;
       this.type = type;
       this.des = des;
       this.atr = atr;
       this.pow = pow;
       this.element = element;
+      this.cost = cost;
     }
   }
   const iceStaff = new Weapon('Ice Staff', 'Staff', 'A basic staff imbued with Ice Magic','Magical', 2, iceEl);
@@ -267,6 +268,7 @@ class Player {
     atr: "Physical",
     pow: 1,
     };
+  const longBow = new Weapon('Long Bow', 'Bow', 'A long, wooden bow.', 'Physical', 4, null, 30);
   const sparkBow = {
       name: "Spark Bow",
       type: "Bow",

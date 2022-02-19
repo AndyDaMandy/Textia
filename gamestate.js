@@ -178,7 +178,11 @@ function alertOne(){
   function purchaser (itemVal){
     if (money >= itemVal.cost) {
       document.getElementById("broke").hidden = true;
+      if (itemVal.type === "Sword" || itemVal.type === "Bow" || itemVal.type === "Staff" || itemVal.type === "Spear"){
+        weaponsOwned.push(itemVal);
+      } else {
       inventory.push(itemVal);
+      }
       money -= itemVal.cost;
       document.getElementById("money").textContent = "$" + money;
     } else {
@@ -203,7 +207,7 @@ function alertOne(){
       shopOne.forEach(pusher);
       }
       if (shopState === 1){
-        let shopTwo = [potion, magicPotion, highpotion, revivalPotion];
+        let shopTwo = [potion, magicPotion, highpotion, revivalPotion, longBow];
         shopTwo.forEach(pusher);
       }
   

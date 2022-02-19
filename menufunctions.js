@@ -370,4 +370,66 @@ function closeMenu() {
   //hide swap
   document.getElementById("swap-team").hidden = true;
   document.getElementById("swap-menu").hidden = true;
-  };  
+  };
+  
+//======================================
+// Start Game , must go below everything else
+//======================================
+const begin = document.getElementById("begin");
+const start = document.getElementById("start-game");
+const mainMenu = document.getElementById("main-menu");
+const adv = document.getElementById("adv-mode");
+let gameCheck = false;
+function startGame(){
+  adv.hidden = false;
+  battleMode.hidden = true;
+  mainMenu.hidden = false;
+  menu.hidden = false;
+  shopButton.hidden = false;
+  begin.hidden = true;
+  gameState = 0;
+  move(gameState);
+  money = 30;
+  ando.weapon = woodSword;
+  marie.weapon = woodStaff;
+  inventory.push(potion);
+  inventory.push(potion);
+  inventory.push(magicPotion);
+  inventory.push(highpotion);
+  inventory.push(revivalPotion);
+  inventory.push(revivalPotion);
+  simpleStorage.flush();
+  gameCheck = true;
+  };
+function load(){
+ ando = JSON.parse(simpleStorage.get("ando", ando)); 
+ marie = JSON.parse(simpleStorage.get("marie", marie));
+  julie = JSON.parse(simpleStorage.get("julie", julie));
+  ari = JSON.parse(simpleStorage.get("ari", ari));
+  reserveParty = simpleStorage.get("reserveParty", reserveParty);
+ weaponsOwned = simpleStorage.get("weaponsOwned", weaponsOwned);
+ currentParty = simpleStorage.get("currentParty", currentParty);
+  inventory =  simpleStorage.get("inventory", inventory);
+  money =  simpleStorage.get("money", money);
+ gameState = simpleStorage.get("gamestate", gameState);
+ opened = simpleStorage.get("opened", opened);
+ applyOpened();
+  move(gameState);
+  adv.hidden = false;
+  mainMenu.hidden = false;
+  menu.hidden = false;
+  begin.hidden = true;
+  battleState = 0;
+  battleMode.hidden = true;
+  change.innerHTML = "";
+  info.innerHTML = "";
+  enemyPlace.innerHTML = "";
+  partyPlace.innerHTML = "";
+  end.innerHTML = "";
+  };
+ function check() {
+  gameCheck = simpleStorage.get("gamecheck", gameCheck);
+  if (gameCheck  === true) {
+  document.getElementById("continue").hidden = false;
+  }
+};

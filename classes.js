@@ -89,6 +89,8 @@ class Player {
     eSkills: [],
     type: "Goblin"
     };
+  
+    //bosses go below
   const livingTree = {
     name: "Living Tree",
     level: 1,
@@ -104,6 +106,8 @@ class Player {
     eSkills: [],
     type: "enemy"
     };
+  const flareFox = new Enemy('Flare Fox', 4, 100, 2, 10, 7, 1, 3, iceEl, 50, 50, [], 'Fox');
+  const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 10, 6, 1, 4, fireEl, 50, 50, [], 'Leopard');
   //============================
   //Skills
   //===========================

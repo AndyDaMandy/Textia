@@ -57,6 +57,7 @@ class Player {
   //if an enemy is flying, bows hit for extra damage.
   const bat = new Enemy('Bat', 1,7, 3, 4, 2, 1, 1, "None", 1, 1, [], 'Flying');
   const familiar = new Enemy('Familiar', 1, 55, 3, 10, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
+  const sparkBison = new Enemy('Spark Bison', 3, 25, 3, 2, 10, 1, 6, watEl, 5, 5, [],'Bison');
   const goblin = {
     name: "Goblin",
     level: 1,

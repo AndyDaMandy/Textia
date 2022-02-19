@@ -107,6 +107,7 @@ function gameFlow (state) {
           document.getElementById("town-2-chapel").hidden = true;
           document.getElementById("town-2-2").hidden = true;
           document.getElementById("town-2-3").hidden = true;
+          document.getElementById("plains-1").hidden = true;
         } 
       //Chapel
         if (state == 7){
@@ -116,6 +117,7 @@ function gameFlow (state) {
           document.getElementById("town-2-chapel").hidden = false;
           document.getElementById("town-2-2").hidden = true;
           document.getElementById("town-2-3").hidden = true;
+          document.getElementById("plains-1").hidden = true;
         }
       //Town 2-2 Magnolia Town
         if (state === 8){
@@ -126,6 +128,7 @@ function gameFlow (state) {
           document.getElementById("town-2-chapel").hidden = true;
           document.getElementById("town-2-2").hidden = false;
           document.getElementById("town-2-3").hidden = true;
+          document.getElementById("plains-1").hidden = true;
         }
         //Town 2-3 Magnolia Town
         if (state === 9) {
@@ -135,6 +138,30 @@ function gameFlow (state) {
           document.getElementById("town-2-chapel").hidden = true;
           document.getElementById("town-2-2").hidden = true;
           document.getElementById("town-2-3").hidden = false;
+          document.getElementById("plains-1").hidden = true;
+        }
+        //Great Maka Plain 1-1
+        if (state === 10) {
+            shopButton.hidden = true;
+            townTwo.hidden = true;
+            document.getElementById("plains-1").hidden = false;
+            document.getElementById("plains-1-1").hidden = false;
+            document.getElementById("plains-1-2").hidden = true;
+            document.getElementById("plains-1-3").hidden = true;
+        }
+        //Great Maka Plains 1-2
+        if (state === 11) {
+            document.getElementById("plains-1").hidden = false;
+            document.getElementById("plains-1-1").hidden = true;
+            document.getElementById("plains-1-2").hidden = false;
+            document.getElementById("plains-1-3").hidden = true;
+        }
+        //Great Maka Plains 1-3
+        if (state === 12){
+            document.getElementById("plains-1").hidden = false;
+            document.getElementById("plains-1-1").hidden = true;
+            document.getElementById("plains-1-2").hidden = true;
+            document.getElementById("plains-1-3").hidden = false;
         }
     };
     function move (state) {

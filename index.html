@@ -209,15 +209,43 @@
       <h2>The end of Magnolia Town</h2>
       <p>You've made it to the end of Magonlia Town.</p>
       <p><em>Marie and Ando see a young woman with a backpack and a bow coming their way</em></p>
-      <p>The woman: "I see you two appear to be on a pilgrimage. My name's Julia, I'm on a pilgrimage for Solar Town"</p>
-      <p>Julia: "Maybe we should team up? It'd be safer if we traveled together."</p>
-      <p>Will you let Julia join you? You may not see her again if your paths diverge here.</p>
+      <p>The woman: "I see you two appear to be on a pilgrimage. My name's Julie, I'm on a pilgrimage for Solar Town"</p>
+      <p>Julie: "Maybe we should team up? It'd be safer if we traveled together."</p>
+      <p>Will you let Julie join you? You may not see her again if your paths diverge here.</p>
       <button id="add-julie" onclick="addJulie(this.id)">Let Julia Join</button>
       <button onclick="move(8)">Go Back</button>
-      <button onclick="">Move Forward</button>
+      <button onclick="move(10)">Move Forward</button>
     </div>
-    
-  <div>
+    <div>
+  </div>
+
+  </div>
+<div id="plains-1" hidden>
+  <div id="plains-1-1">
+    <!-- state = 10 -->
+    <h2>Great Maka Plains</h2>
+    <p>After leaving town you see a great plain that extends as far as the eye can see.</p>
+    <p>The wind makes little waves out of the flowing grass.</p>
+    <p>You see small creatures running around in the distance.</p>
+    <p>You can still go back to town, but if you go further you know you will not be able to return.</p>
+    <p>A group of bats are coming your way, to go forward you must fight!</p>
+    <button onclick="move(9)">Go Back</button>
+    <button onclick="battle([bat, bat, bat]); statePost = 11;">Fight!</button>
+  </div>
+  <div id="plains-1-2">
+    <!-- state = 11 -->
+    <h2>Great Maka Plains - Further in</h2>
+    <p>You see what appears to be bison in the distance</p>
+    <p>They're glowing yellow, certainly not the kind of bison you're used to.</p>
+    <p>They spot you! They're attacking!</p>
+    <button onclick="battle([sparkBison, sparkBison, sparkBison]); statePost = 12;">Fight!</button>
+  </div>
+  <div id="plains-1-3">
+    <!-- state = 12 -->
+    <h2>Great Maka Plains - Watering Hole</h2>
+    <p>All done</p>
+  </div>
+  </div>
 <!-- Adv mode Div -->
 </div>
   </body>

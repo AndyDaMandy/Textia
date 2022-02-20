@@ -465,13 +465,45 @@ function enemCalc (){
       //enemies can then use skills....?
       let attacker = enemyParty[getRandomInt(enLength)];
       if (attacker.eSkills.length > 0){
-        let coinFlip = getRandomInt(1);
+        let coinFlip = getRandomInt(2);
         //flips for skills or not
         if (coinFlip === 0){
           //now picks a random skill
-          //after skill is picked calculates based on magical or physical damage
+          let attackInt = attacker.eSkills.length;
+          let attackChoice = attacker.eSkills[getRandomInt(attackInt)];
+          if (attackChoice.type === "Magical"){
+            let attackerDam = attacker.mAtk;
+            let damage = attackerDam + attackChoice.pow - target.mDef;
+            let damageRange = clamp(damage, damage, damage+1);
+            if (damageRange <= 0){damageRange = 0};
+            target.chp = target.chp - damageRange;
+            let damageRes = document.createElement("p");
+            damageRes.textContent = target.name + " was hit by " + attacker.name + "'s " + attackChoice.name + " for " + damageRange + " damage!";
+            info.appendChild(damageRes);
+          } else if (attackChoice.type === "Physical"){
+            let attackerDam = attacker.pAtk;
+            let damage = attackerDam + attackChoice.pow - target.pDef;
+            let damageRange = clamp(damage, damage, damage+1);
+            if (damageRange <= 0){damageRange = 0};
+            target.chp = target.chp - damageRange;
+            let damageRes = document.createElement("p");
+            damageRes.textContent = target.name + " was hit by " + attacker.name + "'s " + attackChoice.name + " for " + damageRange + " damage!";
+            info.appendChild(damageRes);
+          }
         }
-      }
+        //just normal physical attack again
+        else {
+          let attackerDam = attacker.pAtk;
+          //if buff is off, then buff = 0, thus not changing much.
+          let damage = attackerDam - target.pDef + target.buff[1].pow;
+          let damageRange = clamp(damage, damage, damage+1);
+          if (damageRange <= 0){damageRange = 0};
+          target.chp = target.chp - damageRange;
+          let damageRes = document.createElement("p");
+          damageRes.textContent = target.name + " was hit by " + attacker.name + " for " + damageRange + " damage!";
+          info.appendChild(damageRes);
+          }
+      } else {
       let attackerDam = attacker.pAtk;
       //if buff is off, then buff = 0, thus not changing much.
       let damage = attackerDam - target.pDef + target.buff[1].pow;
@@ -481,6 +513,7 @@ function enemCalc (){
       let damageRes = document.createElement("p");
       damageRes.textContent = target.name + " was hit by " + attacker.name + " for " + damageRange + " damage!";
       info.appendChild(damageRes);
+      }
     }
     deathCheck();
   };

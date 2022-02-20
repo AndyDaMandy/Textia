@@ -821,6 +821,7 @@ function clearBattle() {
   holder.innerHTML = "";
   adv.hidden = false;
   battleState = 0;
+  enemyParty = [];
   battleMode.hidden = true;
   mainMenu.hidden = false;
   expGain = 0;

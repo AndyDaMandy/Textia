@@ -130,7 +130,7 @@ function gameFlow (state) {
           document.getElementById("town-2-3").hidden = true;
           document.getElementById("plains-1").hidden = true;
         }
-        //Town 2-3 Magnolia Town
+      //Town 2-3 Magnolia Town
         if (state === 9) {
           shopButton.hidden = true;
           townTwo.hidden = false;
@@ -140,7 +140,7 @@ function gameFlow (state) {
           document.getElementById("town-2-3").hidden = false;
           document.getElementById("plains-1").hidden = true;
         }
-        //Great Maka Plain 1-1
+      //Great Maka Plain 1-1
         if (state === 10) {
             shopButton.hidden = true;
             townTwo.hidden = true;
@@ -150,8 +150,13 @@ function gameFlow (state) {
             document.getElementById("plains-1-3").hidden = true;
             document.getElementById("plains-1-4").hidden = true;
             document.getElementById("plains-1-5").hidden = true;
+            document.getElementById("plains-1-left").hidden = true;
+            document.getElementById("plains-1-right").hidden = true;
+            document.getElementById("plains-1-left-2").hidden = true;
+            document.getElementById("plains-1-right-2").hidden = true;
+            document.getElementById("plains-1-6").hidden = true;
         }
-        //Great Maka Plains 1-2
+      //Great Maka Plains 1-2
         if (state === 11) {
             document.getElementById("plains-1").hidden = false;
             document.getElementById("plains-1-1").hidden = true;
@@ -159,8 +164,13 @@ function gameFlow (state) {
             document.getElementById("plains-1-3").hidden = true;
             document.getElementById("plains-1-4").hidden = true;
             document.getElementById("plains-1-5").hidden = true;
+            document.getElementById("plains-1-left").hidden = true;
+            document.getElementById("plains-1-right").hidden = true;
+            document.getElementById("plains-1-left-2").hidden = true;
+            document.getElementById("plains-1-right-2").hidden = true;
+            document.getElementById("plains-1-6").hidden = true;
         }
-        //Great Maka Plains 1-3
+      //Great Maka Plains 1-3
         if (state === 12){
             document.getElementById("plains-1").hidden = false;
             document.getElementById("plains-1-1").hidden = true;
@@ -168,8 +178,13 @@ function gameFlow (state) {
             document.getElementById("plains-1-3").hidden = false;
             document.getElementById("plains-1-4").hidden = true;
             document.getElementById("plains-1-5").hidden = true;
+            document.getElementById("plains-1-left").hidden = true;
+            document.getElementById("plains-1-right").hidden = true;
+            document.getElementById("plains-1-left-2").hidden = true;
+            document.getElementById("plains-1-right-2").hidden = true;
+            document.getElementById("plains-1-6").hidden = true;
         }
-        //Great Maka Plains 1-4
+      //Great Maka Plains 1-4
         if (state === 13){
             document.getElementById("plains-1").hidden = false;
             document.getElementById("plains-1-1").hidden = true;
@@ -177,8 +192,13 @@ function gameFlow (state) {
             document.getElementById("plains-1-3").hidden = true;
             document.getElementById("plains-1-4").hidden = false;
             document.getElementById("plains-1-5").hidden = true;
+            document.getElementById("plains-1-left").hidden = true;
+            document.getElementById("plains-1-right").hidden = true;
+            document.getElementById("plains-1-left-2").hidden = true;
+            document.getElementById("plains-1-right-2").hidden = true;
+            document.getElementById("plains-1-6").hidden = true;
         }
-        //Great maka Plains 1-5
+      //Great maka Plains 1-5
         if (state === 14){
             document.getElementById("plains-1").hidden = false;
             document.getElementById("plains-1-1").hidden = true;
@@ -186,6 +206,81 @@ function gameFlow (state) {
             document.getElementById("plains-1-3").hidden = true;
             document.getElementById("plains-1-4").hidden = true;
             document.getElementById("plains-1-5").hidden = false;
+            document.getElementById("plains-1-left").hidden = true;
+            document.getElementById("plains-1-right").hidden = true;
+            document.getElementById("plains-1-left-2").hidden = true;
+            document.getElementById("plains-1-right-2").hidden = true;
+            document.getElementById("plains-1-6").hidden = true;
+        }
+      //Great Maka Plains - left
+        if (state === 15){
+          document.getElementById("plains-1").hidden = false;
+          document.getElementById("plains-1-1").hidden = true;
+          document.getElementById("plains-1-2").hidden = true;
+          document.getElementById("plains-1-3").hidden = true;
+          document.getElementById("plains-1-4").hidden = true;
+          document.getElementById("plains-1-5").hidden = true;
+          document.getElementById("plains-1-left").hidden = false;
+          document.getElementById("plains-1-right").hidden = true;
+          document.getElementById("plains-1-left-2").hidden = true;
+          document.getElementById("plains-1-right-2").hidden = true;
+          document.getElementById("plains-1-6").hidden = true;
+        }
+      //Great maka Plains -right
+        if (state === 16){
+          document.getElementById("plains-1").hidden = false;
+          document.getElementById("plains-1-1").hidden = true;
+          document.getElementById("plains-1-2").hidden = true;
+          document.getElementById("plains-1-3").hidden = true;
+          document.getElementById("plains-1-4").hidden = true;
+          document.getElementById("plains-1-5").hidden = true;
+          document.getElementById("plains-1-left").hidden = true;
+          document.getElementById("plains-1-right").hidden = false;
+          document.getElementById("plains-1-left-2").hidden = true;
+          document.getElementById("plains-1-right-2").hidden = true;
+          document.getElementById("plains-1-6").hidden = true;
+        }
+      //Great Maka plains - left 2
+        if (state === 17){
+          document.getElementById("plains-1").hidden = false;
+          document.getElementById("plains-1-1").hidden = true;
+          document.getElementById("plains-1-2").hidden = true;
+          document.getElementById("plains-1-3").hidden = true;
+          document.getElementById("plains-1-4").hidden = true;
+          document.getElementById("plains-1-5").hidden = true;
+          document.getElementById("plains-1-left").hidden = true;
+          document.getElementById("plains-1-right").hidden = true;
+          document.getElementById("plains-1-left-2").hidden = false;
+          document.getElementById("plains-1-right-2").hidden = true;
+          document.getElementById("plains-1-6").hidden = true;
+        }
+      //Great Maka Plains - right 2
+        if (state === 18){
+          document.getElementById("plains-1").hidden = false;
+          document.getElementById("plains-1-1").hidden = true;
+          document.getElementById("plains-1-2").hidden = true;
+          document.getElementById("plains-1-3").hidden = true;
+          document.getElementById("plains-1-4").hidden = true;
+          document.getElementById("plains-1-5").hidden = true;
+          document.getElementById("plains-1-left").hidden = true;
+          document.getElementById("plains-1-right").hidden = true;
+          document.getElementById("plains-1-left-2").hidden = true;
+          document.getElementById("plains-1-right-2").hidden = false;
+          document.getElementById("plains-1-6").hidden = true;
+        }
+      //end of Great Maka Plains
+        if (state === 19){
+          document.getElementById("plains-1").hidden = false;
+          document.getElementById("plains-1-1").hidden = true;
+          document.getElementById("plains-1-2").hidden = true;
+          document.getElementById("plains-1-3").hidden = true;
+          document.getElementById("plains-1-4").hidden = true;
+          document.getElementById("plains-1-5").hidden = true;
+          document.getElementById("plains-1-left").hidden = true;
+          document.getElementById("plains-1-right").hidden = true;
+          document.getElementById("plains-1-left-2").hidden = true;
+          document.getElementById("plains-1-right-2").hidden = true;
+          document.getElementById("plains-1-6").hidden = false;
         }
     };
 function move (state) {

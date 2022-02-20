@@ -220,85 +220,96 @@
   </div>
 
   </div>
-<div id="plains-1" hidden>
-  <div id="plains-1-1">
-    <!-- state = 10 -->
-    <h2>Great Maka Plains</h2>
-    <p>After leaving town you see a great plain that extends as far as the eye can see.</p>
-    <p>The wind makes little waves out of the flowing grass.</p>
-    <p>You see small creatures running around in the distance.</p>
-    <p>You can still go back to town, but if you go further you know you will not be able to return.</p>
-    <p>A group of bats are coming your way, to go forward you must fight!</p>
-    <button onclick="move(9)">Go Back</button>
-    <button onclick="battle([bat, bat, bat]); statePost = 11;">Fight!</button>
+  <div id="plains-1" hidden>
+    <div id="plains-1-1">
+      <!-- state = 10 -->
+      <h2>Great Maka Plains</h2>
+      <p>After leaving town you see a great plain that extends as far as the eye can see.</p>
+      <p>The wind makes little waves out of the flowing grass.</p>
+      <p>You see small creatures running around in the distance.</p>
+      <p>You can still go back to town, but if you go further you know you will not be able to return.</p>
+      <p>A group of bats are coming your way, to go forward you must fight!</p>
+      <button onclick="move(9)">Go Back</button>
+      <button onclick="battle([bat, bat, bat]); statePost = 11;">Fight!</button>
+    </div>
+    <div id="plains-1-2">
+      <!-- state = 11 -->
+      <h2>Great Maka Plains - Further in</h2>
+      <p>You see what appears to be bison in the distance</p>
+      <p>They're glowing yellow, certainly not the kind of bison you're used to.</p>
+      <p>They spot you! They're attacking!</p>
+      <button onclick="battle([sparkBison, sparkBison, sparkBison]); statePost = 12;">Fight!</button>
+    </div>
+    <div id="plains-1-3">
+      <!-- state = 12 -->
+      <h2>Great Maka Plains - Watering Hole</h2>
+      <p>You see a beautiful watering hole.</p>
+      <p>small animals are drinking from it.</p>
+      <p>You see a few chests nearby labeled "supplies for pilgrimages"</p>
+      <p>Will you take a few supplies out of the chests?</p>
+      <button id="chest-5" onclick="openChest(highPotion, this.id)">Open Chest</button>
+      <button id="chest-6" onclick="openChest(revivalPotion, this.id)">Open Chest</button>
+      <button onclick="move(13)">Go Forward</button>
+    </div>
+    <div id="plains-1-4">
+      <!-- state = 13 -->
+      <h2>Great Maka Plains - Past the Watering Hole</h2>
+      <p>You continue into the plains.</p>
+      <p>Again you see a group of enemies, you have no choice but to fight.</p>
+      <button onclick="battle([bat, redGoblin, sparkBison]); statePost = 14;">Fight!</button>
+    </div>
+    <div id="plains-1-5">
+      <!-- state = 14 -->
+      <h2>Great maka Plains - Diverging Paths</h2>
+      <p>You see two paths ahead.</p>
+      <p>You sense strong enemies ahead of both paths.</p>
+      <p>To the left you see what appears to be fire. Perhaps something has set the grass on fire?</p>
+      <p>To the right you see what appears to be a snow storm.</p>
+      <p>Both paths appear menacing, but you've made it too far to turn back now.</p>
+      <button onclick="move(15)">Go Left</button>
+      <button onclick="move(16)">Go Right</button>
+    </div>
+    <div id="plains-1-left">
+      <!-- state = 15 -->
+      <h2>Great Maka Plains - Flaming Field</h2>
+      <p>The area around you is engulfed in fire.</p>
+      <p>The blessing of the Goddess is pushing away the flames, allowing you to move forward.</p>
+      <p>You see what's causing the fire ahead...</p>
+      <p>It appears to be a large fox engulfed in flames.</p>
+      <p>To move aheady you must fight.</p>
+      <button onclick="battle([flareFox]); statePost = 17;">Fight!</button>
+    </div>
+    <div id="plains-1-right">
+      <!-- state = 16 -->
+      <h2>Great Maka Plains - Frozen Field</h2>
+      <p>The area around you has frozen over entirely.</p>
+      <p>Wind and snow storm around you.</p>
+      <p>It looks more like a tundra now than a plain</p>
+      <p>You see ahead what's causing the storm.</p>
+      <p>It appears to be a large Leopard, with ice shards coming out of it</p>
+      <button onclick="battle([iceLeopard]); statePost = 18;">Fight!</button>
+    </div>
+    <div id="plains-1-left-2">
+      <!-- state = 17 -->
+      <h2>Great Maka Plains - Beyond the Flaming Field</h2>
+      <p>You defeated the Flare Fox!</p>
+      <p><em>Marie and Ando exchange sighs of relief.</em></p>
+      <button onclick="move(19)">Move Forward</button>
+    </div>
+    <div id="plains-1-right-2">
+    <!-- state - 18 -->
+      <h2>Great Maka Plains - Beyond the Frozen Field</h2>
+      <button onclick="move(19)">Move Forward</button>
+    </div>
+    <div id="plains-1-6">
+      <!-- state = 19 -->
+      <h2>End of the Great Maka Plains</h2>
+      <p>Game ends here for now, thanks for playing!</p>
+      <p>Refresh to try again!</p>
+    </div>
   </div>
-  <div id="plains-1-2">
-    <!-- state = 11 -->
-    <h2>Great Maka Plains - Further in</h2>
-    <p>You see what appears to be bison in the distance</p>
-    <p>They're glowing yellow, certainly not the kind of bison you're used to.</p>
-    <p>They spot you! They're attacking!</p>
-    <button onclick="battle([sparkBison, sparkBison, sparkBison]); statePost = 12;">Fight!</button>
-  </div>
-  <div id="plains-1-3">
-    <!-- state = 12 -->
-    <h2>Great Maka Plains - Watering Hole</h2>
-    <p>You see a beautiful watering hole.</p>
-    <p>small animals are drinking from it.</p>
-    <p>You see a few chests nearby labeled "supplies for pilgrimages"</p>
-    <p>Will you take a few supplies out of the chests?</p>
-    <button id="chest-5" onclick="openChest(highPotion, this.id)">Open Chest</button>
-    <button id="chest-6" onclick="openChest(revivalPotion, this.id)">Open Chest</button>
-    <button>Go Forward</button>
-  </div>
-  <div id="plains-1-4">
-    <!-- state = 13 -->
-    <h2>Great Maka Plains - Past the Watering Hole</h2>
-    <p>You continue into the plains.</p>
-    <p>Again you see a group of enemies, you have no choice but to fight.</p>
-    <button onclick="battle([bat, redGoblin, sparkBison]); statePost = 14;"></button>
-  </div>
-  <div id="plains-1-5">
-    <!-- state = 14 -->
-    <h2>Great maka Plains - Diverging Paths</h2>
-    <p>You see two paths ahead.</p>
-    <p>You sense strong enemies ahead of both paths.</p>
-    <p>To the left you see what appears to be fire. Perhaps something has set the grass on fire?</p>
-    <p>To the right you see what appears to be a snow storm.</p>
-    <p>Both paths appear menacing, but you've made it too far to turn back now.</p>
-    <button onclick="move(15)">Go Left</button>
-    <button onclick="move(16)">Go Right</button>
-  </div>
-  <div id="plains-1-left">
-    <!-- state = 15 -->
-    <h2>Great Maka Plains - Flaming Field</h2>
-    <p>The area around you is engulfed in fire.</p>
-    <p>The blessing of the Goddess is pushing away the flames, allowing you to move forward.</p>
-    <p>You see what's causing the fire ahead...</p>
-    <p>It appears to be a large fox engulfed in flames.</p>
-    <p>To move aheady you must fight.</p>
-    <button onclick="battle([flareFox]); statePost = 17;">Fight!</button>
-  </div>
-  <div id="plains-1-right">
-    <!-- state = 16 -->
-    <h2>Great Maka Plains - Frozen Field</h2>
-    <p>The area around you has frozen over entirely.</p>
-    <p>Wind and snow storm around you.</p>
-    <p>It looks more like a tundra now than a plain</p>
-    <p>You see ahead what's causing the storm.</p>
-    <p>It appears to be a large Leopard, with ice shards coming out of it</p>
-    <button onclick="battle([iceLeopard]); statePost = 18;">Fight!</button>
-  </div>
-  <div id="plains-1-left-2">
-    <!-- state = 17 -->
-    <h2>Great Maka Plains - Beyond the Flaming Field</h2>
-    <p>You defeated the Flare Fox!</p>
-    <p><em>Marie and Ando exchange sighs of relief.</em></p>
-  </div>
-  <div id="plains-1-right-2">
-   <!-- state - 18 -->
-    <h2>Great Maka Plains - Beyond the Frozen Field</h2>
-  </div>
+  <div id="town-3" hidden>
+
   </div>
 <!-- Adv mode Div -->
 </div>

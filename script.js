@@ -127,11 +127,16 @@ function targetBtn(partymem, target, flow, skill,){
     }
   }
   };
-function attackCalc (char, target, flow, skill){
-  info.innerHTML = "";
-  function clamp(value, min, max) {
+//calculating functions
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+    }
+function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
     }
+//calculating functions
+function attackCalc (char, target, flow, skill){
+  info.innerHTML = "";
   //branch for skill
   let elementalBoost = 0;
     if (skill != undefined){
@@ -449,12 +454,6 @@ function deathCheck(){
     console.log(deadTeam);
   };
 function enemCalc (){
-  function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-    }
-    function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-    }
   let enPow = [];
   let teamLength = currentParty.length;
     function pusher1 (x){enPow.push(x.pAtk)};
@@ -465,6 +464,14 @@ function enemCalc (){
       //NEW BRANCH FOR MAGIC ENEMIES GOES HERE!!!!! IT CHECKS IF THE ATTACKER HAS MORE MAGIC ATTACK THAN ATTACK
       //enemies can then use skills....?
       let attacker = enemyParty[getRandomInt(enLength)];
+      if (attacker.eSkills.length > 0){
+        let coinFlip = getRandomInt(1);
+        //flips for skills or not
+        if (coinFlip === 0){
+          //now picks a random skill
+          //after skill is picked calculates based on magical or physical damage
+        }
+      }
       let attackerDam = attacker.pAtk;
       //if buff is off, then buff = 0, thus not changing much.
       let damage = attackerDam - target.pDef + target.buff[1].pow;

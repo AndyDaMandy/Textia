@@ -57,7 +57,7 @@ class Player {
   //if an enemy is flying, bows hit for extra damage.
   const bat = new Enemy('Bat', 1,7, 3, 4, 2, 1, 1, "None", 1, 1, [], 'Flying');
   const familiar = new Enemy('Familiar', 1, 55, 3, 9, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
-  const sparkBison = new Enemy('Spark Bison', 3, 25, 1, 11, 9, 1, 6, watEl, 5, 5, [],'Bison');
+  const sparkBison = new Enemy('Spark Bison', 3, 25, 1, 11, 9, 1, 6, thunEl, 5, 5, [],'Bison');
   const redGoblin = new Enemy('Red Goblin', 3, 30, 1, 10, 4, 2, 5, "None" ,7, 10, [], 'Goblin');
   const goblin = {
     name: "Goblin",
@@ -106,8 +106,26 @@ class Player {
     eSkills: [],
     type: "enemy"
     };
-  const flareFox = new Enemy('Flare Fox', 4, 100, 2, 10, 7, 1, 3, iceEl, 50, 50, [], 'Fox');
-  const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 10, 6, 1, 4, fireEl, 50, 50, [], 'Leopard');
+  const flareFox = new Enemy('Flare Fox', 4, 100, 2, 10, 7, 1, 3, fireEl, 50, 50, [], 'Fox');
+  const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 10, 6, 1, 4, iceEl, 50, 50, [], 'Leopard');
+//Enemy Skills - to be pushed into the enemies individually after creating it.
+
+class EnemySkill {
+  constructor(name, type, element, pow, cost, target){
+    this.name = name;
+    this.type = type;
+    this.element = element;
+    this.pow = pow;
+    this.cost = cost;
+    this.target = target;
+  }
+};
+
+const fireBall = new EnemySkill('Fire Ball', 'Magical', fireEl, 5, 5, 'Single');
+flareFox.eSkills.push(fireBall);
+const iceClaw = new EnemySkill('Ice Claw', 'Physical', iceEl, 5, 2, 'Single');
+iceLeopard.eSkills.push(iceClaw);
+
   //============================
   //Skills
   //===========================
@@ -286,18 +304,3 @@ class Player {
   const iceSpear = new Weapon('Ice Spear', 'Spear', 'A spear imbued with Ice Magic', 'Physical', 3, iceEl);
   const excalibur = new Weapon('Excalibur', 'Sword','The most powerful blade in the world','Physical',1000);
   
-
-  //Enemy Skills - to be pushed into the enemies individually after creating it.
-
-class EnemySkill {
-  constructor(name, type, element, pow, cost, target){
-    this.name = name;
-    this.type = type;
-    this.element = element;
-    this.pow = pow;
-    this.cost = cost;
-    this.target = target;
-  }
-};
-
-const fireBall = new EnemySkill('Fire Ball', 'Magical', fireEl, 5, 5, 'Single');

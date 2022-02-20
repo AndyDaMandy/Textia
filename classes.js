@@ -55,7 +55,7 @@ class Player {
   };
   const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
   //if an enemy is flying, bows hit for extra damage.
-  const bat = new Enemy('Bat', 1, 13, 3, 4, 2, 1, 1, "None", 1, 1, [], 'Flying');
+  const bat = new Enemy('Bat', 1, 13, 3, 7, 2, 1, 1, "None", 1, 1, [], 'Flying');
   const familiar = new Enemy('Familiar', 1, 55, 3, 9, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
   const sparkBison = new Enemy('Spark Bison', 3, 20, 1, 11, 9, 1, 3, watEl, 5, 5, [],'Bison');
   const redGoblin = new Enemy('Red Goblin', 3, 30, 1, 10, 4, 2, 5, "None" ,7, 10, [], 'Goblin');
@@ -106,8 +106,8 @@ class Player {
     eSkills: [],
     type: "enemy"
     };
-  const flareFox = new Enemy('Flare Fox', 4, 100, 10, 10, 2, 6, 5, iceEl, 50, 50, [], 'Fox');
-  const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 11, 4, 1, 2, fireEl, 50, 50, [], 'Leopard');
+  const flareFox = new Enemy('Flare Fox', 4, 100, 10, 13, 5, 14, 5, iceEl, 50, 50, [], 'Fox');
+  const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [], 'Leopard');
 //Enemy Skills - to be pushed into the enemies individually after creating it.
 
 class EnemySkill {

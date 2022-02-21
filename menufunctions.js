@@ -432,6 +432,7 @@ for (let i = 0; i < setParty.length; i++){
   }
 }
 if (setReserve.length > 0) {
+  for (let i = 0; i < setReserve.length; i++){
   if (setReserve[i].name === "Ando"){
     reserveParty.push(ando);
   } else if (setReserve[i].name === "Marie"){
@@ -441,6 +442,7 @@ if (setReserve.length > 0) {
   } else if (setReserve[i].name === "Ari") {
     reserveParyy.push(ari);
   }
+}
 }
   console.log(currentParty);
   inventory =  simpleStorage.get("inventory");

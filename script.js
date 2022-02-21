@@ -472,6 +472,18 @@ function enemCalc (){
           let attackChoice = attacker.eSkills[getRandomInt(attackInt)];
           if (attackChoice.type === "Magical"){
             let attackerDam = attacker.mAtk;
+            if (attackChoice.target === "All"){
+              function mapper(target){
+                let damage = attackerDam + attackChoice.pow - target.mDef;
+                let damageRange = clamp(damage, damage, damage+1);
+                if (damageRange <= 0){damageRange = 0};
+                target.chp = target.chp - damageRange;
+                let damageRes = document.createElement("p");
+                damageRes.textContent = target.name + " was hit by " + attacker.name + "'s " + attackChoice.name + " for " + damageRange + " damage!";
+                info.appendChild(damageRes);
+              }
+              currentParty.map(mapper);
+            } else {
             let damage = attackerDam + attackChoice.pow - target.mDef;
             let damageRange = clamp(damage, damage, damage+1);
             if (damageRange <= 0){damageRange = 0};
@@ -479,15 +491,29 @@ function enemCalc (){
             let damageRes = document.createElement("p");
             damageRes.textContent = target.name + " was hit by " + attacker.name + "'s " + attackChoice.name + " for " + damageRange + " damage!";
             info.appendChild(damageRes);
+            }
           } else if (attackChoice.type === "Physical"){
             let attackerDam = attacker.pAtk;
-            let damage = attackerDam + attackChoice.pow - target.pDef;
+            if (attackChoice.target === "All"){
+              function mapper(target){
+                let damage = attackerDam + attackChoice.pow - target.pDef + target.buff[1].pow;
+                let damageRange = clamp(damage, damage, damage+1);
+                if (damageRange <= 0){damageRange = 0};
+                target.chp = target.chp - damageRange;
+                let damageRes = document.createElement("p");
+                damageRes.textContent = target.name + " was hit by " + attacker.name + "'s " + attackChoice.name + " for " + damageRange + " damage!";
+                info.appendChild(damageRes);
+              }
+              currentParty.map(mapper);
+            } else {
+            let damage = attackerDam + attackChoice.pow - target.pDef + target.buff[1].pow;
             let damageRange = clamp(damage, damage, damage+1);
             if (damageRange <= 0){damageRange = 0};
             target.chp = target.chp - damageRange;
             let damageRes = document.createElement("p");
             damageRes.textContent = target.name + " was hit by " + attacker.name + "'s " + attackChoice.name + " for " + damageRange + " damage!";
             info.appendChild(damageRes);
+            }
           }
         }
         //just normal physical attack again

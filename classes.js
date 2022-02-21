@@ -92,19 +92,6 @@ let ari = {
   weapon: 'Text',
   type: 'Player'
 }
-    //name, level, hp, chp, mp, cmp, pAtk, pDef, mAtk, mDef, exp, buff, skills, support, weapon, type
- // let ando = new Player('Ando', 1, 15, 15, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
- // let marie = new Player('Marie', 1, 10, 10, 13, 13, 3, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
- // let julie = new Player('Julie', 3, 14, 14, 8, 8, 12, 5, 3, 6, 30, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
-//  let ari = new Player('Ari', 1, 8, 8, 6, 6, 10, 2, 7, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
-  //Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
- /* class Element {
-    constructor(element, des){
-      this.element = element;
-      this.des - des;
-    }
-  }
-  */
 const iceEl = {
    element: 'Ice',
    des: 'Ice Element, strong against Fire'
@@ -179,8 +166,7 @@ const watEl = {
     money: 2,
     eSkills: [],
     type: "Goblin"
-    };
-  
+    }; 
     //bosses go below
   const livingTree = {
     name: "Living Tree",
@@ -197,24 +183,25 @@ const watEl = {
     eSkills: [],
     type: "enemy"
     };
-  const flareFox = new Enemy('Flare Fox', 4, 100, 10, 13, 5, 14, 5, iceEl, 50, 50, [], 'Fox');
+  const flareFox = new Enemy('Flare Fox', 4, 100, 10, 13, 5, 13, 5, iceEl, 50, 50, [], 'Fox');
   const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [], 'Leopard');
 //Enemy Skills - to be pushed into the enemies individually after creating it.
 
 class EnemySkill {
-  constructor(name, type, element, pow, cost, target){
+  constructor(name, type, pow, cost, target){
     this.name = name;
     this.type = type;
-    this.element = element;
     this.pow = pow;
     this.cost = cost;
     this.target = target;
   }
 };
-
-const fireBall = new EnemySkill('Fire Ball', 'Magical', fireEl, 3, 2, 'Single');
+const fireBall = new EnemySkill('Fire Ball', 'Magical', 3, 2, 'Single');
+const flameWave = new EnemySkill('Flame Wave', 'Magical', 1, 2, 'All');
 flareFox.eSkills.push(fireBall);
-const iceClaw = new EnemySkill('Ice Claw', 'Physical', iceEl, 3, 2, 'Single');
+flareFox.eSkills.push(flameWave);
+const iceClaw = new EnemySkill('Ice Claw', 'Physical', 3, 2, 'Single');
+const wideSwipe = new EnemySkill('Wide Swipe', 'Physical', 1, 2, 'All');
 iceLeopard.eSkills.push(iceClaw);
 
   //============================
@@ -235,7 +222,7 @@ iceLeopard.eSkills.push(iceClaw);
   const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with weak magic-based thunder damage', 4, 5, 'Single');
   //need a way to show a skill hits all or not....
   const water = new Skill('Water','Magic', watEl, 'Hits enemy with weak magic-based water damage', 4, 6, 'All');
-  const volley = new Skill('Volley', 'Physical', null, 'Hits all enemies with arrows', 3, 6, 'All');
+  const volley = new Skill('Volley', 'Physical', "N/A", 'Hits all enemies with arrows', 3, 6, 'All');
   const fire = {
     name: "Fire",
     type: "Magic",
@@ -247,6 +234,7 @@ iceLeopard.eSkills.push(iceClaw);
   const basher = {
     name: "Basher",
     type: "Physical",
+    element: "N/A",
     des: "Deals physical damage to 1 enemy",
     pow: 4,
     cost: 3,
@@ -255,6 +243,7 @@ iceLeopard.eSkills.push(iceClaw);
   const slashAll = {
       name: "Slash All",
       type: "Physical",
+      element: "N/A",
       des: "Deals physical damage to all enemies",
       pow: 4,
       cost: 5,

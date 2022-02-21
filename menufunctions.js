@@ -313,15 +313,20 @@ function swapChars(){
         }
     }
    weaponsOwned.forEach(checker);
+   console.log(currentParty);
     document.getElementById("close-menu").hidden = false;
   }
   function save () {
-    simpleStorage.set("ando",  JSON.stringify(ando));
+    simpleStorage.flush();
+  //  simpleStorage.set("ando",  JSON.stringify(ando));
+  simpleStorage.set("ando", ando);
     simpleStorage.set("marie", JSON.stringify(marie));
     simpleStorage.set("julie", JSON.stringify(julie));
     simpleStorage.set("ari", JSON.stringify(ari));
     simpleStorage.set("currentParty", currentParty);
-    simpleStorage.set("reserveParty", reserveParty);
+  //  simpleStorage.set("currentParty", JSON.stringify(currentParty));
+    console.log(currentParty);
+    simpleStorage.set("reserveParty", JSON.stringify(reserveParty));   
     simpleStorage.set("inventory", inventory);
     simpleStorage.set("weaponsOwned", weaponsOwned);
     simpleStorage.set("money", money);
@@ -332,12 +337,13 @@ function swapChars(){
    // simpleStorage.set("chest", chests.hidden = true);
     document.getElementById("save-menu").hidden = false;
     };
+
 //=======================================
 //======================================
 //Menu functionality, must go below each menu item
 let menu = document.getElementById("open-menu");
 function openMenu(){
-  document.getElementById("save-button").hidden = false;
+ // document.getElementById("save-button").hidden = false;
   document.getElementById("equip-button").hidden = false;
   document.getElementById("inventory-button").hidden = false;
   if (reserveParty.length > 0) {document.getElementById("swap-team").hidden = false}
@@ -390,31 +396,41 @@ function startGame(){
   gameState = 0;
   move(gameState);
   money = 30;
+  currentParty = [ando, marie];
   ando.weapon = woodSword;
   marie.weapon = woodStaff;
   inventory.push(potion);
   inventory.push(potion);
   inventory.push(magicPotion);
-  inventory.push(highpotion);
+  inventory.push(highPotion);
   inventory.push(revivalPotion);
   inventory.push(revivalPotion);
   simpleStorage.flush();
   gameCheck = true;
   };
 function load(){
- ando = JSON.parse(simpleStorage.get("ando", ando)); 
- marie = JSON.parse(simpleStorage.get("marie", marie));
-  julie = JSON.parse(simpleStorage.get("julie", julie));
-  ari = JSON.parse(simpleStorage.get("ari", ari));
-  reserveParty = simpleStorage.get("reserveParty", reserveParty);
- weaponsOwned = simpleStorage.get("weaponsOwned", weaponsOwned);
- currentParty = simpleStorage.get("currentParty", currentParty);
-  inventory =  simpleStorage.get("inventory", inventory);
-  money =  simpleStorage.get("money", money);
- gameState = simpleStorage.get("gamestate", gameState);
- opened = simpleStorage.get("opened", opened);
+  currentParty = "";
+  reserveParty = "";
+ //ando = JSON.parse(simpleStorage.get("ando"));
+ ando = simpleStorage.get("ando");
+ marie = JSON.parse(simpleStorage.get("marie"));
+  julie = JSON.parse(simpleStorage.get("julie"));
+  ari = JSON.parse(simpleStorage.get("ari"));
+//  reserveParty = JSON.parse(simpleStorage.get("reserveParty"));
+ weaponsOwned = simpleStorage.get("weaponsOwned");
+currentParty = simpleStorage.get("currentParty");
+// currentParty = JSON.parse(simpleStorage.get("currentParty"));
+ console.log(currentParty);
+  inventory =  simpleStorage.get("inventory");
+  money =  simpleStorage.get("money");
+ gameState = simpleStorage.get("gamestate");
+ opened = simpleStorage.get("opened");
+savedParty = currentParty;
+ //clearBattle();
+ //handles chests
  applyOpened();
   move(gameState);
+  enemyParty = [];
   adv.hidden = false;
   mainMenu.hidden = false;
   menu.hidden = false;

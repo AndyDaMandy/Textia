@@ -137,6 +137,7 @@ function clamp(value, min, max) {
 //calculating functions
 function attackCalc (char, target, flow, skill){
   info.innerHTML = "";
+  debugger;
   //branch for skill
   let elementalBoost = 0;
     if (skill != undefined){
@@ -1357,7 +1358,6 @@ let reserveParty = [];
 
 //==================================
 // all testing goes below
-currentParty = [ando, marie];
 let savedParty = currentParty;
 ando.weapon = woodSword;
 ando.skills.push(basher);

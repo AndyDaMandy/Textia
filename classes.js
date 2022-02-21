@@ -131,6 +131,7 @@ const watEl = {
       this.type = type;
     }
   };
+  //very important, use "None" for enemies with no elemental weaknesses and "N/A" for skills/weapons
   const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
   //if an enemy is flying, bows hit for extra damage.
   const bat = new Enemy('Bat', 1, 13, 3, 7, 2, 1, 1, "None", 1, 1, [], 'Flying');
@@ -207,7 +208,7 @@ iceLeopard.eSkills.push(iceClaw);
   //============================
   //Skills
   //===========================
-  
+//very important, use "None" for enemies with no elemental weaknesses and "N/A" for skills/weapons  
   class Skill {
     constructor(name, type, element, des, pow, cost, target){
       this.name = name;

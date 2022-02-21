@@ -340,7 +340,7 @@ function attackCalc (char, target, flow, skill){
                 info.appendChild(p6);
                 let p3 = document.createElement("p");
                 let pEl = document.createElement("p");
-                if (enemyParty[target].weakness === skill.element) {
+                if (enemyParty[target].weakness.element === skill.element.element) {
                 pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                 info.appendChild(pEl);
                   }

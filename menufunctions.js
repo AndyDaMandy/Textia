@@ -318,13 +318,13 @@ function swapChars(){
   }
   function save () {
     simpleStorage.flush();
-  //  simpleStorage.set("ando",  JSON.stringify(ando));
-  simpleStorage.set("ando", ando);
+    simpleStorage.set("ando",  JSON.stringify(ando));
+    //simpleStorage.set("ando", ando);
     simpleStorage.set("marie", JSON.stringify(marie));
     simpleStorage.set("julie", JSON.stringify(julie));
     simpleStorage.set("ari", JSON.stringify(ari));
-    simpleStorage.set("currentParty", currentParty);
-  //  simpleStorage.set("currentParty", JSON.stringify(currentParty));
+  //  simpleStorage.set("currentParty", currentParty);
+    simpleStorage.set("currentParty", JSON.stringify(currentParty));
     console.log(currentParty);
     simpleStorage.set("reserveParty", JSON.stringify(reserveParty));   
     simpleStorage.set("inventory", inventory);
@@ -343,7 +343,7 @@ function swapChars(){
 //Menu functionality, must go below each menu item
 let menu = document.getElementById("open-menu");
 function openMenu(){
- // document.getElementById("save-button").hidden = false;
+  document.getElementById("save-button").hidden = false;
   document.getElementById("equip-button").hidden = false;
   document.getElementById("inventory-button").hidden = false;
   if (reserveParty.length > 0) {document.getElementById("swap-team").hidden = false}
@@ -409,23 +409,45 @@ function startGame(){
   gameCheck = true;
   };
 function load(){
-  currentParty = "";
-  reserveParty = "";
- //ando = JSON.parse(simpleStorage.get("ando"));
- ando = simpleStorage.get("ando");
- marie = JSON.parse(simpleStorage.get("marie"));
+  currentParty = [];
+  reserveParty = [];
+  ando = JSON.parse(simpleStorage.get("ando"));
+  marie = JSON.parse(simpleStorage.get("marie"));
   julie = JSON.parse(simpleStorage.get("julie"));
   ari = JSON.parse(simpleStorage.get("ari"));
 //  reserveParty = JSON.parse(simpleStorage.get("reserveParty"));
  weaponsOwned = simpleStorage.get("weaponsOwned");
-currentParty = simpleStorage.get("currentParty");
-// currentParty = JSON.parse(simpleStorage.get("currentParty"));
- console.log(currentParty);
+ //currentParty = simpleStorage.get("currentParty");
+let setParty = JSON.parse(simpleStorage.get("currentParty"));
+let setReserve = JSON.parse(simpleStorage.get("reserveParty"));
+for (let i = 0; i < setParty.length; i++){
+  if (setParty[i].name === "Ando"){
+    currentParty.push(ando);
+  } else if (setParty[i].name === "Marie"){
+    currentParty.push(marie);
+  } else if (setParty[i].name === "Julie"){
+    currentParty.push(julie);
+  } else if (setParty[i].name === "Ari") {
+    currentParty.push(ari);
+  }
+}
+if (setReserve.length > 0) {
+  if (setReserve[i].name === "Ando"){
+    reserveParty.push(ando);
+  } else if (setReserve[i].name === "Marie"){
+    reserveParty.push(marie);
+  } else if (setReserve[i].name === "Julie"){
+    reserveParty.push(julie);
+  } else if (setReserve[i].name === "Ari") {
+    reserveParyy.push(ari);
+  }
+}
+  console.log(currentParty);
   inventory =  simpleStorage.get("inventory");
   money =  simpleStorage.get("money");
- gameState = simpleStorage.get("gamestate");
- opened = simpleStorage.get("opened");
-savedParty = currentParty;
+  gameState = simpleStorage.get("gamestate");
+  opened = simpleStorage.get("opened");
+  savedParty = currentParty;
  //clearBattle();
  //handles chests
  applyOpened();

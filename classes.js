@@ -1,4 +1,4 @@
-
+/*
 class Player {
     constructor(name, level, hp, chp, mp, cmp, pAtk, pDef, mAtk, mDef, exp, buff, skills, support, weapon, type) {
       this.name = name;
@@ -19,7 +19,8 @@ class Player {
       this.type = type;
     }
     };
-/*let ando = {
+  */
+let ando = {
   name: 'Ando',
   level: 1,
   hp: 15,
@@ -29,6 +30,7 @@ class Player {
   pAtk: 10,
   pDef: 4,
   mAtk: 1,
+  mDef: 2,
   exp: 0,
   buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
@@ -36,12 +38,65 @@ class Player {
   weapon: 'Text',
   type: 'Player'
 }
-*/
+let marie = {
+  name: 'Marie',
+  level: 1,
+  hp: 10,
+  chp: 10,
+  mp: 13,
+  cmp: 13,
+  pAtk: 3,
+  pDef: 2,
+  mAtk: 10,
+  mDef: 5,
+  exp: 0,
+  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
+  skills: [],
+  support: [],
+  weapon: 'Text',
+  type: 'Player'
+}
+let julie = {
+  name: 'Julie',
+  level: 3,
+  hp: 14,
+  chp: 14,
+  mp: 8,
+  cmp: 8,
+  pAtk: 12,
+  pDef: 5,
+  mAtk: 3,
+  mDef: 6,
+  exp: 30,
+  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
+  skills: [],
+  support: [],
+  weapon: 'Text',
+  type: 'Player'
+}
+let ari = {
+  name: 'Ari',
+  level: 3,
+  hp: 14,
+  chp: 14,
+  mp: 8,
+  cmp: 8,
+  pAtk: 12,
+  pDef: 5,
+  mAtk: 3,
+  mDef: 6,
+  exp: 30,
+  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
+  skills: [],
+  support: [],
+  weapon: 'Text',
+  type: 'Player'
+}
     //name, level, hp, chp, mp, cmp, pAtk, pDef, mAtk, mDef, exp, buff, skills, support, weapon, type
-  let ando = new Player('Ando', 1, 15, 15, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
-  let marie = new Player('Marie', 1, 10, 10, 13, 13, 3, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
-  let julie = new Player('Julie', 3, 14, 14, 8, 8, 12, 5, 3, 6, 30, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
-  let ari = new Player('Ari', 1, 8, 8, 6, 6, 10, 2, 7, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
+ // let ando = new Player('Ando', 1, 15, 15, 5, 5, 10, 4, 1, 2, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
+ // let marie = new Player('Marie', 1, 10, 10, 13, 13, 3, 2, 10, 5, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+ // let julie = new Player('Julie', 3, 14, 14, 8, 8, 12, 5, 3, 6, 30, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player')
+//  let ari = new Player('Ari', 1, 8, 8, 6, 6, 10, 2, 7, 3, 0, [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],[],[],'test','Player');
   //Elements, the elemental system is system. Fire and ice are opposites, thunder/water are opposites.
  /* class Element {
     constructor(element, des){

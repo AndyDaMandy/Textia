@@ -137,7 +137,6 @@ function clamp(value, min, max) {
 //calculating functions
 function attackCalc (char, target, flow, skill){
   info.innerHTML = "";
-  debugger;
   //branch for skill
   let elementalBoost = 0;
     if (skill != undefined){
@@ -156,7 +155,7 @@ function attackCalc (char, target, flow, skill){
           p3.textContent = char.name + " cast " + skill.name + "!"
           info.appendChild(p3);
           enemyParty.map((en, index) => {
-            if (en.weakness === skill.element) {
+            if (en.weakness.element === skill.element.element) {
               elementalBoost += 2;
                 }
             let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - en.mDef;
@@ -168,7 +167,7 @@ function attackCalc (char, target, flow, skill){
           let final = thp - damage ;
           applyFinal.push(final);
           if (final <= 0) {
-            if (en.weakness === skill.element) {
+            if (en.weakness.element === skill.element.element) {
             let pEl = document.createElement("p");
             pEl.textContent = en.name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
             info.appendChild(pEl);
@@ -182,7 +181,7 @@ function attackCalc (char, target, flow, skill){
           info.appendChild(p2);
           } else {
                 let p3 = document.createElement("p");
-                if (en.weakness === skill.element) {
+                if (en.weakness.element === skill.element.element) {
                 let pEl = document.createElement("p");
                 pEl.textContent = en.name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
                 info.appendChild(pEl);
@@ -203,7 +202,7 @@ function attackCalc (char, target, flow, skill){
           battleMove(flow)
           }     
       else {
-        if (enemyParty[target].weakness === skill.element) {
+        if (enemyParty[target].weakness.element === skill.element.element) {
           elementalBoost += 2;
         }
         //regular branch
@@ -218,7 +217,7 @@ function attackCalc (char, target, flow, skill){
           let p3 = document.createElement("p");
           p3.textContent = char.name + " cast " + skill.name + "!"
           info.appendChild(p3);
-          if (enemyParty[target].weakness === skill.element) {
+          if (enemyParty[target].weakness.element === skill.element.element) {
             let pEl = document.createElement("p");
             pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
             info.appendChild(pEl);
@@ -237,7 +236,7 @@ function attackCalc (char, target, flow, skill){
                 p6.textContent = char.name + " cast " + skill.name + "!"
                 info.appendChild(p6);
                 let p3 = document.createElement("p");
-                if (enemyParty[target].weakness === skill.element) {
+                if (enemyParty[target].weakness.element === skill.element.element) {
                 let pEl = document.createElement("p");
                 pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                 info.appendChild(pEl);
@@ -260,7 +259,7 @@ function attackCalc (char, target, flow, skill){
               p3.textContent = char.name + " used " + skill.name + "!"
               info.appendChild(p3);
               enemyParty.map((en, index) => {
-                if (en.weakness === skill.element) {
+                if (en.weakness.element === skill.element.element) {
                   elementalBoost += 2;
                     }
                 let pa = char.pAtk + char.weapon.pow + skill.pow + elementalBoost - en.pDef;
@@ -272,7 +271,7 @@ function attackCalc (char, target, flow, skill){
               let final = thp - damage ;
               applyFinal.push(final);
               if (final <= 0) {
-                if (en.weakness === skill.element) {
+                if (en.weakness.element === skill.element.element) {
                 let pEl = document.createElement("p");
                 pEl.textContent = en.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                 info.appendChild(pEl);
@@ -286,7 +285,7 @@ function attackCalc (char, target, flow, skill){
               info.appendChild(p2);
               } else {
                     let p3 = document.createElement("p");
-                    if (en.weakness === skill.element) {
+                    if (en.weakness.element === skill.element.element) {
                     let pEl = document.createElement("p");
                     pEl.textContent = en.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                     info.appendChild(pEl);
@@ -306,9 +305,8 @@ function attackCalc (char, target, flow, skill){
               //enemycopy arrays will then overwrite the original arrays.
               battleMove(flow)
               }        
-            
              else { //regular branch
-              if (enemyParty[target].weakness === skill.element) {
+              if (enemyParty[target].weakness.element === skill.element.element) {
                 elementalBoost += 2;
                   }
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].pDef;
@@ -322,7 +320,7 @@ function attackCalc (char, target, flow, skill){
               let p6 = document.createElement("p");
               p6.textContent = char.name + " used " + skill.name + "!"
               info.appendChild(p6);      
-              if (enemyParty[target].weakness === skill.element) {
+              if (enemyParty[target].weakness.element === skill.element.element) {
                 let pEl = document.createElement("p");
                 pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                 info.appendChild(pEl);

@@ -108,6 +108,10 @@ const watEl = {
   element: 'Water',
   des: 'Water Element, strong against Thunder'
 }
+const neuEl = {
+  element: 'Neutral',
+  des: 'non-elemental damage'
+}
 //  const iceEl = new Element('Ice', 'Ice Element, strong against Fire');
  // const fireEl = new Element('Fire', 'Fire Element, strong against Ice.');
 //  const thunEl = new Element('Thunder', 'Thunder Element, strong against Water.');
@@ -134,10 +138,10 @@ const watEl = {
   //very important, use "None" for enemies with no elemental weaknesses and "N/A" for skills/weapons
   const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
   //if an enemy is flying, bows hit for extra damage.
-  const bat = new Enemy('Bat', 1, 13, 3, 7, 2, 1, 1, "None", 1, 1, [], 'Flying');
+  const bat = new Enemy('Bat', 1, 13, 3, 7, 2, 1, 1, neuEl, 1, 1, [], 'Flying');
   const familiar = new Enemy('Familiar', 1, 55, 3, 9, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
   const sparkBison = new Enemy('Spark Bison', 3, 20, 1, 11, 9, 1, 3, watEl, 5, 5, [],'Bison');
-  const redGoblin = new Enemy('Red Goblin', 3, 30, 1, 10, 4, 2, 5, "None" ,7, 10, [], 'Goblin');
+  const redGoblin = new Enemy('Red Goblin', 3, 30, 1, 10, 4, 2, 5, neuEl ,7, 10, [], 'Goblin');
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -162,7 +166,7 @@ const watEl = {
     pDef: 2,
     mAtk: 1,
     mDef: 1,
-    weakness: "None",
+    weakness: neuEl,
     exp: 1,
     money: 2,
     eSkills: [],

@@ -452,7 +452,7 @@ if (setReserve.length > 0) {
   savedParty = currentParty;
  //clearBattle();
  //handles chests
- applyOpened();
+  applyOpened();
   move(gameState);
   enemyParty = [];
   adv.hidden = false;

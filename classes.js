@@ -259,7 +259,7 @@ iceLeopard.eSkills.push(iceClaw);
     type: "Physical",
     des: "Deals physical and ice damage to 1 enemy",
     element: iceEl,
-    pow: 1,
+    pow: 2,
     cost: 2
     };
   const waterArrow = {
@@ -267,7 +267,7 @@ iceLeopard.eSkills.push(iceClaw);
     type: "Physical",
     des: "Deals physical and water damage to 1 enemy",
     element: watEl,
-    pow: 1,
+    pow: 2,
     cost: 2
     };
   //Support Skils
@@ -346,7 +346,7 @@ iceLeopard.eSkills.push(iceClaw);
     des: "A basic sword imbued with Fire Magic",
     atr: "Physical",
     element: fireEl,
-    pow: 3,
+    pow: 5,
   }
   const woodSword = {
     name: "Wooden Sword",

@@ -227,7 +227,7 @@ iceLeopard.eSkills.push(iceClaw);
   const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with weak magic-based thunder damage', 4, 5, 'Single');
   //need a way to show a skill hits all or not....
   const water = new Skill('Water','Magic', watEl, 'Hits enemy with weak magic-based water damage', 4, 6, 'All');
-  const volley = new Skill('Volley', 'Physical', "N/A", 'Hits all enemies with arrows', 3, 6, 'All');
+  const volley = new Skill('Volley', 'Physical', "N/A", 'Hits all enemies with arrows', 2, 6, 'All');
   const fire = {
     name: "Fire",
     type: "Magic",

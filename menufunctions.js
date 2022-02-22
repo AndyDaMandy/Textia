@@ -184,6 +184,9 @@ function swapChars(){
       li = document.createElement("li")
     li.textContent = "Magic Defense: " + x.mDef;
      statsLog.appendChild(li);
+     li = document.createElement("li")
+    li.textContent = "Exp: " + x.exp;
+     statsLog.appendChild(li);
       li = document.createElement("li");
     let skillsList = [];
     for (let b = 0; b < x.skills.length; b++){

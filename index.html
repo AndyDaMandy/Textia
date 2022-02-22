@@ -25,16 +25,15 @@
   <button id="continue" onClick="load()" hidden>Continue</button>
 </div>
 <!-- Menu System below -->
-<div id="main-menu" hidden>
-  <button id="open-menu" onclick="openMenu()" hidden>Menu</button>
-  <button id="save-button" hidden onclick="save()">Save</button>
-  <button id="equip-button" hidden onclick="equip()">Equip</button>
- <button id="swap-team" hidden onclick="swapChars()">Swap Team</button>
-  <button id="formation-button" hidden onclick="partyFormation()">Formation</button>
-  <button id="inventory-button" hidden onclick="showInventory()">Inventory</button>
-  <button id="show-stats" onclick="showStats()" hidden>Party Status</button>
-  <button id="close-menu" onclick="closeMenu()" hidden>Close Menu</button>
-  <hr>
+<div class ="well" id="main-menu" hidden>
+  <button class="small-btn" id="open-menu" onclick="openMenu()" hidden>Menu</button>
+  <button class="small-btn" id="save-button" hidden onclick="save()">Save</button>
+  <button class="small-btn" id="equip-button" hidden onclick="equip()">Equip</button>
+ <button class="small-btn" id="swap-team" hidden onclick="swapChars()">Swap Team</button>
+  <button class="small-btn" id="formation-button" hidden onclick="partyFormation()">Formation</button>
+  <button class="small-btn" id="inventory-button" hidden onclick="showInventory()">Inventory</button>
+  <button class="small-btn" id="show-stats" onclick="showStats()" hidden>Party Status</button>
+  <button class="small-btn" id="close-menu" onclick="closeMenu()" hidden>Close Menu</button>
 </div>
 <div id="save-menu" hidden>
   <p>You saved your game!</p>
@@ -91,7 +90,7 @@
 <!-- My idea for the shop is to have an array of buttons created containing the items.. It's kind of bold, but we'll see!-->
 </div>
 <!-- battles go here -->
-<div id="battle-mode" hidden>
+<div class="well" id="battle-mode" hidden>
   <h2>Battle!</h2>
   <div id="enemies">
     <div id="enemy-sel"></div>
@@ -107,11 +106,10 @@
     <div id="skill-slot"></div>
     <div id="item-slot"></div>
   </div> 
-  <hr>
   <div id="end"></div>
 </div>
 <!-- Adventure elements below -->
-<div id="adv-mode">
+<div class="well" id="adv-mode" hidden>
   <div id="town-1" hidden>
     <!-- state = 0 -->
     <h2>Area Town</h2>

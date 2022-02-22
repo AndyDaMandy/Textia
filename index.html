@@ -25,7 +25,7 @@
   <button id="continue" onClick="load()" hidden>Continue</button>
 </div>
 <!-- Menu System below -->
-<div class ="well" id="main-menu" hidden>
+<div class="well" id="main-menu" hidden>
   <button class="small-btn" id="open-menu" onclick="openMenu()" hidden>Menu</button>
   <button class="small-btn" id="save-button" hidden onclick="save()">Save</button>
   <button class="small-btn" id="equip-button" hidden onclick="equip()">Equip</button>
@@ -35,49 +35,44 @@
   <button class="small-btn" id="show-stats" onclick="showStats()" hidden>Party Status</button>
   <button class="small-btn" id="close-menu" onclick="closeMenu()" hidden>Close Menu</button>
 </div>
-<div id="save-menu" hidden>
+<div class="well" id="save-menu" hidden>
   <p>You saved your game!</p>
 </div>
-  <div id="equip-screen" hidden>
+  <div class="well" id="equip-screen" hidden>
       <h5>Party:</h5>
       <div id="equipped-text"></div>
       <div id="equip-party"></div>
       <h5>Equipment:</h5>
       <p><em>Click a weapon to select your character, then click on the character to swap your weapon.</em></p>
       <div id="equipment"></div>
-     <hr> 
   </div>
-<div id="inventory-menu" hidden>
+<div class="well" id="inventory-menu" hidden>
   <h3>Inventory</h3>
   <ul id="inventory-items"></ul>
-  <hr>
 </div>
-<div id="stats-menu" hidden>
+<div class="well" id="stats-menu" hidden>
   <h3 id="party-status">Your current party: </h3>
   <p><em>Click a character name to view their stats.</em></p>
   <div id="party-btns"></div>
   <h4 id="line-1"></h4>
   <ul id="menu-items"></ul>
-  <hr>
   </div>
-<div id="swap-menu" hidden>
+<div class="well" id="swap-menu" hidden>
   <h3>Swap Team:</h3>
   <p><em>Which reserve member will you swap into your party?</em></p>
   <div id="reserve-chars"></div>
   <div id="main-chars"></div>  
-  <hr>
 </div>
-<div id="formation-menu" hidden>
+<div class="well" id="formation-menu" hidden>
   <h3>Formation:</h3>
   <p><em>Click to establish your party's formation. Once you've selected all your characters hit "Finish Selection" or your party will go back to the previous order</em></p>
   <div id="party-loc"></div>
   <div id="print-party"></div>
   <div id="select-party"></div> 
-  <hr>
 </div>
 <!--Gameplay Elements Below -->
 <button id="shop-button" onclick="openShop()" hidden>Shop</button>
-<div id="shop" hidden>
+<div class="well" id="shop" hidden>
   <button id="close-shop" onclick="closeShop()">Close Shop</button>
   <p>Your money:</p>
   <p id="money"></p>
@@ -86,7 +81,6 @@
   <p id="purchased"></p>
   <h2 id="broke" hidden>Not enough money!</h2>
   <div id="shop-items"></div>
-  <hr>
 <!-- My idea for the shop is to have an array of buttons created containing the items.. It's kind of bold, but we'll see!-->
 </div>
 <!-- battles go here -->

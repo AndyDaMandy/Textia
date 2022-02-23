@@ -16,7 +16,7 @@ shop.hidden = true;
 closeMenu();
 };
 // Area 1
-const townOne = document.getElementById("town-1");
+  const townOne = document.getElementById("town-1");
 //Forest 1, Forest 1-1, 1-2
   const forestOne = document.getElementById("forest-1");
   const forestOneOne = document.getElementById("forest-1-1");

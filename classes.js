@@ -1,25 +1,3 @@
-/*
-class Player {
-    constructor(name, level, hp, chp, mp, cmp, pAtk, pDef, mAtk, mDef, exp, buff, skills, support, weapon, type) {
-      this.name = name;
-      this.level = level;
-      this.hp = hp;
-      this.chp = chp;
-      this.mp = mp;
-      this.cmp = cmp;
-      this.pAtk = pAtk;
-      this.pDef = pDef;
-      this.mAtk = mAtk;
-      this.mDef = mDef;
-      this.exp = exp;
-      this.buff = buff;
-      this.skills = skills;
-      this.support = support;
-      this.weapon = weapon;
-      this.type = type;
-    }
-    };
-  */
 let ando = {
   name: 'Ando',
   level: 1,
@@ -76,6 +54,24 @@ let julie = {
 }
 let ari = {
   name: 'Ari',
+  level: 5,
+  hp: 14,
+  chp: 14,
+  mp: 8,
+  cmp: 8,
+  pAtk: 12,
+  pDef: 5,
+  mAtk: 3,
+  mDef: 6,
+  exp: 30,
+  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
+  skills: [],
+  support: [],
+  weapon: 'Text',
+  type: 'Player'
+}
+let siege = {
+  name: 'Siege',
   level: 3,
   hp: 14,
   chp: 14,
@@ -112,10 +108,6 @@ const neuEl = {
   element: 'Neutral',
   des: 'non-elemental damage'
 }
-//  const iceEl = new Element('Ice', 'Ice Element, strong against Fire');
- // const fireEl = new Element('Fire', 'Fire Element, strong against Ice.');
-//  const thunEl = new Element('Thunder', 'Thunder Element, strong against Water.');
- // const watEl = new Element('Water', 'Water Element, strong against Thunder.');
   //========================================
   //enemies go here
   class Enemy {
@@ -135,7 +127,7 @@ const neuEl = {
       this.type = type;
     }
   };
-  //very important, use "None" for enemies with no elemental weaknesses and "N/A" for skills/weapons
+  //very important, use neuEl for enemies with no elemental weaknesses and "N/A" for skills/weapons
   const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
   //if an enemy is flying, bows hit for extra damage.
   const bat = new Enemy('Bat', 1, 13, 3, 7, 2, 1, 1, neuEl, 1, 1, [], 'Flying');
@@ -209,11 +201,11 @@ const iceClaw = new EnemySkill('Ice Claw', 'Physical', 3, 2, 'Single');
 const wideSwipe = new EnemySkill('Wide Swipe', 'Physical', 1, 2, 'All');
 iceLeopard.eSkills.push(iceClaw);
 
-  //============================
-  //Skills
-  //===========================
+//============================
+//Skills
+//===========================
 //very important, use "None" for enemies with no elemental weaknesses and "N/A" for skills/weapons  
-  class Skill {
+class Skill {
     constructor(name, type, element, des, pow, cost, target){
       this.name = name;
       this.type = type;
@@ -312,7 +304,8 @@ const potion = {
     type: "Healing",
     des: "Heals 5 points of HP.",
     effect: 5,
-    cost: 5
+    cost: 5,
+    sell: 3
     };
 const highPotion = {
       name: "High Potion",

@@ -297,28 +297,38 @@ iceLeopard.eSkills.push(iceClaw);
     };
   //======================================
   //Items go here
-  const potion = {
+  class Item {
+    constructor(name, type, des, effect, cost, target){
+      this.name = name;
+      this.type = type;
+      this.des = des;
+      this.effect = effect;
+      this.cost = cost;
+      this.target = target;
+    }
+  }
+const potion = {
     name: "Potion",
     type: "Healing",
     des: "Heals 5 points of HP.",
     effect: 5,
     cost: 5
     };
-  const highPotion = {
+const highPotion = {
       name: "High Potion",
       type: "Healing",
       des: "Heals 10 points of HP.",
       effect: 10,
       cost: 10
       };
-  const magicPotion = {
+const magicPotion = {
     name: "Magic Potion",
     type: "mHealing",
     des: "Heals 5 points of MP.",
     effect: 5,
     cost: 8
     };
-  const revivalPotion = {
+const revivalPotion = {
     name: "Revival Potion",
     type: "Rev",
     des: "Revives ally with 5 points of hp.",
@@ -383,8 +393,9 @@ iceLeopard.eSkills.push(iceClaw);
       des: "A weak bow imbued with Thunder",
       atr: "Physical",
       element: thunEl,
-      pow: 2,
+      pow: 6,
       };
+  
   const ironSpear = new Weapon('Iron Spear', 'Spear', 'A simple spear with an iron tip', 'Physical', 3);
   const iceSpear = new Weapon('Ice Spear', 'Spear', 'A spear imbued with Ice Magic', 'Physical', 3, iceEl);
   const excalibur = new Weapon('Excalibur', 'Sword','The most powerful blade in the world','Physical',1000);

@@ -1,4 +1,3 @@
-//https://github.com/ZaDarkSide/simpleStorage
 //Things that need to be done:
 //Adding all target to items and support skills
 //begin game balancing

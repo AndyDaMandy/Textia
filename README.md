@@ -5,4 +5,6 @@ The game contains an "adventure" mode, where you go through and explore the worl
 
 It's a work in progress at the moment, but the fundamental battle system is working and is playable.
 
+This game uses Simple Storage, for more information go here: https://github.com/ZaDarkSide/simpleStorage
+
 Version 0.04, alpha build.

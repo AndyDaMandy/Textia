@@ -57,7 +57,7 @@ function swapChars(){
     currentParty.forEach(btnGen);
   }
   
-  function partyFormation(){
+function partyFormation(){
     document.getElementById("equip-screen").hidden = true;
     document.getElementById("equipment").innerHTML = "";
     document.getElementById("equip-party").innerHTML = "";
@@ -115,7 +115,7 @@ function swapChars(){
   document.getElementById("select-party").appendChild(finish);
   }
   
-  function showStats(){
+function showStats(){
     //equip
     document.getElementById("equip-screen").hidden = true;
     document.getElementById("equipment").innerHTML = "";
@@ -151,7 +151,7 @@ function swapChars(){
       reserveParty.forEach(btnGen);
     }
   }
-  function showStatus (x) {
+function showStatus (x) {
     document.getElementById("stats-menu").hidden = false;
     let statsLog = document.getElementById("menu-items");
     if (statsLog != ""){ 
@@ -164,7 +164,7 @@ function swapChars(){
     li.textContent = "Level: " + x.level;
       statsLog.appendChild(li);
       li = document.createElement("li");
-    li.textContent = "Weapon: " + x.weapon.name + " - " + "Type: " + x.weapon.type + " - " + "Attribute: " + x.weapon.atr + " - " + x.weapon.des + " - Power: " + x.weapon.pow;
+    li.textContent = "Weapon: " + x.weapon.name + " - " + x.weapon.type + " - " + x.weapon.atr + " - " + x.weapon.des + " - Power: " + x.weapon.pow;
       statsLog.appendChild(li);
       li = document.createElement("li");
     li.textContent = "HP: " + x.hp;
@@ -204,7 +204,7 @@ function swapChars(){
     li.textContent = "Support Skills: " + joined2;       
     statsLog.appendChild(li);
   };
-  function showInventory() {
+function showInventory() {
     //equip
     document.getElementById("equip-screen").hidden = true;
     document.getElementById("equipment").innerHTML = "";
@@ -245,7 +245,7 @@ function swapChars(){
     inventoryMenu.hidden = false;
     document.getElementById("close-menu").hidden = false;
     };
-  function equipSelect(char, weapon){
+function equipSelect(char, weapon){
     //clears equip items, only shows characters/ creates a back button...
     //needs to swap the items.
     if (document.getElementById("equip-party").innerHTML 
@@ -271,7 +271,7 @@ function swapChars(){
       
   
   }
-  function equip (){
+function equip (){
     document.getElementById("equip-screen").hidden = false;
     document.getElementById("equipment").innerHTML = "";
     document.getElementById("equip-party").innerHTML = "";
@@ -319,7 +319,7 @@ function swapChars(){
    console.log(currentParty);
     document.getElementById("close-menu").hidden = false;
   }
-  function save () {
+function save () {
     simpleStorage.flush();
     simpleStorage.set("ando",  JSON.stringify(ando));
     //simpleStorage.set("ando", ando);

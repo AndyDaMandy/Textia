@@ -1,4 +1,3 @@
-//https://github.com/ZaDarkSide/simpleStorage
 //Things that need to be done:
 //Adding all target to items and support skills
 //begin game balancing
@@ -159,10 +158,9 @@ function attackCalc (char, target, flow, skill){
               elementalBoost += 2;
                 }
             let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - en.mDef;
-          pa -= 2;
-          let minpa = pa - 4;
+          let minpa = pa - 2;
           let thp = enCopy[index];
-          let damage = clamp(pa, minpa, pa);
+          let damage = clamp(getRandomInt(pa), minpa, pa);
            if (damage <= 0){damage = 0};
           let final = thp - damage ;
           applyFinal.push(final);
@@ -207,10 +205,9 @@ function attackCalc (char, target, flow, skill){
         }
         //regular branch
         let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].mDef;
-        pa -= 2;
-        let minpa = pa - 4;
+        let minpa = pa - 2;
         let thp = enHp[target];
-        let damage = clamp(pa, minpa, pa);
+        let damage = clamp(getRandomInt(pa), minpa, pa);
         if (damage <= 0){damage = 0};
         let final = thp - damage ;
         if (final <= 0) {
@@ -263,10 +260,9 @@ function attackCalc (char, target, flow, skill){
                   elementalBoost += 2;
                     }
                 let pa = char.pAtk + char.weapon.pow + skill.pow + elementalBoost - en.pDef;
-              pa -= 2;
-              let minpa = pa - 4;
+              let minpa = pa - 2;
               let thp = enCopy[index];
-              let damage = clamp(pa, minpa, pa);
+              let damage = clamp(getRandomInt(pa), minpa, pa);
                if (damage <= 0){damage = 0};
               let final = thp - damage ;
               applyFinal.push(final);
@@ -311,9 +307,8 @@ function attackCalc (char, target, flow, skill){
                   }
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].pDef;
           let thp = enHp[target];
-          pa -= 2;
-          let minpa = pa - 4;
-          let damage = clamp(pa, minpa, pa);
+          let minpa = pa - 2;
+          let damage = clamp(getRandomInt(pa), minpa, pa);
           if (damage <= 0){damage = 0};
           let final = thp - damage ;
             if (final <= 0) {
@@ -356,9 +351,8 @@ function attackCalc (char, target, flow, skill){
   else {
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow - enemyParty[target].pDef;
           let thp = enHp[target];
-          let minpa = pa - 4;
-          pa -= 2;
-          let damage = clamp(pa, minpa, pa);
+          let minpa = pa - 2;
+          let damage = clamp(getRandomInt(pa), minpa, pa);
           if (damage <= 0){damage = 0};
           let final = thp - damage ;
           if (final <= 0) {
@@ -475,7 +469,7 @@ function enemCalc (){
             if (attackChoice.target === "All"){
               function mapper(target){
                 let damage = attackerDam + attackChoice.pow - target.mDef;
-                let damageRange = clamp(damage, damage, damage+1);
+                let damageRange = clamp(getRandomInt(damage), damage, damage+1);
                 if (damageRange <= 0){damageRange = 0};
                 target.chp = target.chp - damageRange;
                 let damageRes = document.createElement("p");
@@ -485,7 +479,7 @@ function enemCalc (){
               currentParty.map(mapper);
             } else {
             let damage = attackerDam + attackChoice.pow - target.mDef;
-            let damageRange = clamp(damage, damage, damage+1);
+            let damageRange = clamp(getRandomInt(damage), damage, damage+1);
             if (damageRange <= 0){damageRange = 0};
             target.chp = target.chp - damageRange;
             let damageRes = document.createElement("p");
@@ -497,7 +491,7 @@ function enemCalc (){
             if (attackChoice.target === "All"){
               function mapper(target){
                 let damage = attackerDam + attackChoice.pow - target.pDef + target.buff[1].pow;
-                let damageRange = clamp(damage, damage, damage+1);
+                let damageRange = clamp(getRandomInt(damage), damage, damage+1);
                 if (damageRange <= 0){damageRange = 0};
                 target.chp = target.chp - damageRange;
                 let damageRes = document.createElement("p");
@@ -507,7 +501,7 @@ function enemCalc (){
               currentParty.map(mapper);
             } else {
             let damage = attackerDam + attackChoice.pow - target.pDef + target.buff[1].pow;
-            let damageRange = clamp(damage, damage, damage+1);
+            let damageRange = clamp(getRandomInt(damage), damage, damage+1);
             if (damageRange <= 0){damageRange = 0};
             target.chp = target.chp - damageRange;
             let damageRes = document.createElement("p");
@@ -521,7 +515,7 @@ function enemCalc (){
           let attackerDam = attacker.pAtk;
           //if buff is off, then buff = 0, thus not changing much.
           let damage = attackerDam - target.pDef + target.buff[1].pow;
-          let damageRange = clamp(damage, damage, damage+1);
+          let damageRange = clamp(getRandomInt(damage), damage, damage+1);
           if (damageRange <= 0){damageRange = 0};
           target.chp = target.chp - damageRange;
           let damageRes = document.createElement("p");
@@ -532,7 +526,7 @@ function enemCalc (){
       let attackerDam = attacker.pAtk;
       //if buff is off, then buff = 0, thus not changing much.
       let damage = attackerDam - target.pDef + target.buff[1].pow;
-      let damageRange = clamp(damage, damage, damage+1);
+      let damageRange = clamp(getRandomInt(damage), damage, damage+1);
       if (damageRange <= 0){damageRange = 0};
       target.chp = target.chp - damageRange;
       let damageRes = document.createElement("p");

@@ -469,7 +469,7 @@ function enemCalc (){
             if (attackChoice.target === "All"){
               function mapper(target){
                 let damage = attackerDam + attackChoice.pow - target.mDef;
-                let damageRange = clamp(getRandomInt(damage), damage-1, damage+1);
+                let damageRange = clamp(getRandomInt(damage), damage, damage+1);
                 if (damageRange <= 0){damageRange = 0};
                 target.chp = target.chp - damageRange;
                 let damageRes = document.createElement("p");
@@ -479,7 +479,7 @@ function enemCalc (){
               currentParty.map(mapper);
             } else {
             let damage = attackerDam + attackChoice.pow - target.mDef;
-            let damageRange = clamp(getRandomInt(damage), damage-1, damage+1);
+            let damageRange = clamp(getRandomInt(damage), damage, damage+1);
             if (damageRange <= 0){damageRange = 0};
             target.chp = target.chp - damageRange;
             let damageRes = document.createElement("p");
@@ -491,7 +491,7 @@ function enemCalc (){
             if (attackChoice.target === "All"){
               function mapper(target){
                 let damage = attackerDam + attackChoice.pow - target.pDef + target.buff[1].pow;
-                let damageRange = clamp(getRandomInt(damage), damage-1, damage+1);
+                let damageRange = clamp(getRandomInt(damage), damage, damage+1);
                 if (damageRange <= 0){damageRange = 0};
                 target.chp = target.chp - damageRange;
                 let damageRes = document.createElement("p");
@@ -501,7 +501,7 @@ function enemCalc (){
               currentParty.map(mapper);
             } else {
             let damage = attackerDam + attackChoice.pow - target.pDef + target.buff[1].pow;
-            let damageRange = clamp(getRandomInt(damage), damage-1, damage+1);
+            let damageRange = clamp(getRandomInt(damage), damage, damage+1);
             if (damageRange <= 0){damageRange = 0};
             target.chp = target.chp - damageRange;
             let damageRes = document.createElement("p");
@@ -515,7 +515,7 @@ function enemCalc (){
           let attackerDam = attacker.pAtk;
           //if buff is off, then buff = 0, thus not changing much.
           let damage = attackerDam - target.pDef + target.buff[1].pow;
-          let damageRange = clamp(getRandomInt(damage), damage-1, damage+1);
+          let damageRange = clamp(getRandomInt(damage), damage, damage+1);
           if (damageRange <= 0){damageRange = 0};
           target.chp = target.chp - damageRange;
           let damageRes = document.createElement("p");
@@ -526,7 +526,7 @@ function enemCalc (){
       let attackerDam = attacker.pAtk;
       //if buff is off, then buff = 0, thus not changing much.
       let damage = attackerDam - target.pDef + target.buff[1].pow;
-      let damageRange = clamp(getRandomInt(damage), damage-1, damage+1);
+      let damageRange = clamp(getRandomInt(damage), damage, damage+1);
       if (damageRange <= 0){damageRange = 0};
       target.chp = target.chp - damageRange;
       let damageRes = document.createElement("p");

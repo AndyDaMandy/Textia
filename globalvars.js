@@ -16,7 +16,9 @@ marie.skills.push(fire);
 ando.skills.push(iceSlash);
 marie.support.push(cure);
 //marie.support.push(defBoost);
-ari.weapon = ironSpear;
+ari.weapon = ironDaggers;
+ari.skills.push(steal);
+siege.weapon = ironSpear;
 //ari.skills.push(fire);
 //weaponsOwned.push(excalibur);
 

@@ -1,16 +1,3 @@
-//Things that need to be done:
-//Adding all target to items and support skills
-//begin game balancing
-//enmity system? Ando should get hit more.
-//Item descriptions needed in battle?
-//need to set up some randomness to attack damage.
-//Need to create an armor system! Maybe....
-//new enemies needed, new branching paths as well.
-//need to set up a proper random function for battle calculation.
-//new places to fight enemies.
-//new items, shop etc.
-//shop needs to have branch for weapons, possibly armor
-//clean up battle selection functions a bit, make them less chunky.
 //Battle Mode
 let battleState = 0;
 //global variable that holds enemy hp for targetting

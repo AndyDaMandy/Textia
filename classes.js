@@ -379,7 +379,7 @@ const ironSword = {
       atr: "Physical",
       pow: 3,
       };
-const excalibur = new Weapon('Excalibur',Weapon, 'Sword','The most powerful blade in the world','Physical', 1000);
+const excalibur = new Weapon('Excalibur','Weapon', 'Sword','The most powerful blade in the world','Physical', 1000);
 //Staff
 const woodStaff = {
     name: "Wooden Staff",

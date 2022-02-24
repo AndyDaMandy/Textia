@@ -230,11 +230,11 @@ function showInventory() {
     inventorySlot.appendChild(cash);
     let inventoryMenu = document.getElementById("inventory-menu");
     let pusher = function (item) { 
-      if (item.type === "Sword" || item.type === "Bow" || item.type === "Staff" || item.type === "Spear"){
+      if (item.category === "Weapon"){
         let li2 = document.createElement("li");
         li2.textContent = item.name + ": " + "Type: " + item.type + " - Power: " + item.pow + " - " + item.des;
         inventorySlot.appendChild(li2)
-    } else {
+    } else if (item.category === "Item"){
       let li = document.createElement("li");
       li.textContent = item.name + ": " + "Type: " + item.type + " - " + item.des;
       inventorySlot.appendChild(li)
@@ -308,7 +308,7 @@ function equip (){
           button3.addEventListener('click', () => { equipSelect(julie, weapon); });
           document.getElementById("equipment").appendChild(button3);
         }
-        if (weapon.type === "Spear"){
+        if (weapon.type === "Twin Daggers"){
           let button2 = document.createElement("button");
           button2.textContent = weapon.name;
           button2.addEventListener('click', () => {equipSelect(ari, weapon); });

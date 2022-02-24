@@ -338,17 +338,22 @@ function alertOne(){
   //==================================
   //chest variables get saved?
   function openChest(item, id){
-    inventory.push(item);
+    if (item.category === "Weapon"){
+      weaponsOwned.push(item);
+    } else if (item.category === "item"){
+      inventory.push(item);
+    }
     document.getElementById(id).hidden = true;
     opened.push(id);
     alert("You found: " + item.name + " - in the chest!"); 
   };
-  function openWeapon(weapon, id){
+ /* function openWeapon(weapon, id){
     weaponsOwned.push(weapon);
     document.getElementById(id).hidden = true;
     opened.push(id);
     alert("You found: " + weapon.name + " - in the chest!");
   }
+  */
   function applyOpened () {
    function apply(arr) {
      document.getElementById(arr).hidden = true;

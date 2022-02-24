@@ -306,18 +306,20 @@
     <div id="plains-1-6">
       <!-- state = 19 -->
       <h2>End of the Great Maka Plains</h2>
-      <p>Game ends here for now, thanks for playing!</p>
-      <p>Refresh to try again!</p>
-      <p>The go forward button doesn't work yet sorry!</p>
-      <button onclick="">Go Forward</button>
+      <p>You've made it through to the end of the Plains</p>
+      <p>You see a city in the distancce, larger than anything you've seen before!</p>
+      <button onclick="move(20)">Go Forward</button>
     </div>
   </div>
   <div id="town-3" hidden>
     <div id="town-3-s">
       <!-- state = 20 -->
       <h2>Aster City - South</h2>
-      <p></p>
-      <button>Go Forward</button>
+      <p>You've arrived in Aster City!</p>
+      <p>You see tall buildings everywhere and the road is sprawling with people.</p>
+      <p>You think you could easily get lost here.</p>
+      <button onclick="move(19)">Go Back</button>
+      <button onclick="move(21)">Go Forward</button>
     </div>
     <div id="town-3-c">
       <!-- state = 21 -->

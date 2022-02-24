@@ -4,6 +4,7 @@ let battleState = 0;
 let enHp = [];
 let pHp = [];
 let pMp = [];
+let enItems = [];
 //dead party global variable
 let deadTeam = [];
 const battleMode = document.getElementById("battle-mode");
@@ -333,7 +334,10 @@ function attackCalc (char, target, flow, skill){
                   }
           }
          
-  }
+      } if (skill.type === "Steal"){
+        steal(enItems[target]);
+        battleMove(flow)
+      }
 }
   else {
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow - enemyParty[target].pDef;
@@ -360,7 +364,17 @@ function attackCalc (char, target, flow, skill){
                 battleMove(flow)
                 }
             }
-    };
+  };
+function steal(enemy){
+  if (enemy.steal !== ''){
+    //checks steal rate, each item will have one.
+    //checks the global variable of items pushed into enItems
+  } else {
+    let p = document.createElement("p");
+    p.textContent = "The enemy has nothing to steal!";
+    info.appendChild(p);
+  }
+}
 function deathCheck(){
     //death
   //all 3 dead
@@ -440,6 +454,7 @@ function enemCalc (){
     enemyParty.forEach(pusher1);
     let enLength = enPow.length;
     for (let i = 0; i < enPow.length; i++){
+      //targeting needs to be adjusted to factor in luck. Low luck == higher chance of getting hit.
       let target = currentParty[getRandomInt(teamLength)];
       //NEW BRANCH FOR MAGIC ENEMIES GOES HERE!!!!! IT CHECKS IF THE ATTACKER HAS MORE MAGIC ATTACK THAN ATTACK
       //enemies can then use skills....?

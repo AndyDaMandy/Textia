@@ -224,8 +224,8 @@ class Skill {
   const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with weak magic-based thunder damage', 4, 5, 'Single');
   //need a way to show a skill hits all or not....
   const water = new Skill('Water','Magic', watEl, 'Hits enemy with weak magic-based water damage', 4, 6, 'All');
-  const volley = new Skill('Volley', 'Physical', "N/A", 'Hits all enemies with arrows', 2, 6, 'All');
-  const steal = new Skill('Steal', 'Steal', 'N/A', 'Attempts to steal from 1 enemy', 0, 0, 'Single');
+  const volley = new Skill('Volley', 'Physical', neuEl, 'Hits all enemies with arrows', 2, 6, 'All');
+  const steal = new Skill('Steal', 'Steal', neuEl, 'Attempts to steal from 1 enemy', 0, 0, 'Single');
   const fire = {
     name: "Fire",
     type: "Magic",
@@ -246,7 +246,7 @@ class Skill {
   const slashAll = {
       name: "Slash All",
       type: "Physical",
-      element: "N/A",
+      element: neuEl,
       des: "Deals physical damage to all enemies",
       pow: 4,
       cost: 5,
@@ -278,7 +278,7 @@ class Skill {
     cost: 2,
     target: 'Single'
     };
-  const cureAll = new Skill('Cure All', 'Healing', 'None', 'Heals all allies', 5, 5, 'All');
+  const cureAll = new Skill('Cure All', 'Healing', neuEl, 'Heals all allies', 5, 5, 'All');
   const atkBoost = {
     name: "Attack Boost",
     type: "Attack Buff",

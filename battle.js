@@ -135,6 +135,29 @@ function checkWeakness(enemy, skill){
     return false;
   }
 }
+function sayDeadEn(enemy){
+  let p2 = document.createElement("p");
+  p2.textContent = enemy.name + " has been defeated!";
+  info.appendChild(p2);
+}
+function skillUseText(char, skill){
+  if (skill.type === "Magic"){
+    let p = document.createElement("p");
+    p.textContent = `${char.name} cast ${skill.name}!`
+    info.appendChild(p);
+  } if (skill.type === "Physical"){
+    let p = document.createElement("p");
+    p.textContent = `${char.name} used ${skill.name}!`
+    info.appendChild(p);
+  }
+}
+function showDamage(target, damage){
+  //if elemental returned true earlier
+   info.appendChild(pEl);
+  let p = document.createElement("p");
+  p.textContent = `${target.name} was hit for ${damage} damage!`
+  info.appendChild(p);
+}
 //calculating functions
 function attackCalc (char, target, flow, skill){
   info.innerHTML = "";
@@ -152,33 +175,23 @@ function attackCalc (char, target, flow, skill){
           let enCopy = enHp;
           let survivors = [];
           let survivorHp = [];
-          let p3 = document.createElement("p");
-          p3.textContent = char.name + " cast " + skill.name + "!"
-          info.appendChild(p3);
+          skillUseText(char, skill);
           enemyParty.map((en, index) => {
             checkWeakness(en, skill);
-          let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - en.mDef;
-          let thp = enCopy[index];
-          let damage = clamp(getRandomInt(pa), pa-2, pa);
-           if (damage <= 0){damage = 0};
-          let final = thp - damage ;
-          applyFinal.push(final);
-          if (final <= 0) {
-          info.appendChild(pEl);
-          let p = document.createElement("p");
-          p.textContent = en.name + " was hit for " + damage + " damage!";
-          info.appendChild(p);
-          let p2 = document.createElement("p");
-          p2.textContent = en.name + " has been defeated!";
-          info.appendChild(p2);
+            let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - en.mDef;
+            let thp = enCopy[index];
+            let damage = clamp(getRandomInt(pa), pa-2, pa);
+            if (damage <= 0){damage = 0};
+            let final = thp - damage ;
+            applyFinal.push(final);
+            if (final <= 0) {         
+            showDamage(en, damage);
+            sayDeadEn(en);
           } else {
-                let p3 = document.createElement("p");
-                info.appendChild(pEl);
                 enCopy[index] = thp - damage;
                 survivorHp.push(enCopy[index]);
                 survivors.push(enemyCopy[index]);
-                p3.textContent = en.name + " was hit for " + damage + " damage!";
-                info.appendChild(p3);
+                showDamage(en, damage);
             }
           });
           enemyParty = survivors;
@@ -198,28 +211,16 @@ function attackCalc (char, target, flow, skill){
         if (damage <= 0){damage = 0};
         let final = thp - damage ;
         if (final <= 0) {
-          let p3 = document.createElement("p");
-          p3.textContent = char.name + " cast " + skill.name + "!"
-          info.appendChild(p3);
-          info.appendChild(pEl);
-          let p = document.createElement("p");
-          p.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
-          info.appendChild(p);
-          let p2 = document.createElement("p");
-          p2.textContent = enemyParty[target].name + " has been defeated!";
-          info.appendChild(p2);
+          skillUseText(char, skill);
+          showDamage(enemyParty[target], damage);
+          sayDeadEn(enemyParty[target]);
           enemyParty.splice(target, 1);
           enHp.splice(target, 1);
           battleMove(flow)
           } else {
-                let p6 = document.createElement("p");
-                p6.textContent = char.name + " cast " + skill.name + "!"
-                info.appendChild(p6);
-                let p3 = document.createElement("p");
-                info.appendChild(pEl);
+                skillUseText(char, skill);
                 enHp[target] = thp - damage;
-                p3.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
-                info.appendChild(p3);
+                showDamage(enemyParty[target], damage);
                 battleMove(flow)
               }
             }
@@ -231,9 +232,7 @@ function attackCalc (char, target, flow, skill){
               let enCopy = enHp;
               let survivors = [];
               let survivorHp = [];
-              let p3 = document.createElement("p");
-              p3.textContent = char.name + " used " + skill.name + "!"
-              info.appendChild(p3);
+              skillUseText(char, skill);
               enemyParty.map((en, index) => {
                 checkWeakness(en, skill);
               let pa = char.pAtk + char.weapon.pow + skill.pow + elementalBoost - en.pDef;
@@ -243,21 +242,13 @@ function attackCalc (char, target, flow, skill){
               let final = thp - damage ;
               applyFinal.push(final);
               if (final <= 0) {
-                info.appendChild(pEl);
-              let p = document.createElement("p");
-              p.textContent = en.name + " was hit for " + damage + " damage!";
-              info.appendChild(p);
-              let p2 = document.createElement("p");
-              p2.textContent = en.name + " has been defeated!";
-              info.appendChild(p2);
-              } else {
-                    let p3 = document.createElement("p");
-                    info.appendChild(pEl);
-                   enCopy[index] = thp - damage;
-                    survivorHp.push(enCopy[index]);
-                      survivors.push(enemyCopy[index]);
-                    p3.textContent = en.name + " was hit for " + damage + " damage!";
-                    info.appendChild(p3);
+                showDamage(en, damage);
+                sayDeadEn(en);
+              } else {   
+                  enCopy[index] = thp - damage;
+                  survivorHp.push(enCopy[index]);
+                  survivors.push(enemyCopy[index]);
+                  showDamage(en, damage);
                 }
               });
               enemyParty = survivors;
@@ -276,29 +267,17 @@ function attackCalc (char, target, flow, skill){
           if (damage <= 0){damage = 0};
           let final = thp - damage ;
             if (final <= 0) {
-              let p6 = document.createElement("p");
-              p6.textContent = char.name + " used " + skill.name + "!"
-              info.appendChild(p6);
+              skillUseText(char, skill);
               //adds elemental info
-              info.appendChild(pEl);
-              let p = document.createElement("p");    
-              p.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
-              info.appendChild(p);
-              let p2 = document.createElement("p");
-              p2.textContent = enemyParty[target].name + " has been defeated!";
-              info.appendChild(p2);
+              showDamage(enemyParty[target], damage);
+              sayDeadEn(enemyParty[target]);
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
               battleMove(flow)
               } else {
-                let p6 = document.createElement("p");
-                p6.textContent = char.name + " used " + skill.name + "!"
-                info.appendChild(p6);
-                let p3 = document.createElement("p");
-                info.appendChild(pEl);
+                skillUseText(char, skill);
+                showDamage(enemyParty[target], damage);
                 enHp[target] = thp - damage;
-                p3.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
-                info.appendChild(p3);
                 battleMove(flow)
                   }
           }
@@ -315,20 +294,14 @@ function attackCalc (char, target, flow, skill){
           if (damage <= 0){damage = 0};
           let final = thp - damage ;
           if (final <= 0) {
-            let p = document.createElement("p");
-              p.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
-              info.appendChild(p);
-            let p2 = document.createElement("p");
-              p2.textContent = enemyParty[target].name + " has been defeated!";
-              info.appendChild(p2);
+            showDamage(enemyParty[target], damage);
+            sayDeadEn(enemyParty[target]);
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
               battleMove(flow)
             } else {
-                let p3 = document.createElement("p");
                 enHp[target] = thp - damage;
-                p3.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
-                info.appendChild(p3);
+                showDamage(enemyParty[target], damage);
                 battleMove(flow)
                 }
             }

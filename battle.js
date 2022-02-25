@@ -121,11 +121,25 @@ function getRandomInt(max) {
 function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
     }
+//check weakness might scale with levels
+let elementalBoost = 0;
+let pEl = document.createElement("p");
+function checkWeakness(enemy, skill){
+  if (enemy.weakness.element !== neuEl.element && enemy.weakness.element === skill.element.element) {
+    elementalBoost += 2;
+    pEl.textContent = enemy.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
+    return true;
+  } else {
+    pEl.textContent = "";
+    elementalBoost = 0;
+    return false;
+  }
+}
 //calculating functions
 function attackCalc (char, target, flow, skill){
   info.innerHTML = "";
+  elementalBoost = 0;
   //branch for skill
-  let elementalBoost = 0;
     if (skill != undefined){
       char.cmp -= skill.cost;
       if (skill.type === "Magic"){ 
@@ -142,23 +156,15 @@ function attackCalc (char, target, flow, skill){
           p3.textContent = char.name + " cast " + skill.name + "!"
           info.appendChild(p3);
           enemyParty.map((en, index) => {
-            if (en.weakness.element === skill.element.element) {
-              elementalBoost += 2;
-                }
-            let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - en.mDef;
-          let minpa = pa - 2;
+            checkWeakness(en, skill);
+          let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - en.mDef;
           let thp = enCopy[index];
-          let damage = clamp(getRandomInt(pa), minpa, pa);
+          let damage = clamp(getRandomInt(pa), pa-2, pa);
            if (damage <= 0){damage = 0};
           let final = thp - damage ;
           applyFinal.push(final);
           if (final <= 0) {
-            if (en.weakness.element === skill.element.element) {
-            let pEl = document.createElement("p");
-            pEl.textContent = en.name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
-            info.appendChild(pEl);
-         //   enCopy[indexer] = thp - damage;
-              }
+          info.appendChild(pEl);
           let p = document.createElement("p");
           p.textContent = en.name + " was hit for " + damage + " damage!";
           info.appendChild(p);
@@ -167,14 +173,10 @@ function attackCalc (char, target, flow, skill){
           info.appendChild(p2);
           } else {
                 let p3 = document.createElement("p");
-                if (en.weakness.element === skill.element.element) {
-                let pEl = document.createElement("p");
-                pEl.textContent = en.name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
                 info.appendChild(pEl);
-                  }
-               enCopy[index] = thp - damage;
+                enCopy[index] = thp - damage;
                 survivorHp.push(enCopy[index]);
-                  survivors.push(enemyCopy[index]);
+                survivors.push(enemyCopy[index]);
                 p3.textContent = en.name + " was hit for " + damage + " damage!";
                 info.appendChild(p3);
             }
@@ -188,25 +190,18 @@ function attackCalc (char, target, flow, skill){
           battleMove(flow)
           }     
       else {
-        if (enemyParty[target].weakness.element === skill.element.element) {
-          elementalBoost += 2;
-        }
+        checkWeakness(enemyParty[target], skill)
         //regular branch
         let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].mDef;
-        let minpa = pa - 2;
         let thp = enHp[target];
-        let damage = clamp(getRandomInt(pa), minpa, pa);
+        let damage = clamp(getRandomInt(pa), pa-2, pa);
         if (damage <= 0){damage = 0};
         let final = thp - damage ;
         if (final <= 0) {
           let p3 = document.createElement("p");
           p3.textContent = char.name + " cast " + skill.name + "!"
           info.appendChild(p3);
-          if (enemyParty[target].weakness.element === skill.element.element) {
-            let pEl = document.createElement("p");
-            pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
-            info.appendChild(pEl);
-              }
+          info.appendChild(pEl);
           let p = document.createElement("p");
           p.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
           info.appendChild(p);
@@ -221,11 +216,7 @@ function attackCalc (char, target, flow, skill){
                 p6.textContent = char.name + " cast " + skill.name + "!"
                 info.appendChild(p6);
                 let p3 = document.createElement("p");
-                if (enemyParty[target].weakness.element === skill.element.element) {
-                let pEl = document.createElement("p");
-                pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                 info.appendChild(pEl);
-                  }
                 enHp[target] = thp - damage;
                 p3.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
                 info.appendChild(p3);
@@ -244,23 +235,15 @@ function attackCalc (char, target, flow, skill){
               p3.textContent = char.name + " used " + skill.name + "!"
               info.appendChild(p3);
               enemyParty.map((en, index) => {
-                if (en.weakness.element === skill.element.element) {
-                  elementalBoost += 2;
-                    }
-                let pa = char.pAtk + char.weapon.pow + skill.pow + elementalBoost - en.pDef;
-              let minpa = pa - 2;
+                checkWeakness(en, skill);
+              let pa = char.pAtk + char.weapon.pow + skill.pow + elementalBoost - en.pDef;
               let thp = enCopy[index];
-              let damage = clamp(getRandomInt(pa), minpa, pa);
+              let damage = clamp(getRandomInt(pa), pa-2, pa);
                if (damage <= 0){damage = 0};
               let final = thp - damage ;
               applyFinal.push(final);
               if (final <= 0) {
-                if (en.weakness.element === skill.element.element) {
-                let pEl = document.createElement("p");
-                pEl.textContent = en.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                 info.appendChild(pEl);
-             //   enCopy[indexer] = thp - damage;
-                  }
               let p = document.createElement("p");
               p.textContent = en.name + " was hit for " + damage + " damage!";
               info.appendChild(p);
@@ -269,11 +252,7 @@ function attackCalc (char, target, flow, skill){
               info.appendChild(p2);
               } else {
                     let p3 = document.createElement("p");
-                    if (en.weakness.element === skill.element.element) {
-                    let pEl = document.createElement("p");
-                    pEl.textContent = en.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                     info.appendChild(pEl);
-                      }
                    enCopy[index] = thp - damage;
                     survivorHp.push(enCopy[index]);
                       survivors.push(enemyCopy[index]);
@@ -290,24 +269,18 @@ function attackCalc (char, target, flow, skill){
               battleMove(flow)
               }        
              else { //regular branch
-              if (enemyParty[target].weakness.element === skill.element.element) {
-                elementalBoost += 2;
-                  }
+          checkWeakness(enemyParty[target], skill);
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].pDef;
           let thp = enHp[target];
-          let minpa = pa - 2;
-          let damage = clamp(getRandomInt(pa), minpa, pa);
+          let damage = clamp(getRandomInt(pa), pa-2, pa);
           if (damage <= 0){damage = 0};
           let final = thp - damage ;
             if (final <= 0) {
               let p6 = document.createElement("p");
               p6.textContent = char.name + " used " + skill.name + "!"
-              info.appendChild(p6);      
-              if (enemyParty[target].weakness.element === skill.element.element) {
-                let pEl = document.createElement("p");
-                pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
-                info.appendChild(pEl);
-                  }
+              info.appendChild(p6);
+              //adds elemental info
+              info.appendChild(pEl);
               let p = document.createElement("p");    
               p.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
               info.appendChild(p);
@@ -322,11 +295,7 @@ function attackCalc (char, target, flow, skill){
                 p6.textContent = char.name + " used " + skill.name + "!"
                 info.appendChild(p6);
                 let p3 = document.createElement("p");
-                let pEl = document.createElement("p");
-                if (enemyParty[target].weakness.element === skill.element.element) {
-                pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
                 info.appendChild(pEl);
-                  }
                 enHp[target] = thp - damage;
                 p3.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
                 info.appendChild(p3);
@@ -335,15 +304,14 @@ function attackCalc (char, target, flow, skill){
           }
          
       } if (skill.type === "Steal"){
-        steal(enItems[target]);
+        stealFrom(enItems[target]);
         battleMove(flow)
       }
 }
   else {
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow - enemyParty[target].pDef;
           let thp = enHp[target];
-          let minpa = pa - 2;
-          let damage = clamp(getRandomInt(pa), minpa, pa);
+          let damage = clamp(getRandomInt(pa), pa-2, pa);
           if (damage <= 0){damage = 0};
           let final = thp - damage ;
           if (final <= 0) {
@@ -365,7 +333,7 @@ function attackCalc (char, target, flow, skill){
                 }
             }
   };
-function steal(enemy){
+function stealFrom(enemy){
   if (enemy.steal !== ''){
     //checks steal rate, each item will have one.
     //checks the global variable of items pushed into enItems
@@ -624,7 +592,7 @@ function supTarget (caster, sup, supflow){
     skillSlot.appendChild(btn2);
     }
   };
-function supCalc(caster, partymem, sup, supflow){
+function supCalc(caster, partymem, sup){
   info.innerHTML = "";
   skillSlot.innerHTML = "";
   caster.cmp -= sup.cost;
@@ -722,7 +690,7 @@ function itemTarget (item, flow){
     itemSlot.appendChild(btn2);
     }
    };
-function itemCalc(partymem, item, flow){
+function itemCalc(partymem, item){
   info.innerHTML = "";
   itemSlot.innerHTML = "";
   if (item.type === "Healing"){
@@ -808,7 +776,7 @@ function statBoost(char){
   info.appendChild(leveluptext);
 };
 function levelUp(char){
-    if (char.exp >= 3 && char.level < 2){
+  if (char.exp >= 3 && char.level < 2){
       statBoost(char);       
         if (char.level === 2 && char.name === "Marie") {
           marie.skills.push(thunder);
@@ -817,23 +785,41 @@ function levelUp(char){
         info.appendChild(learnedSkill2);
         }
         
-      }  
-    if (char.exp >= 20 && char.level < 3){
-      statBoost(char);
-    }
-    if (char.exp >= 40 && char.level < 4){
-      statBoost(char);
-    }
-    if (char.exp >= 100 && char.level < 5){
-      statBoost(char);
-      if (char.level === 5 && char.name === "Julie") {
-        julie.support.push(atkBoost);
+  }  
+  if (char.exp >= 20 && char.level < 3){
+    statBoost(char);
+  }
+  if (char.exp >= 40 && char.level < 4){
+    statBoost(char);
+  }
+  if (char.exp >= 100 && char.level < 5){
+    statBoost(char);
+    if (char.level === 5 && char.name === "Julie") {
+      julie.support.push(atkBoost);
       let learnedSkill = document.createElement("p");
       learnedSkill.textContent = julie.name + " learned " + atkBoost.name + "!";
       info.appendChild(learnedSkill);
       }
     }
   if (char.exp >= 200 && char.level < 6){
+    statBoost(char);
+  }
+  if (char.exp >= 350 && char.level < 7){
+    statBoost(char);
+  }
+  if (char.exp >= 550 && char.level < 8){
+    statBoost(char);
+  }
+  if (char.exp >= 850 && char.level < 9){
+    statBoost(char);
+    if (char.level === 10 && char.name === "Ando") {
+      julie.skills.push(slashAll);
+      let learnedSkill = document.createElement("p");
+      learnedSkill.textContent = `${char.name} learned ${slashAll.name}!`
+      info.appendChild(learnedSkill);
+      }
+  }
+  if (char.exp >= 1200 && char.level < 10){
     statBoost(char);
   }
 };

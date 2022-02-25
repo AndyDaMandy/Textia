@@ -185,6 +185,9 @@ function showStatus (x) {
     li.textContent = "Magic Defense: " + x.mDef;
      statsLog.appendChild(li);
      li = document.createElement("li")
+    li.textContent = "Luck: " + x.luck;
+     statsLog.appendChild(li);
+     li = document.createElement("li")
     li.textContent = "Exp: " + x.exp;
      statsLog.appendChild(li);
       li = document.createElement("li");

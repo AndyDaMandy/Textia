@@ -1,6 +1,7 @@
 //Things that need to be done:
 //Adding all target to items and support skills
 //begin game balancing
+//Adjust strings to use template literals
 //enmity system? Ando should get hit more.
 //Item descriptions needed in battle?
 //Need to create an armor system! Maybe....

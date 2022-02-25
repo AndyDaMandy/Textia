@@ -135,7 +135,7 @@ const neuEl = {
   //very important, use neuEl for enemies with no elemental weaknesses and "N/A" for skills/weapons
   const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
   //if an enemy is flying, bows hit for extra damage.
-  const bat = new Enemy('Bat', 1, 13, 3, 7, 2, 1, 1, neuEl, 1, 1, [], 'Flying');
+  const bat = new Enemy('Bat', 1, 13, 3, 10, 3, 1, 1, neuEl, 1, 1, [], 'Flying');
   const familiar = new Enemy('Familiar', 1, 55, 3, 9, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
   const sparkBison = new Enemy('Spark Bison', 3, 20, 1, 11, 9, 1, 3, watEl, 5, 5, [],'Bison');
   const redGoblin = new Enemy('Red Goblin', 3, 30, 1, 10, 4, 2, 5, neuEl ,7, 10, [], 'Goblin');
@@ -237,7 +237,7 @@ class Skill {
   const basher = {
     name: "Basher",
     type: "Physical",
-    element: "N/A",
+    element: neuEl,
     des: "Deals physical damage to 1 enemy",
     pow: 4,
     cost: 3,

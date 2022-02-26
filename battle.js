@@ -712,12 +712,6 @@ function itemCalc(partymem, item){
   };
 let itemChoice;
 let itemPos;
-/*
-function itmChooser(x){
-  debugger;
-  itemPos = x;
-};
-*/
 function itemBtnGen (flow){
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
@@ -839,24 +833,19 @@ function loadEnemyInfo(){
     let p = document.createElement("h4");
     p.textContent = "Enemies: " + enemyParty[0].name;
     enemyPlace.appendChild(p);
-  //  enHp.push(enemyParty[0].hp);
     };
     if (enemyParty.length === 2) {
        let p = document.createElement("h4");
         p.textContent = "Enemies: " + enemyParty[0].name + ", " + enemyParty[1].name;
         enemyPlace.appendChild(p);
-      //  enHp.push(enemyParty[0].hp);
-      //  enHp.push(enemyParty[1].hp);
       };
     if (enemyParty.length === 3) {
        let p = document.createElement("h4");
         p.textContent = "Enemies: " + enemyParty[0].name + ", " + enemyParty[1].name + ", " + enemyParty[2].name;
         enemyPlace.appendChild(p);
-      //  enHp.push(enemyParty[0].hp);
-      //  enHp.push(enemyParty[1].hp);
-      //  enHp.push(enemyParty[2].hp);
       };
       console.log(enHp);
+      console.log(enItems);
   };
 function loadPartyInfo(){
   partyPlace.innerHTML = "";
@@ -902,11 +891,6 @@ function saveParty (){
   savedParty = currentParty;
   console.log(savedParty);
 }
-/*function loadParty(){
-  console.log(savedParty);
-  currentParty = savedParty;
-}
-*/
 function battle(en) {
   //battleState controls battle flow and button creation.
   adv.hidden = true;
@@ -924,15 +908,21 @@ function battle(en) {
   info.innerHTML = "";
   if (enemyParty.length === 1){
     enHp.push(enemyParty[0].hp);
+    enItems.push(enemyParty[0].steal);
     };
     if (enemyParty.length === 2) {
         enHp.push(enemyParty[0].hp);
+        enItems.push(enemyParty[0].steal);
         enHp.push(enemyParty[1].hp);
+        enItems.push(enemyParty[1].steal);
       };
     if (enemyParty.length === 3) {
         enHp.push(enemyParty[0].hp);
+        enItems.push(enemyParty[0].steal);
         enHp.push(enemyParty[1].hp);
+        enItems.push(enemyParty[1].steal);
         enHp.push(enemyParty[2].hp);
+        enItems.push(enemyParty[2].steal);
       };
   loadEnemyInfo();
   loadPartyInfo();

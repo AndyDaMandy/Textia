@@ -22,6 +22,7 @@ let reserveParty = [];
 
 //==================================
 // all testing goes below
+//important! Enemy skills/steal items go in the classes file.
 let savedParty = currentParty;
 ando.weapon = woodSword;
 ando.skills.push(basher);

@@ -37,6 +37,7 @@
   <button class="small-btn" id="formation-button" hidden onclick="partyFormation()">Formation</button>
   <button class="small-btn" id="inventory-button" hidden onclick="showInventory()">Inventory</button>
   <button class="small-btn" id="show-stats" onclick="showStats()" hidden>Party Status</button>
+  <button class="small-btn" id="tutorial-button" onClick="openTutorial()" hidden>Tutorial</button>
   <button class="small-btn" id="close-menu" onclick="closeMenu()" hidden>Close Menu</button>
 </div>
 <div class="well" id="save-menu" hidden>
@@ -73,6 +74,48 @@
   <div id="party-loc"></div>
   <div id="print-party"></div>
   <div id="select-party"></div> 
+</div>
+<div class="well" id="tutorial-menu" hidden>
+  <h3>Tutorial</h3>
+  <p><em>Welcome to the tutorial menu! Here are some explanations of mechanics!</em></p>
+  <h4>Menu</h4>
+  <p>As you've seen, there is a menu. It lets you access equipment, inventory, character status, and lets you set the formation/party you'll use going forward.</p>
+  <p>You can save if you hit the save button. Save uses local storage, so refreshing browser data will delete your save file.</p>
+  <p>Hitting close menu will close the menu and whatever the menu is displaying. Try closing this tutorial!</p>
+  <h4>Battle</h4>
+  <p>You'll encounter enemies on your journey. Once you find them you will enter a battle</p>
+  <p>Battles are won by lowering the enemy hit points to 0. You can't see their hit points, so be careful!</p>
+  <p>Turns follow an order: Party Member 1 - > Party Member 2 -> Party Member 3 -> Enemy Turn -> Repeat</p>
+  <p>The key to battle is to hit elemental weaknesses and to avoid having all of your team incapacitated.</p>
+  <h4>Stats</h4>
+  <p>Each character has their own stats. Attacks are split into physical attacks and magical attacks. Physical attacks hit Physical Defense, Magical hits Magical Defense. Enemies have affinities for physical and magical as well, so be sure pay attention to how much damage you do with one or the other.</p>
+  <p>HP is your hit points, if you lose them all that character will be incapacitated! You can revive an incapacitated character with a Revival Potion</p>
+  <p>MP is your magic points. Skills and spells use magic points. If you don't have enough MP you will not be able to use a skill</p>
+  <p><strong>Don't be afraid to use MP, you recover HP/MP after each battle!</strong></p>
+  <p>Exp referes to experience points, you'll gain exp by defeating enemies. Gaining enough will allow you to level up!</p>
+  <p>Leveling up will raise all stats and if you hit certain levels you'll gain new skills/support skills</p>
+  <p>Luck determines several luck-based elements.</p>
+  <h4>Skills</h4>
+  <p>Each character has a set of "skills" and "support skills"</p>
+  <p>Skills target enemies and usually do damage.</p>
+  <p>Support skills will usually support allies in some capacity. Healing, buffing, etc.</p>
+  <p>While skills and support skills fall under the Skills category, there are some other major differences</p>
+  <p>Some skills are "physical" and make use of the character's physical stats. Other skills are "magical" aka spells and make use of the magic stat.</p>
+  <p>Skills can have elemental attributes as well, doing extra damage based on the elements. See below:</p>
+  <h4>Elements</h4>
+  <p>There are 4 elements in this world: <strong>Fire, Ice, Water, Thunder.</strong></p>
+  <p><strong>Fire and Ice are opposites and Water and Thunder are opposites.</strong> If an enemy has a Fire affinity, that means Ice will do extra damage. If the enemy has an Ice affinity, Fire will do extra damage. Water beats Thunder and Thunder beats Water.</p>
+  <p>Water does not do extra damage to Fire or Ice, Ice does not do extra damage to Thunder or Fire, for example.</p>
+  <p>Not all enemies have elemental affinities, thus an elemental attack won't do extra damage on them.</p>
+  <h4>Weapons</h4>
+  <p>Each character uses their own unique weapons. You can't equip weapons that your character won't use.</p>
+  <p>If you find a weapon and you can't equip it, perhaps you haven't met the character that can use it?</p>
+  <h4>Party</h4>
+  <p>You'll encounter several characters in your journey, they can join your "party"</p>
+  <p>Your party is split into your "current party" and your "reseve party". Only characters in your current party can battle. All other charaters will remain in your reserve.</p>
+  <p><strong>Your current party has a limit of 3 characters, you can have no more</strong></p>
+  <p>You can't lower your party size once it's at 3, if you're a loner then you can use 2, but I wouldn't recommend it!</p>
+  <button onclick="closeMenu()">Close Tutorial Screen</button>
 </div>
 <!--Gameplay Elements Below -->
   <button id="shop-button" onclick="openShop()" hidden>Shop</button>
@@ -114,13 +157,8 @@
     <p>Shaman: "Hello Ando and Marie, today is the day of your pilgrimage."</p>
     <p>"Our town needs a new crystal and you both are going to the Crystal Lake to gather one for us"</p>
     <p>"Without it we cannot protect ourselves from monsters much longer."</p>
-    <p>"Allow me to provide you with some information on battle:"</p>
-    <p>"About you two. Ando specializes in Physical skills, while Marie specializes in Magic"</p>
-    <p>"Be sure sure to keep that in mind when you're fighting enemies!"</p>
-    <p>"When using elemental skills remember that Fire and Ice are opposites and Water and Thunder are opposites!"</p>
-    <p>"If you hit an enemey with an opposite element it will do extra damage!"</p>
-    <p>"The blessing of the Goddess will heal your wounds after each enemy encounter."</p>
     <p>"To access the menu, click the "Menu" button above. You can check your items, party, skills, etc."</p>
+    <p>"If you click the tutorial button you can learn a lot about how to survive. Don't go into the wilderness unprepared! You can access it at any time, so if you're ever confused you can open it again."</p>
     <p>"If you'd like to move on, click below, or click the shop button above"</p>
     <button onclick="move(1);">Enter Forest</button>
     </div>

@@ -65,6 +65,8 @@ function partyFormation(){
     document.getElementById("save-menu").hidden = true;
     //formation
     document.getElementById("formation-menu").hidden = true;
+    //hide tutorial
+    document.getElementById("tutorial-menu").hidden = true;
     //inventory
     document.getElementById("inventory-menu").hidden = true;
     document.getElementById("inventory-items").innerHTML = "";
@@ -127,6 +129,8 @@ function showStats(){
     //inventory
     document.getElementById("inventory-menu").hidden = true;
     document.getElementById("inventory-items").innerHTML = "";
+    //hide tutorial
+    document.getElementById("tutorial-menu").hidden = true;
     //hide swap
     document.getElementById("swap-menu").hidden = true;
       //save remove
@@ -220,6 +224,8 @@ function showInventory() {
       document.getElementById("menu-items").innerHTML = "";
     //hide swap
     document.getElementById("swap-menu").hidden = true;
+    //hide tutorial
+    document.getElementById("tutorial-menu").hidden = true;
       //save remove
       document.getElementById("save-menu").hidden = true;
   
@@ -343,21 +349,43 @@ function save () {
    // simpleStorage.set("chest", chests.hidden = true);
     document.getElementById("save-menu").hidden = false;
     };
-
+function openTutorial(){
+  document.getElementById("equip-screen").hidden = true;
+  document.getElementById("equipment").innerHTML = "";
+  document.getElementById("equip-party").innerHTML = "";
+  //formation
+  document.getElementById("formation-menu").hidden = true;
+  //inventory
+  document.getElementById("inventory-menu").hidden = true;
+  document.getElementById("inventory-items").innerHTML = "";
+  //party stats
+  document.getElementById("stats-menu").hidden = true;
+    document.getElementById("line-1").innerHTML = "";
+    document.getElementById("menu-items").innerHTML = "";
+  //hide save
+  document.getElementById("save-menu").hidden = true;
+  //hide swap
+  document.getElementById("swap-menu").hidden = true;
+  //open tutorial
+  document.getElementById("tutorial-menu").hidden = false;
+}
 //=======================================
 //======================================
 //Menu functionality, must go below each menu item
 let menu = document.getElementById("open-menu");
 function openMenu(){
+  menu.hidden = true;
   document.getElementById("save-button").hidden = false;
   document.getElementById("equip-button").hidden = false;
   document.getElementById("inventory-button").hidden = false;
   if (reserveParty.length > 0) {document.getElementById("swap-team").hidden = false}
   document.getElementById("show-stats").hidden = false;
   document.getElementById("formation-button").hidden = false;
+  document.getElementById("tutorial-button").hidden = false;
   document.getElementById("close-menu").hidden = false;
   };
 function closeMenu() {
+  menu.hidden = false;
   document.getElementById("save-button").hidden = true;
   //equip
   document.getElementById("equip-button").hidden = true;
@@ -382,6 +410,9 @@ function closeMenu() {
   //hide swap
   document.getElementById("swap-team").hidden = true;
   document.getElementById("swap-menu").hidden = true;
+  //hide tutorial
+  document.getElementById("tutorial-menu").hidden = true;
+  document.getElementById("tutorial-button").hidden = true;
   };
   
 //======================================

@@ -282,6 +282,16 @@ function gameFlow (state) {
           document.getElementById("plains-1-right-2").hidden = true;
           document.getElementById("plains-1-6").hidden = false;
         }
+      //Aster City - Aster City South
+        if (state === 20){
+          document.getElementById("plains-1").hidden = true;
+          document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-s").hidden = false;
+        }
+      //Aster City Center
+        if (state === 21) {
+          
+        }
     };
 function move (state) {
       gameState = state;

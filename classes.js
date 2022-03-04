@@ -337,6 +337,7 @@ const magicPotion = {
     category: "Item",
     type: "mHealing",
     des: "Heals 5 points of MP.",
+    rarity: 25,
     effect: 5,
     cost: 8
     };
@@ -345,6 +346,7 @@ const revivalPotion = {
     category: "Item",
     type: "Rev",
     des: "Revives ally with 5 points of hp.",
+    rarity: 25,
     effect: 5,
     cost: 15
     };

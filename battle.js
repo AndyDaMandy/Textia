@@ -306,9 +306,16 @@ function attackCalc (char, target, flow, skill){
                 }
             }
   };
-function stealFrom(enemy){
-  if (enemy.steal !== ''){
+function stealFrom(enemyItem){
+  if (enemyItem !== blankItem){
     //checks steal rate, each item will have one.
+    let itemRarity = enemyItem.rarity;
+    let luckStat = Math.floor(ari.luck / 2);
+    let final = itemRarity + luckStat;
+    let roll = clamp(1,0,100);
+    if (roll <= final){{
+      //it now splices the item, then replaces with blankItem
+    }}
     //checks the global variable of items pushed into enItems
   } else {
     let p = document.createElement("p");

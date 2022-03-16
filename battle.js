@@ -173,8 +173,10 @@ function attackCalc (char, target, flow, skill){
           let applyFinal = [];
           let enemyCopy = enemyParty;
           let enCopy = enHp;
+          let itemCopy = enItems;
           let survivors = [];
           let survivorHp = [];
+          let survivorItems = [];
           skillUseText(char, skill);
           enemyParty.map((en, index) => {
             checkWeakness(en, skill);
@@ -191,11 +193,13 @@ function attackCalc (char, target, flow, skill){
                 enCopy[index] = thp - damage;
                 survivorHp.push(enCopy[index]);
                 survivors.push(enemyCopy[index]);
+                survivorItems.push(itemCopy[index])
                 showDamage(en, damage);
             }
           });
           enemyParty = survivors;
           enHp = survivorHp;
+          enItems = survivorItems;
           //first applier finds out who's dead and pushes it into a new array.
           //applier applies damage to all 3. AH, okay so perhaps it applies the damage regardless, but no splice.
           //then finalizer will then take that and apply it to the enemycopy arrays.
@@ -216,6 +220,7 @@ function attackCalc (char, target, flow, skill){
           sayDeadEn(enemyParty[target]);
           enemyParty.splice(target, 1);
           enHp.splice(target, 1);
+          enItems.splice(target, 1);
           battleMove(flow)
           } else {
                 skillUseText(char, skill);
@@ -230,8 +235,10 @@ function attackCalc (char, target, flow, skill){
               let applyFinal = [];
               let enemyCopy = enemyParty;
               let enCopy = enHp;
+              let itemCopy = enItems;
               let survivors = [];
               let survivorHp = [];
+              let survivorItems = [];
               skillUseText(char, skill);
               enemyParty.map((en, index) => {
                 checkWeakness(en, skill);
@@ -248,11 +255,13 @@ function attackCalc (char, target, flow, skill){
                   enCopy[index] = thp - damage;
                   survivorHp.push(enCopy[index]);
                   survivors.push(enemyCopy[index]);
+                  survivorItems.push(itemCopy[index])
                   showDamage(en, damage);
                 }
               });
               enemyParty = survivors;
               enHp = survivorHp;
+              enItems = survivorItems;
               //first applier finds out who's dead and pushes it into a new array.
               //applier applies damage to all 3. AH, okay so perhaps it applies the damage regardless, but no splice.
               //then finalizer will then take that and apply it to the enemycopy arrays.
@@ -273,6 +282,7 @@ function attackCalc (char, target, flow, skill){
               sayDeadEn(enemyParty[target]);
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
+              enItems.splice(target, 1);
               battleMove(flow)
               } else {
                 skillUseText(char, skill);
@@ -283,7 +293,7 @@ function attackCalc (char, target, flow, skill){
           }
          
       } if (skill.type === "Steal"){
-        stealFrom(enItems[target]);
+        stealFrom(enItems[target], target);
         battleMove(flow)
       }
 }
@@ -298,6 +308,7 @@ function attackCalc (char, target, flow, skill){
             sayDeadEn(enemyParty[target]);
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
+              enItems.splice(target, 1);
               battleMove(flow)
             } else {
                 enHp[target] = thp - damage;
@@ -306,22 +317,39 @@ function attackCalc (char, target, flow, skill){
                 }
             }
   };
-function stealFrom(enemyItem){
+function stealFrom(enemyItem, location){
   if (enemyItem !== blankItem){
     //checks steal rate, each item will have one.
     let itemRarity = enemyItem.rarity;
     let luckStat = Math.floor(ari.luck / 2);
     let final = itemRarity + luckStat;
-    let roll = clamp(1,0,100);
-    if (roll <= final){{
+    let roll = clamp(getRandomInt(100),1,100);
+    if (roll <= final){
       //it now splices the item, then replaces with blankItem
-    }}
+      let pusher = enItems[location];
+      let newBlank = blankItem;
+      enItems.splice(location, 1, newBlank);
+      let p = document.createElement("p");
+      p.textContent = `Yes! You stole: ${pusher.name}!`;
+      info.appendChild(p);
+      if (pusher.category === "Weapon"){
+        weaponsOwned.push(pusher);
+
+      } else if (pusher.category === "Item") {
+        inventory.push(pusher);
+      }
+    } else {
+      let p = document.createElement("p");
+      p.textContent = "Darn, you failed to steal!";
+      info.appendChild(p);
+    }
     //checks the global variable of items pushed into enItems
   } else {
     let p = document.createElement("p");
     p.textContent = "The enemy has nothing to steal!";
     info.appendChild(p);
   }
+  console.log(enItems);
 }
 function deathCheck(){
     //death

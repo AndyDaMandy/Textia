@@ -371,16 +371,21 @@
     </div>
     <div id="town-3-l">
       <!-- state = 22 -->
-      <h2>Aster City - West</h2>
+      <h2>Aster City - West - Shop District</h2>
       <p>You enter Aster City West, the shop district. You smell delicious roasted fish from the stands all around.</p>
       <p>There are merchants from many different towns and cities across the continent that are trading with the the city-folk of Aster City.</p>
       <p>You think it would be a good idea to view some of the items in the shops to prepare for your journey ahead.</p>
-      <button onclick="move(23)">Go further into the shop district.</button>
-      <button onclick="move(21)">Go back to the city center.</button>
+      <button onclick="move(23)">Go further West</button>
+      <button onclick="move(21)">Go back to the city center</button>
     </div>
     <div id="town-3-l-2">
       <!-- state = 23 -->
-      <h2>Aster City - West 2</h2>
+      <h2>Aster City - West - Arena</h2>
+      <p>You find an arena past the Shop District</p>
+      <p>Here warriors from all over come to test their might</p>
+      <p>You think it might be good training to challenge some of these fighters.</p>
+      <button onclick="move(22)">Go Back to Shop District</button>
+      <button onclick="battle([arenaFighter, arenaMage, arenaFighter]); statePost = 23;">Fight</button>
     </div>
     <div id="town-3-r">
       <!-- state = 24 -->

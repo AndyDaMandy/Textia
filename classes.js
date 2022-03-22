@@ -144,6 +144,8 @@ const neuEl = {
   const familiar = new Enemy('Familiar', 1, 55, 3, 9, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
   const sparkBison = new Enemy('Spark Bison', 3, 20, 1, 11, 9, 1, 3, watEl, 5, 5, [],'Bison');
   const redGoblin = new Enemy('Red Goblin', 3, 30, 1, 10, 4, 2, 5, neuEl ,7, 10, [], 'Goblin');
+  const arenaFighter = new Enemy('Arena Fighter', 4, 85, 3, 13, 9, 0, 0, iceEl, 5, 5, [], 'Human', potion);
+  const arenaMage = new Enemy('Arena Mage', 10, 60, 20, 12, 8, 14, 5, iceEl, 5, 5, [],  )
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -211,6 +213,8 @@ flareFox.eSkills.push(flameWave);
 const iceClaw = new EnemySkill('Ice Claw', 'Physical', 3, 2, 'Single');
 const wideSwipe = new EnemySkill('Wide Swipe', 'Physical', 1, 2, 'All');
 iceLeopard.eSkills.push(iceClaw);
+const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
+arenaMage.eSkills.push(eFire);
 
 //============================
 //Skills

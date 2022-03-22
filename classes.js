@@ -412,7 +412,7 @@ const iceStaff = new Weapon('Ice Staff','Weapon','Staff', 'A basic staff imbued 
     atr: "Physical",
     pow: 1
     };
-  const longBow = new Weapon('Long Bow','Weapon', 'Bow', 'A long, wooden bow.', 'Physical', 4, null, 30, 30);
+  const longBow = new Weapon('Long Bow','Weapon', 'Bow', 'A long, wooden bow.', 'Physical', 4, null, 30, 50);
   const sparkBow = {
       name: "Spark Bow",
       category: "Weapon",
@@ -426,7 +426,8 @@ const iceStaff = new Weapon('Ice Staff','Weapon','Staff', 'A basic staff imbued 
   const ironSpear = new Weapon('Iron Spear','Weapon', 'Spear', 'A simple spear with an iron tip', 'Physical', 4, null, 30);
   const iceSpear = new Weapon('Ice Spear', 'Weapon', 'Spear', 'A spear imbued with Ice Magic', 'Physical', 3, iceEl, 50);
 //Twin Daggers
-const ironDaggers = new Weapon('Iron Daggers', 'Weapon', 'Twin Daggers', 'Two daggers made of iron', 'Physical', 3, null, 30);
+const ironDaggers = new Weapon('Iron Daggers', 'Weapon', 'Twin Daggers', 'Two daggers made of iron', 'Physical', 3, null, 30, 80);
+const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two daggers that make you feel lucky!', 'Physical', 2, null, 30, 10);
 
 //Steal items get pushed to enemies here:
 goblin.steal = potion;

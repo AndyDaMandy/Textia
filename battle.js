@@ -322,6 +322,10 @@ function stealFrom(enemyItem, location){
     //checks steal rate, each item will have one.
     let itemRarity = enemyItem.rarity;
     let luckStat = Math.floor(ari.luck / 2);
+    //since Ari is the only one that can equip lucky daggers
+    if (ari.weapon === luckyDaggers){
+      luckStat+= 3;
+    }
     let final = itemRarity + luckStat;
     let roll = clamp(getRandomInt(100),1,100);
     if (roll <= final){

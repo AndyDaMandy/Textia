@@ -290,7 +290,47 @@ function gameFlow (state) {
         }
       //Aster City Center
         if (state === 21) {
-          
+          shopButton.hidden = true;
+          document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-c").hidden = false;
+        }
+        //Aster City West 1
+        if (state === 22){
+          shopState = 2;
+          shopButton.hidden = false;
+          document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-l").hidden = false;
+        }
+        //Aster city West 2
+        if (state === 23){
+          shopButton.hidden = true;
+          document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-l-2").hidden = false;
+        }
+        //Aster city East
+        if (state === 24){
+          document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-r").hidden = false;
+        }
+        //Aster City East 2
+        if (state === 25){
+          document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-r-2").hidden = false;
+        }
+        //Aster City East 3
+        if (state === 26){
+          document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-r-3").hidden = false;
+        }
+        //Aster City North
+        if (state === 27){
+          document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-n").hidden = false;
+        }
+        //Aster City North 2
+        if (state === 28){
+          document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-n-2").hidden = false;
         }
     };
 function move (state) {
@@ -338,6 +378,10 @@ function alertOne(){
       if (shopState === 1){
         let shopTwo = [potion, magicPotion, highPotion, revivalPotion, longBow];
         shopTwo.forEach(pusher);
+      }
+      if (shopState === 2){
+        let shopThree = [potion, magicPotion, highPotion, revivalPotion];
+        shopThree.foreEach(pusher);
       }
   
   }

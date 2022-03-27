@@ -113,200 +113,6 @@ const neuEl = {
   element: 'Neutral',
   des: 'non-elemental damage'
 }
-  //========================================
-//blank item is a blank item for enemies to hold.
-  const blankItem = {
-    name: 'Blank'
-  };
-//enemies go here
-  class Enemy {
-    constructor(name, level, hp, mp, pAtk, pDef, mAtk, mDef, weakness, exp, money, eSkills, type,  steal){
-      this.name = name;
-      this.level = level;
-      this.hp = hp,
-      this.mp = mp;
-      this.pAtk = pAtk,
-      this.pDef = pDef,
-      this.mAtk = mAtk,
-      this.mDef = mDef,
-      this.weakness = weakness;
-      this.exp = exp;
-      this.money = money;
-      this.eSkills = eSkills,
-      this.type = type;
-      this.steal = steal;
-    }
-  };
-  //very important, use neuEl for enemies with no elemental weaknesses and "N/A" for skills/weapons
-  const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
-  //if an enemy is flying, bows hit for extra damage.
-  const bat = new Enemy('Bat', 1, 13, 3, 10, 3, 1, 1, neuEl, 1, 1, [], 'Flying');
-  const familiar = new Enemy('Familiar', 1, 55, 3, 9, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
-  const sparkBison = new Enemy('Spark Bison', 3, 20, 1, 11, 9, 1, 3, watEl, 5, 5, [],'Bison');
-  const redGoblin = new Enemy('Red Goblin', 3, 30, 1, 10, 4, 2, 5, neuEl ,7, 10, [], 'Goblin');
-  const arenaFighter = new Enemy('Arena Fighter', 4, 85, 3, 13, 9, 0, 0, iceEl, 5, 5, [], 'Human', potion);
-  const arenaMage = new Enemy('Arena Mage', 10, 60, 20, 12, 8, 14, 5, iceEl, 5, 5, [],  )
-  const goblin = {
-    name: "Goblin",
-    level: 1,
-    hp: 10,
-    mp: 5,
-    pAtk: 5,
-    pDef: 2,
-    mAtk: 1,
-    mDef: 1,
-    weakness: iceEl,
-    exp: 1,
-    money: 1,
-    steal: "blank",
-    eSkills: [],
-    type: "Goblin"
-    };
-  const potatoThief = {
-    name: "Potato Thief",
-    level: 1,
-    hp: 15,
-    mp: 5,
-    pAtk: 5,
-    pDef: 2,
-    mAtk: 1,
-    mDef: 1,
-    weakness: neuEl,
-    exp: 1,
-    money: 2,
-    eSkills: [],
-    type: "Goblin"
-    }; 
-    //bosses go below
-  const livingTree = {
-    name: "Living Tree",
-    level: 1,
-    hp: 70,
-    mp: 5,
-    pAtk: 9,
-    pDef: 4,
-    mAtk: 1,
-    mDef: 1,
-    weakness: fireEl,
-    exp: 15,
-    money: 20,
-    eSkills: [],
-    type: "enemy"
-    };
-  const flareFox = new Enemy('Flare Fox', 4, 100, 10, 13, 5, 13, 5, iceEl, 50, 50, [], 'Fox', blankItem);
-  const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [], 'Leopard', blankItem);
-//Enemy Skills - to be pushed into the enemies individually after creating it.
-
-class EnemySkill {
-  constructor(name, type, pow, cost, target){
-    this.name = name;
-    this.type = type;
-    this.pow = pow;
-    this.cost = cost;
-    this.target = target;
-  }
-};
-const fireBall = new EnemySkill('Fire Ball', 'Magical', 3, 2, 'Single');
-const flameWave = new EnemySkill('Flame Wave', 'Magical', 1, 2, 'All');
-flareFox.eSkills.push(fireBall);
-flareFox.eSkills.push(flameWave);
-const iceClaw = new EnemySkill('Ice Claw', 'Physical', 3, 2, 'Single');
-const wideSwipe = new EnemySkill('Wide Swipe', 'Physical', 1, 2, 'All');
-iceLeopard.eSkills.push(iceClaw);
-const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
-arenaMage.eSkills.push(eFire);
-
-//============================
-//Skills
-//===========================
-//very important, use "None" for enemies with no elemental weaknesses and "N/A" for skills/weapons  
-class Skill {
-    constructor(name, type, element, des, pow, cost, target){
-      this.name = name;
-      this.type = type;
-      this.element = element;
-      this.des = des;
-      this.pow = pow;
-      this.cost = cost;
-      this.target = target;
-    }
-  };
-  const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with weak magic-based thunder damage', 4, 5, 'Single');
-  //need a way to show a skill hits all or not....
-  const water = new Skill('Water','Magic', watEl, 'Hits enemy with weak magic-based water damage', 4, 6, 'All');
-  const volley = new Skill('Volley', 'Physical', neuEl, 'Hits all enemies with arrows', 2, 6, 'All');
-  const steal = new Skill('Steal', 'Steal', neuEl, 'Attempts to steal from 1 enemy', 0, 0, 'Single');
-  const fireTwo = new Skill('Fire 2', 'Magic', fireEl, 'Deals powerful fire damage to one enemy', 8, 7, 'Single');
-  const waterArrowTwo = new Skill('Water Arrow 2', 'Physical', watEl, 'Shoots an arrow that deals powerful water damage to 1 enemy', 8, 7, 'Single');
-  const iceSlashTwo = new Skill('Ice Slash 2', 'Physical', iceEl, 'A powerful slash that deals ice damage to 1 enemy', 8, 7, 'Single');
-  const fire = {
-    name: "Fire",
-    type: "Magic",
-    element: fireEl,
-    des: "Hits enemy with magic-based fire damage",
-    pow: 2,
-    cost: 3,
-    target: 'Single'
-    };
-  const basher = {
-    name: "Basher",
-    type: "Physical",
-    element: neuEl,
-    des: "Deals physical damage to 1 enemy",
-    pow: 4,
-    cost: 3,
-    target: 'Single'
-    };
-  const slashAll = {
-      name: "Slash All",
-      type: "Physical",
-      element: neuEl,
-      des: "Deals physical damage to all enemies",
-      pow: 4,
-      cost: 5,
-      target: 'All'
-      };
-  const iceSlash = {
-    name: "Ice Slash",
-    type: "Physical",
-    des: "Deals physical and ice damage to 1 enemy",
-    element: iceEl,
-    pow: 2,
-    cost: 2
-    };
-  const waterArrow = {
-    name: "Water Arrow",
-    type: "Physical",
-    des: "Deals physical and water damage to 1 enemy",
-    element: watEl,
-    pow: 2,
-    cost: 2
-    };
-  //Support Skils
-  const cure = {
-    name: "Cure",
-    type: "Healing",
-    des: "Heals target character for 5 HP",
-    element: watEl,
-    pow: 5,
-    cost: 2,
-    target: 'Single'
-    };
-  const cureAll = new Skill('Cure All', 'Healing', neuEl, 'Heals all allies', 5, 5, 'All');
-  const atkBoost = {
-    name: "Attack Boost",
-    type: "Attack Buff",
-    des: "Boosts attack for 1 turn.",
-    pow: 1,
-    cost: 2
-    };
-  const defBoost = {
-    name: "Defense Boost",
-    type: "Defense Buff",
-    des: "Boosts attack for 1 turn.",
-    pow: 1,
-    cost: 2
-    };
   //======================================
   //Items go here
   //rarity = difficulty for stealing. Low = rare, high = not rare
@@ -337,7 +143,7 @@ const highPotion = {
       type: "Healing",
       des: "Heals 10 points of HP.",
       effect: 10,
-      rarity: 70,
+      rarity: 60,
       cost: 10
       };
 const magicPotion = {
@@ -436,6 +242,204 @@ const iceStaff = new Weapon('Ice Staff','Weapon','Staff', 'A basic staff imbued 
 //Twin Daggers
 const ironDaggers = new Weapon('Iron Daggers', 'Weapon', 'Twin Daggers', 'Two daggers made of iron', 'Physical', 3, null, 30, 80);
 const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two daggers that make you feel lucky!', 'Physical', 2, null, 30, 10);
+
+  //========================================
+//blank item is a blank item for enemies to hold.
+  const blankItem = {
+    name: 'Blank'
+  };
+//enemies go here
+  class Enemy {
+    constructor(name, level, hp, mp, pAtk, pDef, mAtk, mDef, weakness, exp, money, eSkills, type,  steal){
+      this.name = name;
+      this.level = level;
+      this.hp = hp,
+      this.mp = mp;
+      this.pAtk = pAtk,
+      this.pDef = pDef,
+      this.mAtk = mAtk,
+      this.mDef = mDef,
+      this.weakness = weakness;
+      this.exp = exp;
+      this.money = money;
+      this.eSkills = eSkills,
+      this.type = type;
+      this.steal = steal;
+    }
+  };
+  //very important, use neuEl for enemies with no elemental weaknesses and "N/A" for skills/weapons
+  const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
+  //if an enemy is flying, bows hit for extra damage.
+  const bat = new Enemy('Bat', 1, 13, 3, 10, 3, 1, 1, neuEl, 1, 1, [], 'Flying');
+  const familiar = new Enemy('Familiar', 1, 55, 3, 9, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
+  const sparkBison = new Enemy('Spark Bison', 3, 20, 1, 11, 9, 1, 3, watEl, 5, 5, [],'Bison');
+  const redGoblin = new Enemy('Red Goblin', 3, 30, 1, 10, 4, 2, 5, neuEl ,7, 10, [], 'Goblin');
+  const arenaFighter = new Enemy('Arena Fighter', 4, 85, 3, 13, 9, 0, 0, iceEl, 5, 5, [], 'Human', potion);
+  const arenaMage = new Enemy('Arena Mage', 10, 60, 20, 12, 8, 14, 5, iceEl, 5, 5, [], 'Human', magicPotion);
+  const swordFish = new Enemy('Sword Fish', 5, 25, 5, 10, 10, 7, 7, thunEl, 20, 20, [], 'Fish', highPotion);
+  const goblin = {
+    name: "Goblin",
+    level: 1,
+    hp: 10,
+    mp: 5,
+    pAtk: 5,
+    pDef: 2,
+    mAtk: 1,
+    mDef: 1,
+    weakness: iceEl,
+    exp: 1,
+    money: 1,
+    steal: "blank",
+    eSkills: [],
+    type: "Goblin"
+    };
+  const potatoThief = {
+    name: "Potato Thief",
+    level: 1,
+    hp: 15,
+    mp: 5,
+    pAtk: 5,
+    pDef: 2,
+    mAtk: 1,
+    mDef: 1,
+    weakness: neuEl,
+    exp: 1,
+    money: 2,
+    eSkills: [],
+    type: "Goblin"
+    }; 
+    //bosses go below
+  const livingTree = {
+    name: "Living Tree",
+    level: 1,
+    hp: 70,
+    mp: 5,
+    pAtk: 9,
+    pDef: 4,
+    mAtk: 1,
+    mDef: 1,
+    weakness: fireEl,
+    exp: 15,
+    money: 20,
+    eSkills: [],
+    type: "enemy"
+    };
+  const flareFox = new Enemy('Flare Fox', 4, 100, 10, 13, 5, 13, 5, iceEl, 50, 50, [], 'Fox', blankItem);
+  const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [], 'Leopard', blankItem);
+//Enemy Skills - to be pushed into the enemies individually after creating it.
+
+class EnemySkill {
+  constructor(name, type, pow, cost, target){
+    this.name = name;
+    this.type = type;
+    this.pow = pow;
+    this.cost = cost;
+    this.target = target;
+  }
+};
+const fireBall = new EnemySkill('Fire Ball', 'Magical', 3, 2, 'Single');
+const flameWave = new EnemySkill('Flame Wave', 'Magical', 1, 2, 'All');
+flareFox.eSkills.push(fireBall);
+flareFox.eSkills.push(flameWave);
+const iceClaw = new EnemySkill('Ice Claw', 'Physical', 3, 2, 'Single');
+const wideSwipe = new EnemySkill('Wide Swipe', 'Physical', 1, 2, 'All');
+iceLeopard.eSkills.push(iceClaw);
+const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
+arenaMage.eSkills.push(eFire);
+
+//============================
+//Skills
+//===========================
+//very important, use "None" for enemies with no elemental weaknesses and "N/A" for skills/weapons  
+class Skill {
+    constructor(name, type, element, des, pow, cost, target){
+      this.name = name;
+      this.type = type;
+      this.element = element;
+      this.des = des;
+      this.pow = pow;
+      this.cost = cost;
+      this.target = target;
+    }
+  };
+  const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with weak magic-based thunder damage', 4, 5, 'Single');
+  //need a way to show a skill hits all or not....
+  const water = new Skill('Water','Magic', watEl, 'Hits enemy with weak magic-based water damage', 4, 6, 'All');
+  const volley = new Skill('Volley', 'Physical', neuEl, 'Hits all enemies with arrows', 2, 6, 'All');
+  const steal = new Skill('Steal', 'Steal', neuEl, 'Attempts to steal from 1 enemy', 0, 0, 'Single');
+  const fireTwo = new Skill('Fire 2', 'Magic', fireEl, 'Deals powerful fire damage to one enemy', 8, 7, 'Single');
+  const waterArrowTwo = new Skill('Water Arrow 2', 'Physical', watEl, 'Shoots an arrow that deals powerful water damage to 1 enemy', 8, 7, 'Single');
+  const iceSlashTwo = new Skill('Ice Slash 2', 'Physical', iceEl, 'A powerful slash that deals ice damage to 1 enemy', 8, 7, 'Single');
+  const quickSlashes = new Skill('Quick Swipes', 'Physical', neuEl, 'Deals light damage to all enemies', 2, 1, 'All');
+  const thunSwipes = new Skill('Thunder Swipe', 'Physical', thunEl, 'Deals light thunder damage to all enemies', 2, 2, 'All');
+  const fire = {
+    name: "Fire",
+    type: "Magic",
+    element: fireEl,
+    des: "Hits enemy with magic-based fire damage",
+    pow: 2,
+    cost: 3,
+    target: 'Single'
+    };
+  const basher = {
+    name: "Basher",
+    type: "Physical",
+    element: neuEl,
+    des: "Deals physical damage to 1 enemy",
+    pow: 4,
+    cost: 3,
+    target: 'Single'
+    };
+  const slashAll = {
+      name: "Slash All",
+      type: "Physical",
+      element: neuEl,
+      des: "Deals physical damage to all enemies",
+      pow: 4,
+      cost: 5,
+      target: 'All'
+      };
+  const iceSlash = {
+    name: "Ice Slash",
+    type: "Physical",
+    des: "Deals physical and ice damage to 1 enemy",
+    element: iceEl,
+    pow: 2,
+    cost: 2
+    };
+  const waterArrow = {
+    name: "Water Arrow",
+    type: "Physical",
+    des: "Deals physical and water damage to 1 enemy",
+    element: watEl,
+    pow: 2,
+    cost: 2
+    };
+  //Support Skils
+  const cure = {
+    name: "Cure",
+    type: "Healing",
+    des: "Heals target character for 5 HP",
+    element: watEl,
+    pow: 5,
+    cost: 2,
+    target: 'Single'
+    };
+  const cureAll = new Skill('Cure All', 'Healing', neuEl, 'Heals all allies', 5, 5, 'All');
+  const atkBoost = {
+    name: "Attack Boost",
+    type: "Attack Buff",
+    des: "Boosts attack for 1 turn.",
+    pow: 1,
+    cost: 2
+    };
+  const defBoost = {
+    name: "Defense Boost",
+    type: "Defense Buff",
+    des: "Boosts attack for 1 turn.",
+    pow: 1,
+    cost: 2
+    };
 
 //Steal items get pushed to enemies here:
 goblin.steal = potion;

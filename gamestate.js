@@ -293,44 +293,58 @@ function gameFlow (state) {
           shopButton.hidden = true;
           document.getElementById("town-3").hidden = false;
           document.getElementById("town-3-c").hidden = false;
+          document.getElementById("town-3-s").hidden = true;
+          document.getElementById("town-3-l").hidden = true;
+          document.getElementById("town-3-r").hidden = true;
+          document.getElementById("town-3-n").hidden = true;
         }
         //Aster City West 1
         if (state === 22){
           shopState = 2;
           shopButton.hidden = false;
           document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-c").hidden = true;
           document.getElementById("town-3-l").hidden = false;
+          document.getElementById("town-3-l-2").hidden = true;
         }
         //Aster city West 2
         if (state === 23){
           shopButton.hidden = true;
           document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-l").hidden = true;
           document.getElementById("town-3-l-2").hidden = false;
         }
         //Aster city East
         if (state === 24){
           document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-c").hidden = true;
           document.getElementById("town-3-r").hidden = false;
+          document.getElementById("town-3-r-2").hidden = true;
         }
         //Aster City East 2
         if (state === 25){
           document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-r").hidden = true;
           document.getElementById("town-3-r-2").hidden = false;
+          document.getElementById("town-3-r-3").hidden = true;
         }
         //Aster City East 3
         if (state === 26){
           document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-r-2").hidden =  true;
           document.getElementById("town-3-r-3").hidden = false;
         }
         //Aster City North
         if (state === 27){
           document.getElementById("town-3").hidden = false;
+          document.getElementById("town-3-c").hidden = true;
           document.getElementById("town-3-n").hidden = false;
         }
-        //Aster City North 2
+        //Boat
         if (state === 28){
-          document.getElementById("town-3").hidden = false;
-          document.getElementById("town-3-n-2").hidden = false;
+          document.getElementById("town-3").hidden = true;
+          document.getElementById("boat-1").hidden = false;
+          document.getElementById("boat-1-1").hidden = false;
         }
     };
 function move (state) {
@@ -381,7 +395,7 @@ function alertOne(){
       }
       if (shopState === 2){
         let shopThree = [potion, magicPotion, highPotion, revivalPotion];
-        shopThree.foreEach(pusher);
+        shopThree.forEach(pusher);
       }
   
   }
@@ -427,12 +441,32 @@ function alertOne(){
     //Julie dialogue trees could get interesting.
     opened.push(id);
   }
+  function addAri(id) {
+    if (currentParty.length >= 3){
+      reserveParty.push(ari);
+      alert("Ari has joined the party! Since your party is full she is in the reserve party. To switch check the menu!");
+    } else if (currentParty.length <= 2) {
+      currentParty.push(ari);
+      alert("Ari has joined the party! ");
+    }
+    document.getElementById(id).hidden = true;
+    opened.push(id);
+  }
   // read magic book function
   function addBook(id){
     ando.skills.push(iceSlashTwo);
     marie.skills.push(fireTwo);
     julie.skills.push(waterArrowTwo);
+    ari.skills.push(thunSwipes);
     alert('"Magic comes from pulling the energy from nature. By focusing your mind on the elements and their power you can further harness them. A kind soul that protects nature will have more magical power than one that destroys it." After reading the book you and your allies have received newfound knowledge! You now have better mastery over your skills!');
     document.getElementById(id).hidden = true;
     opened.push(id);
+  }
+  function rideBoat(){
+    if (currentParty.indexOf(ari) != -1 || reserveParty.indexOf(ari) != -1){
+      alert('Ari: "And so our voyage begins!!"')
+      move(28);
+    } else {
+      alert('You asked around to see if someone would be willing to let you ride a boat, but it appears nobody will take you. You decide to turn back and see if you can find a way to get access to a boat.')
+    }
   }

@@ -347,7 +347,7 @@
     </div>
   </div>
   <div id="town-3" hidden>
-    <div id="town-3-s">
+    <div id="town-3-s" hidden>
       <!-- state = 20 -->
       <h2>Aster City - South</h2>
       <p>You've arrived in Aster City!</p>
@@ -355,21 +355,21 @@
       <p>You think you could easily get lost here.</p>
       <button onclick="move(21)">Go Forward</button>
     </div>
-    <div id="town-3-c">
+    <div id="town-3-c" hidden>
       <!-- state = 21 -->
       <h2>Aster City - Center</h2>
       <p>At the heart of the city is a large statue.</p>
       <p>The statue is of a man with a sword and shield, the original pilgrim, Red the Great. He first found the crystals, discovered their power and created a safe future for mankind.</p>
       <p>There's a plaque below him, maybe you should read it?</p>
       <p>There are several ways you can go, back South, North, East or West.</p>
-      <button onclick="move(20)">South</button>
       <button onclick="move(27)">North</button>
+      <button onclick="move(20)">South</button>
       <button onclick="move(24)">East</button>
       <button onclick="move(22)">West</button>
       <button onclick="alert('Red the Great, the man that saved us from the monsters. Born in the year XXX1, Red lived in Aster Town, as it was called then, as the son of a fisherman. When the monsters began appear in the year XX30, Red found that crystal his father purchased many years ago could repel monsteres. He used this to keep Aster Town safe. When the cyrstal ran out of energy, he went off to the far North to dip it in the spring where it was created, restoring its energy. He then brought and back and our town was left to prosper into the great city it is today.')">Read Plaque</button>
 
     </div>
-    <div id="town-3-l">
+    <div id="town-3-l" hidden>
       <!-- state = 22 -->
       <h2>Aster City - West - Shop District</h2>
       <p>You enter Aster City West, the shop district. You smell delicious roasted fish from the stands all around.</p>
@@ -378,7 +378,7 @@
       <button onclick="move(23)">Go further West</button>
       <button onclick="move(21)">Go back to the city center</button>
     </div>
-    <div id="town-3-l-2">
+    <div id="town-3-l-2" hidden>
       <!-- state = 23 -->
       <h2>Aster City - West - Arena</h2>
       <p>You find an arena past the Shop District</p>
@@ -387,7 +387,7 @@
       <button onclick="move(22)">Go Back to Shop District</button>
       <button onclick="battle([arenaFighter, arenaMage, arenaFighter]); statePost = 23;">Fight</button>
     </div>
-    <div id="town-3-r">
+    <div id="town-3-r" hidden>
       <!-- state = 24 -->
       <h2>Aster City - East - Cultural District</h2>
       <p>Here you find the city's cultural district.</p>
@@ -395,13 +395,27 @@
       <button onclick="move(21)">Back to City Center</button>
       <button onclick="move(25)">Go further East</button>
     </div>
-    <div id="town-3-r-2">
+    <div id="town-3-r-2" hidden>
       <!-- state = 25 -->
-      <h2>Aster City - East 2</h2>
+      <h2>Aster City - East 2 - Tavern</h2>
+      <p>You find a tavern in the cultural district and decide to stop by.</p>
+      <p>You find the tavern full of people, and decide to talk to the barkeep</p>
+      <p>Barkeep: "Ah, pilgrims, welcome! This round is on the house!"</p>
+      <p>"If you're trying to find your way across the ocean, I'd recommend talking with that woman, Ari, over there."</p>
+      <p>"She's a bounty hunter and is planning a hunt and hasn't had much luck gathering allies. She has a boat, which she might be willing to let you use."</p>
+      <button onclick="document.getElementById('meet-ari').hidden = false">Talk to the Woman</button>
+      <div id="meet-ari" hidden>
+        <hr>
+        <p>You approach the young woman studying a map and introduce yourself.</p>
+        <p>Ari: "I see, so you're pigrlims. I could use some help, there's a creature I've been comissioned to kill, the Great Shark of Aster Ocean. It's ruining the lives of the local fisherman, destroying their boats and eating all the local fish."</p>
+        <p>Ari: "If you help me with this I can help you cross the ocean! I'm sure there's plenty of treasure to be found at the Cyrstal Lakes too!"</p>
+        <button id="add-ari" onclick="addAri('add-ari')">Join Ari</button>
+        <hr>
+      </div>
       <button onclick="move(24)">Go Back</button>
       <button onclick="move(26)">Go Further East</button>
     </div>
-    <div id="town-3-r-3">
+    <div id="town-3-r-3" hidden>
       <!-- state = 26 -->
       <h2>Aster City - East 3 - Library</h2>
       <p>Here you find the Great Library of Aster City.</p>
@@ -412,17 +426,23 @@
       <button>Read "The geography of Corena"</button>
       <button onclick="move(25)">Go Back</button>
     </div>
-    <div id="town-3-n">
+    <div id="town-3-n" hidden>
       <!-- state = 27 -->
-      <h2>Aster City - North</h2>
-      <p>Here you find </p>
-    </div>
-    <div id="town-3-n-2">
-      <!-- state = 28 -->
-      <h2>Aster City - Docks</h2>
+      <h2>Aster City - North - Docks</h2>
+      <p>You see boats all around, you know that across the ocean lies the mountain of Narsh, where the Crystal Lake lies.</p>
+      <p>You should try to find a a boat to use.</p>
+      <button onclick="move(21)">Go Back</button>
+      <button onclick="rideBoat()">Ride Boat</button>
     </div>
   </div>
-  <div id="boat-1" hidden></div>
+  <div id="boat-1" hidden>
+    <div id="boat-1-1">
+      <!-- state = 28 -->
+      <h2>You're now on the boat!</h2>
+      <p>Enemies!</p>
+      <button onclick="battle([swordFish, swordFish, swordFish]); statePost = 29">Fight!</button>
+    </div>
+  </div>
   <div id="mountain-1" hidden></div>
 <!-- Adv mode Div -->
 </div>

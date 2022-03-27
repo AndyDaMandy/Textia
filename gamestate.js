@@ -427,3 +427,12 @@ function alertOne(){
     //Julie dialogue trees could get interesting.
     opened.push(id);
   }
+  // read magic book function
+  function addBook(id){
+    ando.skills.push(iceSlashTwo);
+    marie.skills.push(fireTwo);
+    julie.skills.push(waterArrowTwo);
+    alert('"Magic comes from pulling the energy from nature. By focusing your mind on the elements and their power you can further harness them. A kind soul that protects nature will have more magical power than one that destroys it." After reading the book you and your allies have received newfound knowledge! You now have better mastery over your skills!');
+    document.getElementById(id).hidden = true;
+    opened.push(id);
+  }

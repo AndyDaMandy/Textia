@@ -1207,7 +1207,7 @@ function battleMove(x) {
     p.textContent = "The party has been defeated. Reload?";
     info.appendChild(p);
     let reload = document.createElement("button");
-    reload.textContent = "Reload previous save";
+    reload.textContent = "Reload previous save or refresh page to restart from the beginning";
     reload.addEventListener('click', function (){load()});
     change.appendChild(reload);
   } 

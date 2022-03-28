@@ -34,8 +34,7 @@ ari.weapon = ironDaggers;
 ari.skills.push(steal);
 ari.skills.push(quickSlashes);
 siege.weapon = ironSpear;
-//ari.skills.push(fire);
-weaponsOwned.push(excalibur);
+//weaponsOwned.push(excalibur);
 
 function toggleChests(){
     opened.hidden = true;

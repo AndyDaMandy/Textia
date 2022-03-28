@@ -282,7 +282,7 @@ const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two 
   const arenaFighter = new Enemy('Arena Fighter', 4, 30, 3, 13, 9, 0, 0, iceEl, 5, 5, [], 'Human', potion);
   const arenaMage = new Enemy('Arena Mage', 10, 25, 20, 12, 8, 14, 5, iceEl, 5, 5, [], 'Human', magicPotion);
   const swordFish = new Enemy('Sword Fish', 5, 30, 5, 16, 7, 7, 6, thunEl, 20, 20, [], 'Fish', highPotion);
-  const shieldFish = new Enemy('Shield Fish', 5, 40, 4, 13, 13, 2, 2, thunEl, 10, 20, [], 'Fish', highPotion);
+  const shieldFish = new Enemy('Shield Fish', 5, 40, 4, 15, 13, 2, 2, thunEl, 10, 20, [], 'Fish', highPotion);
   const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 17, 8, 15, 10, thunEl, 50, 100, [], 'Fish', sparkBow);
   const goblin = {
     name: "Goblin",

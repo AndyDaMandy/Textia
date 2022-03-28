@@ -287,6 +287,7 @@ function gameFlow (state) {
           document.getElementById("plains-1").hidden = true;
           document.getElementById("town-3").hidden = false;
           document.getElementById("town-3-s").hidden = false;
+          document.getElementById("town-3-c").hidden = true;
         }
       //Aster City Center
         if (state === 21) {
@@ -419,7 +420,7 @@ function alertOne(){
         shopTwo.forEach(pusher);
       }
       if (shopState === 2){
-        let shopThree = [potion, magicPotion, highPotion, revivalPotion, luckyDaggers];
+        let shopThree = [potion, magicPotion, highPotion, revivalPotion,longBow, luckyDaggers];
         shopThree.forEach(pusher);
       }
   

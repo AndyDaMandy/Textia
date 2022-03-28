@@ -340,11 +340,36 @@ function gameFlow (state) {
           document.getElementById("town-3-c").hidden = true;
           document.getElementById("town-3-n").hidden = false;
         }
-        //Boat
+        //Boat - Linear sequence
         if (state === 28){
           document.getElementById("town-3").hidden = true;
           document.getElementById("boat-1").hidden = false;
           document.getElementById("boat-1-1").hidden = false;
+        }
+        if (state === 29){
+          document.getElementById("boat-1").hidden = false;
+          document.getElementById("boat-1-1").hidden = true;
+          document.getElementById("boat-1-2").hidden = false;
+        }
+        if (state === 30) {
+          document.getElementById("boat-1").hidden = false;
+          document.getElementById("boat-1-2").hidden = true;
+          document.getElementById("boat-1-3").hidden = false;
+        }
+        if (state === 31){
+          document.getElementById("boat-1").hidden = false;
+          document.getElementById("boat-1-3").hidden = true;
+          document.getElementById("boat-1-4").hidden = false;
+        }
+        if (state === 32){
+          document.getElementById("boat-1").hidden = false;
+          document.getElementById("boat-1-4").hidden = true;
+          document.getElementById("boat-1-5").hidden = false;
+        }
+        if (state === 33){
+          document.getElementById("boat-1").hidden = true;
+          document.getElementById("port-1").hidden = false;
+          document.getElementById("port-1-1").hidden = false;
         }
     };
 function move (state) {
@@ -394,7 +419,7 @@ function alertOne(){
         shopTwo.forEach(pusher);
       }
       if (shopState === 2){
-        let shopThree = [potion, magicPotion, highPotion, revivalPotion];
+        let shopThree = [potion, magicPotion, highPotion, revivalPotion, luckyDagger];
         shopThree.forEach(pusher);
       }
   
@@ -462,6 +487,8 @@ function alertOne(){
     document.getElementById(id).hidden = true;
     opened.push(id);
   }
+  //Character/item checks. These functions check if an ally has been added and prevents moving forward without a character.
+  //Checks for Ari
   function rideBoat(){
     if (currentParty.indexOf(ari) != -1 || reserveParty.indexOf(ari) != -1){
       alert('Ari: "And so our voyage begins!!"')

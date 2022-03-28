@@ -234,14 +234,15 @@ const iceStaff = new Weapon('Ice Staff','Weapon','Staff', 'A basic staff imbued 
       des: "A weak bow imbued with Thunder",
       atr: "Physical",
       element: thunEl,
-      pow: 6
+      pow: 8,
+      rarity: 30
       };
 //Spear
   const ironSpear = new Weapon('Iron Spear','Weapon', 'Spear', 'A simple spear with an iron tip', 'Physical', 4, null, 30);
   const iceSpear = new Weapon('Ice Spear', 'Weapon', 'Spear', 'A spear imbued with Ice Magic', 'Physical', 3, iceEl, 50);
 //Twin Daggers
 const ironDaggers = new Weapon('Iron Daggers', 'Weapon', 'Twin Daggers', 'Two daggers made of iron', 'Physical', 3, null, 30, 80);
-const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two daggers that make you feel lucky!', 'Physical', 2, null, 30, 10);
+const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two daggers that make you feel lucky!', 'Physical', 2, null, 100, 10);
 
   //========================================
 //blank item is a blank item for enemies to hold.
@@ -276,7 +277,9 @@ const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two 
   const redGoblin = new Enemy('Red Goblin', 3, 30, 1, 10, 4, 2, 5, neuEl ,7, 10, [], 'Goblin');
   const arenaFighter = new Enemy('Arena Fighter', 4, 85, 3, 13, 9, 0, 0, iceEl, 5, 5, [], 'Human', potion);
   const arenaMage = new Enemy('Arena Mage', 10, 60, 20, 12, 8, 14, 5, iceEl, 5, 5, [], 'Human', magicPotion);
-  const swordFish = new Enemy('Sword Fish', 5, 25, 5, 10, 10, 7, 7, thunEl, 20, 20, [], 'Fish', highPotion);
+  const swordFish = new Enemy('Sword Fish', 5, 40, 5, 11, 7, 7, 6, thunEl, 20, 20, [], 'Fish', highPotion);
+  const shieldFish = new Enemy('Shield Fish', 5, 40, 4, 10, 12, 0, 0, thunEl, 10, 20, [], 'Fish', highPotion);
+  const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 160, 10, 13, 10, 10, 10, thunEl, 50, 100, [], 'Fish', sparkBow);
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -346,6 +349,10 @@ const wideSwipe = new EnemySkill('Wide Swipe', 'Physical', 1, 2, 'All');
 iceLeopard.eSkills.push(iceClaw);
 const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
 arenaMage.eSkills.push(eFire);
+const largeBite = new EnemySkill('Large Bite', 'Physical', 4, 2, 'Single');
+const bigWave = new EnemySkill('Powerful Wave', 'Magical', 2, 2, 'All');
+greatShark.eSkills.push(largeBite);
+greatShark.eSkills.push(bigWave);
 
 //============================
 //Skills
@@ -440,7 +447,3 @@ class Skill {
     pow: 1,
     cost: 2
     };
-
-//Steal items get pushed to enemies here:
-goblin.steal = potion;
-potatoThief.steal = longBow;

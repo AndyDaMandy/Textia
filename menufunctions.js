@@ -445,7 +445,6 @@ function startGame(){
   gameCheck = true;
   };
 function load(){
-  debugger;
   currentParty = [];
   reserveParty = [];
   ando = JSON.parse(simpleStorage.get("ando"));

@@ -488,6 +488,15 @@ function alertOne(){
     opened.push(id);
   }
   //Character/item checks. These functions check if an ally has been added and prevents moving forward without a character.
+  //Checks for Julie
+  function checkJulie(){
+    if (currentParty.indexOf(julie) != -1){
+      alert("Julie: I'm glad we're joining together! I'll do my best!")
+      move(10);
+    } else {
+      alert('You think it would be best to go back and join up with Julie. The more the merrier!');
+    }
+  }
   //Checks for Ari
   function rideBoat(){
     if (currentParty.indexOf(ari) != -1 || reserveParty.indexOf(ari) != -1){

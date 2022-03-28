@@ -123,25 +123,22 @@ function clamp(value, min, max) {
     }
 //check weakness might scale with levels
 let elementalBoost = 0;
-let pEl = document.createElement("div");
-function checkWeakness(enemy, skill){
-  let newEl = document.createElement("p");
-  if (skill != undefined){   
+function checkWeakness(enemy, skill, weapon){
+  if (skill != "blank"){   
     if (enemy.weakness.element !== neuEl.element && enemy.weakness.element === skill.element.element) {
-      elementalBoost += 2;
-      newEl.textContent = enemy.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
-      pEl.appendChild(newEl);
+      elementalBoost += 2;     
       return true;
     } else {
-      newEl.textContent = "";
       elementalBoost = 0;
       return false;
     }
  }
-else {
-  newEl.textContent = "";
-    elementalBoost = 0;
-    return false;
+else if (enemy.weakness.element !== neuEl.element && enemy.weakness.element === weapon.element.element){
+    elementalBoost += 2;
+    return true;
+} else {
+  elementalBoost = 0;
+  return false;
 }
 }
 function sayDeadEn(enemy){
@@ -160,9 +157,12 @@ function skillUseText(char, skill){
     info.appendChild(p);
   }
 }
-function showDamage(target, damage){
-  //if elemental returned true earlier
-  info.appendChild(pEl);
+function showDamage(target, damage, elemental){
+  if (elemental === true) {
+    let pEl = document.createElement("p");
+      pEl.textContent = target.name + " is weak to " + target.weakness.element + "! The attack did bonus damage!"; 
+      info.appendChild(pEl);
+  } 
   let p = document.createElement("p");
   p.textContent = `${target.name} was hit for ${damage} damage!`
   info.appendChild(p);
@@ -188,7 +188,7 @@ function attackCalc (char, target, flow, skill){
           let survivorItems = [];
           skillUseText(char, skill);
           enemyParty.map((en, index) => {
-            checkWeakness(en, skill);
+            let weak = checkWeakness(en, skill, char.weapon);
             let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - en.mDef;
             let thp = enCopy[index];
             let damage = clamp(getRandomInt(pa), pa-2, pa);
@@ -196,14 +196,14 @@ function attackCalc (char, target, flow, skill){
             let final = thp - damage ;
             applyFinal.push(final);
             if (final <= 0) {         
-            showDamage(en, damage);
+            showDamage(en, damage, weak);
             sayDeadEn(en);
           } else {
                 enCopy[index] = thp - damage;
                 survivorHp.push(enCopy[index]);
                 survivors.push(enemyCopy[index]);
                 survivorItems.push(itemCopy[index])
-                showDamage(en, damage);
+                showDamage(en, damage, weak);
             }
           });
           enemyParty = survivors;
@@ -216,7 +216,7 @@ function attackCalc (char, target, flow, skill){
           battleMove(flow)
           }     
       else {
-        checkWeakness(enemyParty[target], skill)
+        let weak = checkWeakness(enemyParty[target], skill, char.weapon)
         //regular branch
         let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].mDef;
         let thp = enHp[target];
@@ -225,7 +225,7 @@ function attackCalc (char, target, flow, skill){
         let final = thp - damage ;
         if (final <= 0) {
           skillUseText(char, skill);
-          showDamage(enemyParty[target], damage);
+          showDamage(enemyParty[target], damage, weak);
           sayDeadEn(enemyParty[target]);
           enemyParty.splice(target, 1);
           enHp.splice(target, 1);
@@ -234,7 +234,7 @@ function attackCalc (char, target, flow, skill){
           } else {
                 skillUseText(char, skill);
                 enHp[target] = thp - damage;
-                showDamage(enemyParty[target], damage);
+                showDamage(enemyParty[target], damage, weak);
                 battleMove(flow)
               }
             }
@@ -250,7 +250,7 @@ function attackCalc (char, target, flow, skill){
               let survivorItems = [];
               skillUseText(char, skill);
               enemyParty.map((en, index) => {
-                checkWeakness(en, skill);
+              let weak = checkWeakness(en, skill, char.weapon);
               let pa = char.pAtk + char.weapon.pow + skill.pow + elementalBoost - en.pDef;
               let thp = enCopy[index];
               let damage = clamp(getRandomInt(pa), pa-2, pa);
@@ -258,14 +258,14 @@ function attackCalc (char, target, flow, skill){
               let final = thp - damage ;
               applyFinal.push(final);
               if (final <= 0) {
-                showDamage(en, damage);
+                showDamage(en, damage, weak);
                 sayDeadEn(en);
               } else {   
                   enCopy[index] = thp - damage;
                   survivorHp.push(enCopy[index]);
                   survivors.push(enemyCopy[index]);
                   survivorItems.push(itemCopy[index])
-                  showDamage(en, damage);
+                  showDamage(en, damage, weak);
                 }
               });
               enemyParty = survivors;
@@ -278,7 +278,7 @@ function attackCalc (char, target, flow, skill){
               battleMove(flow)
               }        
              else { //regular branch
-          checkWeakness(enemyParty[target], skill);
+          let weak = checkWeakness(enemyParty[target], skill, char.weapon);
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].pDef;
           let thp = enHp[target];
           let damage = clamp(getRandomInt(pa), pa-2, pa);
@@ -287,7 +287,7 @@ function attackCalc (char, target, flow, skill){
             if (final <= 0) {
               skillUseText(char, skill);
               //adds elemental info
-              showDamage(enemyParty[target], damage);
+              showDamage(enemyParty[target], damage, weak);
               sayDeadEn(enemyParty[target]);
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
@@ -295,7 +295,7 @@ function attackCalc (char, target, flow, skill){
               battleMove(flow)
               } else {
                 skillUseText(char, skill);
-                showDamage(enemyParty[target], damage);
+                showDamage(enemyParty[target], damage, weak);
                 enHp[target] = thp - damage;
                 battleMove(flow)
                   }
@@ -307,14 +307,14 @@ function attackCalc (char, target, flow, skill){
       }
 }
   else {
-          checkWeakness(enemyParty[target], undefined);
-          let pa = char.pAtk + char.buff[0].pow + char.weapon.pow - enemyParty[target].pDef;
+          let weak = checkWeakness(enemyParty[target], "blank", char.weapon);
+          let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + elementalBoost - enemyParty[target].pDef;
           let thp = enHp[target];
           let damage = clamp(getRandomInt(pa), pa-2, pa);
           if (damage <= 0){damage = 0};
           let final = thp - damage ;
           if (final <= 0) {
-            showDamage(enemyParty[target], damage);
+            showDamage(enemyParty[target], damage, weak);
             sayDeadEn(enemyParty[target]);
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
@@ -322,11 +322,10 @@ function attackCalc (char, target, flow, skill){
               battleMove(flow)
             } else {
                 enHp[target] = thp - damage;
-                showDamage(enemyParty[target], damage);
+                showDamage(enemyParty[target], damage, weak);
                 battleMove(flow)
                 }
             }
-            pEl.innerHTML = "";
   };
 function stealFrom(enemyItem, location){
   if (enemyItem !== blankItem){
@@ -818,16 +817,16 @@ function levelUp(char){
       info.appendChild(learnedSkill);
       }
     }
-  if (char.exp >= 200 && char.level < 6){
+  if (char.exp >= 150 && char.level < 6){
     statBoost(char);
   }
-  if (char.exp >= 350 && char.level < 7){
+  if (char.exp >= 220 && char.level < 7){
     statBoost(char);
   }
-  if (char.exp >= 550 && char.level < 8){
+  if (char.exp >= 350 && char.level < 8){
     statBoost(char);
   }
-  if (char.exp >= 850 && char.level < 9){
+  if (char.exp >= 450 && char.level < 9){
     statBoost(char);
     if (char.level === 10 && char.name === "Ando") {
       julie.skills.push(slashAll);
@@ -836,7 +835,22 @@ function levelUp(char){
       info.appendChild(learnedSkill);
       }
   }
-  if (char.exp >= 1200 && char.level < 10){
+  if (char.exp >= 550 && char.level < 10){
+    statBoost(char);
+  }
+  if (char.exp >= 650 && char.level < 11){
+    statBoost(char);
+  }
+  if (char.exp >= 800 && char.level < 12){
+    statBoost(char);
+  }
+  if (char.exp >= 950 && char.level < 13){
+    statBoost(char);
+  }
+  if (char.exp >= 1100 && char.level < 14){
+    statBoost(char);
+  }
+  if (char.exp >= 1300 && char.level < 15){
     statBoost(char);
   }
 };

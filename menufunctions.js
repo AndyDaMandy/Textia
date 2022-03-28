@@ -445,6 +445,7 @@ function startGame(){
   gameCheck = true;
   };
 function load(){
+  debugger;
   currentParty = [];
   reserveParty = [];
   ando = JSON.parse(simpleStorage.get("ando"));
@@ -476,9 +477,10 @@ if (setReserve.length > 0) {
   } else if (setReserve[i].name === "Julie"){
     reserveParty.push(julie);
   } else if (setReserve[i].name === "Ari") {
-    reserveParyy.push(ari);
+    reserveParty.push(ari);
   }
 }
+currentParty.length = 3;
 }
   console.log(currentParty);
   inventory =  simpleStorage.get("inventory");

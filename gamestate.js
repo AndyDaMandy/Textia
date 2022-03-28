@@ -386,7 +386,7 @@ function alertOne(){
   function purchaser (itemVal){
     if (money >= itemVal.cost) {
       document.getElementById("broke").hidden = true;
-      if (itemVal.type === "Sword" || itemVal.type === "Bow" || itemVal.type === "Staff" || itemVal.type === "Spear"){
+      if (itemVal.category === "Weapon"){
         weaponsOwned.push(itemVal);
       } else {
       inventory.push(itemVal);
@@ -419,7 +419,7 @@ function alertOne(){
         shopTwo.forEach(pusher);
       }
       if (shopState === 2){
-        let shopThree = [potion, magicPotion, highPotion, revivalPotion, luckyDagger];
+        let shopThree = [potion, magicPotion, highPotion, revivalPotion, luckyDaggers];
         shopThree.forEach(pusher);
       }
   

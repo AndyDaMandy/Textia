@@ -125,15 +125,22 @@ function clamp(value, min, max) {
 let elementalBoost = 0;
 let pEl = document.createElement("p");
 function checkWeakness(enemy, skill){
-  if (enemy.weakness.element !== neuEl.element && enemy.weakness.element === skill.element.element) {
-    elementalBoost += 2;
-    pEl.textContent = enemy.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
-    return true;
-  } else {
-    pEl.textContent = "";
+  if (skill != undefined){
+    if (enemy.weakness.element !== neuEl.element && enemy.weakness.element === skill.element.element) {
+      elementalBoost += 2;
+      pEl.textContent = enemy.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
+      return true;
+    } else {
+      pEl.textContent = "";
+      elementalBoost = 0;
+      return false;
+    }
+ }
+else {
+  pEl.textContent = "";
     elementalBoost = 0;
     return false;
-  }
+}
 }
 function sayDeadEn(enemy){
   let p2 = document.createElement("p");
@@ -153,7 +160,7 @@ function skillUseText(char, skill){
 }
 function showDamage(target, damage){
   //if elemental returned true earlier
-   info.appendChild(pEl);
+  info.appendChild(pEl);
   let p = document.createElement("p");
   p.textContent = `${target.name} was hit for ${damage} damage!`
   info.appendChild(p);
@@ -298,6 +305,7 @@ function attackCalc (char, target, flow, skill){
       }
 }
   else {
+          checkWeakness(enemyParty[target], undefined);
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow - enemyParty[target].pDef;
           let thp = enHp[target];
           let damage = clamp(getRandomInt(pa), pa-2, pa);

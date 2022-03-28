@@ -37,6 +37,7 @@
   <button class="small-btn" id="formation-button" hidden onclick="partyFormation()">Formation</button>
   <button class="small-btn" id="inventory-button" hidden onclick="showInventory()">Inventory</button>
   <button class="small-btn" id="show-stats" onclick="showStats()" hidden>Party Status</button>
+  <button class="small-btn" id="tutorial-button" onClick="openTutorial()" hidden>Tutorial</button>
   <button class="small-btn" id="close-menu" onclick="closeMenu()" hidden>Close Menu</button>
 </div>
 <div class="well" id="save-menu" hidden>
@@ -73,6 +74,48 @@
   <div id="party-loc"></div>
   <div id="print-party"></div>
   <div id="select-party"></div> 
+</div>
+<div class="well" id="tutorial-menu" hidden>
+  <h3>Tutorial</h3>
+  <p><em>Welcome to the tutorial menu! Here are some explanations of mechanics!</em></p>
+  <h4>Menu</h4>
+  <p>As you've seen, there is a menu. It lets you access equipment, inventory, character status, and lets you set the formation/party you'll use going forward.</p>
+  <p>You can save if you hit the save button. Save uses local storage, so refreshing browser data will delete your save file.</p>
+  <p>Hitting close menu will close the menu and whatever the menu is displaying. Try closing this tutorial!</p>
+  <h4>Battle</h4>
+  <p>You'll encounter enemies on your journey. Once you find them you will enter a battle</p>
+  <p>Battles are won by lowering the enemy hit points to 0. You can't see their hit points, so be careful!</p>
+  <p>Turns follow an order: Party Member 1 - > Party Member 2 -> Party Member 3 -> Enemy Turn -> Repeat</p>
+  <p>The key to battle is to hit elemental weaknesses and to avoid having all of your team incapacitated.</p>
+  <h4>Stats</h4>
+  <p>Each character has their own stats. Attacks are split into physical attacks and magical attacks. Physical attacks hit Physical Defense, Magical hits Magical Defense. Enemies have affinities for physical and magical as well, so be sure pay attention to how much damage you do with one or the other.</p>
+  <p>HP is your hit points, if you lose them all that character will be incapacitated! You can revive an incapacitated character with a Revival Potion</p>
+  <p>MP is your magic points. Skills and spells use magic points. If you don't have enough MP you will not be able to use a skill</p>
+  <p><strong>Don't be afraid to use MP, you recover HP/MP after each battle!</strong></p>
+  <p>Exp referes to experience points, you'll gain exp by defeating enemies. Gaining enough will allow you to level up!</p>
+  <p>Leveling up will raise all stats and if you hit certain levels you'll gain new skills/support skills</p>
+  <p>Luck determines several luck-based elements.</p>
+  <h4>Skills</h4>
+  <p>Each character has a set of "skills" and "support skills"</p>
+  <p>Skills target enemies and usually do damage.</p>
+  <p>Support skills will usually support allies in some capacity. Healing, buffing, etc.</p>
+  <p>While skills and support skills fall under the Skills category, there are some other major differences</p>
+  <p>Some skills are "physical" and make use of the character's physical stats. Other skills are "magical" aka spells and make use of the magic stat.</p>
+  <p>Skills can have elemental attributes as well, doing extra damage based on the elements. See below:</p>
+  <h4>Elements</h4>
+  <p>There are 4 elements in this world: <strong>Fire, Ice, Water, Thunder.</strong></p>
+  <p><strong>Fire and Ice are opposites and Water and Thunder are opposites.</strong> If an enemy has a Fire affinity, that means Ice will do extra damage. If the enemy has an Ice affinity, Fire will do extra damage. Water beats Thunder and Thunder beats Water.</p>
+  <p>Water does not do extra damage to Fire or Ice, Ice does not do extra damage to Thunder or Fire, for example.</p>
+  <p>Not all enemies have elemental affinities, thus an elemental attack won't do extra damage on them.</p>
+  <h4>Weapons</h4>
+  <p>Each character uses their own unique weapons. You can't equip weapons that your character won't use.</p>
+  <p>If you find a weapon and you can't equip it, perhaps you haven't met the character that can use it?</p>
+  <h4>Party</h4>
+  <p>You'll encounter several characters in your journey, they can join your "party"</p>
+  <p>Your party is split into your "current party" and your "reseve party". Only characters in your current party can battle. All other charaters will remain in your reserve.</p>
+  <p><strong>Your current party has a limit of 3 characters, you can have no more</strong></p>
+  <p>You can't lower your party size once it's at 3, if you're a loner then you can use 2, but I wouldn't recommend it!</p>
+  <button onclick="closeMenu()">Close Tutorial Screen</button>
 </div>
 <!--Gameplay Elements Below -->
   <button id="shop-button" onclick="openShop()" hidden>Shop</button>
@@ -114,13 +157,8 @@
     <p>Shaman: "Hello Ando and Marie, today is the day of your pilgrimage."</p>
     <p>"Our town needs a new crystal and you both are going to the Crystal Lake to gather one for us"</p>
     <p>"Without it we cannot protect ourselves from monsters much longer."</p>
-    <p>"Allow me to provide you with some information on battle:"</p>
-    <p>"About you two. Ando specializes in Physical skills, while Marie specializes in Magic"</p>
-    <p>"Be sure sure to keep that in mind when you're fighting enemies!"</p>
-    <p>"When using elemental skills remember that Fire and Ice are opposites and Water and Thunder are opposites!"</p>
-    <p>"If you hit an enemey with an opposite element it will do extra damage!"</p>
-    <p>"The blessing of the Goddess will heal your wounds after each enemy encounter."</p>
     <p>"To access the menu, click the "Menu" button above. You can check your items, party, skills, etc."</p>
+    <p>"If you click the tutorial button you can learn a lot about how to survive. Don't go into the wilderness unprepared! You can access it at any time, so if you're ever confused you can open it again."</p>
     <p>"If you'd like to move on, click below, or click the shop button above"</p>
     <button onclick="move(1);">Enter Forest</button>
     </div>
@@ -167,7 +205,7 @@
       <p>You've defeated living tree!</p>
       <p>The living tree dropped a chest, Will you open it?</p>
       <p>Now that the exit is ahead, it's time for you to move on</p>
-      <button id="chest-4" onclick="openWeapon(ironSword, this.id)">Open Chest</button>
+      <button id="chest-4" onclick="openChest(ironSword, this.id)">Open Chest</button>
       <button onclick="move(6)">Move Foward</button>
     </div>
   </div>
@@ -212,11 +250,8 @@
       <p>Will you let Julie join you? You may not see her again if your paths diverge here.</p>
       <button id="add-julie" onclick="addJulie(this.id)">Let Julie Join</button>
       <button onclick="move(8)">Go Back</button>
-      <button onclick="move(10)">Move Forward</button>
+      <button onclick="checkJulie()">Move Forward</button>
     </div>
-    <div>
-  </div>
-
   </div>
   <div id="plains-1" hidden>
     <div id="plains-1-1">
@@ -293,67 +328,163 @@
       <p>You defeated the Flare Fox!</p>
       <p><em>Marie and Ando exchange sighs of relief.</em></p>
       <p>You found a treasure chest, will you open it?</p>
-      <button id="chest-7" onclick="openWeapon(flameSword, this.id)">Open Chest</button>
+      <button id="chest-7" onclick="openChest(flameSword, this.id)">Open Chest</button>
       <button onclick="move(19)">Move Forward</button>
     </div>
     <div id="plains-1-right-2">
     <!-- state - 18 -->
       <h2>Great Maka Plains - Beyond the Frozen Field</h2>
       <p>You found a treasure chest, will you open it?</p>
-      <button id="chest-8" onclick="openWeapon(iceStaff, this.id)">Open Chest</button>
+      <button id="chest-8" onclick="openChest(iceStaff, this.id)">Open Chest</button>
       <button onclick="move(19)">Move Forward</button>
     </div>
     <div id="plains-1-6">
       <!-- state = 19 -->
       <h2>End of the Great Maka Plains</h2>
-      <p>Game ends here for now, thanks for playing!</p>
-      <p>Refresh to try again!</p>
-      <p>The go forward button doesn't work yet sorry!</p>
-      <button onclick="">Go Forward</button>
+      <p>You've made it through to the end of the Plains</p>
+      <p>You see a city in the distancce, larger than anything you've seen before!</p>
+      <button onclick="move(20)">Go Forward</button>
     </div>
   </div>
   <div id="town-3" hidden>
-    <div id="town-3-s">
+    <div id="town-3-s" hidden>
       <!-- state = 20 -->
       <h2>Aster City - South</h2>
-      <p></p>
-      <button>Go Forward</button>
+      <p>You've arrived in Aster City!</p>
+      <p>You see tall buildings everywhere and the road is sprawling with people.</p>
+      <p>You think you could easily get lost here.</p>
+      <button onclick="move(21)">Go Forward</button>
     </div>
-    <div id="town-3-c">
+    <div id="town-3-c" hidden>
       <!-- state = 21 -->
       <h2>Aster City - Center</h2>
-      <p></p>
+      <p>At the heart of the city is a large statue.</p>
+      <p>The statue is of a man with a sword and shield, the original pilgrim, Red the Great. He first found the crystals, discovered their power and created a safe future for mankind.</p>
+      <p>There's a plaque below him, maybe you should read it?</p>
+      <p>There are several ways you can go, back South, North, East or West.</p>
+      <button onclick="move(27)">North</button>
+      <button onclick="move(20)">South</button>
+      <button onclick="move(24)">East</button>
+      <button onclick="move(22)">West</button>
+      <button onclick="alert('Red the Great, the man that saved us from the monsters. Born in the year X311, Red lived in Aster Town, as it was called then, as the son of a fisherman. When the monsters began appear in the year X340, Red found that crystal his father purchased many years ago could repel monsteres. He used this to keep Aster Town safe. When the cyrstal ran out of energy, he went off to the far North to dip it in the spring where it was created, restoring its energy. He then brought and back and our town was left to prosper into the great city it is today.')">Read Plaque</button>
+
     </div>
-    <div id="town-3-l">
+    <div id="town-3-l" hidden>
       <!-- state = 22 -->
-      <h2>Aster City - Left</h2>
+      <h2>Aster City - West - Shop District</h2>
+      <p>You enter Aster City West, the shop district. You smell delicious roasted fish from the stands all around.</p>
+      <p>There are merchants from many different towns and cities across the continent that are trading with the the city-folk of Aster City.</p>
+      <p>You think it would be a good idea to view some of the items in the shops to prepare for your journey ahead.</p>
+      <button onclick="move(23)">Go further West</button>
+      <button onclick="move(21)">Go back to the city center</button>
     </div>
-    <div id="town-3-l-2">
+    <div id="town-3-l-2" hidden>
       <!-- state = 23 -->
-      <h2>Aster City - Left 2</h2>
+      <h2>Aster City - West - Arena</h2>
+      <p>You find an arena past the Shop District</p>
+      <p>Here warriors from all over come to test their might</p>
+      <p>You think it might be good training to challenge some of these fighters.</p>
+      <button onclick="move(22)">Go Back to Shop District</button>
+      <button onclick="battle([arenaFighter, arenaMage, arenaFighter]); statePost = 23;">Fight</button>
     </div>
-    <div id="town-3-r">
+    <div id="town-3-r" hidden>
       <!-- state = 24 -->
-      <h2>Aster City - Right</h2>
+      <h2>Aster City - East - Cultural District</h2>
+      <p>Here you find the city's cultural district.</p>
+      <p>There are museums, libraries, and all sorts of statues of famous explorers, politicians, and monarchs all around.</p>
+      <button onclick="move(21)">Back to City Center</button>
+      <button onclick="move(25)">Go further East</button>
     </div>
-    <div id="town-3-r-2">
+    <div id="town-3-r-2" hidden>
       <!-- state = 25 -->
-      <h2>Aster City - Right 2</h2>
+      <h2>Aster City - East 2 - Tavern</h2>
+      <p>You find a tavern in the cultural district and decide to stop by.</p>
+      <p>You find the tavern full of people, and decide to talk to the barkeep</p>
+      <p>Barkeep: "Ah, pilgrims, welcome! This round is on the house!"</p>
+      <p>"If you're trying to find your way across the ocean, I'd recommend talking with that woman, Ari, over there."</p>
+      <p>"She's a treasure hunter and is planning a hunt and hasn't had much luck gathering allies. She has a boat, which she might be willing to let you use."</p>
+      <button onclick="document.getElementById('meet-ari').hidden = false">Talk to the Woman</button>
+      <div id="meet-ari" hidden>
+        <hr>
+        <p>You approach the young woman studying a map and introduce yourself.</p>
+        <p>Ari: "I see, so you're pigrlims. I could use some help, there's a creature I've been tasked with killing to obtain a rare artifact, its name is the Great Shark of Aster Ocean. It's ruining the lives of the local fisherman, destroying their boats and eating all the local fish."</p>
+        <p>Ari: "If you help me with this I can help you cross the ocean! I'm sure there's plenty of treasure to be found at the Cyrstal Lakes too!"</p>
+        <button id="add-ari" onclick="addAri('add-ari')">Join Ari</button>
+        <hr>
+      </div>
+      <button onclick="move(24)">Go Back</button>
+      <button onclick="move(26)">Go Further East</button>
     </div>
-    <div id="town-3-r-3">
+    <div id="town-3-r-3" hidden>
       <!-- state = 26 -->
-      <h2>Aster City - Right 3</h2>
+      <h2>Aster City - East 3 - Library</h2>
+      <p>Here you find the Great Library of Aster City.</p>
+      <p>Books cover the walls all over. You think it would be a good idea to gather some knowledge about your adenture.</p>
+      <p>You found several books that look to be useful. Which will you read?</p>
+      <button onclick="alert('The crystals were first discovered by an inquistive spirit, Alea of Narsh. She was the first recorded person to find the Crystal Lake hidden deep within the Mountain of Narsh. She found the lake and subsequently used the some of the crystals she found to create amulets. These amulets were cosniderd sacred and used to protect the people of her village on their travels. Eventually, the popularity of these crystals led to the pilgrimage of Red the Great. He then went on to be the first Pilgrim.')">Read "A History of Crystals"</button>
+      <button id="book-1" onclick="addBook('book-1')">Read "On Magic"</button>
+      <button onclick="alert('The planet of Corena is particularly diverse, as far as has been discovered at least. When the great philosopher Galio, in the year X101, mathmatically proved that Corena was not flat, but instead a sphere, it rocked the major kingdoms, Elera, Sumita, and Celerra. The three kingdoms dedicated large resources to discovering new landmasses and mapping new areas, particularly for global domination and riches. The continent of Euria contains the kingdom of Elera and Celerra. Aster City is located to the far North East of Euria. A particularly diverse region, Euria has plains, forest, and even a desert to the west. North-est of Euria lies Lea, the land ruled by the Sumita. There most famoously is the Mountain of Narsh. To get there from the town of Nubia, a port town of Lea in good relation to Aster City, you need to pass a bog, a followed by a mushroom forest, follwoed by the Broken Lands. More on the Broken Lands in volume 2.')">Read "The geography of Corena, volume 1"</button>
+      <button onclick="move(25)">Go Back</button>
     </div>
-    <div id="town-3-n">
+    <div id="town-3-n" hidden>
       <!-- state = 27 -->
-      <h2>Aster City - North</h2>
-    </div>
-    <div id="town-3-n-2">
-      <!-- state = 28 -->
-      <h2>Aster City - Docks</h2>
+      <h2>Aster City - North - Docks</h2>
+      <p>You see boats all around, you know that across the ocean lies the Mountain of Narsh, where the Crystal Lake lies.</p>
+      <p>You should try to find a a boat to use.</p>
+      <button onclick="move(21)">Go Back</button>
+      <button onclick="rideBoat()">Ride Boat</button>
     </div>
   </div>
-  <div id="boat-1" hidden></div>
+  <div id="boat-1" hidden>
+    <div id="boat-1-1" hidden>
+      <!-- state = 28 -->
+      <h2>The Boat - 1</h2>
+      <p>While on the boat, You reflect on your journey. You realize they've become much stronger you've become</p>
+      <p>Ari: "The path ahead is dangerous. I can handle myself with my twin daggers, but don't understimate the enemies out there!"</p>
+      <p>The boat suddenly shakes.</p>
+      <p>You find your boat is being attacked by sea creatures!</p>
+      <p>You have no choice but to fight!</p>
+      <button onclick="battle([swordFish, swordFish, swordFish]); statePost = 29">Fight!</button>
+    </div>
+    <div id="boat-1-2" hidden>
+      <!-- state = 29 -->
+      <h2>The Boat -2</h2>
+      <p>The enemies are relentless! Another group attacks the boat!</p>
+      <button onclick="battle([swordFish, swordFish, swordFish]); statePost = 30">Fight!</button>
+    </div>
+    <div id="boat-1-3" hidden>
+      <!-- state = 30 -->
+      <h2>The Boat - 3</h2>
+      <p>The enemies have stopped for now. You have a moment to regroup.</p>
+      <p>Ari: "I have a few supplies on the boat for times like these. They might come in handy, feel free to tend to your wounds with them."</p>
+      <button id="chest-9" onclick="openChest(highPotion, this.id)">Open Chest</button>
+      <button id="chest-10" onclick="openChest(revivalPotion, this.id)">Open Chest</button>
+      <button onclick="move(31)">Go Forward</button>
+    </div>
+    <div id="boat-1-4" hidden>
+      <!-- state = 31 -->
+      <h2>The Boat - 4</h2>
+      <p>More enemies are attacking!</p>
+      <button onclick="battle([swordFish, shieldFish, swordFish]); statePost = 32">Fight!</button>
+    </div>
+    <div id="boat-1-5" hidden>
+      <!-- state = 32 -->
+      <h2>The Boat - The Storm</h2>
+      <p>A storm suddenly arises.</p>
+      <p>Ari: "It looks like this is the Great Shark of Aster Ocean!"</p>
+      <p>Ari: "I see now why it's done so much damage to this land."</p>
+      <p>Ari: "Let's end this!"</p>
+      <p>The Storm heads your way, you have no choice but to fight!</p>
+      <button onclick="battle([swordFish, greatShark]); statePost = 33">Fight!</button>
+    </div>
+  </div>
+  <div id="port-1" hidden>
+    <div id="port-1-1" hidden>
+      <!-- state = 33 -->
+      <h2>The Port Town of Nubia</h2>
+      <p>The game ends here for now, thanks for playing! The next chapter will be released soon!</p>
+    </div>
+  </div>
   <div id="mountain-1" hidden></div>
 <!-- Adv mode Div -->
 </div>

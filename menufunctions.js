@@ -65,6 +65,8 @@ function partyFormation(){
     document.getElementById("save-menu").hidden = true;
     //formation
     document.getElementById("formation-menu").hidden = true;
+    //hide tutorial
+    document.getElementById("tutorial-menu").hidden = true;
     //inventory
     document.getElementById("inventory-menu").hidden = true;
     document.getElementById("inventory-items").innerHTML = "";
@@ -127,6 +129,8 @@ function showStats(){
     //inventory
     document.getElementById("inventory-menu").hidden = true;
     document.getElementById("inventory-items").innerHTML = "";
+    //hide tutorial
+    document.getElementById("tutorial-menu").hidden = true;
     //hide swap
     document.getElementById("swap-menu").hidden = true;
       //save remove
@@ -185,6 +189,9 @@ function showStatus (x) {
     li.textContent = "Magic Defense: " + x.mDef;
      statsLog.appendChild(li);
      li = document.createElement("li")
+    li.textContent = "Luck: " + x.luck;
+     statsLog.appendChild(li);
+     li = document.createElement("li")
     li.textContent = "Exp: " + x.exp;
      statsLog.appendChild(li);
       li = document.createElement("li");
@@ -217,6 +224,8 @@ function showInventory() {
       document.getElementById("menu-items").innerHTML = "";
     //hide swap
     document.getElementById("swap-menu").hidden = true;
+    //hide tutorial
+    document.getElementById("tutorial-menu").hidden = true;
       //save remove
       document.getElementById("save-menu").hidden = true;
   
@@ -230,11 +239,11 @@ function showInventory() {
     inventorySlot.appendChild(cash);
     let inventoryMenu = document.getElementById("inventory-menu");
     let pusher = function (item) { 
-      if (item.type === "Sword" || item.type === "Bow" || item.type === "Staff" || item.type === "Spear"){
+      if (item.category === "Weapon"){
         let li2 = document.createElement("li");
         li2.textContent = item.name + ": " + "Type: " + item.type + " - Power: " + item.pow + " - " + item.des;
         inventorySlot.appendChild(li2)
-    } else {
+    } else if (item.category === "Item"){
       let li = document.createElement("li");
       li.textContent = item.name + ": " + "Type: " + item.type + " - " + item.des;
       inventorySlot.appendChild(li)
@@ -308,7 +317,7 @@ function equip (){
           button3.addEventListener('click', () => { equipSelect(julie, weapon); });
           document.getElementById("equipment").appendChild(button3);
         }
-        if (weapon.type === "Spear"){
+        if (weapon.type === "Twin Daggers"){
           let button2 = document.createElement("button");
           button2.textContent = weapon.name;
           button2.addEventListener('click', () => {equipSelect(ari, weapon); });
@@ -340,21 +349,43 @@ function save () {
    // simpleStorage.set("chest", chests.hidden = true);
     document.getElementById("save-menu").hidden = false;
     };
-
+function openTutorial(){
+  document.getElementById("equip-screen").hidden = true;
+  document.getElementById("equipment").innerHTML = "";
+  document.getElementById("equip-party").innerHTML = "";
+  //formation
+  document.getElementById("formation-menu").hidden = true;
+  //inventory
+  document.getElementById("inventory-menu").hidden = true;
+  document.getElementById("inventory-items").innerHTML = "";
+  //party stats
+  document.getElementById("stats-menu").hidden = true;
+    document.getElementById("line-1").innerHTML = "";
+    document.getElementById("menu-items").innerHTML = "";
+  //hide save
+  document.getElementById("save-menu").hidden = true;
+  //hide swap
+  document.getElementById("swap-menu").hidden = true;
+  //open tutorial
+  document.getElementById("tutorial-menu").hidden = false;
+}
 //=======================================
 //======================================
 //Menu functionality, must go below each menu item
 let menu = document.getElementById("open-menu");
 function openMenu(){
+  menu.hidden = true;
   document.getElementById("save-button").hidden = false;
   document.getElementById("equip-button").hidden = false;
   document.getElementById("inventory-button").hidden = false;
   if (reserveParty.length > 0) {document.getElementById("swap-team").hidden = false}
   document.getElementById("show-stats").hidden = false;
   document.getElementById("formation-button").hidden = false;
+  document.getElementById("tutorial-button").hidden = false;
   document.getElementById("close-menu").hidden = false;
   };
 function closeMenu() {
+  menu.hidden = false;
   document.getElementById("save-button").hidden = true;
   //equip
   document.getElementById("equip-button").hidden = true;
@@ -379,6 +410,9 @@ function closeMenu() {
   //hide swap
   document.getElementById("swap-team").hidden = true;
   document.getElementById("swap-menu").hidden = true;
+  //hide tutorial
+  document.getElementById("tutorial-menu").hidden = true;
+  document.getElementById("tutorial-button").hidden = true;
   };
   
 //======================================
@@ -406,7 +440,6 @@ function startGame(){
   inventory.push(potion);
   inventory.push(magicPotion);
   inventory.push(highPotion);
-  inventory.push(revivalPotion);
   inventory.push(revivalPotion);
   simpleStorage.flush();
   gameCheck = true;
@@ -443,9 +476,10 @@ if (setReserve.length > 0) {
   } else if (setReserve[i].name === "Julie"){
     reserveParty.push(julie);
   } else if (setReserve[i].name === "Ari") {
-    reserveParyy.push(ari);
+    reserveParty.push(ari);
   }
 }
+currentParty.length = 3;
 }
   console.log(currentParty);
   inventory =  simpleStorage.get("inventory");

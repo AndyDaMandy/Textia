@@ -1,22 +1,10 @@
-//Things that need to be done:
-//Adding all target to items and support skills
-//begin game balancing
-//enmity system? Ando should get hit more.
-//Item descriptions needed in battle?
-//need to set up some randomness to attack damage.
-//Need to create an armor system! Maybe....
-//new enemies needed, new branching paths as well.
-//need to set up a proper random function for battle calculation.
-//new places to fight enemies.
-//new items, shop etc.
-//shop needs to have branch for weapons, possibly armor
-//clean up battle selection functions a bit, make them less chunky.
 //Battle Mode
 let battleState = 0;
 //global variable that holds enemy hp for targetting
 let enHp = [];
 let pHp = [];
 let pMp = [];
+let enItems = [];
 //dead party global variable
 let deadTeam = [];
 const battleMode = document.getElementById("battle-mode");
@@ -133,11 +121,57 @@ function getRandomInt(max) {
 function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
     }
+//check weakness might scale with levels
+let elementalBoost = 0;
+function checkWeakness(enemy, skill, weapon){
+  if (skill != "blank"){   
+    if (enemy.weakness.element !== neuEl.element && enemy.weakness.element === skill.element.element) {
+      elementalBoost += 2;     
+      return true;
+    } else {
+      elementalBoost = 0;
+      return false;
+    }
+ }
+else if (enemy.weakness.element !== neuEl.element && enemy.weakness.element === weapon.element.element){
+    elementalBoost += 2;
+    return true;
+} else {
+  elementalBoost = 0;
+  return false;
+}
+}
+function sayDeadEn(enemy){
+  let p2 = document.createElement("p");
+  p2.textContent = enemy.name + " has been defeated!";
+  info.appendChild(p2);
+}
+function skillUseText(char, skill){
+  if (skill.type === "Magic"){
+    let p = document.createElement("p");
+    p.textContent = `${char.name} cast ${skill.name}!`
+    info.appendChild(p);
+  } if (skill.type === "Physical"){
+    let p = document.createElement("p");
+    p.textContent = `${char.name} used ${skill.name}!`
+    info.appendChild(p);
+  }
+}
+function showDamage(target, damage, elemental){
+  if (elemental === true) {
+    let pEl = document.createElement("p");
+      pEl.textContent = target.name + " is weak to " + target.weakness.element + "! The attack did bonus damage!"; 
+      info.appendChild(pEl);
+  } 
+  let p = document.createElement("p");
+  p.textContent = `${target.name} was hit for ${damage} damage!`
+  info.appendChild(p);
+}
 //calculating functions
 function attackCalc (char, target, flow, skill){
   info.innerHTML = "";
+  elementalBoost = 0;
   //branch for skill
-  let elementalBoost = 0;
     if (skill != undefined){
       char.cmp -= skill.cost;
       if (skill.type === "Magic"){ 
@@ -148,51 +182,33 @@ function attackCalc (char, target, flow, skill){
           let applyFinal = [];
           let enemyCopy = enemyParty;
           let enCopy = enHp;
+          let itemCopy = enItems;
           let survivors = [];
           let survivorHp = [];
-          let p3 = document.createElement("p");
-          p3.textContent = char.name + " cast " + skill.name + "!"
-          info.appendChild(p3);
+          let survivorItems = [];
+          skillUseText(char, skill);
           enemyParty.map((en, index) => {
-            if (en.weakness.element === skill.element.element) {
-              elementalBoost += 2;
-                }
+            let weak = checkWeakness(en, skill, char.weapon);
             let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - en.mDef;
-          let minpa = pa - 2;
-          let thp = enCopy[index];
-          let damage = clamp(getRandomInt(pa), minpa, pa);
-           if (damage <= 0){damage = 0};
-          let final = thp - damage ;
-          applyFinal.push(final);
-          if (final <= 0) {
-            if (en.weakness.element === skill.element.element) {
-            let pEl = document.createElement("p");
-            pEl.textContent = en.name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
-            info.appendChild(pEl);
-         //   enCopy[indexer] = thp - damage;
-              }
-          let p = document.createElement("p");
-          p.textContent = en.name + " was hit for " + damage + " damage!";
-          info.appendChild(p);
-          let p2 = document.createElement("p");
-          p2.textContent = en.name + " has been defeated!";
-          info.appendChild(p2);
+            let thp = enCopy[index];
+            let damage = clamp(getRandomInt(pa), pa-2, pa);
+            if (damage <= 0){damage = 0};
+            let final = thp - damage ;
+            applyFinal.push(final);
+            if (final <= 0) {         
+            showDamage(en, damage, weak);
+            sayDeadEn(en);
           } else {
-                let p3 = document.createElement("p");
-                if (en.weakness.element === skill.element.element) {
-                let pEl = document.createElement("p");
-                pEl.textContent = en.name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
-                info.appendChild(pEl);
-                  }
-               enCopy[index] = thp - damage;
+                enCopy[index] = thp - damage;
                 survivorHp.push(enCopy[index]);
-                  survivors.push(enemyCopy[index]);
-                p3.textContent = en.name + " was hit for " + damage + " damage!";
-                info.appendChild(p3);
+                survivors.push(enemyCopy[index]);
+                survivorItems.push(itemCopy[index])
+                showDamage(en, damage, weak);
             }
           });
           enemyParty = survivors;
           enHp = survivorHp;
+          enItems = survivorItems;
           //first applier finds out who's dead and pushes it into a new array.
           //applier applies damage to all 3. AH, okay so perhaps it applies the damage regardless, but no splice.
           //then finalizer will then take that and apply it to the enemycopy arrays.
@@ -200,47 +216,25 @@ function attackCalc (char, target, flow, skill){
           battleMove(flow)
           }     
       else {
-        if (enemyParty[target].weakness.element === skill.element.element) {
-          elementalBoost += 2;
-        }
+        let weak = checkWeakness(enemyParty[target], skill, char.weapon)
         //regular branch
         let pa = char.mAtk + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].mDef;
-        let minpa = pa - 2;
         let thp = enHp[target];
-        let damage = clamp(getRandomInt(pa), minpa, pa);
+        let damage = clamp(getRandomInt(pa), pa-2, pa);
         if (damage <= 0){damage = 0};
         let final = thp - damage ;
         if (final <= 0) {
-          let p3 = document.createElement("p");
-          p3.textContent = char.name + " cast " + skill.name + "!"
-          info.appendChild(p3);
-          if (enemyParty[target].weakness.element === skill.element.element) {
-            let pEl = document.createElement("p");
-            pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The spell did bonus damage!"; 
-            info.appendChild(pEl);
-              }
-          let p = document.createElement("p");
-          p.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
-          info.appendChild(p);
-          let p2 = document.createElement("p");
-          p2.textContent = enemyParty[target].name + " has been defeated!";
-          info.appendChild(p2);
+          skillUseText(char, skill);
+          showDamage(enemyParty[target], damage, weak);
+          sayDeadEn(enemyParty[target]);
           enemyParty.splice(target, 1);
           enHp.splice(target, 1);
+          enItems.splice(target, 1);
           battleMove(flow)
           } else {
-                let p6 = document.createElement("p");
-                p6.textContent = char.name + " cast " + skill.name + "!"
-                info.appendChild(p6);
-                let p3 = document.createElement("p");
-                if (enemyParty[target].weakness.element === skill.element.element) {
-                let pEl = document.createElement("p");
-                pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
-                info.appendChild(pEl);
-                  }
+                skillUseText(char, skill);
                 enHp[target] = thp - damage;
-                p3.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
-                info.appendChild(p3);
+                showDamage(enemyParty[target], damage, weak);
                 battleMove(flow)
               }
             }
@@ -250,51 +244,33 @@ function attackCalc (char, target, flow, skill){
               let applyFinal = [];
               let enemyCopy = enemyParty;
               let enCopy = enHp;
+              let itemCopy = enItems;
               let survivors = [];
               let survivorHp = [];
-              let p3 = document.createElement("p");
-              p3.textContent = char.name + " used " + skill.name + "!"
-              info.appendChild(p3);
+              let survivorItems = [];
+              skillUseText(char, skill);
               enemyParty.map((en, index) => {
-                if (en.weakness.element === skill.element.element) {
-                  elementalBoost += 2;
-                    }
-                let pa = char.pAtk + char.weapon.pow + skill.pow + elementalBoost - en.pDef;
-              let minpa = pa - 2;
+              let weak = checkWeakness(en, skill, char.weapon);
+              let pa = char.pAtk + char.weapon.pow + skill.pow + elementalBoost - en.pDef;
               let thp = enCopy[index];
-              let damage = clamp(getRandomInt(pa), minpa, pa);
+              let damage = clamp(getRandomInt(pa), pa-2, pa);
                if (damage <= 0){damage = 0};
               let final = thp - damage ;
               applyFinal.push(final);
               if (final <= 0) {
-                if (en.weakness.element === skill.element.element) {
-                let pEl = document.createElement("p");
-                pEl.textContent = en.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
-                info.appendChild(pEl);
-             //   enCopy[indexer] = thp - damage;
-                  }
-              let p = document.createElement("p");
-              p.textContent = en.name + " was hit for " + damage + " damage!";
-              info.appendChild(p);
-              let p2 = document.createElement("p");
-              p2.textContent = en.name + " has been defeated!";
-              info.appendChild(p2);
-              } else {
-                    let p3 = document.createElement("p");
-                    if (en.weakness.element === skill.element.element) {
-                    let pEl = document.createElement("p");
-                    pEl.textContent = en.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
-                    info.appendChild(pEl);
-                      }
-                   enCopy[index] = thp - damage;
-                    survivorHp.push(enCopy[index]);
-                      survivors.push(enemyCopy[index]);
-                    p3.textContent = en.name + " was hit for " + damage + " damage!";
-                    info.appendChild(p3);
+                showDamage(en, damage, weak);
+                sayDeadEn(en);
+              } else {   
+                  enCopy[index] = thp - damage;
+                  survivorHp.push(enCopy[index]);
+                  survivors.push(enemyCopy[index]);
+                  survivorItems.push(itemCopy[index])
+                  showDamage(en, damage, weak);
                 }
               });
               enemyParty = survivors;
               enHp = survivorHp;
+              enItems = survivorItems;
               //first applier finds out who's dead and pushes it into a new array.
               //applier applies damage to all 3. AH, okay so perhaps it applies the damage regardless, but no splice.
               //then finalizer will then take that and apply it to the enemycopy arrays.
@@ -302,78 +278,93 @@ function attackCalc (char, target, flow, skill){
               battleMove(flow)
               }        
              else { //regular branch
-              if (enemyParty[target].weakness.element === skill.element.element) {
-                elementalBoost += 2;
-                  }
+          let weak = checkWeakness(enemyParty[target], skill, char.weapon);
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].pDef;
           let thp = enHp[target];
-          let minpa = pa - 2;
-          let damage = clamp(getRandomInt(pa), minpa, pa);
+          let damage = clamp(getRandomInt(pa), pa-2, pa);
           if (damage <= 0){damage = 0};
           let final = thp - damage ;
             if (final <= 0) {
-              let p6 = document.createElement("p");
-              p6.textContent = char.name + " used " + skill.name + "!"
-              info.appendChild(p6);      
-              if (enemyParty[target].weakness.element === skill.element.element) {
-                let pEl = document.createElement("p");
-                pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
-                info.appendChild(pEl);
-                  }
-              let p = document.createElement("p");    
-              p.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
-              info.appendChild(p);
-              let p2 = document.createElement("p");
-              p2.textContent = enemyParty[target].name + " has been defeated!";
-              info.appendChild(p2);
+              skillUseText(char, skill);
+              //adds elemental info
+              showDamage(enemyParty[target], damage, weak);
+              sayDeadEn(enemyParty[target]);
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
+              enItems.splice(target, 1);
               battleMove(flow)
               } else {
-                let p6 = document.createElement("p");
-                p6.textContent = char.name + " used " + skill.name + "!"
-                info.appendChild(p6);
-                let p3 = document.createElement("p");
-                let pEl = document.createElement("p");
-                if (enemyParty[target].weakness.element === skill.element.element) {
-                pEl.textContent = enemyParty[target].name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
-                info.appendChild(pEl);
-                  }
+                skillUseText(char, skill);
+                showDamage(enemyParty[target], damage, weak);
                 enHp[target] = thp - damage;
-                p3.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
-                info.appendChild(p3);
                 battleMove(flow)
                   }
           }
          
-  }
+      } if (skill.type === "Steal"){
+        stealFrom(enItems[target], target);
+        battleMove(flow)
+      }
 }
   else {
-          let pa = char.pAtk + char.buff[0].pow + char.weapon.pow - enemyParty[target].pDef;
+          let weak = checkWeakness(enemyParty[target], "blank", char.weapon);
+          let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + elementalBoost - enemyParty[target].pDef;
           let thp = enHp[target];
-          let minpa = pa - 2;
-          let damage = clamp(getRandomInt(pa), minpa, pa);
+          let damage = clamp(getRandomInt(pa), pa-2, pa);
           if (damage <= 0){damage = 0};
           let final = thp - damage ;
           if (final <= 0) {
-            let p = document.createElement("p");
-              p.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
-              info.appendChild(p);
-            let p2 = document.createElement("p");
-              p2.textContent = enemyParty[target].name + " has been defeated!";
-              info.appendChild(p2);
+            showDamage(enemyParty[target], damage, weak);
+            sayDeadEn(enemyParty[target]);
               enemyParty.splice(target, 1);
               enHp.splice(target, 1);
+              enItems.splice(target, 1);
               battleMove(flow)
             } else {
-                let p3 = document.createElement("p");
                 enHp[target] = thp - damage;
-                p3.textContent = enemyParty[target].name + " was hit for " + damage + " damage!";
-                info.appendChild(p3);
+                showDamage(enemyParty[target], damage, weak);
                 battleMove(flow)
                 }
             }
-    };
+  };
+function stealFrom(enemyItem, location){
+  if (enemyItem !== blankItem){
+    //checks steal rate, each item will have one.
+    let itemRarity = enemyItem.rarity;
+    let luckStat = Math.floor(ari.luck / 2);
+    //since Ari is the only one that can equip lucky daggers
+    if (ari.weapon === luckyDaggers){
+      luckStat+= 3;
+    }
+    let final = itemRarity + luckStat;
+    let roll = clamp(getRandomInt(100),1,100);
+    if (roll <= final){
+      //it now splices the item, then replaces with blankItem
+      let pusher = enItems[location];
+      let newBlank = blankItem;
+      enItems.splice(location, 1, newBlank);
+      let p = document.createElement("p");
+      p.textContent = `Yes! You stole: ${pusher.name}!`;
+      info.appendChild(p);
+      if (pusher.category === "Weapon"){
+        weaponsOwned.push(pusher);
+
+      } else if (pusher.category === "Item") {
+        inventory.push(pusher);
+      }
+    } else {
+      let p = document.createElement("p");
+      p.textContent = "Darn, you failed to steal!";
+      info.appendChild(p);
+    }
+    //checks the global variable of items pushed into enItems
+  } else {
+    let p = document.createElement("p");
+    p.textContent = "The enemy has nothing to steal!";
+    info.appendChild(p);
+  }
+  console.log(enItems);
+}
 function deathCheck(){
     //death
   //all 3 dead
@@ -453,6 +444,7 @@ function enemCalc (){
     enemyParty.forEach(pusher1);
     let enLength = enPow.length;
     for (let i = 0; i < enPow.length; i++){
+      //targeting needs to be adjusted to factor in luck. Low luck == higher chance of getting hit.
       let target = currentParty[getRandomInt(teamLength)];
       //NEW BRANCH FOR MAGIC ENEMIES GOES HERE!!!!! IT CHECKS IF THE ATTACKER HAS MORE MAGIC ATTACK THAN ATTACK
       //enemies can then use skills....?
@@ -622,7 +614,7 @@ function supTarget (caster, sup, supflow){
     skillSlot.appendChild(btn2);
     }
   };
-function supCalc(caster, partymem, sup, supflow){
+function supCalc(caster, partymem, sup){
   info.innerHTML = "";
   skillSlot.innerHTML = "";
   caster.cmp -= sup.cost;
@@ -720,7 +712,7 @@ function itemTarget (item, flow){
     itemSlot.appendChild(btn2);
     }
    };
-function itemCalc(partymem, item, flow){
+function itemCalc(partymem, item){
   info.innerHTML = "";
   itemSlot.innerHTML = "";
   if (item.type === "Healing"){
@@ -769,12 +761,6 @@ function itemCalc(partymem, item, flow){
   };
 let itemChoice;
 let itemPos;
-/*
-function itmChooser(x){
-  debugger;
-  itemPos = x;
-};
-*/
 function itemBtnGen (flow){
   skillSlot.innerHTML = "";
   itemSlot.innerHTML = "";
@@ -806,7 +792,7 @@ function statBoost(char){
   info.appendChild(leveluptext);
 };
 function levelUp(char){
-    if (char.exp >= 3 && char.level < 2){
+  if (char.exp >= 3 && char.level < 2){
       statBoost(char);       
         if (char.level === 2 && char.name === "Marie") {
           marie.skills.push(thunder);
@@ -815,23 +801,56 @@ function levelUp(char){
         info.appendChild(learnedSkill2);
         }
         
-      }  
-    if (char.exp >= 20 && char.level < 3){
-      statBoost(char);
-    }
-    if (char.exp >= 40 && char.level < 4){
-      statBoost(char);
-    }
-    if (char.exp >= 100 && char.level < 5){
-      statBoost(char);
-      if (char.level === 5 && char.name === "Julie") {
-        julie.support.push(atkBoost);
+  }  
+  if (char.exp >= 20 && char.level < 3){
+    statBoost(char);
+  }
+  if (char.exp >= 40 && char.level < 4){
+    statBoost(char);
+  }
+  if (char.exp >= 100 && char.level < 5){
+    statBoost(char);
+    if (char.level === 5 && char.name === "Julie") {
+      julie.support.push(atkBoost);
       let learnedSkill = document.createElement("p");
       learnedSkill.textContent = julie.name + " learned " + atkBoost.name + "!";
       info.appendChild(learnedSkill);
       }
     }
-  if (char.exp >= 200 && char.level < 6){
+  if (char.exp >= 150 && char.level < 6){
+    statBoost(char);
+  }
+  if (char.exp >= 220 && char.level < 7){
+    statBoost(char);
+  }
+  if (char.exp >= 350 && char.level < 8){
+    statBoost(char);
+  }
+  if (char.exp >= 450 && char.level < 9){
+    statBoost(char);
+    if (char.level === 10 && char.name === "Ando") {
+      julie.skills.push(slashAll);
+      let learnedSkill = document.createElement("p");
+      learnedSkill.textContent = `${char.name} learned ${slashAll.name}!`
+      info.appendChild(learnedSkill);
+      }
+  }
+  if (char.exp >= 550 && char.level < 10){
+    statBoost(char);
+  }
+  if (char.exp >= 650 && char.level < 11){
+    statBoost(char);
+  }
+  if (char.exp >= 800 && char.level < 12){
+    statBoost(char);
+  }
+  if (char.exp >= 950 && char.level < 13){
+    statBoost(char);
+  }
+  if (char.exp >= 1100 && char.level < 14){
+    statBoost(char);
+  }
+  if (char.exp >= 1300 && char.level < 15){
     statBoost(char);
   }
 };
@@ -878,24 +897,19 @@ function loadEnemyInfo(){
     let p = document.createElement("h4");
     p.textContent = "Enemies: " + enemyParty[0].name;
     enemyPlace.appendChild(p);
-  //  enHp.push(enemyParty[0].hp);
     };
     if (enemyParty.length === 2) {
        let p = document.createElement("h4");
         p.textContent = "Enemies: " + enemyParty[0].name + ", " + enemyParty[1].name;
         enemyPlace.appendChild(p);
-      //  enHp.push(enemyParty[0].hp);
-      //  enHp.push(enemyParty[1].hp);
       };
     if (enemyParty.length === 3) {
        let p = document.createElement("h4");
         p.textContent = "Enemies: " + enemyParty[0].name + ", " + enemyParty[1].name + ", " + enemyParty[2].name;
         enemyPlace.appendChild(p);
-      //  enHp.push(enemyParty[0].hp);
-      //  enHp.push(enemyParty[1].hp);
-      //  enHp.push(enemyParty[2].hp);
       };
       console.log(enHp);
+      console.log(enItems);
   };
 function loadPartyInfo(){
   partyPlace.innerHTML = "";
@@ -941,11 +955,6 @@ function saveParty (){
   savedParty = currentParty;
   console.log(savedParty);
 }
-/*function loadParty(){
-  console.log(savedParty);
-  currentParty = savedParty;
-}
-*/
 function battle(en) {
   //battleState controls battle flow and button creation.
   adv.hidden = true;
@@ -963,15 +972,21 @@ function battle(en) {
   info.innerHTML = "";
   if (enemyParty.length === 1){
     enHp.push(enemyParty[0].hp);
+    enItems.push(enemyParty[0].steal);
     };
     if (enemyParty.length === 2) {
         enHp.push(enemyParty[0].hp);
+        enItems.push(enemyParty[0].steal);
         enHp.push(enemyParty[1].hp);
+        enItems.push(enemyParty[1].steal);
       };
     if (enemyParty.length === 3) {
         enHp.push(enemyParty[0].hp);
+        enItems.push(enemyParty[0].steal);
         enHp.push(enemyParty[1].hp);
+        enItems.push(enemyParty[1].steal);
         enHp.push(enemyParty[2].hp);
+        enItems.push(enemyParty[2].steal);
       };
   loadEnemyInfo();
   loadPartyInfo();

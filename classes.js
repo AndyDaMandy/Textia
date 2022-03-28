@@ -9,6 +9,7 @@ let ando = {
   pDef: 4,
   mAtk: 1,
   mDef: 2,
+  luck: 1,
   exp: 0,
   buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
@@ -27,6 +28,7 @@ let marie = {
   pDef: 2,
   mAtk: 10,
   mDef: 5,
+  luck: 5,
   exp: 0,
   buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
@@ -45,6 +47,7 @@ let julie = {
   pDef: 5,
   mAtk: 3,
   mDef: 6,
+  luck: 6,
   exp: 30,
   buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
@@ -60,9 +63,10 @@ let ari = {
   mp: 8,
   cmp: 8,
   pAtk: 12,
-  pDef: 5,
+  pDef: 8,
   mAtk: 3,
-  mDef: 6,
+  mDef: 9,
+  luck: 10,
   exp: 30,
   buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
@@ -72,15 +76,16 @@ let ari = {
 }
 let siege = {
   name: 'Siege',
-  level: 3,
-  hp: 14,
-  chp: 14,
-  mp: 8,
-  cmp: 8,
-  pAtk: 12,
-  pDef: 5,
-  mAtk: 3,
-  mDef: 6,
+  level: 5,
+  hp: 18,
+  chp: 18,
+  mp: 5,
+  cmp: 5,
+  pAtk: 20,
+  pDef: 8,
+  mAtk: 1,
+  mDef: 1,
+  luck: 2,
   exp: 30,
   buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
@@ -108,10 +113,149 @@ const neuEl = {
   element: 'Neutral',
   des: 'non-elemental damage'
 }
+  //======================================
+  //Items go here
+  //rarity = difficulty for stealing. Low = rare, high = not rare
+  class Item {
+    constructor(name, category, type, des, effect, rarity, cost, target){
+      this.name = name;
+      this.category = category;
+      this.type = type;
+      this.des = des;
+      this.effect = effect;
+      this.rarity = rarity;
+      this.cost = cost;
+      this.target = target;
+    }
+  }
+const potion = {
+    name: "Potion",
+    category: "Item",
+    type: "Healing",
+    des: "Heals 5 points of HP.",
+    rarity: 80,
+    effect: 5,
+    cost: 5
+    };
+const highPotion = {
+      name: "High Potion",
+      category: "Item",
+      type: "Healing",
+      des: "Heals 10 points of HP.",
+      effect: 10,
+      rarity: 60,
+      cost: 10
+      };
+const magicPotion = {
+    name: "Magic Potion",
+    category: "Item",
+    type: "mHealing",
+    des: "Heals 5 points of MP.",
+    rarity: 25,
+    effect: 5,
+    cost: 8
+    };
+const revivalPotion = {
+    name: "Revival Potion",
+    category: "Item",
+    type: "Rev",
+    des: "Revives ally with 5 points of hp.",
+    rarity: 25,
+    effect: 5,
+    cost: 15
+    };
+  //=======================================
+  // Weapons go here
+  //characters can only equip certain types of weapons, enforced by the equip screen.
+  class Weapon {
+    constructor(name, category, type, des, atr, pow, element, cost, rarity){
+      this.name = name;
+      this.category = category;
+      this.type = type;
+      this.des = des;
+      this.atr = atr;
+      this.pow = pow;
+      this.element = element;
+      this.cost = cost;
+      this.rarity = rarity;
+    }
+  }
+//Sword
+const flameSword = {
+    name: "Flame Sword",
+    category: "Weapon",
+    type: "Sword",
+    des: "A basic sword imbued with Fire Magic",
+    atr: "Physical",
+    element: fireEl,
+    pow: 5
+  }
+const woodSword = {
+    name: "Wooden Sword",
+    category: "Weapon",
+    type: "Sword",
+    des: "A basic wooden sword",
+    atr: "Physical",
+    element: neuEl,
+    pow: 1
+    };
+const ironSword = {
+      name: "Iron Sword",
+      category: "Weapon",
+      type: "Sword",
+      des: "An iron sword",
+      atr: "Physical",
+      element: neuEl,
+      pow: 3
+      };
+const excalibur = new Weapon('Excalibur','Weapon', 'Sword','The most powerful blade in the world','Physical', 1000, neuEl, 10000, 1);
+//Staff
+const woodStaff = {
+    name: "Wooden Staff",
+    category: "Weapon",
+    type: "Staff",
+    des: "A basic Staff",
+    atr: "Magical",
+    element: neuEl,
+    pow: 1
+    };
+const iceStaff = new Weapon('Ice Staff','Weapon','Staff', 'A basic staff imbued with Ice Magic','Magical', 2, iceEl, 10, 30);
+//Bow
+  const woodBow = {
+    name: "Wooden Bow",
+    category: "Weapon",
+    type: "Bow",
+    des: "A basic Bow and Arrow set",
+    atr: "Physical",
+    element: neuEl,
+    pow: 1
+    };
+  const longBow = new Weapon('Long Bow','Weapon', 'Bow', 'A long, wooden bow.', 'Physical', 4, neuEl, 30, 50);
+  const sparkBow = {
+      name: "Spark Bow",
+      category: "Weapon",
+      type: "Bow",
+      des: "A weak bow imbued with Thunder",
+      atr: "Physical",
+      element: thunEl,
+      pow: 8,
+      rarity: 30
+      };
+//Spear
+  const ironSpear = new Weapon('Iron Spear','Weapon', 'Spear', 'A simple spear with an iron tip', 'Physical', 4, neuEl, 30);
+  const iceSpear = new Weapon('Ice Spear', 'Weapon', 'Spear', 'A spear imbued with Ice Magic', 'Physical', 3, iceEl, 50);
+//Twin Daggers
+const ironDaggers = new Weapon('Iron Daggers', 'Weapon', 'Twin Daggers', 'Two daggers made of iron', 'Physical', 3, neuEl, 30, 80);
+const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two daggers that make you feel lucky!', 'Physical', 2, neuEl, 100, 10);
+
   //========================================
-  //enemies go here
+//blank item is a blank item for enemies to hold.
+  const blankItem = {
+    name: 'Blank'
+  };
+//enemies go here
   class Enemy {
-    constructor(name, level, hp, mp, pAtk, pDef, mAtk, mDef, weakness, exp, money, eSkills, type){
+    constructor(name, level, hp, mp, pAtk, pDef, mAtk, mDef, weakness, exp, money, eSkills, type,  steal){
       this.name = name;
       this.level = level;
       this.hp = hp,
@@ -125,15 +269,21 @@ const neuEl = {
       this.money = money;
       this.eSkills = eSkills,
       this.type = type;
+      this.steal = steal;
     }
   };
   //very important, use neuEl for enemies with no elemental weaknesses and "N/A" for skills/weapons
   const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
   //if an enemy is flying, bows hit for extra damage.
-  const bat = new Enemy('Bat', 1, 13, 3, 7, 2, 1, 1, neuEl, 1, 1, [], 'Flying');
+  const bat = new Enemy('Bat', 1, 13, 3, 10, 3, 1, 1, neuEl, 1, 1, [], 'Flying');
   const familiar = new Enemy('Familiar', 1, 55, 3, 9, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
   const sparkBison = new Enemy('Spark Bison', 3, 20, 1, 11, 9, 1, 3, watEl, 5, 5, [],'Bison');
   const redGoblin = new Enemy('Red Goblin', 3, 30, 1, 10, 4, 2, 5, neuEl ,7, 10, [], 'Goblin');
+  const arenaFighter = new Enemy('Arena Fighter', 4, 30, 3, 13, 9, 0, 0, iceEl, 5, 5, [], 'Human', potion);
+  const arenaMage = new Enemy('Arena Mage', 10, 25, 20, 12, 8, 14, 5, iceEl, 5, 5, [], 'Human', magicPotion);
+  const swordFish = new Enemy('Sword Fish', 5, 30, 5, 16, 7, 7, 6, thunEl, 20, 20, [], 'Fish', highPotion);
+  const shieldFish = new Enemy('Shield Fish', 5, 40, 4, 13, 13, 2, 2, thunEl, 10, 20, [], 'Fish', highPotion);
+  const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 17, 8, 15, 10, thunEl, 50, 100, [], 'Fish', sparkBow);
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -146,6 +296,7 @@ const neuEl = {
     weakness: iceEl,
     exp: 1,
     money: 1,
+    steal: "blank",
     eSkills: [],
     type: "Goblin"
     };
@@ -180,8 +331,8 @@ const neuEl = {
     eSkills: [],
     type: "enemy"
     };
-  const flareFox = new Enemy('Flare Fox', 4, 100, 10, 13, 5, 13, 5, iceEl, 50, 50, [], 'Fox');
-  const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [], 'Leopard');
+  const flareFox = new Enemy('Flare Fox', 4, 100, 10, 13, 5, 13, 5, iceEl, 50, 50, [], 'Fox', blankItem);
+  const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [], 'Leopard', blankItem);
 //Enemy Skills - to be pushed into the enemies individually after creating it.
 
 class EnemySkill {
@@ -200,6 +351,12 @@ flareFox.eSkills.push(flameWave);
 const iceClaw = new EnemySkill('Ice Claw', 'Physical', 3, 2, 'Single');
 const wideSwipe = new EnemySkill('Wide Swipe', 'Physical', 1, 2, 'All');
 iceLeopard.eSkills.push(iceClaw);
+const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
+arenaMage.eSkills.push(eFire);
+const largeBite = new EnemySkill('Large Bite', 'Physical', 2, 2, 'Single');
+const bigWave = new EnemySkill('Powerful Wave', 'Magical', 1, 2, 'All');
+greatShark.eSkills.push(largeBite);
+greatShark.eSkills.push(bigWave);
 
 //============================
 //Skills
@@ -219,19 +376,26 @@ class Skill {
   const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with weak magic-based thunder damage', 4, 5, 'Single');
   //need a way to show a skill hits all or not....
   const water = new Skill('Water','Magic', watEl, 'Hits enemy with weak magic-based water damage', 4, 6, 'All');
-  const volley = new Skill('Volley', 'Physical', "N/A", 'Hits all enemies with arrows', 2, 6, 'All');
+  const volley = new Skill('Volley', 'Physical', neuEl, 'Hits all enemies with arrows', 2, 6, 'All');
+  const steal = new Skill('Steal', 'Steal', neuEl, 'Attempts to steal from 1 enemy', 0, 0, 'Single');
+  const fireTwo = new Skill('Fire 2', 'Magic', fireEl, 'Deals powerful fire damage to one enemy', 8, 7, 'Single');
+  const waterArrowTwo = new Skill('Water Arrow 2', 'Physical', watEl, 'Shoots an arrow that deals powerful water damage to 1 enemy', 8, 7, 'Single');
+  const iceSlashTwo = new Skill('Ice Slash 2', 'Physical', iceEl, 'A powerful slash that deals ice damage to 1 enemy', 8, 7, 'Single');
+  const quickSlashes = new Skill('Quick Swipes', 'Physical', neuEl, 'Deals light damage to all enemies', 2, 1, 'All');
+  const thunSwipes = new Skill('Thunder Swipe', 'Physical', thunEl, 'Deals light thunder damage to all enemies', 2, 2, 'All');
   const fire = {
     name: "Fire",
     type: "Magic",
     element: fireEl,
     des: "Hits enemy with magic-based fire damage",
     pow: 2,
-    cost: 3
+    cost: 3,
+    target: 'Single'
     };
   const basher = {
     name: "Basher",
     type: "Physical",
-    element: "N/A",
+    element: neuEl,
     des: "Deals physical damage to 1 enemy",
     pow: 4,
     cost: 3,
@@ -240,7 +404,7 @@ class Skill {
   const slashAll = {
       name: "Slash All",
       type: "Physical",
-      element: "N/A",
+      element: neuEl,
       des: "Deals physical damage to all enemies",
       pow: 4,
       cost: 5,
@@ -272,7 +436,7 @@ class Skill {
     cost: 2,
     target: 'Single'
     };
-  const cureAll = new Skill('Cure All', 'Healing', 'None', 'Heals all allies', 5, 5, 'All');
+  const cureAll = new Skill('Cure All', 'Healing', neuEl, 'Heals all allies', 5, 5, 'All');
   const atkBoost = {
     name: "Attack Boost",
     type: "Attack Buff",
@@ -287,109 +451,3 @@ class Skill {
     pow: 1,
     cost: 2
     };
-  //======================================
-  //Items go here
-  class Item {
-    constructor(name, type, des, effect, cost, target){
-      this.name = name;
-      this.type = type;
-      this.des = des;
-      this.effect = effect;
-      this.cost = cost;
-      this.target = target;
-    }
-  }
-const potion = {
-    name: "Potion",
-    type: "Healing",
-    des: "Heals 5 points of HP.",
-    effect: 5,
-    cost: 5,
-    sell: 3
-    };
-const highPotion = {
-      name: "High Potion",
-      type: "Healing",
-      des: "Heals 10 points of HP.",
-      effect: 10,
-      cost: 10
-      };
-const magicPotion = {
-    name: "Magic Potion",
-    type: "mHealing",
-    des: "Heals 5 points of MP.",
-    effect: 5,
-    cost: 8
-    };
-const revivalPotion = {
-    name: "Revival Potion",
-    type: "Rev",
-    des: "Revives ally with 5 points of hp.",
-    effect: 5,
-    cost: 15
-    };
-  //=======================================
-  // Weapons go here
-  //characters can only equip certain types of weapons, enforced by the equip screen.
-  class Weapon {
-    constructor(name, type, des, atr, pow, element, cost){
-      this.name = name;
-      this.type = type;
-      this.des = des;
-      this.atr = atr;
-      this.pow = pow;
-      this.element = element;
-      this.cost = cost;
-    }
-  }
-  const iceStaff = new Weapon('Ice Staff', 'Staff', 'A basic staff imbued with Ice Magic','Magical', 2, iceEl);
-  const flameSword = {
-    name: "Flame Sword",
-    type: "Sword",
-    des: "A basic sword imbued with Fire Magic",
-    atr: "Physical",
-    element: fireEl,
-    pow: 5,
-  }
-  const woodSword = {
-    name: "Wooden Sword",
-    type: "Sword",
-    des: "A basic wooden sword",
-    atr: "Physical",
-    pow: 1,
-    };
-  const ironSword = {
-      name: "Iron Sword",
-      type: "Sword",
-      des: "An iron sword",
-      atr: "Physical",
-      pow: 3,
-      };
-  const woodStaff = {
-    name: "Wooden Staff",
-    type: "Staff",
-    des: "A basic Staff",
-    atr: "Magical",
-    pow: 1,
-    };
-  const woodBow = {
-    name: "Wooden Bow",
-    type: "Bow",
-    des: "A basic Bow and Arrow set",
-    atr: "Physical",
-    pow: 1,
-    };
-  const longBow = new Weapon('Long Bow', 'Bow', 'A long, wooden bow.', 'Physical', 4, null, 30);
-  const sparkBow = {
-      name: "Spark Bow",
-      type: "Bow",
-      des: "A weak bow imbued with Thunder",
-      atr: "Physical",
-      element: thunEl,
-      pow: 6,
-      };
-  
-  const ironSpear = new Weapon('Iron Spear', 'Spear', 'A simple spear with an iron tip', 'Physical', 3);
-  const iceSpear = new Weapon('Ice Spear', 'Spear', 'A spear imbued with Ice Magic', 'Physical', 3, iceEl);
-  const excalibur = new Weapon('Excalibur', 'Sword','The most powerful blade in the world','Physical',1000);
-  

@@ -7,4 +7,4 @@ It's a work in progress at the moment, but the fundamental battle system is work
 
 This game uses Simple Storage, for more information go here: https://github.com/ZaDarkSide/simpleStorage
 
-Version 0.04, alpha build.
+Version 0.1, beta build.

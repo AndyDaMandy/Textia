@@ -123,15 +123,18 @@ function clamp(value, min, max) {
     }
 //check weakness might scale with levels
 let elementalBoost = 0;
-let pEl = document.createElement("p");
+let pEl = document.createElement("div");
 function checkWeakness(enemy, skill){
   if (skill != undefined){
+    pEl.innerHTML = "";
+    let newEl = document.createElement("p")
     if (enemy.weakness.element !== neuEl.element && enemy.weakness.element === skill.element.element) {
       elementalBoost += 2;
-      pEl.textContent = enemy.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
+      newEl.textContent = enemy.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
+      pEl.appendChild(newEl);
       return true;
     } else {
-      pEl.textContent = "";
+      newEl.textContent = "";
       elementalBoost = 0;
       return false;
     }

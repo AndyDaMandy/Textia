@@ -125,9 +125,8 @@ function clamp(value, min, max) {
 let elementalBoost = 0;
 let pEl = document.createElement("div");
 function checkWeakness(enemy, skill){
-  if (skill != undefined){
-    pEl.innerHTML = "";
-    let newEl = document.createElement("p")
+  let newEl = document.createElement("p");
+  if (skill != undefined){   
     if (enemy.weakness.element !== neuEl.element && enemy.weakness.element === skill.element.element) {
       elementalBoost += 2;
       newEl.textContent = enemy.name + " is weak to " + skill.element.element + "! The attack did bonus damage!"; 
@@ -140,7 +139,7 @@ function checkWeakness(enemy, skill){
     }
  }
 else {
-  pEl.textContent = "";
+  newEl.textContent = "";
     elementalBoost = 0;
     return false;
 }
@@ -327,6 +326,7 @@ function attackCalc (char, target, flow, skill){
                 battleMove(flow)
                 }
             }
+            pEl.innerHTML = "";
   };
 function stealFrom(enemyItem, location){
   if (enemyItem !== blankItem){

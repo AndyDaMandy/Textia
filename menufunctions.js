@@ -433,7 +433,7 @@ function startGame(){
   gameState = 0;
   move(gameState);
   money = 30;
-  currentParty = [ando, marie, ari];
+  currentParty = [ando, marie];
   ando.weapon = woodSword;
   marie.weapon = woodStaff;
   inventory.push(potion);

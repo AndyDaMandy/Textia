@@ -416,11 +416,11 @@ function alertOne(){
       shopOne.forEach(pusher);
       }
       if (shopState === 1){
-        let shopTwo = [potion, magicPotion, highPotion, revivalPotion, longBow];
+        let shopTwo = [potion, magicPotion, highPotion, revivalPotion,ironStaff, longBow];
         shopTwo.forEach(pusher);
       }
       if (shopState === 2){
-        let shopThree = [potion, magicPotion, highPotion, revivalPotion,longBow, luckyDaggers];
+        let shopThree = [potion, magicPotion, highPotion, revivalPotion,longBow,ironStaff, luckyDaggers];
         shopThree.forEach(pusher);
       }
   

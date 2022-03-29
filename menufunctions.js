@@ -439,7 +439,6 @@ function startGame(){
   inventory.push(potion);
   inventory.push(potion);
   inventory.push(magicPotion);
-  inventory.push(highPotion);
   inventory.push(revivalPotion);
   simpleStorage.flush();
   gameCheck = true;

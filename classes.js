@@ -28,7 +28,7 @@ let marie = {
   pDef: 2,
   mAtk: 10,
   mDef: 5,
-  luck: 5,
+  luck: 3,
   exp: 0,
   buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
@@ -47,7 +47,7 @@ let julie = {
   pDef: 5,
   mAtk: 3,
   mDef: 6,
-  luck: 6,
+  luck: 5,
   exp: 30,
   buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
@@ -60,14 +60,14 @@ let ari = {
   level: 5,
   hp: 14,
   chp: 14,
-  mp: 8,
-  cmp: 8,
+  mp: 6,
+  cmp: 6,
   pAtk: 12,
   pDef: 8,
   mAtk: 3,
   mDef: 9,
-  luck: 10,
-  exp: 30,
+  luck: 8,
+  exp: 50,
   buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
   support: [],
@@ -132,17 +132,17 @@ const potion = {
     name: "Potion",
     category: "Item",
     type: "Healing",
-    des: "Heals 5 points of HP.",
+    des: "Heals 10 points of HP.",
     rarity: 80,
-    effect: 5,
+    effect: 10,
     cost: 5
     };
 const highPotion = {
       name: "High Potion",
       category: "Item",
       type: "Healing",
-      des: "Heals 10 points of HP.",
-      effect: 10,
+      des: "Heals 15 points of HP.",
+      effect: 20,
       rarity: 60,
       cost: 10
       };
@@ -150,18 +150,18 @@ const magicPotion = {
     name: "Magic Potion",
     category: "Item",
     type: "mHealing",
-    des: "Heals 5 points of MP.",
+    des: "Heals 10 points of MP.",
     rarity: 25,
-    effect: 5,
+    effect: 10,
     cost: 8
     };
 const revivalPotion = {
     name: "Revival Potion",
     category: "Item",
     type: "Rev",
-    des: "Revives ally with 5 points of hp.",
+    des: "Revives ally with 10 points of HP.",
     rarity: 25,
-    effect: 5,
+    effect: 10,
     cost: 15
     };
   //=======================================
@@ -219,7 +219,8 @@ const woodStaff = {
     element: neuEl,
     pow: 1
     };
-const iceStaff = new Weapon('Ice Staff','Weapon','Staff', 'A basic staff imbued with Ice Magic','Magical', 2, iceEl, 10, 30);
+const ironStaff = new Weapon('Iron Staff', 'Weapon', 'Staff', 'A simple staff made of iron', 'Magical', 3, neuEl, 20, 50);
+const iceStaff = new Weapon('Ice Staff','Weapon','Staff', 'A basic staff imbued with Ice Magic','Magical', 4, iceEl, 10, 30);
 //Bow
   const woodBow = {
     name: "Wooden Bow",
@@ -231,16 +232,7 @@ const iceStaff = new Weapon('Ice Staff','Weapon','Staff', 'A basic staff imbued 
     pow: 1
     };
   const longBow = new Weapon('Long Bow','Weapon', 'Bow', 'A long, wooden bow.', 'Physical', 4, neuEl, 30, 50);
-  const sparkBow = {
-      name: "Spark Bow",
-      category: "Weapon",
-      type: "Bow",
-      des: "A weak bow imbued with Thunder",
-      atr: "Physical",
-      element: thunEl,
-      pow: 8,
-      rarity: 30
-      };
+  const sparkBow = new Weapon('Spark Bow', 'Weapon', 'Bow', 'A powerful bow imbued with Thunder', 'Physical', 8, thunEl, 80, 30);
 //Spear
   const ironSpear = new Weapon('Iron Spear','Weapon', 'Spear', 'A simple spear with an iron tip', 'Physical', 4, neuEl, 30);
   const iceSpear = new Weapon('Ice Spear', 'Weapon', 'Spear', 'A spear imbued with Ice Magic', 'Physical', 3, iceEl, 50);
@@ -253,6 +245,29 @@ const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two 
   const blankItem = {
     name: 'Blank'
   };
+
+//Enemy Skills - to be pushed into the enemies individually after creating it.
+
+class EnemySkill {
+  constructor(name, type, pow, cost, target){
+    this.name = name;
+    this.type = type;
+    this.pow = pow;
+    this.cost = cost;
+    this.target = target;
+  }
+};
+//flare fox skills
+const fireBall = new EnemySkill('Fire Ball', 'Magical', 3, 2, 'Single');
+const flameWave = new EnemySkill('Flame Wave', 'Magical', 1, 2, 'All');
+//ice leopard skills
+const iceClaw = new EnemySkill('Ice Claw', 'Physical', 3, 2, 'Single');
+const wideSwipe = new EnemySkill('Wide Swipe', 'Physical', 1, 2, 'All');
+const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
+//great shark skills
+const largeBite = new EnemySkill('Large Bite', 'Physical', 2, 2, 'Single');
+const bigWave = new EnemySkill('Powerful Wave', 'Magical', 1, 2, 'All');
+
 //enemies go here
   class Enemy {
     constructor(name, level, hp, mp, pAtk, pDef, mAtk, mDef, weakness, exp, money, eSkills, type,  steal){
@@ -280,10 +295,9 @@ const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two 
   const sparkBison = new Enemy('Spark Bison', 3, 20, 1, 11, 9, 1, 3, watEl, 5, 5, [],'Bison');
   const redGoblin = new Enemy('Red Goblin', 3, 30, 1, 10, 4, 2, 5, neuEl ,7, 10, [], 'Goblin');
   const arenaFighter = new Enemy('Arena Fighter', 4, 30, 3, 13, 9, 0, 0, iceEl, 5, 5, [], 'Human', potion);
-  const arenaMage = new Enemy('Arena Mage', 10, 25, 20, 12, 8, 14, 5, iceEl, 5, 5, [], 'Human', magicPotion);
-  const swordFish = new Enemy('Sword Fish', 5, 30, 5, 16, 7, 7, 6, thunEl, 20, 20, [], 'Fish', highPotion);
-  const shieldFish = new Enemy('Shield Fish', 5, 40, 4, 15, 13, 2, 2, thunEl, 10, 20, [], 'Fish', highPotion);
-  const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 17, 8, 15, 10, thunEl, 50, 100, [], 'Fish', sparkBow);
+  const arenaMage = new Enemy('Arena Mage', 10, 25, 20, 12, 8, 14, 5, iceEl, 5, 5, [eFire], 'Human', magicPotion);
+  const swordFish = new Enemy('Sword Fish', 5, 30, 5, 18, 7, 7, 6, thunEl, 10, 20, [], 'Fish', highPotion);
+  const shieldFish = new Enemy('Shield Fish', 5, 40, 4, 16, 13, 2, 2, thunEl, 10, 20, [], 'Fish', highPotion);
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -298,7 +312,8 @@ const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two 
     money: 1,
     steal: "blank",
     eSkills: [],
-    type: "Goblin"
+    type: "Goblin",
+    steal: potion
     };
   const potatoThief = {
     name: "Potato Thief",
@@ -313,7 +328,8 @@ const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two 
     exp: 1,
     money: 2,
     eSkills: [],
-    type: "Goblin"
+    type: "Goblin",
+    steal: potion
     }; 
     //bosses go below
   const livingTree = {
@@ -329,35 +345,13 @@ const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two 
     exp: 15,
     money: 20,
     eSkills: [],
-    type: "enemy"
+    type: "enemy",
+    steal: blankItem
     };
-  const flareFox = new Enemy('Flare Fox', 4, 100, 10, 13, 5, 13, 5, iceEl, 50, 50, [], 'Fox', blankItem);
-  const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [], 'Leopard', blankItem);
-//Enemy Skills - to be pushed into the enemies individually after creating it.
-
-class EnemySkill {
-  constructor(name, type, pow, cost, target){
-    this.name = name;
-    this.type = type;
-    this.pow = pow;
-    this.cost = cost;
-    this.target = target;
-  }
-};
-const fireBall = new EnemySkill('Fire Ball', 'Magical', 3, 2, 'Single');
-const flameWave = new EnemySkill('Flame Wave', 'Magical', 1, 2, 'All');
-flareFox.eSkills.push(fireBall);
-flareFox.eSkills.push(flameWave);
-const iceClaw = new EnemySkill('Ice Claw', 'Physical', 3, 2, 'Single');
-const wideSwipe = new EnemySkill('Wide Swipe', 'Physical', 1, 2, 'All');
-iceLeopard.eSkills.push(iceClaw);
-const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
-arenaMage.eSkills.push(eFire);
-const largeBite = new EnemySkill('Large Bite', 'Physical', 2, 2, 'Single');
-const bigWave = new EnemySkill('Powerful Wave', 'Magical', 1, 2, 'All');
-greatShark.eSkills.push(largeBite);
-greatShark.eSkills.push(bigWave);
-
+  const flareFox = new Enemy('Flare Fox', 4, 100, 10, 13, 5, 13, 5, iceEl, 50, 50, [fireBall, flameWave], 'Fox', blankItem);
+  const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [iceClaw, wideSwipe], 'Leopard', blankItem);
+  //greatshark is allied with a swordFish
+  const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 19, 8, 15, 10, thunEl, 55, 100, [largeBite, bigWave], 'Fish', sparkBow);
 //============================
 //Skills
 //===========================

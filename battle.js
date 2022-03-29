@@ -787,6 +787,7 @@ function statBoost(char){
   char.mAtk += 1;
   char.pDef += 1;
   char.mDef += 1;
+  char.luck += 1;
   let leveluptext = document.createElement("p");
   leveluptext.textContent = char.name + " leveled up! Their level is now: " + char.level + "!" ;
   info.appendChild(leveluptext);
@@ -851,6 +852,21 @@ function levelUp(char){
     statBoost(char);
   }
   if (char.exp >= 1300 && char.level < 15){
+    statBoost(char);
+  }
+  if (char.exp >= 1500 && char.level < 16){
+    statBoost(char);
+  }
+  if (char.exp >= 1800 && char.level < 17){
+    statBoost(char);
+  }
+  if (char.exp >= 2100 && char.level < 18){
+    statBoost(char);
+  }
+  if (char.exp >= 2400 && char.level < 19){
+    statBoost(char);
+  }
+  if (char.exp >= 2800 && char.level < 20){
     statBoost(char);
   }
 };

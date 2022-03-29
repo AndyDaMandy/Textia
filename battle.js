@@ -864,11 +864,12 @@ function clearBattle() {
   mainMenu.hidden = false;
   expGain = 0;
  // loadParty();
- if (deadTeam.length >= 1){
+ /*if (deadTeam.length >= 1){
    for (let i = 0; i < deadTeam.length; i++){
      currentParty.push(deadTeam[i]);
    }
  }
+ */
   console.log(currentParty);
   function healer(x){
     x.chp = x.hp;
@@ -951,17 +952,13 @@ function loadPartyInfo(){
   };
 let winMon = 0;
 let expGain = 0;
-function saveParty (){
-  savedParty = currentParty;
-  console.log(savedParty);
-}
 function battle(en) {
   //battleState controls battle flow and button creation.
   adv.hidden = true;
   battleState = 1;
   battleMode.hidden = false;
   mainMenu.hidden = true;
- // saveParty();
+  savedParty = currentParty.map(a => Object.assign({}, a));
   closeMenu();
   enemyParty = en;
   winMon = 0;
@@ -1012,6 +1009,8 @@ function battle(en) {
 let target = 0;
 function battleMove(x) {
   if (x === 0){
+    deadTeam = [];
+    currentParty = savedParty.map(a => Object.assign({}, a));
    change.innerHTML = "";
    // info.innerHTML = "";
     holder.innerHTML = "";
@@ -1032,6 +1031,10 @@ function battleMove(x) {
     
     currentParty.forEach(expGainer);
     currentParty.forEach(levelUp);
+    if (reserveParty.length >= 1){
+      reserveParty.forEach(expGainer);
+      reserveParty.forEach(levelUp);
+    }
     endBattle();
   };
   //player 1 turn

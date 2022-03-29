@@ -433,6 +433,7 @@ function startGame(){
   gameState = 0;
   move(gameState);
   money = 30;
+  inventory = [];
   currentParty = [ando, marie];
   ando.weapon = woodSword;
   marie.weapon = woodStaff;

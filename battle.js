@@ -1223,10 +1223,14 @@ function battleMove(x) {
     itemSlot.innerHTML = "";
     skillSlot.innerHTML = "";
     let p = document.createElement("p");
-    p.textContent = "The party has been defeated. Reload?";
+    p.textContent = "The party has been defeated. Reload or start from the beginning.";
     info.appendChild(p);
+    let restart = document.createElement("button");
+    restart.textContent = "Start from the beginning";
+    restart.addEventListener('click', function(){location.reload()});
+    change.appendChild(restart);
     let reload = document.createElement("button");
-    reload.textContent = "Reload previous save or refresh page to restart from the beginning";
+    reload.textContent = "Reload previous save?";
     reload.addEventListener('click', function (){load()});
     change.appendChild(reload);
   } 

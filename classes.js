@@ -1,3 +1,79 @@
+let baseAndo = {
+  name: 'Ando',
+  level: 1,
+  hp: 15,
+  chp: 15,
+  mp: 5,
+  cmp: 5,
+  pAtk: 10,
+  pDef: 4,
+  mAtk: 1,
+  mDef: 2,
+  luck: 1,
+  exp: 0,
+  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
+  skills: [],
+  support: [],
+  weapon: 'Text',
+  type: 'Player'
+}
+let baseMarie = {
+  name: 'Marie',
+  level: 1,
+  hp: 10,
+  chp: 10,
+  mp: 13,
+  cmp: 13,
+  pAtk: 3,
+  pDef: 2,
+  mAtk: 10,
+  mDef: 5,
+  luck: 3,
+  exp: 0,
+  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
+  skills: [],
+  support: [],
+  weapon: 'Text',
+  type: 'Player'
+}
+let baseJulie = {
+  name: 'Julie',
+  level: 3,
+  hp: 14,
+  chp: 14,
+  mp: 8,
+  cmp: 8,
+  pAtk: 12,
+  pDef: 5,
+  mAtk: 3,
+  mDef: 6,
+  luck: 5,
+  exp: 30,
+  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
+  skills: [],
+  support: [],
+  weapon: 'Text',
+  type: 'Player'
+}
+let baseAri = {
+  name: 'Ari',
+  level: 5,
+  hp: 14,
+  chp: 14,
+  mp: 6,
+  cmp: 6,
+  pAtk: 12,
+  pDef: 8,
+  mAtk: 3,
+  mDef: 9,
+  luck: 8,
+  exp: 50,
+  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
+  skills: [],
+  support: [],
+  weapon: 'Text',
+  type: 'Player'
+}
 let ando = {
   name: 'Ando',
   level: 1,
@@ -375,8 +451,8 @@ class Skill {
   const fireTwo = new Skill('Fire 2', 'Magic', fireEl, 'Deals powerful fire damage to one enemy', 8, 7, 'Single');
   const waterArrowTwo = new Skill('Water Arrow 2', 'Physical', watEl, 'Shoots an arrow that deals powerful water damage to 1 enemy', 8, 7, 'Single');
   const iceSlashTwo = new Skill('Ice Slash 2', 'Physical', iceEl, 'A powerful slash that deals ice damage to 1 enemy', 8, 7, 'Single');
-  const quickSlashes = new Skill('Quick Swipes', 'Physical', neuEl, 'Deals light damage to all enemies', 2, 1, 'All');
-  const thunSwipes = new Skill('Thunder Swipe', 'Physical', thunEl, 'Deals light thunder damage to all enemies', 2, 2, 'All');
+  const quickSlashes = new Skill('Quick Swipes', 'Physical', neuEl, 'Deals light damage to all enemies', 1, 1, 'All');
+  const thunSwipes = new Skill('Thunder Swipe', 'Physical', thunEl, 'Deals light thunder damage to all enemies', 1, 2, 'All');
   const fire = {
     name: "Fire",
     type: "Magic",

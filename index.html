@@ -513,13 +513,33 @@
       <p>The Mayor sees Ari and smiles.</p>
       <p>The Mayor: "Ari! I assume you have good news for me?"</p>
       <p><em>You show teeth you've gathered from defeating the great shark.</em></p>
-      <p>The Mayor: "Wonderful news! I'd like to present you with the sacred relics of our town. These weapons were used by some of the pilgrims of our town many years ago.</p>
+      <p>The Mayor: "Wonderful news! I'd like to present you with the relics of our town. These weapons were used by some of the pilgrims of our town many years ago.</p>
+      <p>You thank the mayor for the relics and prepare to move on.</p>
       <button id="chest-11" onclick="openChest(silverSword, this.id)">Open Chest 1</button>
       <button id="chest-12" onclick="openChest(waterDaggers, this.id)">Open Chest 2</button>
       <button id="chest-13" onclick="openChest(ancientWoodStaff, this.id)">Open Chest 3</button>
+      <button onclick="move(34)">Go Back</button>
+      <button onclick="move(36)">Go Forward</button>
+    </div>
+    <div id="port-1-4" hidden>
+      <!-- state = 36 -->
+      <h2>The Port Town of Nubia - End of Town</h2>
+      <p>Ahead you see the Mountain of Narsh.</p>
+      <p>To your left you see a group of adventurers.</p>
+      <p>They approach you.</p>
+      <p>"Before you go, would you like to train with us? The mountain is full of powerful enemies."</p>
+      <p>Will you train with them? Once you leave town you cannot return.</p>
+      <button onclick="battle([advenKnight, advenMage, advenArcher]); statePost = 36">Train with adventurers</button>
+      <button onclick="move(35)">Go Back</button>
+      <button onclick="move(37)">Go to Mountain of Narsh</button>
     </div>
   </div>
-  <div id="mountain-1" hidden></div>
+  <div id="mountain-1" hidden>
+    <!-- state = 37 -->
+    <div id="mountain-1-1" hidden>
+      <h2>The Mountain of Narsh - Foot of the mountain</h2>
+    </div>
+  </div>
 <!-- Adv mode Div -->
 </div>
   </body>

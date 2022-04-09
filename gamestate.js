@@ -372,6 +372,29 @@ function gameFlow (state) {
           document.getElementById("port-1").hidden = false;
           document.getElementById("port-1-1").hidden = false;
         }
+        if (state === 34){
+          shopState = 2;
+          shopButton.hidden = false;
+          document.getElementById("port-1").hidden = false;
+          document.getElementById("port-1-1").hidden = true;
+          document.getElementById("port-1-2").hidden = false;
+        }
+        if (state === 35){
+          shopButton.hidden = true;
+          document.getElementById("port-1").hidden = false;
+          document.getElementById("port-1-2").hidden = true;
+          document.getElementById("port-1-3").hidden = false;
+        }
+        if (state === 36){
+          document.getElementById("port-1").hidden = false;
+          document.getElementById("port-1-3").hidden = true;
+          document.getElementById("port-1-4").hidden = false;
+        }
+        if (state === 37){
+          document.getElementById("port-1").hidden = true;
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-1").hidden = false;
+        }
     };
 function move (state) {
       gameState = state;
@@ -416,12 +439,16 @@ function alertOne(){
       shopOne.forEach(pusher);
       }
       if (shopState === 1){
-        let shopTwo = [potion, magicPotion, highPotion, revivalPotion,ironStaff, longBow];
+        let shopTwo = [potion, magicPotion, highPotion, revivalPotion, ironStaff, longBow];
         shopTwo.forEach(pusher);
       }
       if (shopState === 2){
-        let shopThree = [potion, magicPotion, highPotion, revivalPotion,longBow,ironStaff, luckyDaggers];
+        let shopThree = [potion, magicPotion, highPotion, revivalPotion, longBow, ironStaff, luckyDaggers];
         shopThree.forEach(pusher);
+      }
+      if (shopState === 3){
+        let shopFour = [magicPotion, highPotion, revivalPotion, sparkBow];
+        shopFour.forEach(pusher);
       }
   
   }

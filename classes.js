@@ -1,79 +1,3 @@
-let baseAndo = {
-  name: 'Ando',
-  level: 1,
-  hp: 15,
-  chp: 15,
-  mp: 5,
-  cmp: 5,
-  pAtk: 10,
-  pDef: 4,
-  mAtk: 1,
-  mDef: 2,
-  luck: 1,
-  exp: 0,
-  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
-  skills: [],
-  support: [],
-  weapon: 'Text',
-  type: 'Player'
-}
-let baseMarie = {
-  name: 'Marie',
-  level: 1,
-  hp: 10,
-  chp: 10,
-  mp: 13,
-  cmp: 13,
-  pAtk: 3,
-  pDef: 2,
-  mAtk: 10,
-  mDef: 5,
-  luck: 3,
-  exp: 0,
-  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
-  skills: [],
-  support: [],
-  weapon: 'Text',
-  type: 'Player'
-}
-let baseJulie = {
-  name: 'Julie',
-  level: 3,
-  hp: 14,
-  chp: 14,
-  mp: 8,
-  cmp: 8,
-  pAtk: 12,
-  pDef: 5,
-  mAtk: 3,
-  mDef: 6,
-  luck: 5,
-  exp: 30,
-  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
-  skills: [],
-  support: [],
-  weapon: 'Text',
-  type: 'Player'
-}
-let baseAri = {
-  name: 'Ari',
-  level: 5,
-  hp: 14,
-  chp: 14,
-  mp: 6,
-  cmp: 6,
-  pAtk: 12,
-  pDef: 8,
-  mAtk: 3,
-  mDef: 9,
-  luck: 8,
-  exp: 50,
-  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
-  skills: [],
-  support: [],
-  weapon: 'Text',
-  type: 'Player'
-}
 let ando = {
   name: 'Ando',
   level: 1,
@@ -310,7 +234,7 @@ const ancientWoodStaff = new Weapon('Ancient Wooden Staff', 'Weapon', 'Staff', '
     pow: 1
     };
   const longBow = new Weapon('Long Bow','Weapon', 'Bow', 'A long, wooden bow.', 'Physical', 4, neuEl, 30, 50);
-  const sparkBow = new Weapon('Spark Bow', 'Weapon', 'Bow', 'A powerful bow imbued with Thunder', 'Physical', 8, thunEl, 80, 30);
+  const sparkBow = new Weapon('Spark Bow', 'Weapon', 'Bow', 'A powerful bow imbued with Thunder', 'Physical', 8, thunEl, 150, 30);
 //Spear
   const ironSpear = new Weapon('Iron Spear','Weapon', 'Spear', 'A simple spear with an iron tip', 'Physical', 4, neuEl, 30);
   const iceSpear = new Weapon('Ice Spear', 'Weapon', 'Spear', 'A spear imbued with Ice Magic', 'Physical', 3, iceEl, 50);
@@ -377,6 +301,9 @@ const bigWave = new EnemySkill('Powerful Wave', 'Magical', 1, 2, 'All');
   const arenaMage = new Enemy('Arena Mage', 10, 25, 20, 12, 8, 14, 5, iceEl, 5, 5, [eFire], 'Human', magicPotion);
   const swordFish = new Enemy('Sword Fish', 5, 30, 5, 18, 7, 7, 6, thunEl, 10, 20, [], 'Fish', highPotion);
   const shieldFish = new Enemy('Shield Fish', 5, 40, 4, 16, 13, 2, 2, thunEl, 10, 20, [], 'Fish', highPotion);
+  const advenKnight = new Enemy('Adventurer Knight', 10, 50, 5, 90, 12, 0, 9, neuEl, 10, 10, [], 'Human', blankItem);
+  const advenArcher = new Enemy('Adventurer Archer', 5, 40, 10, 21, 12, 0, 12, iceEl, 10, 10, [], 'Human', blankItem);
+  const advenMage = new Enemy('Adventurer Mage', 10, 30, 20, 15, 12, 10, 15, neuEl, 10, 10, [eFire, flameWave], 'Human', magicPotion);
   const goblin = {
     name: "Goblin",
     level: 1,

@@ -284,6 +284,7 @@ const ironSword = {
       element: neuEl,
       pow: 3
       };
+const silverSword = new Weapon('Silver Sword', 'Weapon', 'Sword', 'A powerful blade of steel, with anti-undead properties', 'Physical', 7, neuEl, 10000, 1);
 const excalibur = new Weapon('Excalibur','Weapon', 'Sword','The most powerful blade in the world','Physical', 1000, neuEl, 10000, 1);
 //Staff
 const woodStaff = {
@@ -297,6 +298,7 @@ const woodStaff = {
     };
 const ironStaff = new Weapon('Iron Staff', 'Weapon', 'Staff', 'A simple staff made of iron', 'Magical', 3, neuEl, 20, 50);
 const iceStaff = new Weapon('Ice Staff','Weapon','Staff', 'A basic staff imbued with Ice Magic','Magical', 4, iceEl, 10, 30);
+const ancientWoodStaff = new Weapon('Ancient Wooden Staff', 'Weapon', 'Staff', 'A staff made from the wood of an ancient magical tree', 'Magical', 7, neuEl, 10000, 1);
 //Bow
   const woodBow = {
     name: "Wooden Bow",
@@ -315,6 +317,7 @@ const iceStaff = new Weapon('Ice Staff','Weapon','Staff', 'A basic staff imbued 
 //Twin Daggers
 const ironDaggers = new Weapon('Iron Daggers', 'Weapon', 'Twin Daggers', 'Two daggers made of iron', 'Physical', 3, neuEl, 30, 80);
 const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two daggers that make you feel lucky!', 'Physical', 2, neuEl, 100, 10);
+const waterDaggers = new Weapon('Water Daggers', 'Weapon', 'Twin Daggers', 'Twin daggers imbued with', 'Physical', 7, watEl, 30, 1);
 
   //========================================
 //blank item is a blank item for enemies to hold.

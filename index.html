@@ -493,7 +493,30 @@
     <div id="port-1-1" hidden>
       <!-- state = 33 -->
       <h2>The Port Town of Nubia</h2>
-      <p>The game ends here for now, thanks for playing! The next chapter will be released soon!</p>
+      <p>After defeating the Greatk Shark, you gather its teeth as proof of your victory.</p>
+      <p>After arriving to the port town of Nubia, you take a moment to rest.</p>
+      <p>Ari: "The mayor of this town gave the me the job, I can collect ahead."</p>
+      <p>You decide to go further into town.</p>
+      <button onclick="move(34)">Go Forward</button>
+    </div>
+    <div id="port-1-2" hidden>
+      <!-- state = 34 -->
+      <h2>The Port Town of Nubia - Town Center</h2>
+      <p>The Town Center is full of merchants, you decide to stock up on supplies.</p>
+      <button onclick="move(35)">Go Forward</button>
+    </div>
+    <div id="port-1-3" hidden>
+      <!-- state = 35 -->
+      <h2>The Port Town of Nubia - Mayor Office</h2>
+      <p>The Mayor office is fairly run down, it looks like it hasn't been handled</p>
+      <p>The Mayor was a stout older woman, her face and hair weathered by the Ocean.</p>
+      <p>The Mayor sees Ari and smiles.</p>
+      <p>The Mayor: "Ari! I assume you have good news for me?"</p>
+      <p><em>You show teeth you've gathered from defeating the great shark.</em></p>
+      <p>The Mayor: "Wonderful news! I'd like to present you with the sacred relics of our town. These weapons were used by some of the pilgrims of our town many years ago.</p>
+      <button id="chest-11" onclick="openChest(silverSword, this.id)">Open Chest 1</button>
+      <button id="chest-12" onclick="openChest(waterDaggers, this.id)">Open Chest 2</button>
+      <button id="chest-13" onclick="openChest(ancientWoodStaff, this.id)">Open Chest 3</button>
     </div>
   </div>
   <div id="mountain-1" hidden></div>

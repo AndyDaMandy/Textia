@@ -538,6 +538,30 @@
     <!-- state = 37 -->
     <div id="mountain-1-1" hidden>
       <h2>The Mountain of Narsh - Foot of the mountain</h2>
+      <p>The path ahead looks dangerous, you prepare yourself mentally for the battles you'll face.</p>
+      <p>You find a few chests on the ground left from Nubia's villagers for pilgrims going up Mount Narsh.</p>
+      <p>Will you open them?</p>
+      <button id="chest-14" onclick="openChest(highMagicPotion, this.id)">Open Chest 1</button>
+      <button id="chest-15" onclick="openChest(highRevivalPotion, this.id)">Open Chest 2</button>
+      <button onclick="move(38)">Go Forward</button>
+    </div>
+    <div id="mountain-1-2" hidden>
+      <!-- state = 38 -->
+      <h2>The Mountain of Narsh - Pilgrim's Path</h2>
+      <p>Enemies are scattered around the path, looking to attack.</p>
+      <p>You must defend yourself!</p>
+      <button onclick="battle([]); statePost = 39">Go Forward</button>
+    </div>
+    <div id="mountain-1-3" hidden>
+      <!-- state = 39 -->
+      <h2>The Mountain of Narsh - Pigrlim's Path - Further in</h2>
+      <p>The enemies are relentless!</p>
+      <p>You have no choice but to fight!</p>
+      <button onclick="battle([]); statePost = 40">Go Forward</button>
+    </div>
+    <div id="mountain-1-4" hidden>
+      <!-- state = 40 -->
+      <h2>The Mountain of Narsh - Pilgrim's Mark</h2>
     </div>
   </div>
 <!-- Adv mode Div -->

@@ -155,6 +155,7 @@ const magicPotion = {
     effect: 10,
     cost: 8
     };
+const highMagicPotion = new Item('High Magic Potion', 'Item', 'mHealing', 'Heals 20 points of MP', 20, 18, 60, 'Single');
 const revivalPotion = {
     name: "Revival Potion",
     category: "Item",
@@ -164,6 +165,7 @@ const revivalPotion = {
     effect: 10,
     cost: 15
     };
+const highRevivalPotion = new Item('High Revival Potion', 'Item', 'Rev', 'Revives an ally with 20 points of HP', 20, 18, 60, 'Single');
   //=======================================
   // Weapons go here
   //characters can only equip certain types of weapons, enforced by the equip screen.

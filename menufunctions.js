@@ -323,6 +323,12 @@ function equip (){
           button2.addEventListener('click', () => {equipSelect(ari, weapon); });
           document.getElementById("equipment").appendChild(button2);
         }
+        if (weapon.type === "Tome"){
+          let button2 = document.createElement("button");
+          button2.textContent = weapon.name;
+          button2.addEventListener('click', () => {equipSelect(gabriel, weapon); });
+          document.getElementById("equipment").appendChild(button2);
+        }
     }
    weaponsOwned.forEach(checker);
    console.log(currentParty);
@@ -335,6 +341,7 @@ function save () {
     simpleStorage.set("marie", JSON.stringify(marie));
     simpleStorage.set("julie", JSON.stringify(julie));
     simpleStorage.set("ari", JSON.stringify(ari));
+    simpleStorage.set("gabriel", JSON.stringify(gabriel));
   //  simpleStorage.set("currentParty", currentParty);
     simpleStorage.set("currentParty", JSON.stringify(currentParty));
     console.log(currentParty);
@@ -451,6 +458,7 @@ function load(){
   marie = JSON.parse(simpleStorage.get("marie"));
   julie = JSON.parse(simpleStorage.get("julie"));
   ari = JSON.parse(simpleStorage.get("ari"));
+  gabriel = JSON.parse(simpleStorage.get("gabriel"));
 //  reserveParty = JSON.parse(simpleStorage.get("reserveParty"));
  weaponsOwned = simpleStorage.get("weaponsOwned");
  //currentParty = simpleStorage.get("currentParty");
@@ -465,6 +473,8 @@ for (let i = 0; i < setParty.length; i++){
     currentParty.push(julie);
   } else if (setParty[i].name === "Ari") {
     currentParty.push(ari);
+  } else if (setParty[i].name === "Gabriel") {
+    currentParty.push(gabriel);
   }
 }
 if (setReserve.length > 0) {
@@ -477,6 +487,8 @@ if (setReserve.length > 0) {
     reserveParty.push(julie);
   } else if (setReserve[i].name === "Ari") {
     reserveParty.push(ari);
+  } else if (setReserve[i].name === "Gabriel") {
+    reserveParty.push(gabriel);
   }
 }
 currentParty.length = 3;

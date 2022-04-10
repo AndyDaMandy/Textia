@@ -74,6 +74,25 @@ let ari = {
   weapon: 'Text',
   type: 'Player'
 }
+let gabriel = {
+  name: 'Gabriel',
+  level: 11,
+  hp: 19,
+  chp: 19,
+  mp: 22,
+  cmp: 22,
+  pAtk: 12,
+  pDef: 8,
+  mAtk: 14,
+  mDef: 14,
+  luck: 8,
+  exp: 900,
+  buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
+  skills: [],
+  support: [],
+  weapon: 'Text',
+  type: 'Player'
+}
 let siege = {
   name: 'Siege',
   level: 5,
@@ -244,7 +263,8 @@ const ancientWoodStaff = new Weapon('Ancient Wooden Staff', 'Weapon', 'Staff', '
 const ironDaggers = new Weapon('Iron Daggers', 'Weapon', 'Twin Daggers', 'Two daggers made of iron', 'Physical', 3, neuEl, 30, 80);
 const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two daggers that make you feel lucky!', 'Physical', 2, neuEl, 100, 10);
 const waterDaggers = new Weapon('Water Daggers', 'Weapon', 'Twin Daggers', 'Twin daggers imbued with', 'Physical', 7, watEl, 30, 1);
-
+//Tomes
+const tomeofLife = new Weapon('Tome of Life', 'Weapon', 'Tome', 'A tome that reveals the secrets of life-energies', 'Magical', 5, neuEl, 1000, 10);
   //========================================
 //blank item is a blank item for enemies to hold.
   const blankItem = {

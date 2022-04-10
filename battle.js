@@ -829,12 +829,6 @@ function levelUp(char){
   }
   if (char.exp >= 450 && char.level < 9){
     statBoost(char);
-    if (char.level === 10 && char.name === "Ando") {
-      julie.skills.push(slashAll);
-      let learnedSkill = document.createElement("p");
-      learnedSkill.textContent = `${char.name} learned ${slashAll.name}!`
-      info.appendChild(learnedSkill);
-      }
   }
   if (char.exp >= 550 && char.level < 10){
     statBoost(char);
@@ -844,6 +838,12 @@ function levelUp(char){
   }
   if (char.exp >= 800 && char.level < 12){
     statBoost(char);
+    if (char.level === 12 && char.name === "Ando") {
+      ando.skills.push(criticalThrust);
+      let learnedSkill = document.createElement("p");
+      learnedSkill.textContent = `Ando learned Critical Thrust!` 
+      info.appendChild(learnedSkill);
+      }
   }
   if (char.exp >= 950 && char.level < 13){
     statBoost(char);

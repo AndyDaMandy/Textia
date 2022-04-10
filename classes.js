@@ -405,6 +405,7 @@ class Skill {
   const iceSlashTwo = new Skill('Ice Slash 2', 'Physical', iceEl, 'A powerful slash that deals ice damage to 1 enemy', 8, 7, 'Single');
   const quickSlashes = new Skill('Quick Swipes', 'Physical', neuEl, 'Deals light damage to all enemies', 1, 1, 'All');
   const thunSwipes = new Skill('Thunder Swipe', 'Physical', thunEl, 'Deals light thunder damage to all enemies', 1, 2, 'All');
+  const criticalThrust = new Skill('Critical Thrust', 'Physical', neuEl, "A carefully aimed thrust for an enemy's weak point, dealing critical damage", 12, 10, 'Single');
   const fire = {
     name: "Fire",
     type: "Magic",

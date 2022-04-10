@@ -46,6 +46,7 @@
   <button class="small-btn" id="inventory-button" hidden onclick="showInventory()">Inventory</button>
   <button class="small-btn" id="show-stats" onclick="showStats()" hidden>Party Status</button>
   <button class="small-btn" id="tutorial-button" onClick="openTutorial()" hidden>Tutorial</button>
+  <button class="small-btn" id="dev-mode" onclick="" hidden>Dev Mode</button>
   <button class="small-btn" id="close-menu" onclick="closeMenu()" hidden>Close Menu</button>
 </div>
 <div class="well" id="save-menu" hidden>
@@ -125,6 +126,23 @@
   <p><strong>Your current party has a limit of 3 characters, you can have no more</strong></p>
   <p>You can't lower your party size once it's at 3, if you're a loner then you can use 2, but I wouldn't recommend it!</p>
   <button onclick="closeMenu()">Close Tutorial Screen</button>
+</div>
+<div class="well" id="dev-menu" hidden>
+  <h3>Welcome to Dev mode! If you're seeing this you're a dev, a savvy user, or I messed up!</h3>
+  <p>Here you can adjust gameplay elements and select where you'd like to go in the story.</p>
+  <button>Add Julie to party</button>
+  <button>Add Ari to party</button>
+  <button>Add Gabriel to party</button>
+  <button>Level up Ando</button>
+  <button>Level up Marie</button>
+  <button>Level up Julie</button>
+  <button>Level up Ari</button>
+  <button>Level up Gabriel</button>
+  <form onsubmit="move(document.getElementById('moving-tool').value)">
+    <input id="moving-tool" type="number" placeholder="1"></input>
+    <input type="submit">Submit</input>
+  </form>
+  
 </div>
 <!--Gameplay Elements Below -->
   <button id="shop-button" onclick="openShop()" hidden>Shop</button>

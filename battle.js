@@ -278,6 +278,42 @@ function attackCalc (char, target, flow, skill){
               battleMove(flow)
               }        
              else { //regular branch
+              if (skill.effect === "Drain"){
+                let weak = checkWeakness(enemyParty[target], skill, char.weapon);
+                let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].pDef;
+                let thp = enHp[target];
+                let damage = clamp(getRandomInt(pa), pa-2, pa);
+                if (damage <= 0){damage = 0};
+                let healAmt = damage - 3;
+                if (healAmt <= 0){healAmt = 0};
+                char.chp += healAmt;
+                if (char.chp > char.hp){
+                  char.chp = char.hp
+                }
+                let final = thp - damage ;
+                if (final <= 0) {
+                  skillUseText(char, skill);
+                  //adds elemental info
+                  showDamage(enemyParty[target], damage, weak);
+                  let showDrain = document.createElement("p");
+                  showDrain.textContent = `${char.name} has healed for ${healAmt}!`
+                  info.appendChild(showDrain);
+                  sayDeadEn(enemyParty[target]);
+                  enemyParty.splice(target, 1);
+                  enHp.splice(target, 1);
+                  enItems.splice(target, 1);
+                  battleMove(flow)
+                  } else {
+                    skillUseText(char, skill);
+                    showDamage(enemyParty[target], damage, weak);
+                    let showDrain = document.createElement("p");
+                    showDrain.textContent = `${char.name} has healed for ${healAmt}!`
+                    info.appendChild(showDrain);
+                    enHp[target] = thp - damage;
+                    battleMove(flow)
+                      }
+              } 
+              else {
           let weak = checkWeakness(enemyParty[target], skill, char.weapon);
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].pDef;
           let thp = enHp[target];
@@ -300,7 +336,7 @@ function attackCalc (char, target, flow, skill){
                 battleMove(flow)
                   }
           }
-         
+             } 
       } if (skill.type === "Steal"){
         skillUseText(char, skill);
         stealFrom(enItems[target], target);
@@ -949,6 +985,12 @@ function levelUp(char){
     statBoost(char);
   }
   if (char.exp >= 3200 && char.level < 21){
+    statBoost(char);
+  }
+  if (char.exp >= 3800 && char.level < 22){
+    statBoost(char);
+  }
+  if (char.exp >= 4200 && char.level < 23){
     statBoost(char);
   }
 };

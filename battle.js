@@ -590,7 +590,12 @@ function supTarget (caster, sup, supflow){
   itemSlot.innerHTML = "";
   //needs a caster parameter based on the battleflow?
   //pulls target MP away atm
-//  if (sup.target === "All"){}
+  if (sup.target === "All"){
+    let btn = document.createElement("button");
+    btn.textContent = 'All';
+    btn.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = "All"; supportChoice = x; battleMove(y); a = caster; supCalc(a, z, x, y); choice = 1;})
+  skillSlot.appendChild(btn);
+  }
   if (currentParty.length === 1){
   let btn = document.createElement("button");
   btn.textContent = currentParty[0].name;
@@ -626,6 +631,15 @@ function supCalc(caster, partymem, sup){
   skillSlot.innerHTML = "";
   caster.cmp -= sup.cost;
   if (sup.type === "Healing"){
+    if (partymem === "All") {
+      for (let i = 0; i < currentParty.length; i++){
+        currentParty[i].chp += sup.pow;
+        if (currentParty[i].chp > currentParty[i].hp){currentParty[i].chp = currentParty[i].hp};
+        let pheal = document.createElement("p")
+        pheal.textContent = currentParty[i].name + "'s HP is now: " + currentParty[i].chp + "/" + currentParty[i].hp;
+        info.appendChild(pheal);
+      }
+    } else {
     partymem.chp += sup.pow;
       if (partymem.chp > partymem.hp){
       partymem.chp = partymem.hp;
@@ -639,6 +653,7 @@ function supCalc(caster, partymem, sup){
         info.appendChild(pheal);
         loadPartyInfo();
         }
+    }
     } if (sup.type === "Attack Buff"){
       if (partymem.buff[0].on === false){
         partymem.buff[0].pow += sup.pow;

@@ -390,10 +390,54 @@ function gameFlow (state) {
           document.getElementById("port-1-3").hidden = true;
           document.getElementById("port-1-4").hidden = false;
         }
+        //Mountain of Narsh
         if (state === 37){
           document.getElementById("port-1").hidden = true;
           document.getElementById("mountain-1").hidden = false;
           document.getElementById("mountain-1-1").hidden = false;
+        }
+        if (state === 38){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-1").hidden = true;
+          document.getElementById("mountain-1-2").hidden = false;
+        }
+        if (state === 39){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-2").hidden = true;
+          document.getElementById("mountain-1-3").hidden = false;
+        }
+        if (state === 40){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-3").hidden = true;
+          document.getElementById("mountain-1-4").hidden = false;
+        }
+        if (state === 41){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-4").hidden = true;
+          document.getElementById("mountain-1-5").hidden = false;
+        }
+        if (state === 42){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-5").hidden = true;
+          document.getElementById("mountain-1-6").hidden = false;
+        }
+        if (state === 43){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-6").hidden = true;
+          document.getElementById("mountain-1-7").hidden = false;
+        }
+        if (state === 44){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-7").hidden = true;
+          document.getElementById("mountain-1-8").hidden = false;
+        }
+        if (state === 45){
+          document.getElementById("mountain-1").hidden = false;
+        }
+        //Crystal Lake
+        if (state == 46){
+          document.getElementById("mountain-1").hidden = true;
+          document.getElementById("crystal").hidden = false;
         }
     };
 function move (state) {

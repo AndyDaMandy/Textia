@@ -459,7 +459,9 @@ class Skill {
     cost: 2,
     target: 'Single'
     };
-  const cureAll = new Skill('Cure All', 'Healing', neuEl, 'Heals all allies', 5, 5, 'All');
+  const cure2 = new Skill('Cure 2', 'Healing', neuEl, 'Heals 1 ally for 20 HP', 20, 8, 'Single');
+  const cureAll = new Skill('Cure All', 'Healing', neuEl, 'Heals all allies for 5 HP', 5, 4, 'All');
+  const highCureAll = new Skill('High Cure All', 'Healing', neuEl, 'Healls all allies for 15 HP each', 15, 10, 'All');
   const atkBoost = {
     name: "Attack Boost",
     type: "Attack Buff",
@@ -470,7 +472,7 @@ class Skill {
   const defBoost = {
     name: "Defense Boost",
     type: "Defense Buff",
-    des: "Boosts attack for 1 turn.",
+    des: "Boosts Defense for 1 turn.",
     pow: 1,
     cost: 2
     };

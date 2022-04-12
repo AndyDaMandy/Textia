@@ -47,7 +47,7 @@
   <button class="small-btn" id="inventory-button" hidden onclick="showInventory()">Inventory</button>
   <button class="small-btn" id="show-stats" onclick="showStats()" hidden>Party Status</button>
   <button class="small-btn" id="tutorial-button" onclick="openTutorial()" hidden>Tutorial</button>
-  <button class="small-btn" id="dev-mode" onclick="" hidden>Dev Mode</button>
+  <button class="small-btn" id="dev-mode" onclick="openDev()" hidden>Dev Mode</button>
   <button class="small-btn" id="close-menu" onclick="closeMenu()" hidden>Close Menu</button>
 </div>
 <div class="well" id="save-menu" hidden>
@@ -149,10 +149,11 @@
   <button>Level up Julie</button>
   <button>Level up Ari</button>
   <button>Level up Gabriel</button>
-  <form onsubmit="move(document.getElementById('moving-tool').value)">
+  <form onsubmit="globalDev = document.getElementById('moving-tool').value; return false;">
     <input id="moving-tool" type="number" placeholder="1"></input>
-    <input type="submit">Submit</input>
+    <input type="submit"></input>
   </form>
+    <button onclick="move(globalDev)">Move</button>
   
 </div>
 <!--Gameplay Elements Below -->

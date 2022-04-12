@@ -289,7 +289,9 @@ const flameWave = new EnemySkill('Flame Wave', 'Magical', 1, 2, 'All');
 //ice leopard skills
 const iceClaw = new EnemySkill('Ice Claw', 'Physical', 3, 2, 'Single');
 const wideSwipe = new EnemySkill('Wide Swipe', 'Physical', 1, 2, 'All');
+//misc enemy skills
 const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
+const lightHeal = new EnemySkill('Light Heal', 'Healing', 10, 3, 'Single');
 //great shark skills
 const largeBite = new EnemySkill('Large Bite', 'Physical', 2, 2, 'Single');
 const bigWave = new EnemySkill('Powerful Wave', 'Magical', 1, 2, 'All');
@@ -328,7 +330,7 @@ const moonlight = new EnemySkill('Moonlight', 'Healing', 20, 2, 'Single');
   const shieldFish = new Enemy('Shield Fish', 5, 40, 4, 16, 13, 2, 2, thunEl, 10, 20, [], 'Fish', highPotion);
   const advenKnight = new Enemy('Adventurer Knight', 10, 50, 5, 90, 12, 0, 9, neuEl, 10, 10, [], 'Human', highRevivalPotion);
   const advenArcher = new Enemy('Adventurer Archer', 5, 40, 10, 21, 12, 0, 12, iceEl, 10, 10, [], 'Human', highPotion);
-  const advenMage = new Enemy('Adventurer Mage', 10, 30, 20, 15, 12, 10, 15, neuEl, 10, 10, [eFire, flameWave], 'Human', highMagicPotion);
+  const advenMage = new Enemy('Adventurer Mage', 10, 30, 20, 15, 12, 10, 15, neuEl, 10, 10, [eFire, flameWave, lightHeal], 'Human', highMagicPotion);
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -383,7 +385,7 @@ const moonlight = new EnemySkill('Moonlight', 'Healing', 20, 2, 'Single');
   const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [iceClaw, wideSwipe], 'Leopard', blankItem);
   //greatshark is allied with a swordFish
   const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 19, 8, 15, 10, thunEl, 55, 100, [largeBite, bigWave], 'Fish', sparkBow);
-  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 160, 30, 25, 16, 23, 19, watEl, 200, 300, [lunarEdge], 'Dragon', dragonScales);
+  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 160, 30, 25, 16, 23, 19, watEl, 200, 300, [lunarEdge, moonlight], 'Dragon', dragonScales);
 //============================
 //Skills
 //===========================

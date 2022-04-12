@@ -417,6 +417,25 @@ function openTutorial(){
 }
 function openDev () {
   document.getElementById("dev-menu").hidden = false;
+
+  document.getElementById("equip-screen").hidden = true;
+  document.getElementById("equipment").innerHTML = "";
+  document.getElementById("equip-party").innerHTML = "";
+  //formation
+  document.getElementById("formation-menu").hidden = true;
+  //inventory
+  document.getElementById("inventory-menu").hidden = true;
+  document.getElementById("inventory-items").innerHTML = "";
+  //party stats
+  document.getElementById("stats-menu").hidden = true;
+    document.getElementById("line-1").innerHTML = "";
+    document.getElementById("menu-items").innerHTML = "";
+  //hide save
+  document.getElementById("save-menu").hidden = true;
+  //hide swap
+  document.getElementById("swap-menu").hidden = true;
+  //open tutorial
+  document.getElementById("tutorial-menu").hidden = true;
 };
 //=======================================
 //======================================

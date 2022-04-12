@@ -41,3 +41,5 @@ gabriel.support.push(cureAll);
 function toggleChests(){
     opened.hidden = true;
 };
+
+let globalDev = 0;

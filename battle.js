@@ -305,7 +305,8 @@ function attackCalc (char, target, flow, skill){
         skillUseText(char, skill);
         stealFrom(enItems[target], target);
         if (skill.effect === "Mug"){
-          let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow - enemyParty[target].pDef;
+          let weak = checkWeakness(enemyParty[target], skill, char.weapon);
+          let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].pDef;
           let thp = enHp[target];
           let damage = clamp(getRandomInt(pa), pa-2, pa);
           if (damage <= 0){damage = 0};
@@ -930,6 +931,10 @@ function levelUp(char){
   }
   if (char.exp >= 1500 && char.level < 16){
     statBoost(char);
+    ari.skills.push(mug);
+    let learnedSkill = document.createElement("p");
+    learnedSkill.textContent = 'Ari learned Mug!';
+    info.appendChild(learnedSkill);
   }
   if (char.exp >= 1800 && char.level < 17){
     statBoost(char);

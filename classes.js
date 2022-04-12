@@ -389,7 +389,7 @@ const moonlight = new EnemySkill('Moonlight', 'Healing', 20, 2, 'Single');
 //===========================
 //very important, use "None" for enemies with no elemental weaknesses and "N/A" for skills/weapons  
 class Skill {
-    constructor(name, type, element, des, pow, cost, target){
+    constructor(name, type, element, des, pow, cost, target, effect){
       this.name = name;
       this.type = type;
       this.element = element;
@@ -397,19 +397,23 @@ class Skill {
       this.pow = pow;
       this.cost = cost;
       this.target = target;
+      this.effect = effect;
     }
   };
-  const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with weak magic-based thunder damage', 4, 5, 'Single');
+  const thunder = new Skill('Thunder', 'Magic', thunEl, 'Hits enemy with weak magic-based thunder damage', 4, 5, 'Single', 'None');
+  const thunderThree = new Skill('Thunder 3', 'Magic', thunEl, 'Hits an enemy with extremely powerful Thunder Magic', 15, 11, 'Single', 'None');
   //need a way to show a skill hits all or not....
-  const water = new Skill('Water','Magic', watEl, 'Hits enemy with weak magic-based water damage', 4, 6, 'All');
-  const volley = new Skill('Volley', 'Physical', neuEl, 'Hits all enemies with arrows', 2, 6, 'All');
-  const steal = new Skill('Steal', 'Steal', neuEl, 'Attempts to steal from 1 enemy', 0, 0, 'Single');
+  const water = new Skill('Water','Magic', watEl, 'Hits enemy with weak magic-based water damage', 4, 6, 'All', 'None');
+  const volley = new Skill('Volley', 'Physical', neuEl, 'Hits all enemies with arrows', 2, 6, 'All', 'None');
+  const steal = new Skill('Steal', 'Steal', neuEl, 'Attempts to steal from 1 enemy', 0, 0, 'Single', 'None');
+  const mug = new Skill('Mug', 'Steal', neuEl, 'Deals Physical damage and attempts to steal from 1 enemy', 4, 4, 'Single', 'Mug');
+  const drainArrow = new Skill('Drain Arrow', 'Physical', neuEl, 'Deals Physical damage and drains health from enemy', 3, 3, 'Single', 'Drain');
   const fireTwo = new Skill('Fire 2', 'Magic', fireEl, 'Deals powerful fire damage to one enemy', 8, 7, 'Single');
-  const waterArrowTwo = new Skill('Water Arrow 2', 'Physical', watEl, 'Shoots an arrow that deals powerful water damage to 1 enemy', 8, 7, 'Single');
-  const iceSlashTwo = new Skill('Ice Slash 2', 'Physical', iceEl, 'A powerful slash that deals ice damage to 1 enemy', 8, 7, 'Single');
-  const quickSlashes = new Skill('Quick Swipes', 'Physical', neuEl, 'Deals light damage to all enemies', 1, 1, 'All');
-  const thunSwipes = new Skill('Thunder Swipe', 'Physical', thunEl, 'Deals light thunder damage to all enemies', 1, 2, 'All');
-  const criticalThrust = new Skill('Critical Thrust', 'Physical', neuEl, "A carefully aimed thrust for an enemy's weak point, dealing critical damage", 12, 10, 'Single');
+  const waterArrowTwo = new Skill('Water Arrow 2', 'Physical', watEl, 'Shoots an arrow that deals powerful water damage to 1 enemy', 8, 7, 'Single', 'None');
+  const iceSlashTwo = new Skill('Ice Slash 2', 'Physical', iceEl, 'A powerful slash that deals ice damage to 1 enemy', 8, 7, 'Single', 'None');
+  const quickSlashes = new Skill('Quick Swipes', 'Physical', neuEl, 'Deals light damage to all enemies', 1, 1, 'All', 'None');
+  const thunSwipes = new Skill('Thunder Swipe', 'Physical', thunEl, 'Deals light thunder damage to all enemies', 1, 2, 'All', 'None');
+  const criticalThrust = new Skill('Critical Thrust', 'Physical', neuEl, "A carefully aimed thrust for an enemy's weak point, dealing critical damage", 12, 10, 'Single', 'None');
   const fire = {
     name: "Fire",
     type: "Magic",
@@ -417,7 +421,8 @@ class Skill {
     des: "Hits enemy with magic-based fire damage",
     pow: 2,
     cost: 3,
-    target: 'Single'
+    target: 'Single',
+    effect: 'None'
     };
   const basher = {
     name: "Basher",
@@ -426,7 +431,8 @@ class Skill {
     des: "Deals physical damage to 1 enemy",
     pow: 4,
     cost: 3,
-    target: 'Single'
+    target: 'Single',
+    effect: 'None'
     };
   const slashAll = {
       name: "Slash All",
@@ -435,7 +441,8 @@ class Skill {
       des: "Deals physical damage to all enemies",
       pow: 4,
       cost: 5,
-      target: 'All'
+      target: 'All',
+      effect: 'None'
       };
   const iceSlash = {
     name: "Ice Slash",
@@ -443,7 +450,9 @@ class Skill {
     des: "Deals physical and ice damage to 1 enemy",
     element: iceEl,
     pow: 2,
-    cost: 2
+    cost: 2,
+    target: 'Single',
+    effect: 'None'
     };
   const waterArrow = {
     name: "Water Arrow",
@@ -451,7 +460,9 @@ class Skill {
     des: "Deals physical and water damage to 1 enemy",
     element: watEl,
     pow: 2,
-    cost: 2
+    cost: 2,
+    target: 'Single',
+    effect: 'None'
     };
   //Support Skils
   const cure = {
@@ -461,22 +472,28 @@ class Skill {
     element: watEl,
     pow: 5,
     cost: 2,
-    target: 'Single'
+    target: 'Single',
+    effect: 'None'
     };
-  const cure2 = new Skill('Cure 2', 'Healing', neuEl, 'Heals 1 ally for 20 HP', 20, 8, 'Single');
-  const cureAll = new Skill('Cure All', 'Healing', neuEl, 'Heals all allies for 5 HP', 5, 4, 'All');
-  const highCureAll = new Skill('High Cure All', 'Healing', neuEl, 'Healls all allies for 15 HP each', 15, 10, 'All');
+  const meditate = new Skill('Meditate', 'Magic Healing', neuEl, 'Heals 5 MP', 5, 0, 'Self', 'None');
+  const cure2 = new Skill('Cure 2', 'Healing', neuEl, 'Heals 1 ally for 20 HP', 20, 8, 'Single', 'None');
+  const cureAll = new Skill('Cure All', 'Healing', neuEl, 'Heals all allies for 5 HP', 5, 4, 'All', 'None');
+  const highCureAll = new Skill('High Cure All', 'Healing', neuEl, 'Healls all allies for 15 HP each', 15, 10, 'All', 'None');
   const atkBoost = {
     name: "Attack Boost",
     type: "Attack Buff",
-    des: "Boosts attack for one ally for the rest of the battle.",
+    des: "Boosts attack for one ally for the rest of the battle. Can only be used once per character, per battle.",
     pow: 5,
-    cost: 5
+    cost: 5,
+    target: 'Single',
+    effect: 'None'
     };
   const defBoost = {
     name: "Defense Boost",
     type: "Defense Buff",
-    des: "Boosts Defense for one ally for the fest of the battle ",
+    des: "Boosts Defense for one ally for the fest of the battle. Can only be used once per character, per battle. ",
     pow: 5,
-    cost: 5
+    cost: 5,
+    target: "Single",
+    effect: 'None'
     };

@@ -302,7 +302,30 @@ function attackCalc (char, target, flow, skill){
           }
          
       } if (skill.type === "Steal"){
+        skillUseText(char, skill);
         stealFrom(enItems[target], target);
+        if (skill.effect === "Mug"){
+          let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow - enemyParty[target].pDef;
+          let thp = enHp[target];
+          let damage = clamp(getRandomInt(pa), pa-2, pa);
+          if (damage <= 0){damage = 0};
+          let final = thp - damage ;
+            if (final <= 0) {
+             // skillUseText(char, skill);
+              //adds elemental info
+              showDamage(enemyParty[target], damage, weak);
+              sayDeadEn(enemyParty[target]);
+              enemyParty.splice(target, 1);
+              enHp.splice(target, 1);
+              enItems.splice(target, 1);
+              battleMove(flow)
+              } else {
+             //   skillUseText(char, skill);
+                showDamage(enemyParty[target], damage, weak);
+                enHp[target] = thp - damage;
+                battleMove(flow)
+                  }
+        }
         battleMove(flow)
       }
 }
@@ -595,7 +618,13 @@ function supTarget (caster, sup, supflow){
     btn.textContent = 'All';
     btn.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = "All"; supportChoice = x; battleMove(y); a = caster; supCalc(a, z, x, y); choice = 1;})
   skillSlot.appendChild(btn);
-  }
+  } else if (sup.target === "Self"){
+    let btn = document.createElement("button");
+    btn.textContent = caster.name;
+    let position = currentParty.indexOf(caster);
+    btn.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = currentParty[position]; supportChoice = x; battleMove(y); a = caster; supCalc(a, z, x, y); choice = 1;})
+    skillSlot.appendChild(btn);
+  } else if (sup.target === "Single"){
   if (currentParty.length === 1){
   let btn = document.createElement("button");
   btn.textContent = currentParty[0].name;
@@ -625,6 +654,7 @@ function supTarget (caster, sup, supflow){
     btn2.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = currentParty[2]; supportChioice = x; battleMove(y); a = caster; supCalc(a, z, x, y);;})
     skillSlot.appendChild(btn2);
     }
+  }
   };
 function supCalc(caster, partymem, sup){
   info.innerHTML = "";
@@ -654,7 +684,18 @@ function supCalc(caster, partymem, sup){
         loadPartyInfo();
         }
     }
-    } if (sup.type === "Attack Buff"){
+    }
+    if (sup.type === "Magic Healing"){
+      partymem.cmp += sup.pow;
+      if (partymem.cmp > partymem.mp){
+        partymem.cmp = partymem.mp;
+      }
+      let showMp = document.createElement("p");
+      showMp.textContent = `${partymem.name}'s MP has been healed by ${sup.pow}, their MP is now ${partymem.cmp}/${partymem.mp}!`;
+      info.appendChild(showMp);
+      loadPartyInfo();
+    }
+     if (sup.type === "Attack Buff"){
       if (partymem.buff[0].on === false){
         partymem.buff[0].pow += sup.pow;
         partymem.buff[0].on = true;
@@ -868,12 +909,24 @@ function levelUp(char){
   }
   if (char.exp >= 950 && char.level < 13){
     statBoost(char);
+    julie.skills.push(drainArrow);
+    let learnedSkill = document.createElement("p");
+    learnedSkill.textContent = 'Julie learned Drain Arrow!';
+    info.appendChild(learnedSkill);
   }
   if (char.exp >= 1100 && char.level < 14){
     statBoost(char);
+    marie.skills.push(thunderThree);
+    let learnedSkill = document.createElement("p");
+      learnedSkill.textContent = 'Marie learned Thunder 3!';
+      info.appendChild(learnedSkill);
   }
   if (char.exp >= 1300 && char.level < 15){
     statBoost(char);
+    ando.support.push(meditate);
+    let learnedSkill = document.createElement("p");
+    learnedSkill.textContent = 'Ando learned Meditate!';
+    info.appendChild(learnedSkill);
   }
   if (char.exp >= 1500 && char.level < 16){
     statBoost(char);

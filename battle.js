@@ -491,6 +491,13 @@ function enemCalc (){
                 info.appendChild(damageRes);
               }
               currentParty.map(mapper);
+            } else if (attackChoice.type === "Healing"){
+              let healingVal = attackChoice.effect;
+              let healedTargetVal = getRandomInt(enLength);
+              enHp[healedTargetVal] += healingVal;
+              let showHeal = document.createElement("p");
+              showHeal.textContent = `${enemyParty[healedTargetVal].name} has been healed for ${healingVal}!`
+              info.appendChild(showHeal);
             } else {
             let damage = attackerDam + attackChoice.pow - target.pDef + target.buff[1].pow;
             let damageRange = clamp(getRandomInt(damage), damage, damage+1);
@@ -667,12 +674,12 @@ function itemTarget (item, flow){
   change.innerHTML = "";
   itemSlot.innerHTML = "";
   skillSlot.innerHTML = "";
-  if (item.type === "Rev" && deadTeam.length === 1){
+  if (item.type === "Revival" && deadTeam.length === 1){
     let btn = document.createElement("button");
   btn.textContent = deadTeam[0].name;
   btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = deadTeam[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
   itemSlot.appendChild(btn);
-  } else if (item.type === "Rev" && deadTeam.length === 2){
+  } else if (item.type === "Revival" && deadTeam.length === 2){
     let btn = document.createElement("button");
   btn.textContent = deadTeam[0].name;
   btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = deadTeam[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
@@ -729,7 +736,7 @@ function itemCalc(partymem, item){
       info.appendChild(pheal);
       loadPartyInfo();
     }
-  } if (item.type === "mHealing"){
+  } if (item.type === "Magic Healing"){
   partymem.cmp += item.effect;
     if (partymem.cmp > partymem.mp){
       partymem.cmp = partymem.mp;
@@ -744,12 +751,11 @@ function itemCalc(partymem, item){
       loadPartyInfo();
     }
   }
-    if (item.type == "Rev"){
+    if (item.type == "Revival"){
       const index = deadTeam.map(object => object.name).indexOf(partymem.name);
      let a = deadTeam.splice(index, 1);
-    // deadArr.push(a[0]);
-    // let b = deadArr.indexOf(partymem);
      partymem.chp = item.effect;
+     if (partymem.chp > partymem.hp){partymem.chp = partymem.hp}
      currentParty.push(a[0]);
      let pheal = document.createElement("p")
      pheal.textContent = partymem.name + " has been revived!";
@@ -867,6 +873,9 @@ function levelUp(char){
     statBoost(char);
   }
   if (char.exp >= 2800 && char.level < 20){
+    statBoost(char);
+  }
+  if (char.exp >= 3200 && char.level < 21){
     statBoost(char);
   }
 };

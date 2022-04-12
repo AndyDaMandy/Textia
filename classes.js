@@ -168,23 +168,23 @@ const highPotion = {
 const magicPotion = {
     name: "Magic Potion",
     category: "Item",
-    type: "mHealing",
+    type: "Magic Healing",
     des: "Heals 10 points of MP.",
     rarity: 25,
     effect: 10,
     cost: 8
     };
-const highMagicPotion = new Item('High Magic Potion', 'Item', 'mHealing', 'Heals 20 points of MP', 20, 18, 60, 'Single');
+const highMagicPotion = new Item('High Magic Potion', 'Item', 'Magic Healing', 'Heals 20 points of MP', 20, 18, 60, 'Single');
 const revivalPotion = {
     name: "Revival Potion",
     category: "Item",
-    type: "Rev",
+    type: "Revival",
     des: "Revives ally with 10 points of HP.",
     rarity: 25,
     effect: 10,
     cost: 15
     };
-const highRevivalPotion = new Item('High Revival Potion', 'Item', 'Rev', 'Revives an ally with 20 points of HP', 20, 18, 60, 'Single');
+const highRevivalPotion = new Item('High Revival Potion', 'Item', 'Revival', 'Revives an ally with 20 points of HP', 20, 18, 60, 'Single');
   //=======================================
   // Weapons go here
   //characters can only equip certain types of weapons, enforced by the equip screen.
@@ -263,6 +263,7 @@ const ancientWoodStaff = new Weapon('Ancient Wooden Staff', 'Weapon', 'Staff', '
 const ironDaggers = new Weapon('Iron Daggers', 'Weapon', 'Twin Daggers', 'Two daggers made of iron', 'Physical', 3, neuEl, 30, 80);
 const luckyDaggers = new Weapon('Lucky Daggers', 'Weapon', 'Twin Daggers', 'Two daggers that make you feel lucky!', 'Physical', 2, neuEl, 100, 10);
 const waterDaggers = new Weapon('Water Daggers', 'Weapon', 'Twin Daggers', 'Twin daggers imbued with', 'Physical', 7, watEl, 30, 1);
+const dragonScales = new Weapon('Lunar Dragon Scales', 'Weapon', 'Twin Daggers', 'Scales from the Lunar Dragon, sharp enough to use as blades.', 'Physical', 12, neuEl, 10000, 9);
 //Tomes
 const tomeofLife = new Weapon('Tome of Life', 'Weapon', 'Tome', 'A tome that reveals the secrets of life-energies', 'Magical', 5, neuEl, 1000, 10);
   //========================================
@@ -292,6 +293,8 @@ const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
 //great shark skills
 const largeBite = new EnemySkill('Large Bite', 'Physical', 2, 2, 'Single');
 const bigWave = new EnemySkill('Powerful Wave', 'Magical', 1, 2, 'All');
+const lunarEdge = new EnemySkill('Lunar Edge', 'Magical', 3, 2, 'Single');
+const moonlight = new EnemySkill('Moonlight', 'Healing', 20, 2, 'Single');
 
 //enemies go here
   class Enemy {
@@ -323,9 +326,9 @@ const bigWave = new EnemySkill('Powerful Wave', 'Magical', 1, 2, 'All');
   const arenaMage = new Enemy('Arena Mage', 10, 25, 20, 12, 8, 14, 5, iceEl, 5, 5, [eFire], 'Human', magicPotion);
   const swordFish = new Enemy('Sword Fish', 5, 30, 5, 18, 7, 7, 6, thunEl, 10, 20, [], 'Fish', highPotion);
   const shieldFish = new Enemy('Shield Fish', 5, 40, 4, 16, 13, 2, 2, thunEl, 10, 20, [], 'Fish', highPotion);
-  const advenKnight = new Enemy('Adventurer Knight', 10, 50, 5, 90, 12, 0, 9, neuEl, 10, 10, [], 'Human', blankItem);
-  const advenArcher = new Enemy('Adventurer Archer', 5, 40, 10, 21, 12, 0, 12, iceEl, 10, 10, [], 'Human', blankItem);
-  const advenMage = new Enemy('Adventurer Mage', 10, 30, 20, 15, 12, 10, 15, neuEl, 10, 10, [eFire, flameWave], 'Human', magicPotion);
+  const advenKnight = new Enemy('Adventurer Knight', 10, 50, 5, 90, 12, 0, 9, neuEl, 10, 10, [], 'Human', highRevivalPotion);
+  const advenArcher = new Enemy('Adventurer Archer', 5, 40, 10, 21, 12, 0, 12, iceEl, 10, 10, [], 'Human', highPotion);
+  const advenMage = new Enemy('Adventurer Mage', 10, 30, 20, 15, 12, 10, 15, neuEl, 10, 10, [eFire, flameWave], 'Human', highMagicPotion);
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -380,6 +383,7 @@ const bigWave = new EnemySkill('Powerful Wave', 'Magical', 1, 2, 'All');
   const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [iceClaw, wideSwipe], 'Leopard', blankItem);
   //greatshark is allied with a swordFish
   const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 19, 8, 15, 10, thunEl, 55, 100, [largeBite, bigWave], 'Fish', sparkBow);
+  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 160, 30, 25, 16, 23, 19, watEl, 200, 300, [lunarEdge], 'Dragon', dragonScales);
 //============================
 //Skills
 //===========================
@@ -465,14 +469,14 @@ class Skill {
   const atkBoost = {
     name: "Attack Boost",
     type: "Attack Buff",
-    des: "Boosts attack for 1 turn.",
-    pow: 1,
-    cost: 2
+    des: "Boosts attack for one ally for the rest of the battle.",
+    pow: 5,
+    cost: 5
     };
   const defBoost = {
     name: "Defense Boost",
     type: "Defense Buff",
-    des: "Boosts Defense for 1 turn.",
-    pow: 1,
-    cost: 2
+    des: "Boosts Defense for one ally for the fest of the battle ",
+    pow: 5,
+    cost: 5
     };

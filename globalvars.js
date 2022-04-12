@@ -33,7 +33,9 @@ marie.support.push(cure);
 ari.weapon = ironDaggers;
 ari.skills.push(steal);
 ari.skills.push(quickSlashes);
-siege.weapon = ironSpear;
+gabriel.weapon = tomeofLife;
+gabriel.skills.push(water);
+gabriel.support.push(cureAll);
 //weaponsOwned.push(excalibur);
 
 function toggleChests(){

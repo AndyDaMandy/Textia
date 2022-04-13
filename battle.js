@@ -1159,6 +1159,7 @@ function battleMove(x) {
         currentParty.push(deadTeam[i]);
       }
     }
+    deadTeam = [];
    change.innerHTML = "";
    // info.innerHTML = "";
     holder.innerHTML = "";

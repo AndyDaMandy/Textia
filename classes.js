@@ -76,17 +76,17 @@ let ari = {
 }
 let gabriel = {
   name: 'Gabriel',
-  level: 11,
-  hp: 19,
-  chp: 19,
-  mp: 22,
-  cmp: 22,
+  level: 10,
+  hp: 17,
+  chp: 17,
+  mp: 24,
+  cmp: 24,
   pAtk: 12,
-  pDef: 8,
-  mAtk: 14,
-  mDef: 14,
-  luck: 8,
-  exp: 900,
+  pDef: 17,
+  mAtk: 19,
+  mDef: 20,
+  luck: 12,
+  exp: 650,
   buff: [{type: "atk", pow: 0, on: false},{type: "def", pow: 0, on: false}],
   skills: [],
   support: [],
@@ -345,11 +345,11 @@ const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   const advenKnight = new Enemy('Adventurer Knight', 10, 40, 5, 19, 12, 0, 9, neuEl, 10, 10, [], 'Human', highRevivalPotion);
   const advenArcher = new Enemy('Adventurer Archer', 5, 25, 25, 21, 12, 0, 12, iceEl, 10, 10, [], 'Human', highPotion);
   const advenMage = new Enemy('Adventurer Mage', 10, 20, 20, 17, 12, 20, 12, neuEl, 10, 10, [eFire, flameWave, lightHeal], 'Human', highMagicPotion);
-  const glassBeast = new Enemy('Glass Beast', 15, 100, 0, 25, 0, 0, 9, fireEl, 25, 25, [], 'Glass', blankItem);
-  const fireLion = new Enemy('Fire Mountain Lion', 13, 30, 10, 22, 10, 0, 12, iceEl, 25, 25, [], 'Lion', highPotion);
+  const glassBeast = new Enemy('Glass Beast', 15, 80, 0, 25, 0, 0, 2, fireEl, 25, 25, [], 'Glass', blankItem);
+  const fireLion = new Enemy('Fire Mountain Lion', 13, 30, 10, 23, 10, 0, 12, iceEl, 25, 25, [], 'Lion', highPotion);
   const obsidianGolem = new Enemy('Obsidian Golem', 20, 35, 10, 20, 12, 0, 6, fireEl, 30, 30, [], 'Golem', highRevivalPotion); 
   const thunderRod = new Enemy('Thunder Rod', 20, 30, 30, 19, 10, 25, 15, watEl, 40, 40, [ethun, thunWave], 'Rod', blankItem);
-  const aquaSlime = new Enemy('Aqua Slime', 10, 30, 10, 19, 12, 20, 15, thunEl, 20, 20, [], 'Slime', highMagicPotion);
+  const aquaSlime = new Enemy('Aqua Slime', 10, 30, 10, 27, 12, 20, 15, thunEl, 20, 20, [], 'Slime', highMagicPotion);
   const shadow = new Enemy('Shadow Warrior', 20, 45, 40, 26, 12, 26, 12, neuEl, 40, 40, [eFire, lightHeal], 'Shadow', highRevivalPotion);
   const goblin = {
     name: "Goblin",
@@ -404,9 +404,9 @@ const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   const flareFox = new Enemy('Flare Fox', 4, 100, 10, 13, 5, 13, 5, iceEl, 50, 50, [fireBall, flameWave], 'Fox', blankItem);
   const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [iceClaw, wideSwipe], 'Leopard', blankItem);
   //greatshark is allied with a swordFish
-  const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 19, 8, 15, 10, thunEl, 55, 100, [largeBite, bigWave], 'Fish', sparkBow);
+  const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 22, 8, 20, 10, thunEl, 55, 100, [largeBite, bigWave], 'Fish', sparkBow);
   //dark crow
-  const darkCrow = new Enemy('Thunder Rod', 20, 80, 30, 25, 20, 25, 20, neuEl, 80, 80, [], 'Flying', blankItem);
+  const darkCrow = new Enemy('Dark Crow', 20, 80, 30, 25, 20, 25, 20, neuEl, 80, 80, [], 'Flying', blankItem);
   const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 110, 30, 25, 12, 23, 12, watEl, 200, 300, [lunarEdge, moonlight, crescentStrike], 'Dragon', dragonScales);
   const redPilgrim = new Enemy('Red - The First Pilgrim', 100, 300, 20, 25, 9, 25, 9, neuEl, 200, 500, [sunSlash, crystalBlessing, eCriticalThrust, wideSlash], 'Human', excalibur);
 //============================

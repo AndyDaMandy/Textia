@@ -373,7 +373,7 @@ function gameFlow (state) {
           document.getElementById("port-1-1").hidden = false;
         }
         if (state === 34){
-          shopState = 2;
+          shopState = 3;
           shopButton.hidden = false;
           document.getElementById("port-1").hidden = false;
           document.getElementById("port-1-1").hidden = true;

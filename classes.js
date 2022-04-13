@@ -255,7 +255,8 @@ const ancientWoodStaff = new Weapon('Ancient Wooden Staff', 'Weapon', 'Staff', '
     pow: 1
     };
   const longBow = new Weapon('Long Bow','Weapon', 'Bow', 'A long, wooden bow.', 'Physical', 4, neuEl, 30, 50);
-  const sparkBow = new Weapon('Spark Bow', 'Weapon', 'Bow', 'A powerful bow imbued with Thunder', 'Physical', 8, thunEl, 150, 30);
+  const sparkBow = new Weapon('Spark Bow', 'Weapon', 'Bow', 'A powerful bow imbued with Thunder', 'Physical', 10, thunEl, 150, 30);
+  const narshBow = new Weapon('Sacred Narsh Bow', 'Weapon', 'Bow', 'A strong bow made from the sacred trees of Narsh', 'Phsycial', 10, neuEl, 85, 30);
 //Spear
   const ironSpear = new Weapon('Iron Spear','Weapon', 'Spear', 'A simple spear with an iron tip', 'Physical', 4, neuEl, 30);
   const iceSpear = new Weapon('Ice Spear', 'Weapon', 'Spear', 'A spear imbued with Ice Magic', 'Physical', 3, iceEl, 50);
@@ -335,9 +336,9 @@ const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   const advenArcher = new Enemy('Adventurer Archer', 5, 30, 10, 21, 12, 0, 12, iceEl, 10, 10, [], 'Human', highPotion);
   const advenMage = new Enemy('Adventurer Mage', 10, 30, 20, 17, 14, 20, 15, neuEl, 10, 10, [eFire, flameWave, lightHeal], 'Human', highMagicPotion);
   const glassBeast = new Enemy('Glass Beast', 15, 100, 0, 25, 0, 0, 15, fireEl, 25, 25, [], 'Glass', blankItem);
-  const fireLion = new Enemy('Fire Mountain Lion', 13, 40, 10, 22, 16, 0, 12, iceEl, 25, 25, [], 'Lion', highPotion);
-  const obsidianGolem = new Enemy('Obsidian Golem', 20, 60, 10, 20, 20, 0, 6, fireEl, 30, 30, [], 'Golem', highRevivalPotion); 
-  const thunderRod = new Enemy('Thunder Rod', 20, 40, 30, 16, 20, 25, 20, watEl, 40, 40, [ethun, thunWave], 'Rod', blankItem);
+  const fireLion = new Enemy('Fire Mountain Lion', 13, 30, 10, 22, 16, 0, 12, iceEl, 25, 25, [], 'Lion', highPotion);
+  const obsidianGolem = new Enemy('Obsidian Golem', 20, 35, 10, 20, 20, 0, 6, fireEl, 30, 30, [], 'Golem', highRevivalPotion); 
+  const thunderRod = new Enemy('Thunder Rod', 20, 30, 30, 16, 20, 25, 20, watEl, 40, 40, [ethun, thunWave], 'Rod', blankItem);
   const goblin = {
     name: "Goblin",
     level: 1,

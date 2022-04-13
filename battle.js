@@ -551,10 +551,12 @@ function enemCalc (){
                 info.appendChild(damageRes);
               }
               currentParty.map(mapper);
-            } else if (attackChoice.type === "Healing"){
-              let healingVal = attackChoice.effect;
+            } 
+          } else if (attackChoice.type === "Healing"){
+              let healingVal = attackChoice.pow;
               let healedTargetVal = getRandomInt(enLength);
               enHp[healedTargetVal] += healingVal;
+              if (enHp[healedTargetVal] >= enemyParty[healedTargetVal].hp){enHp[healedTargetVal] = enemyParty[healedTargetVal].hp}
               let showHeal = document.createElement("p");
               showHeal.textContent = `${enemyParty[healedTargetVal].name} has been healed for ${healingVal}!`
               info.appendChild(showHeal);
@@ -568,7 +570,7 @@ function enemCalc (){
             info.appendChild(damageRes);
             }
           }
-        }
+        
         //just normal physical attack again
         else {
           let attackerDam = attacker.pAtk;

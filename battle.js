@@ -551,6 +551,14 @@ function enemCalc (){
                 info.appendChild(damageRes);
               }
               currentParty.map(mapper);
+            } else {
+              let damage = attackerDam + attackChoice.pow - target.pDef + target.buff[1].pow;
+            let damageRange = clamp(getRandomInt(damage), damage, damage+1);
+            if (damageRange <= 0){damageRange = 0};
+            target.chp = target.chp - damageRange;
+            let damageRes = document.createElement("p");
+            damageRes.textContent = target.name + " was hit by " + attacker.name + "'s " + attackChoice.name + " for " + damageRange + " damage!";
+            info.appendChild(damageRes);
             } 
           } else if (attackChoice.type === "Healing"){
               let healingVal = attackChoice.pow;
@@ -560,17 +568,8 @@ function enemCalc (){
               let showHeal = document.createElement("p");
               showHeal.textContent = `${enemyParty[healedTargetVal].name} has been healed for ${healingVal}!`
               info.appendChild(showHeal);
-            } else {
-            let damage = attackerDam + attackChoice.pow - target.pDef + target.buff[1].pow;
-            let damageRange = clamp(getRandomInt(damage), damage, damage+1);
-            if (damageRange <= 0){damageRange = 0};
-            target.chp = target.chp - damageRange;
-            let damageRes = document.createElement("p");
-            damageRes.textContent = target.name + " was hit by " + attacker.name + "'s " + attackChoice.name + " for " + damageRange + " damage!";
-            info.appendChild(damageRes);
             }
           }
-        
         //just normal physical attack again
         else {
           let attackerDam = attacker.pAtk;

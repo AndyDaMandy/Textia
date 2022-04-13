@@ -614,7 +614,7 @@
       <p>Suddenly from the shadows of the trees a large crow appears.</p>
       <p>Its eyes glow red as it readies its beak to attack.</p>
       <p>You have no choice but to fight.</p>
-      <button>Fight</button>
+      <button onclick="battle([darkCrow]); statePost = 43">Fight</button>
     </div>
     <div id="mountain-1-7" hidden>
       <!-- state = 43 -->
@@ -622,19 +622,19 @@
       <p>After defeating the Dark Crow, you come across a man with a plethora of bags, weapons, and items.</p>
       <p>He introduces himself as a traveling merchant.</p>
       <p>Perhaps you should buy something for the road ahead?</p>
-      <button>Go Forward</button>
+      <button onclick="move(44)">Go Forward</button>
     </div>
     <div id="mountain-1-8" hidden>
-      <!-- state = 43 -->
+      <!-- state = 44 -->
       <h2>The Mountain of Narsh - Near the Peak</h2>
       <p>You near the peak of the mountain, you begin to see snow at your feet. It is now dark out, but you must find a safe place before you can rest.</p>
       <p>Although exhausted you remember how far you've come in your adventure.</p>
       <p>A group of enemies block the path ahead.</p>
       <p>You steel yourself.</p>
-      <button>Fight</button>
+      <button onclick="battle([obsidianGolem, aquaSlime, fireLion]); statePost = 45">Fight</button>
     </div>
     <div id="mountain-1-9" hidden>
-      <!-- state = 44 -->
+      <!-- state = 45 -->
       <h2>The Mountain of Narsh - Peak</h2>
       <p>At the top of the mountain you see the moonlight reflecting on the ocean. The moon's size appears tripled from this height.</p>
       <p>Although when you think about it harder, you don't recall the moon ever being so large or so bright.</p>
@@ -645,18 +645,19 @@
       <button onclick="battle([lunarDragon]); statePost = 45;">Fight</button>
     </div>
     <div id="mountain-1-10" hidden>
-      <!-- state = 45 -->
+      <!-- state = 46 -->
       <h2>The Mountain of Narsh - Overlooking the Crystal Lake</h2>
       <p>After defeating the Lunar Dragon of Narsh, you see the Crystal Lake ahead, buried deep within the mountain.</p>
       <p>At last your adventure is nearing its close.</p>
       <p>There's a chest here, will you open it?</p>
-      <button>Open Chest</button>
+      <button id="chest-16" onclick="openChest(lunarStaff, this.id)">Open Chest</button>
       <button>Go Forward</button>
     </div>
   </div>
   <div id="crystal">
     <div id="crystal-1">
       <!-- state = 46 -->
+      <h2>Game ends here for now, stay tuned for the finale!</h2>
     </div>
   </div>
 <!-- Adv mode Div -->

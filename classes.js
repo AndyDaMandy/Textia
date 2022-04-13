@@ -229,6 +229,7 @@ const ironSword = {
       element: neuEl,
       pow: 3
       };
+const katana = new Weapon('Katana', 'Weapon','Sword', 'A powerful blade from the far East', 'Physical', 8, neuEl, 120, 10);
 const silverSword = new Weapon('Silver Sword', 'Weapon', 'Sword', 'A powerful blade of steel, with anti-undead properties', 'Physical', 7, neuEl, 10000, 1);
 const excalibur = new Weapon('Excalibur','Weapon', 'Sword','The most powerful blade in the world','Physical', 1000, neuEl, 10000, 1);
 //Staff
@@ -244,6 +245,7 @@ const woodStaff = {
 const ironStaff = new Weapon('Iron Staff', 'Weapon', 'Staff', 'A simple staff made of iron', 'Magical', 3, neuEl, 20, 50);
 const iceStaff = new Weapon('Ice Staff','Weapon','Staff', 'A basic staff imbued with Ice Magic','Magical', 4, iceEl, 10, 30);
 const ancientWoodStaff = new Weapon('Ancient Wooden Staff', 'Weapon', 'Staff', 'A staff made from the wood of an ancient magical tree', 'Magical', 7, neuEl, 10000, 1);
+const lunarStaff = new Weapon('Lunar Staff', 'Weapon', 'Staff', 'A staff made from fragments of the moon.', 'Magical', 9, neuEl, 10000, 10);
 //Bow
   const woodBow = {
     name: "Wooden Bow",
@@ -267,6 +269,7 @@ const waterDaggers = new Weapon('Water Daggers', 'Weapon', 'Twin Daggers', 'Twin
 const dragonScales = new Weapon('Lunar Dragon Scales', 'Weapon', 'Twin Daggers', 'Scales from the Lunar Dragon, sharp enough to use as blades.', 'Physical', 12, neuEl, 10000, 9);
 //Tomes
 const tomeofLife = new Weapon('Tome of Life', 'Weapon', 'Tome', 'A tome that reveals the secrets of life-energies', 'Magical', 5, neuEl, 1000, 10);
+const tomeFire = new Weapon('Tome of Fire', 'Weapon', 'Tome', 'A Tome that reveals the secrets of the fire element', 'Magical', 9, fireEl, 100, 20);
   //========================================
 //blank item is a blank item for enemies to hold.
   const blankItem = {
@@ -339,6 +342,7 @@ const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   const fireLion = new Enemy('Fire Mountain Lion', 13, 30, 10, 22, 16, 0, 12, iceEl, 25, 25, [], 'Lion', highPotion);
   const obsidianGolem = new Enemy('Obsidian Golem', 20, 35, 10, 20, 20, 0, 6, fireEl, 30, 30, [], 'Golem', highRevivalPotion); 
   const thunderRod = new Enemy('Thunder Rod', 20, 30, 30, 16, 20, 25, 20, watEl, 40, 40, [ethun, thunWave], 'Rod', blankItem);
+  const aquaSlime = new Enemy('Aqua Slime', 10, 30, 10, 19, 22, 20, 20, thunEl, 20, 20, [], 'Slime', highMagicPotion);
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -393,7 +397,9 @@ const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [iceClaw, wideSwipe], 'Leopard', blankItem);
   //greatshark is allied with a swordFish
   const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 19, 8, 15, 10, thunEl, 55, 100, [largeBite, bigWave], 'Fish', sparkBow);
-  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 160, 30, 25, 16, 23, 17, watEl, 200, 300, [lunarEdge, moonlight], 'Dragon', dragonScales);
+  //dark crow
+  const darkCrow = new Enemy('Thunder Rod', 20, 80, 30, 25, 20, 25, 20, neuEl, 80, 80, [], 'Flying', blankItem);
+  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 110, 30, 25, 16, 23, 17, watEl, 200, 300, [lunarEdge, moonlight], 'Dragon', dragonScales);
 //============================
 //Skills
 //===========================

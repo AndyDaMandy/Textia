@@ -417,16 +417,20 @@ function gameFlow (state) {
           document.getElementById("mountain-1-5").hidden = false;
         }
         if (state === 42){
+          shopButton.hidden = true;
           document.getElementById("mountain-1").hidden = false;
           document.getElementById("mountain-1-5").hidden = true;
           document.getElementById("mountain-1-6").hidden = false;
         }
         if (state === 43){
+          shopState = 4;
+          shopButton.hidden = false;
           document.getElementById("mountain-1").hidden = false;
           document.getElementById("mountain-1-6").hidden = true;
           document.getElementById("mountain-1-7").hidden = false;
         }
         if (state === 44){
+          shopButton.hidden = true;
           document.getElementById("mountain-1").hidden = false;
           document.getElementById("mountain-1-7").hidden = true;
           document.getElementById("mountain-1-8").hidden = false;
@@ -434,10 +438,8 @@ function gameFlow (state) {
         if (state === 45){
           document.getElementById("mountain-1").hidden = false;
         }
-        //Crystal Lake
         if (state == 46){
-          document.getElementById("mountain-1").hidden = true;
-          document.getElementById("crystal").hidden = false;
+          document.getElementById("mountain-1").hidden = false;
         }
     };
 function move (state) {
@@ -493,6 +495,10 @@ function alertOne(){
       if (shopState === 3){
         let shopFour = [magicPotion, highPotion, revivalPotion, highRevivalPotion, sparkBow];
         shopFour.forEach(pusher);
+      }
+      if (shopState === 4){
+        let shopFive = [magicPotion,highMagicPotion, highPotion, revivalPotion, highRevivalPotion, sparkBow, katana, tomeFire];
+        shopFive.forEach(pusher);
       }
   
   }

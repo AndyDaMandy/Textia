@@ -656,20 +656,64 @@
   </div>
   <div id="crystal" hidden>
     <div id="crystal-1" hidden>
-      <!-- state = 46 -->
+      <!-- state = 47 -->
       <h2>Crystal Lake - Placing Crystals in the Lake</h2>
-      <p></p>
+      <p>The lake glows a bright purple, it almost looks like it's breathing.</p>
+      <p>Surrounding the lake are a plethora of crystals, you could easily take a few home to protect the town for years to come.</p>
+      <p>You place the crystals from home in the lake and slowly they begin to take on the energy of the Lake</p>
+      <p>Once they've been re-energized, you decide to head back.</p>
+      <button onclick="move(47)">Head Home</button>
     </div>
     <div id="crystal-2" hidden>
-      <!-- state = 47 -->
+      <!-- state = 48 -->
       <h2>Crystal Lake - Mysterious Air</h2>
+      <p>You feel a mysterious chill in the air as you turn around. You feel a strange presence behind you.</p>
+      <p>You turn around and are attacked by shadows!</p>
+      <button onclick="battle([shadow, shadow, shadow]); statePost = 48">Fight</button>
     </div>
     <div id="crystal-3" hidden>
-      <h2>Crystal Lake - Red the First Pilgrim</h2>
-      <button>Protect the Future</button>
+      <h2>Crystal Lake - The End</h2>
+      <!-- state = 49 -->
+      <p>After defeating the shadows a man appears. You recognize him, he was the man from the statue, Red, the first Pilgrim</p>
+      <p>Red: "I'm impressed that you've made it this far, I've found ways to stop pilgrims for years now."</p>
+      <p>Red: "The crystals contain Planet Energy, the element that makes us all up. All life in this world comes from Planet Energy."</p>
+      <p>Red: "When I defeated the Solar Dragon, I knew I made a mistake. The Dragon was simply protecting this land. Now the the plants are dying and we will have nothing left."</p>
+      <p>Red: "A long time ago I made a pact with the spirit of the planet to protect this world, and I'll continue to do it!"</p>
+      <p>Red: "Prepare yourselves!"</p>
+      <button onclick="battle([redPilgrim]); statePost = 49">Battle for the Future</button>
     </div>
   </div>
-
+<div id="ending" hidden>
+  <div id="ending-1" hidden>
+    <!-- 50 -->
+    <h2>The End</h2>
+    <p>You defeat Red, knocking him over. He's still breathing.</p>
+    <p>Red: "Why did you let me live? Do you too wish to protect this sacred land?"</p>
+    <p>You ponder for a moment, this could have deep consequences for the world.</p>
+    <button onclick="move(51)">Help Red protect this land</button>
+    <button onclick="move(52)">Reject his offer</button>
+  </div>
+  <div id="ending-1-1" hidden>
+    <!-- 51 -->
+    <h2>Protecting the Crystal Lake</h2>
+    <p>Although you can no longer protect the people of this world, you and your allies decide to protect the Crystal Lake, as without it, no life could exist in this world anymore.</p>
+    <p>Gabriel realizes in his studies that there are more Crystal Lakes in different continents, and sets off with Ari to help protect those lakes.</p>
+    <p>Ando and Marie begin researching alternative ways to help protect the villages from monsters without the need of the Planet Energy</p>
+    <hr>
+    <p><em>Thanks for playing, I hope you enjoyed Textia! - Andy</em></p>
+  </div>
+  <div id="ending-2-1" hidden>
+    <!-- 52 -->
+    <h2>Returning to Amaryllis Town</h2>
+    <p>Having rejected Red's offer, you return to Amaryllis Town</p>
+    <p>The Shaman: "You've saved us! Now that our crystal is back we will live in peace for many years to come."</p>
+    <p>Ando and Marie live peacefully in Amaryllis Town until the end of their days.</p>
+    <p>Julie returns to her hometown and brings a crystal to them, ensuring peace.</p>
+    <p>Gabriel begins researching ways to reuse the planet's energies. We hope his research will come to fruition in the near future.</p>
+    <hr>
+    <p><em>Thanks for playing, I hope you enjoyed Textia! - Andy</em></p>
+  </div>
+</div>
 <!-- Adv mode Div -->
 </div>
   </body>

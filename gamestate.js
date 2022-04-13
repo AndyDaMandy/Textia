@@ -437,9 +437,43 @@ function gameFlow (state) {
         }
         if (state === 45){
           document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-8").hidden = true;
+          document.getElementById("mountain-1-9").hidden = false;
         }
         if (state == 46){
           document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-9").hidden = true;
+          document.getElementById("mountain-1-10").hidden = false;
+        }
+        if (state === 47){
+          document.getElementById("mountain-1").hidden = true;
+          document.getElementById("crystal").hidden = false;
+          document.getElementById("crystal-1").hidden = false;
+        }
+        if (state === 48){
+          document.getElementById("crystal").hidden = false;
+          document.getElementById("crystal-1").hidden = true;
+          document.getElementById("crystal-2").hidden = false;
+        }
+        if (state === 49){
+          document.getElementById("crystal").hidden = false;
+          document.getElementById("crystal-2").hidden = true;
+          document.getElementById("crystal-3").hidden = false;
+        }
+        if (state === 50){
+          document.getElementById("crystal").hidden = true;
+          document.getElementById("ending").hidden = false;
+          document.getElementById("ending-1").hidden = false;
+        }
+        if (state === 51){
+          document.getElementById("ending").hidden = false;
+          document.getElementById("ending-1").hidden = true;
+          document.getElementById("ending-1-1").hidden = false;
+        }
+        if (state === 52){
+          document.getElementById("ending").hidden = false;
+          document.getElementById("ending-1").hidden = true;
+          document.getElementById("ending-2-1").hidden = false;
         }
     };
 function move (state) {

@@ -298,12 +298,19 @@ const largeBite = new EnemySkill('Large Bite', 'Physical', 2, 2, 'Single');
 const bigWave = new EnemySkill('Powerful Wave', 'Magical', 1, 2, 'All');
 //Lunar Dragon
 const lunarEdge = new EnemySkill('Lunar Edge', 'Magical', 3, 2, 'Single');
+const crescentStrike = new EnemySkill('Crescent Strike', 'Physical', 1, 2, 'All');
 const moonlight = new EnemySkill('Moonlight', 'Healing', 20, 2, 'Single');
+//Red Skills
+const sunSlash = new EnemySkill('Solar Dragon Blade', 'Magical', 3, 3, 'Single');
+const crystalBlessing = new EnemySkill('Crystal Blessing', 'Healing', 40, 3, 'Single');
+const eCriticalThrust = new EnemySkill('Critical Thrust', 'Physical', 5, 3, 'Single');
+const wideSlash = new EnemySkill('Wide Slash', 'Physical', 2, 3, 'All');
 //misc enemy skills
 const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
 const lightHeal = new EnemySkill('Light Heal', 'Healing', 10, 3, 'Single');
 const ethun = new EnemySkill('Thunder', 'Magical', 3, 2, 'Single');
 const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
+
 
 //enemies go here
   class Enemy {
@@ -343,6 +350,7 @@ const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   const obsidianGolem = new Enemy('Obsidian Golem', 20, 35, 10, 20, 20, 0, 6, fireEl, 30, 30, [], 'Golem', highRevivalPotion); 
   const thunderRod = new Enemy('Thunder Rod', 20, 30, 30, 16, 20, 25, 20, watEl, 40, 40, [ethun, thunWave], 'Rod', blankItem);
   const aquaSlime = new Enemy('Aqua Slime', 10, 30, 10, 19, 22, 20, 20, thunEl, 20, 20, [], 'Slime', highMagicPotion);
+  const shadow = new Enemy('Shadow Warrior', 20, 40, 40, 26, 20, 26, 20, neuEl, 40, 40, [eFire, lightHeal], 'Shadow', highRevivalPotion);
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -399,7 +407,8 @@ const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 19, 8, 15, 10, thunEl, 55, 100, [largeBite, bigWave], 'Fish', sparkBow);
   //dark crow
   const darkCrow = new Enemy('Thunder Rod', 20, 80, 30, 25, 20, 25, 20, neuEl, 80, 80, [], 'Flying', blankItem);
-  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 110, 30, 25, 16, 23, 17, watEl, 200, 300, [lunarEdge, moonlight], 'Dragon', dragonScales);
+  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 110, 30, 25, 16, 23, 17, watEl, 200, 300, [lunarEdge, moonlight, crescentStrike], 'Dragon', dragonScales);
+  const redPilgrim = new Enemy('Red - The First Pilgrim', 100, 300, 20, 25, 12, 25, 12, neuEl, 200, 500, [sunSlash, crystalBlessing, eCriticalThrust, wideSlash], 'Human', excalibur);
 //============================
 //Skills
 //===========================

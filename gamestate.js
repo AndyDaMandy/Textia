@@ -528,10 +528,11 @@ function alertOne(){
   
   //add party functions
   function addJulie (id){
-    julie.weapon = woodBow;
-    julie.skills.push(waterArrow);
-    julie.skills.push(volley);
-    currentParty.push(julie);
+    if (currentParty.length >= 3){
+      reserveParty.push(julie);
+    } else {
+      currentParty.push(julie);
+    }
     alert("Julie joined the party!");
     document.getElementById(id).hidden = true;
     //julie button gets treated as a chest to prevent getting Julia more than once.
@@ -548,6 +549,16 @@ function alertOne(){
     }
     document.getElementById(id).hidden = true;
     opened.push(id);
+  }
+  function addGabriel(id){
+    if (currentParty.length >= 3) {
+      reserveParty.push(gabriel);
+    } else {
+      currentParty.push(gabriel);
+    }
+    document.getElementById(id).hidden = true;
+    opened.push(id);
+    alert("Gabriel has joined the party! ");
   }
   // read magic book function
   function addBook(id){
@@ -576,5 +587,14 @@ function alertOne(){
       move(28);
     } else {
       alert('You asked around to see if someone would be willing to let you ride a boat, but it appears nobody will take you. You decide to turn back and see if you can find a way to get access to a boat.')
+    }
+  }
+  //checks for Gabriel
+  function checkGabe (){
+    if (currentParty.indexOf(gabriel) != -1 || reserveParty.indexOf(gabriel) != -1){
+      alert('Gabriel: "Let us march forward then."')
+      move(41);
+    } else {
+      alert('You think it would be best to accept the offer, better to have more allies then less.')
     }
   }

@@ -289,14 +289,17 @@ const flameWave = new EnemySkill('Flame Wave', 'Magical', 1, 2, 'All');
 //ice leopard skills
 const iceClaw = new EnemySkill('Ice Claw', 'Physical', 3, 2, 'Single');
 const wideSwipe = new EnemySkill('Wide Swipe', 'Physical', 1, 2, 'All');
-//misc enemy skills
-const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
-const lightHeal = new EnemySkill('Light Heal', 'Healing', 10, 3, 'Single');
 //great shark skills
 const largeBite = new EnemySkill('Large Bite', 'Physical', 2, 2, 'Single');
 const bigWave = new EnemySkill('Powerful Wave', 'Magical', 1, 2, 'All');
+//Lunar Dragon
 const lunarEdge = new EnemySkill('Lunar Edge', 'Magical', 3, 2, 'Single');
 const moonlight = new EnemySkill('Moonlight', 'Healing', 20, 2, 'Single');
+//misc enemy skills
+const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
+const lightHeal = new EnemySkill('Light Heal', 'Healing', 10, 3, 'Single');
+const ethun = new EnemySkill('Thunder', 'Magical', 3, 2, 'Single');
+const thunWave = new EnemeySkill('Thunder Wave', 'Magical', 2, 2, 'All');
 
 //enemies go here
   class Enemy {
@@ -317,7 +320,7 @@ const moonlight = new EnemySkill('Moonlight', 'Healing', 20, 2, 'Single');
       this.steal = steal;
     }
   };
-  //very important, use neuEl for enemies with no elemental weaknesses and "N/A" for skills/weapons
+  //very important, use neuEl for enemies with no elemental weaknesses
   const iceman = new Enemy ('Ice Man', 1, 8, 5, 5, 2, 1, 1, fireEl, 1, 1, [], 'Frost');
   //if an enemy is flying, bows hit for extra damage.
   const bat = new Enemy('Bat', 1, 13, 3, 10, 3, 1, 1, neuEl, 1, 1, [], 'Flying');
@@ -331,6 +334,10 @@ const moonlight = new EnemySkill('Moonlight', 'Healing', 20, 2, 'Single');
   const advenKnight = new Enemy('Adventurer Knight', 10, 50, 5, 90, 12, 0, 9, neuEl, 10, 10, [], 'Human', highRevivalPotion);
   const advenArcher = new Enemy('Adventurer Archer', 5, 40, 10, 21, 12, 0, 12, iceEl, 10, 10, [], 'Human', highPotion);
   const advenMage = new Enemy('Adventurer Mage', 10, 30, 20, 15, 12, 10, 15, neuEl, 10, 10, [eFire, flameWave, lightHeal], 'Human', highMagicPotion);
+  const glassBeast = new Enemy('Glass Beast', 15, 100, 0, 25, 0, 0, 15, fireEl, 25, 25, [], 'Glass', blankItem);
+  const fireLion = new Enemy('Fire Mountain Lion', 13, 40, 10, 22, 16, 0, 12, iceEl, 25, 25, [], 'Lion', highPotion);
+  const obsidianGolem = new Enemy('Obsidian Golem', 20, 60, 10, 20, 20, 0, 6, fireEl, 30, 30, [], 'Golem', highRevivalPotion); 
+  const thunderRod = new Enemy('Thunder Rod', 20, 40, 30, 16, 20, 25, 20, watEl, 40, 40, [ethun, thunWave], 'Rod', blankItem);
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -385,11 +392,11 @@ const moonlight = new EnemySkill('Moonlight', 'Healing', 20, 2, 'Single');
   const iceLeopard = new Enemy('Ice Leopard', 4, 100, 2, 15, 6, 1, 2, fireEl, 50, 50, [iceClaw, wideSwipe], 'Leopard', blankItem);
   //greatshark is allied with a swordFish
   const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 19, 8, 15, 10, thunEl, 55, 100, [largeBite, bigWave], 'Fish', sparkBow);
-  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 160, 30, 25, 16, 23, 19, watEl, 200, 300, [lunarEdge, moonlight], 'Dragon', dragonScales);
+  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 160, 30, 25, 16, 23, 17, watEl, 200, 300, [lunarEdge, moonlight], 'Dragon', dragonScales);
 //============================
 //Skills
 //===========================
-//very important, use "None" for enemies with no elemental weaknesses and "N/A" for skills/weapons  
+//very important, use "None" for enemies with no elemental weaknesses  
 class Skill {
     constructor(name, type, element, des, pow, cost, target, effect){
       this.name = name;

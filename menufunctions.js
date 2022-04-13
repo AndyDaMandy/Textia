@@ -450,7 +450,7 @@ function openMenu(){
   document.getElementById("show-stats").hidden = false;
   document.getElementById("formation-button").hidden = false;
   document.getElementById("tutorial-button").hidden = false;
-  document.getElementById("dev-mode").hidden = false;
+ // document.getElementById("dev-mode").hidden = false;
   document.getElementById("close-menu").hidden = false;
   };
 function closeMenu() {
@@ -483,8 +483,8 @@ function closeMenu() {
   document.getElementById("tutorial-menu").hidden = true;
   document.getElementById("tutorial-button").hidden = true;
   //dev mode
-  document.getElementById("dev-mode").hidden = true;
-  document.getElementById("dev-menu").hidden = true;
+//  document.getElementById("dev-mode").hidden = true;
+ // document.getElementById("dev-menu").hidden = true;
   };
   
 //======================================

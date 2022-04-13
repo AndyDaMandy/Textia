@@ -47,7 +47,7 @@
   <button class="small-btn" id="inventory-button" hidden onclick="showInventory()">Inventory</button>
   <button class="small-btn" id="show-stats" onclick="showStats()" hidden>Party Status</button>
   <button class="small-btn" id="tutorial-button" onclick="openTutorial()" hidden>Tutorial</button>
-  <button class="small-btn" id="dev-mode" onclick="openDev()" hidden>Dev Mode</button>
+ <!-- <button class="small-btn" id="dev-mode" onclick="openDev()" hidden>Dev Mode</button> -->
   <button class="small-btn" id="close-menu" onclick="closeMenu()" hidden>Close Menu</button>
 </div>
 <div class="well" id="save-menu" hidden>
@@ -654,12 +654,22 @@
       <button>Go Forward</button>
     </div>
   </div>
-  <div id="crystal">
-    <div id="crystal-1">
+  <div id="crystal" hidden>
+    <div id="crystal-1" hidden>
       <!-- state = 46 -->
-      <h2>Game ends here for now, stay tuned for the finale!</h2>
+      <h2>Crystal Lake - Placing Crystals in the Lake</h2>
+      <p></p>
+    </div>
+    <div id="crystal-2" hidden>
+      <!-- state = 47 -->
+      <h2>Crystal Lake - Mysterious Air</h2>
+    </div>
+    <div id="crystal-3" hidden>
+      <h2>Crystal Lake - Red the First Pilgrim</h2>
+      <button>Protect the Future</button>
     </div>
   </div>
+
 <!-- Adv mode Div -->
 </div>
   </body>

@@ -39,6 +39,8 @@ ari.skills.push(quickSlashes);
 gabriel.weapon = tomeofLife;
 gabriel.skills.push(water);
 gabriel.support.push(cureAll);
+gabriel.support.push(defenseBoost);
+gabriel.skills.push(iceTwo);
 //weaponsOwned.push(excalibur);
 
 function toggleChests(){

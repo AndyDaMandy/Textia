@@ -336,21 +336,21 @@ const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   //if an enemy is flying, bows hit for extra damage.
   const bat = new Enemy('Bat', 1, 13, 3, 10, 3, 1, 1, neuEl, 1, 1, [], 'Flying');
   const familiar = new Enemy('Familiar', 1, 55, 3, 9, 4, 0, 2, thunEl, 1, 0, [], 'Familiar');
-  const sparkBison = new Enemy('Spark Bison', 3, 20, 1, 11, 9, 1, 3, watEl, 5, 5, [],'Bison');
+  const sparkBison = new Enemy('Spark Bison', 3, 20, 1, 11, 7, 1, 3, watEl, 5, 5, [],'Bison');
   const redGoblin = new Enemy('Red Goblin', 3, 30, 1, 10, 4, 2, 5, neuEl ,7, 10, [], 'Goblin');
-  const arenaFighter = new Enemy('Arena Fighter', 4, 30, 3, 13, 9, 0, 0, iceEl, 5, 5, [], 'Human', potion);
-  const arenaMage = new Enemy('Arena Mage', 10, 25, 20, 12, 8, 14, 5, iceEl, 5, 5, [eFire], 'Human', magicPotion);
-  const swordFish = new Enemy('Sword Fish', 5, 30, 5, 18, 7, 7, 6, thunEl, 15, 20, [], 'Fish', highPotion);
-  const shieldFish = new Enemy('Shield Fish', 5, 40, 4, 16, 13, 2, 2, thunEl, 15, 20, [], 'Fish', highPotion);
+  const arenaFighter = new Enemy('Arena Fighter', 4, 25, 3, 13, 8, 0, 0, iceEl, 5, 5, [], 'Human', potion);
+  const arenaMage = new Enemy('Arena Mage', 10, 25, 20, 12, 6, 14, 5, iceEl, 5, 5, [eFire], 'Human', magicPotion);
+  const swordFish = new Enemy('Sword Fish', 5, 25, 5, 18, 7, 7, 6, thunEl, 15, 20, [], 'Fish', highPotion);
+  const shieldFish = new Enemy('Shield Fish', 5, 40, 4, 16, 10, 2, 2, thunEl, 15, 20, [], 'Fish', highPotion);
   const advenKnight = new Enemy('Adventurer Knight', 10, 40, 5, 19, 12, 0, 9, neuEl, 10, 10, [], 'Human', highRevivalPotion);
   const advenArcher = new Enemy('Adventurer Archer', 5, 25, 25, 21, 12, 0, 12, iceEl, 10, 10, [], 'Human', highPotion);
   const advenMage = new Enemy('Adventurer Mage', 10, 20, 20, 17, 12, 20, 12, neuEl, 10, 10, [eFire, flameWave, lightHeal], 'Human', highMagicPotion);
-  const glassBeast = new Enemy('Glass Beast', 15, 100, 0, 25, 0, 0, 15, fireEl, 25, 25, [], 'Glass', blankItem);
-  const fireLion = new Enemy('Fire Mountain Lion', 13, 30, 10, 22, 16, 0, 12, iceEl, 25, 25, [], 'Lion', highPotion);
-  const obsidianGolem = new Enemy('Obsidian Golem', 20, 35, 10, 20, 20, 0, 6, fireEl, 30, 30, [], 'Golem', highRevivalPotion); 
-  const thunderRod = new Enemy('Thunder Rod', 20, 30, 30, 16, 20, 25, 20, watEl, 40, 40, [ethun, thunWave], 'Rod', blankItem);
-  const aquaSlime = new Enemy('Aqua Slime', 10, 30, 10, 19, 22, 20, 20, thunEl, 20, 20, [], 'Slime', highMagicPotion);
-  const shadow = new Enemy('Shadow Warrior', 20, 40, 40, 26, 20, 26, 20, neuEl, 40, 40, [eFire, lightHeal], 'Shadow', highRevivalPotion);
+  const glassBeast = new Enemy('Glass Beast', 15, 100, 0, 25, 0, 0, 9, fireEl, 25, 25, [], 'Glass', blankItem);
+  const fireLion = new Enemy('Fire Mountain Lion', 13, 30, 10, 22, 10, 0, 12, iceEl, 25, 25, [], 'Lion', highPotion);
+  const obsidianGolem = new Enemy('Obsidian Golem', 20, 35, 10, 20, 12, 0, 6, fireEl, 30, 30, [], 'Golem', highRevivalPotion); 
+  const thunderRod = new Enemy('Thunder Rod', 20, 30, 30, 19, 10, 25, 15, watEl, 40, 40, [ethun, thunWave], 'Rod', blankItem);
+  const aquaSlime = new Enemy('Aqua Slime', 10, 30, 10, 19, 12, 20, 15, thunEl, 20, 20, [], 'Slime', highMagicPotion);
+  const shadow = new Enemy('Shadow Warrior', 20, 45, 40, 26, 12, 26, 12, neuEl, 40, 40, [eFire, lightHeal], 'Shadow', highRevivalPotion);
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -407,8 +407,8 @@ const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 19, 8, 15, 10, thunEl, 55, 100, [largeBite, bigWave], 'Fish', sparkBow);
   //dark crow
   const darkCrow = new Enemy('Thunder Rod', 20, 80, 30, 25, 20, 25, 20, neuEl, 80, 80, [], 'Flying', blankItem);
-  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 110, 30, 25, 16, 23, 17, watEl, 200, 300, [lunarEdge, moonlight, crescentStrike], 'Dragon', dragonScales);
-  const redPilgrim = new Enemy('Red - The First Pilgrim', 100, 300, 20, 25, 12, 25, 12, neuEl, 200, 500, [sunSlash, crystalBlessing, eCriticalThrust, wideSlash], 'Human', excalibur);
+  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 110, 30, 25, 12, 23, 12, watEl, 200, 300, [lunarEdge, moonlight, crescentStrike], 'Dragon', dragonScales);
+  const redPilgrim = new Enemy('Red - The First Pilgrim', 100, 300, 20, 25, 9, 25, 9, neuEl, 200, 500, [sunSlash, crystalBlessing, eCriticalThrust, wideSlash], 'Human', excalibur);
 //============================
 //Skills
 //===========================
@@ -429,6 +429,7 @@ class Skill {
   const thunderThree = new Skill('Thunder 3', 'Magic', thunEl, 'Hits an enemy with extremely powerful Thunder Magic', 15, 11, 'Single', 'None');
   //need a way to show a skill hits all or not....
   const water = new Skill('Water','Magic', watEl, 'Hits enemy with weak magic-based water damage', 4, 6, 'All', 'None');
+  const iceTwo = new Skill('Ice 2', 'Magic', iceEl, 'Deals powerful ice magic damage to all enemies', 10, 7, 'All', 'None');
   const volley = new Skill('Volley', 'Physical', neuEl, 'Hits all enemies with arrows', 2, 6, 'All', 'None');
   const steal = new Skill('Steal', 'Steal', neuEl, 'Attempts to steal from 1 enemy', 0, 0, 'Single', 'None');
   const mug = new Skill('Mug', 'Steal', neuEl, 'Deals Physical damage and attempts to steal from 1 enemy', 4, 4, 'Single', 'Mug');

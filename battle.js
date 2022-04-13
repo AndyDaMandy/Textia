@@ -1100,7 +1100,11 @@ function battle(en) {
   battleState = 1;
   battleMode.hidden = false;
   mainMenu.hidden = true;
-  savedParty = currentParty.map(a => Object.assign({}, a));
+  if (currentParty.length < 3){
+    savedParty = [currentParty[0].name, currentParty[1].name];
+  } if (currentParty.length === 3){
+    savedParty = [currentParty[0].name, currentParty[1].name, currentParty[2].name];
+  }
   closeMenu();
   enemyParty = en;
   winMon = 0;
@@ -1151,8 +1155,11 @@ function battle(en) {
 let target = 0;
 function battleMove(x) {
   if (x === 0){
-    deadTeam = [];
-    currentParty = savedParty.map(a => Object.assign({}, a));
+    if (deadTeam.length > 0){
+      for (let i = 0; i < deadTeam.length; i++){
+        currentParty.push(deadTeam[i]);
+      }
+    }
    change.innerHTML = "";
    // info.innerHTML = "";
     holder.innerHTML = "";

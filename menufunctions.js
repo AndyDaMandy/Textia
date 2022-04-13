@@ -314,26 +314,40 @@ function equip (){
         if (weapon.type === "Bow"){
           let button3 = document.createElement("button");
           button3.textContent = weapon.name;
-          button3.addEventListener('click', () => { equipSelect(julie, weapon); });
-          document.getElementById("equipment").appendChild(button3);
+          if (currentParty.indexOf(julie) !== -1 || reserveParty.indexOf(julie) !== -1){
+            button3.addEventListener('click', () => { equipSelect(julie, weapon); });
+            document.getElementById("equipment").appendChild(button3);
+          } else {
+            button3.addEventListener('click', () =>{alert("It seems you haven't met whomever can equip this yet.")})
+          }
         }
         if (weapon.type === "Twin Daggers"){
           let button2 = document.createElement("button");
           button2.textContent = weapon.name;
-          button2.addEventListener('click', () => {equipSelect(ari, weapon); });
-          document.getElementById("equipment").appendChild(button2);
+          if (currentParty.indexOf(ari) !== -1 || reserveParty.indexOf(ari) !== -1){
+            button2.addEventListener('click', () => {equipSelect(ari, weapon); });
+            document.getElementById("equipment").appendChild(button2);
+          } else {
+            button2.addEventListener('click', () =>{alert("It seems you haven't met whomever can equip this yet.")
+            })           
         }
+      }
         if (weapon.type === "Tome"){
           let button2 = document.createElement("button");
           button2.textContent = weapon.name;
+          if (currentParty.indexOf(gabriel) !== -1 || reserveParty.indexOf(gabriel) !== -1){
           button2.addEventListener('click', () => {equipSelect(gabriel, weapon); });
           document.getElementById("equipment").appendChild(button2);
+        } else {
+          button2.addEventListener('click', () =>{alert("It seems you haven't met whomever can equip this yet.")
+            })
         }
     }
    weaponsOwned.forEach(checker);
    console.log(currentParty);
     document.getElementById("close-menu").hidden = false;
   }
+};
 function saveScreen(){
  //equip
  document.getElementById("equip-screen").hidden = true;
@@ -354,7 +368,7 @@ function saveScreen(){
  document.getElementById("save-menu").hidden = false;
 }
 function save () {
-  simpleStorage.flush()
+    simpleStorage.flush()
     simpleStorage.set("ando",  JSON.stringify(ando));
     //simpleStorage.set("ando", ando);
     simpleStorage.set("marie", JSON.stringify(marie));
@@ -522,6 +536,7 @@ function startGame(){
 function load(){
   currentParty = [];
   reserveParty = [];
+ // ando = simpleStorage.get("ando");
   ando = JSON.parse(simpleStorage.get("ando"));
   marie = JSON.parse(simpleStorage.get("marie"));
   julie = JSON.parse(simpleStorage.get("julie"));
@@ -530,9 +545,9 @@ function load(){
 //  reserveParty = JSON.parse(simpleStorage.get("reserveParty"));
  weaponsOwned = simpleStorage.get("weaponsOwned");
  //currentParty = simpleStorage.get("currentParty");
-let setParty = JSON.parse(simpleStorage.get("currentParty"));
-let setReserve = JSON.parse(simpleStorage.get("reserveParty"));
-for (let i = 0; i < setParty.length; i++){
+  let setParty = JSON.parse(simpleStorage.get("currentParty"));
+  let setReserve = JSON.parse(simpleStorage.get("reserveParty"));
+  for (let i = 0; i < setParty.length; i++){
   if (setParty[i].name === "Ando"){
     currentParty.push(ando);
   } else if (setParty[i].name === "Marie"){
@@ -544,8 +559,8 @@ for (let i = 0; i < setParty.length; i++){
   } else if (setParty[i].name === "Gabriel") {
     currentParty.push(gabriel);
   }
-}
-if (setReserve.length > 0) {
+  }
+  if (setReserve.length > 0) {
   for (let i = 0; i < setReserve.length; i++){
   if (setReserve[i].name === "Ando"){
     reserveParty.push(ando);
@@ -558,9 +573,9 @@ if (setReserve.length > 0) {
   } else if (setReserve[i].name === "Gabriel") {
     reserveParty.push(gabriel);
   }
-}
-currentParty.length = 3;
-}
+  }
+  currentParty.length = 3;
+    }
   console.log(currentParty);
   inventory =  simpleStorage.get("inventory");
   money =  simpleStorage.get("money");

@@ -342,12 +342,12 @@ function equip (){
           button2.addEventListener('click', () =>{alert("It seems you haven't met whomever can equip this yet.")
             })
         }
+      }
     }
    weaponsOwned.forEach(checker);
    console.log(currentParty);
     document.getElementById("close-menu").hidden = false;
-  }
-};
+  };
 function saveScreen(){
  //equip
  document.getElementById("equip-screen").hidden = true;

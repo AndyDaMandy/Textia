@@ -39,7 +39,7 @@ ari.skills.push(quickSlashes);
 gabriel.weapon = tomeofLife;
 gabriel.skills.push(water);
 gabriel.support.push(cureAll);
-gabriel.support.push(defenseBoost);
+gabriel.support.push(defBoost);
 gabriel.skills.push(iceTwo);
 //weaponsOwned.push(excalibur);
 

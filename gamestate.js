@@ -372,6 +372,109 @@ function gameFlow (state) {
           document.getElementById("port-1").hidden = false;
           document.getElementById("port-1-1").hidden = false;
         }
+        if (state === 34){
+          shopState = 3;
+          shopButton.hidden = false;
+          document.getElementById("port-1").hidden = false;
+          document.getElementById("port-1-1").hidden = true;
+          document.getElementById("port-1-2").hidden = false;
+        }
+        if (state === 35){
+          shopButton.hidden = true;
+          document.getElementById("port-1").hidden = false;
+          document.getElementById("port-1-2").hidden = true;
+          document.getElementById("port-1-3").hidden = false;
+        }
+        if (state === 36){
+          document.getElementById("port-1").hidden = false;
+          document.getElementById("port-1-3").hidden = true;
+          document.getElementById("port-1-4").hidden = false;
+        }
+        //Mountain of Narsh
+        if (state === 37){
+          document.getElementById("port-1").hidden = true;
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-1").hidden = false;
+        }
+        if (state === 38){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-1").hidden = true;
+          document.getElementById("mountain-1-2").hidden = false;
+        }
+        if (state === 39){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-2").hidden = true;
+          document.getElementById("mountain-1-3").hidden = false;
+        }
+        if (state === 40){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-3").hidden = true;
+          document.getElementById("mountain-1-4").hidden = false;
+        }
+        if (state === 41){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-4").hidden = true;
+          document.getElementById("mountain-1-5").hidden = false;
+        }
+        if (state === 42){
+          shopButton.hidden = true;
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-5").hidden = true;
+          document.getElementById("mountain-1-6").hidden = false;
+        }
+        if (state === 43){
+          shopState = 4;
+          shopButton.hidden = false;
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-6").hidden = true;
+          document.getElementById("mountain-1-7").hidden = false;
+        }
+        if (state === 44){
+          shopButton.hidden = true;
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-7").hidden = true;
+          document.getElementById("mountain-1-8").hidden = false;
+        }
+        if (state === 45){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-8").hidden = true;
+          document.getElementById("mountain-1-9").hidden = false;
+        }
+        if (state == 46){
+          document.getElementById("mountain-1").hidden = false;
+          document.getElementById("mountain-1-9").hidden = true;
+          document.getElementById("mountain-1-10").hidden = false;
+        }
+        if (state === 47){
+          document.getElementById("mountain-1").hidden = true;
+          document.getElementById("crystal").hidden = false;
+          document.getElementById("crystal-1").hidden = false;
+        }
+        if (state === 48){
+          document.getElementById("crystal").hidden = false;
+          document.getElementById("crystal-1").hidden = true;
+          document.getElementById("crystal-2").hidden = false;
+        }
+        if (state === 49){
+          document.getElementById("crystal").hidden = false;
+          document.getElementById("crystal-2").hidden = true;
+          document.getElementById("crystal-3").hidden = false;
+        }
+        if (state === 50){
+          document.getElementById("crystal").hidden = true;
+          document.getElementById("ending").hidden = false;
+          document.getElementById("ending-1").hidden = false;
+        }
+        if (state === 51){
+          document.getElementById("ending").hidden = false;
+          document.getElementById("ending-1").hidden = true;
+          document.getElementById("ending-1-1").hidden = false;
+        }
+        if (state === 52){
+          document.getElementById("ending").hidden = false;
+          document.getElementById("ending-1").hidden = true;
+          document.getElementById("ending-2-1").hidden = false;
+        }
     };
 function move (state) {
       gameState = state;
@@ -416,12 +519,20 @@ function alertOne(){
       shopOne.forEach(pusher);
       }
       if (shopState === 1){
-        let shopTwo = [potion, magicPotion, highPotion, revivalPotion, longBow];
+        let shopTwo = [potion, magicPotion, highPotion, revivalPotion, ironStaff, longBow];
         shopTwo.forEach(pusher);
       }
       if (shopState === 2){
-        let shopThree = [potion, magicPotion, highPotion, revivalPotion,longBow, luckyDaggers];
+        let shopThree = [potion, magicPotion, highPotion, revivalPotion, longBow, ironStaff, luckyDaggers];
         shopThree.forEach(pusher);
+      }
+      if (shopState === 3){
+        let shopFour = [magicPotion, highPotion, revivalPotion, highRevivalPotion, sparkBow];
+        shopFour.forEach(pusher);
+      }
+      if (shopState === 4){
+        let shopFive = [magicPotion,highMagicPotion, highPotion, revivalPotion, highRevivalPotion, sparkBow, katana, tomeFire];
+        shopFive.forEach(pusher);
       }
   
   }
@@ -457,10 +568,11 @@ function alertOne(){
   
   //add party functions
   function addJulie (id){
-    julie.weapon = woodBow;
-    julie.skills.push(waterArrow);
-    julie.skills.push(volley);
-    currentParty.push(julie);
+    if (currentParty.length >= 3){
+      reserveParty.push(julie);
+    } else {
+      currentParty.push(julie);
+    }
     alert("Julie joined the party!");
     document.getElementById(id).hidden = true;
     //julie button gets treated as a chest to prevent getting Julia more than once.
@@ -474,6 +586,17 @@ function alertOne(){
     } else if (currentParty.length <= 2) {
       currentParty.push(ari);
       alert("Ari has joined the party! ");
+    }
+    document.getElementById(id).hidden = true;
+    opened.push(id);
+  }
+  function addGabriel(id){
+    if (currentParty.length >= 3) {
+      reserveParty.push(gabriel);
+      alert("Gabriel has joined the party!");
+    } else {
+      currentParty.push(gabriel);
+      alert("Gabriel has joined the party!");
     }
     document.getElementById(id).hidden = true;
     opened.push(id);
@@ -505,5 +628,14 @@ function alertOne(){
       move(28);
     } else {
       alert('You asked around to see if someone would be willing to let you ride a boat, but it appears nobody will take you. You decide to turn back and see if you can find a way to get access to a boat.')
+    }
+  }
+  //checks for Gabriel
+  function checkGabe (){
+    if (currentParty.indexOf(gabriel) != -1 || reserveParty.indexOf(gabriel) != -1){
+      alert('Gabriel: "Let us march forward then."')
+      move(41);
+    } else {
+      alert('You think it would be best to accept the offer, better to have more allies then less.')
     }
   }

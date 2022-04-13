@@ -278,6 +278,42 @@ function attackCalc (char, target, flow, skill){
               battleMove(flow)
               }        
              else { //regular branch
+              if (skill.effect === "Drain"){
+                let weak = checkWeakness(enemyParty[target], skill, char.weapon);
+                let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].pDef;
+                let thp = enHp[target];
+                let damage = clamp(getRandomInt(pa), pa-2, pa);
+                if (damage <= 0){damage = 0};
+                let healAmt = damage - 3;
+                if (healAmt <= 0){healAmt = 0};
+                char.chp += healAmt;
+                if (char.chp > char.hp){
+                  char.chp = char.hp
+                }
+                let final = thp - damage ;
+                if (final <= 0) {
+                  skillUseText(char, skill);
+                  //adds elemental info
+                  showDamage(enemyParty[target], damage, weak);
+                  let showDrain = document.createElement("p");
+                  showDrain.textContent = `${char.name} has healed for ${healAmt}!`
+                  info.appendChild(showDrain);
+                  sayDeadEn(enemyParty[target]);
+                  enemyParty.splice(target, 1);
+                  enHp.splice(target, 1);
+                  enItems.splice(target, 1);
+                  battleMove(flow)
+                  } else {
+                    skillUseText(char, skill);
+                    showDamage(enemyParty[target], damage, weak);
+                    let showDrain = document.createElement("p");
+                    showDrain.textContent = `${char.name} has healed for ${healAmt}!`
+                    info.appendChild(showDrain);
+                    enHp[target] = thp - damage;
+                    battleMove(flow)
+                      }
+              } 
+              else {
           let weak = checkWeakness(enemyParty[target], skill, char.weapon);
           let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].pDef;
           let thp = enHp[target];
@@ -300,9 +336,33 @@ function attackCalc (char, target, flow, skill){
                 battleMove(flow)
                   }
           }
-         
+             } 
       } if (skill.type === "Steal"){
+        skillUseText(char, skill);
         stealFrom(enItems[target], target);
+        if (skill.effect === "Mug"){
+          let weak = checkWeakness(enemyParty[target], skill, char.weapon);
+          let pa = char.pAtk + char.buff[0].pow + char.weapon.pow + skill.pow + elementalBoost - enemyParty[target].pDef;
+          let thp = enHp[target];
+          let damage = clamp(getRandomInt(pa), pa-2, pa);
+          if (damage <= 0){damage = 0};
+          let final = thp - damage ;
+            if (final <= 0) {
+             // skillUseText(char, skill);
+              //adds elemental info
+              showDamage(enemyParty[target], damage, weak);
+              sayDeadEn(enemyParty[target]);
+              enemyParty.splice(target, 1);
+              enHp.splice(target, 1);
+              enItems.splice(target, 1);
+              battleMove(flow)
+              } else {
+             //   skillUseText(char, skill);
+                showDamage(enemyParty[target], damage, weak);
+                enHp[target] = thp - damage;
+                battleMove(flow)
+                  }
+        }
         battleMove(flow)
       }
 }
@@ -448,7 +508,7 @@ function enemCalc (){
       let target = currentParty[getRandomInt(teamLength)];
       //NEW BRANCH FOR MAGIC ENEMIES GOES HERE!!!!! IT CHECKS IF THE ATTACKER HAS MORE MAGIC ATTACK THAN ATTACK
       //enemies can then use skills....?
-      let attacker = enemyParty[getRandomInt(enLength)];
+      let attacker = enemyParty[i];
       if (attacker.eSkills.length > 0){
         let coinFlip = getRandomInt(2);
         //flips for skills or not
@@ -491,6 +551,15 @@ function enemCalc (){
                 info.appendChild(damageRes);
               }
               currentParty.map(mapper);
+            } 
+          } else if (attackChoice.type === "Healing"){
+              let healingVal = attackChoice.pow;
+              let healedTargetVal = getRandomInt(enLength);
+              enHp[healedTargetVal] += healingVal;
+              if (enHp[healedTargetVal] >= enemyParty[healedTargetVal].hp){enHp[healedTargetVal] = enemyParty[healedTargetVal].hp}
+              let showHeal = document.createElement("p");
+              showHeal.textContent = `${enemyParty[healedTargetVal].name} has been healed for ${healingVal}!`
+              info.appendChild(showHeal);
             } else {
             let damage = attackerDam + attackChoice.pow - target.pDef + target.buff[1].pow;
             let damageRange = clamp(getRandomInt(damage), damage, damage+1);
@@ -501,7 +570,7 @@ function enemCalc (){
             info.appendChild(damageRes);
             }
           }
-        }
+        
         //just normal physical attack again
         else {
           let attackerDam = attacker.pAtk;
@@ -583,7 +652,18 @@ function supTarget (caster, sup, supflow){
   itemSlot.innerHTML = "";
   //needs a caster parameter based on the battleflow?
   //pulls target MP away atm
-//  if (sup.target === "All"){}
+  if (sup.target === "All"){
+    let btn = document.createElement("button");
+    btn.textContent = 'All';
+    btn.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = "All"; supportChoice = x; battleMove(y); a = caster; supCalc(a, z, x, y); choice = 1;})
+  skillSlot.appendChild(btn);
+  } else if (sup.target === "Self"){
+    let btn = document.createElement("button");
+    btn.textContent = caster.name;
+    let position = currentParty.indexOf(caster);
+    btn.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = currentParty[position]; supportChoice = x; battleMove(y); a = caster; supCalc(a, z, x, y); choice = 1;})
+    skillSlot.appendChild(btn);
+  } else if (sup.target === "Single"){
   if (currentParty.length === 1){
   let btn = document.createElement("button");
   btn.textContent = currentParty[0].name;
@@ -613,12 +693,22 @@ function supTarget (caster, sup, supflow){
     btn2.addEventListener('click', function (x, y, z, a){x = sup; y = supflow;z = currentParty[2]; supportChioice = x; battleMove(y); a = caster; supCalc(a, z, x, y);;})
     skillSlot.appendChild(btn2);
     }
+  }
   };
 function supCalc(caster, partymem, sup){
   info.innerHTML = "";
   skillSlot.innerHTML = "";
   caster.cmp -= sup.cost;
   if (sup.type === "Healing"){
+    if (partymem === "All") {
+      for (let i = 0; i < currentParty.length; i++){
+        currentParty[i].chp += sup.pow;
+        if (currentParty[i].chp > currentParty[i].hp){currentParty[i].chp = currentParty[i].hp};
+        let pheal = document.createElement("p")
+        pheal.textContent = currentParty[i].name + "'s HP is now: " + currentParty[i].chp + "/" + currentParty[i].hp;
+        info.appendChild(pheal);
+      }
+    } else {
     partymem.chp += sup.pow;
       if (partymem.chp > partymem.hp){
       partymem.chp = partymem.hp;
@@ -632,7 +722,19 @@ function supCalc(caster, partymem, sup){
         info.appendChild(pheal);
         loadPartyInfo();
         }
-    } if (sup.type === "Attack Buff"){
+    }
+    }
+    if (sup.type === "Magic Healing"){
+      partymem.cmp += sup.pow;
+      if (partymem.cmp > partymem.mp){
+        partymem.cmp = partymem.mp;
+      }
+      let showMp = document.createElement("p");
+      showMp.textContent = `${partymem.name}'s MP has been healed by ${sup.pow}, their MP is now ${partymem.cmp}/${partymem.mp}!`;
+      info.appendChild(showMp);
+      loadPartyInfo();
+    }
+     if (sup.type === "Attack Buff"){
       if (partymem.buff[0].on === false){
         partymem.buff[0].pow += sup.pow;
         partymem.buff[0].on = true;
@@ -667,12 +769,12 @@ function itemTarget (item, flow){
   change.innerHTML = "";
   itemSlot.innerHTML = "";
   skillSlot.innerHTML = "";
-  if (item.type === "Rev" && deadTeam.length === 1){
+  if (item.type === "Revival" && deadTeam.length === 1){
     let btn = document.createElement("button");
   btn.textContent = deadTeam[0].name;
   btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = deadTeam[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
   itemSlot.appendChild(btn);
-  } else if (item.type === "Rev" && deadTeam.length === 2){
+  } else if (item.type === "Revival" && deadTeam.length === 2){
     let btn = document.createElement("button");
   btn.textContent = deadTeam[0].name;
   btn.addEventListener('click', function (x, y, z){x = item; y = flow;z = deadTeam[0]; itemChoice = x; battleMove(y); itemCalc(z, x, y);})
@@ -729,7 +831,7 @@ function itemCalc(partymem, item){
       info.appendChild(pheal);
       loadPartyInfo();
     }
-  } if (item.type === "mHealing"){
+  } if (item.type === "Magic Healing"){
   partymem.cmp += item.effect;
     if (partymem.cmp > partymem.mp){
       partymem.cmp = partymem.mp;
@@ -744,12 +846,11 @@ function itemCalc(partymem, item){
       loadPartyInfo();
     }
   }
-    if (item.type == "Rev"){
+    if (item.type == "Revival"){
       const index = deadTeam.map(object => object.name).indexOf(partymem.name);
      let a = deadTeam.splice(index, 1);
-    // deadArr.push(a[0]);
-    // let b = deadArr.indexOf(partymem);
      partymem.chp = item.effect;
+     if (partymem.chp > partymem.hp){partymem.chp = partymem.hp}
      currentParty.push(a[0]);
      let pheal = document.createElement("p")
      pheal.textContent = partymem.name + " has been revived!";
@@ -787,6 +888,7 @@ function statBoost(char){
   char.mAtk += 1;
   char.pDef += 1;
   char.mDef += 1;
+  char.luck += 1;
   let leveluptext = document.createElement("p");
   leveluptext.textContent = char.name + " leveled up! Their level is now: " + char.level + "!" ;
   info.appendChild(leveluptext);
@@ -828,12 +930,6 @@ function levelUp(char){
   }
   if (char.exp >= 450 && char.level < 9){
     statBoost(char);
-    if (char.level === 10 && char.name === "Ando") {
-      julie.skills.push(slashAll);
-      let learnedSkill = document.createElement("p");
-      learnedSkill.textContent = `${char.name} learned ${slashAll.name}!`
-      info.appendChild(learnedSkill);
-      }
   }
   if (char.exp >= 550 && char.level < 10){
     statBoost(char);
@@ -843,14 +939,60 @@ function levelUp(char){
   }
   if (char.exp >= 800 && char.level < 12){
     statBoost(char);
+    if (char.level === 12 && char.name === "Ando") {
+      ando.skills.push(criticalThrust);
+      let learnedSkill = document.createElement("p");
+      learnedSkill.textContent = `Ando learned Critical Thrust!` 
+      info.appendChild(learnedSkill);
+      }
   }
   if (char.exp >= 950 && char.level < 13){
     statBoost(char);
+    julie.skills.push(drainArrow);
+    let learnedSkill = document.createElement("p");
+    learnedSkill.textContent = 'Julie learned Drain Arrow!';
+    info.appendChild(learnedSkill);
   }
   if (char.exp >= 1100 && char.level < 14){
     statBoost(char);
+    marie.skills.push(thunderThree);
+    let learnedSkill = document.createElement("p");
+      learnedSkill.textContent = 'Marie learned Thunder 3!';
+      info.appendChild(learnedSkill);
   }
   if (char.exp >= 1300 && char.level < 15){
+    statBoost(char);
+    ando.support.push(meditate);
+    let learnedSkill = document.createElement("p");
+    learnedSkill.textContent = 'Ando learned Meditate!';
+    info.appendChild(learnedSkill);
+  }
+  if (char.exp >= 1500 && char.level < 16){
+    statBoost(char);
+    ari.skills.push(mug);
+    let learnedSkill = document.createElement("p");
+    learnedSkill.textContent = 'Ari learned Mug!';
+    info.appendChild(learnedSkill);
+  }
+  if (char.exp >= 1800 && char.level < 17){
+    statBoost(char);
+  }
+  if (char.exp >= 2100 && char.level < 18){
+    statBoost(char);
+  }
+  if (char.exp >= 2400 && char.level < 19){
+    statBoost(char);
+  }
+  if (char.exp >= 2800 && char.level < 20){
+    statBoost(char);
+  }
+  if (char.exp >= 3200 && char.level < 21){
+    statBoost(char);
+  }
+  if (char.exp >= 3800 && char.level < 22){
+    statBoost(char);
+  }
+  if (char.exp >= 4200 && char.level < 23){
     statBoost(char);
   }
 };
@@ -864,11 +1006,12 @@ function clearBattle() {
   mainMenu.hidden = false;
   expGain = 0;
  // loadParty();
- if (deadTeam.length >= 1){
+ /*if (deadTeam.length >= 1){
    for (let i = 0; i < deadTeam.length; i++){
      currentParty.push(deadTeam[i]);
    }
  }
+ */
   console.log(currentParty);
   function healer(x){
     x.chp = x.hp;
@@ -951,17 +1094,13 @@ function loadPartyInfo(){
   };
 let winMon = 0;
 let expGain = 0;
-function saveParty (){
-  savedParty = currentParty;
-  console.log(savedParty);
-}
 function battle(en) {
   //battleState controls battle flow and button creation.
   adv.hidden = true;
   battleState = 1;
   battleMode.hidden = false;
   mainMenu.hidden = true;
- // saveParty();
+  savedParty = currentParty.map(a => Object.assign({}, a));
   closeMenu();
   enemyParty = en;
   winMon = 0;
@@ -1012,6 +1151,8 @@ function battle(en) {
 let target = 0;
 function battleMove(x) {
   if (x === 0){
+    deadTeam = [];
+    currentParty = savedParty.map(a => Object.assign({}, a));
    change.innerHTML = "";
    // info.innerHTML = "";
     holder.innerHTML = "";
@@ -1032,6 +1173,10 @@ function battleMove(x) {
     
     currentParty.forEach(expGainer);
     currentParty.forEach(levelUp);
+    if (reserveParty.length >= 1){
+      reserveParty.forEach(expGainer);
+      reserveParty.forEach(levelUp);
+    }
     endBattle();
   };
   //player 1 turn
@@ -1204,10 +1349,14 @@ function battleMove(x) {
     itemSlot.innerHTML = "";
     skillSlot.innerHTML = "";
     let p = document.createElement("p");
-    p.textContent = "The party has been defeated. Reload?";
+    p.textContent = "The party has been defeated. Reload or start from the beginning.";
     info.appendChild(p);
+    let restart = document.createElement("button");
+    restart.textContent = "Start from the beginning";
+    restart.addEventListener('click', function(){location.reload()});
+    change.appendChild(restart);
     let reload = document.createElement("button");
-    reload.textContent = "Reload previous save or refresh page to restart from the beginning";
+    reload.textContent = "Reload previous save?";
     reload.addEventListener('click', function (){load()});
     change.appendChild(reload);
   } 

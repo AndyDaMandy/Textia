@@ -24,7 +24,7 @@
 	gtag('config', 'UA-87767693-3');
 	</script>
   </head>
-  <body onload="check()">
+  <body onload="check();">
     <header>
     <h1>Textia: a World without Images</h1>
     <p><em>To play, click the buttons below:</em></p>
@@ -33,8 +33,9 @@
 <div id="begin">
   <h2>Game Start</h2>
   <p><em>Your adventure begins with two friends, Marie and Ando</em></p>
-  <button id="start-game" onClick="startGame()">New Game, Click Here</button>
-  <button id="continue" onClick="load()" hidden>Continue</button>
+  <button id="start-game" onclick="startGame()">New Game, Click Here</button>
+  <button id="continue" onclick="load()" hidden>Continue</button>
+  <button id="continue1" onclick="loadOne()" hidden>Continue Slot 2</button>
 </div>
 <!-- Menu System below -->
 <div class="well" id="main-menu" hidden>
@@ -45,11 +46,23 @@
   <button class="small-btn" id="formation-button" hidden onclick="partyFormation()">Formation</button>
   <button class="small-btn" id="inventory-button" hidden onclick="showInventory()">Inventory</button>
   <button class="small-btn" id="show-stats" onclick="showStats()" hidden>Party Status</button>
-  <button class="small-btn" id="tutorial-button" onClick="openTutorial()" hidden>Tutorial</button>
+  <button class="small-btn" id="tutorial-button" onclick="openTutorial()" hidden>Tutorial</button>
+ <!-- <button class="small-btn" id="dev-mode" onclick="openDev()" hidden>Dev Mode</button> -->
   <button class="small-btn" id="close-menu" onclick="closeMenu()" hidden>Close Menu</button>
 </div>
 <div class="well" id="save-menu" hidden>
-  <p>You saved your game!</p>
+  <p><em>Click a slot to save your game</em></p>
+  <button onclick="save(); document.getElementById('saved-1').hidden = false;">Save Slot</button>
+ <!-- <button onclick="saveOne(); document.getElementById('saved-2').hidden = false;">Save Slot 2</button> -->
+  <div id="saved-1" hidden>
+    <p>You saved slot 1!</p>
+    <button onclick="document.getElementById('saved-1').hidden = true;">Close Saved Message</button>
+  </div>
+ <!-- <div id="saved-2" hidden>
+    <p>You saved slot 2!</p>
+    <button onclick="document.getElementById('saved-2').hidden = true;">Close Slot 2 Save Screen</button>
+  </div>
+-->
 </div>
   <div class="well" id="equip-screen" hidden>
       <h5>Party:</h5>
@@ -101,6 +114,7 @@
   <p>MP is your magic points. Skills and spells use magic points. If you don't have enough MP you will not be able to use a skill</p>
   <p><strong>Don't be afraid to use MP, you recover HP/MP after each battle!</strong></p>
   <p>Exp referes to experience points, you'll gain exp by defeating enemies. Gaining enough will allow you to level up!</p>
+  <p>Dying in battle will still allow a dead party member to gain exp.</p>
   <p>Leveling up will raise all stats and if you hit certain levels you'll gain new skills/support skills</p>
   <p>Luck determines several luck-based elements.</p>
   <h4>Skills</h4>
@@ -124,6 +138,23 @@
   <p><strong>Your current party has a limit of 3 characters, you can have no more</strong></p>
   <p>You can't lower your party size once it's at 3, if you're a loner then you can use 2, but I wouldn't recommend it!</p>
   <button onclick="closeMenu()">Close Tutorial Screen</button>
+</div>
+<div class="well" id="dev-menu" hidden>
+  <h3>Welcome to Dev mode! If you're seeing this you're a dev, a savvy user, or I messed up!</h3>
+  <p>Here you can adjust gameplay elements and select where you'd like to go in the story.</p>
+  <button onclick="addJulie('test-1')">Add Julie to party</button>
+  <button onclick="addAri('test-2')">Add Ari to party</button>
+  <button onclick="addGabriel('test-3')">Add Gabriel to party</button>
+  <button onclick="boostExp(ando)">Level up Ando</button>
+  <button onclick="boostExp(marie)">Level up Marie</button>
+  <button onclick="boostExp(julie)">Level up Julie</button>
+  <button onclick="boostExp(ari)">Level up Ari</button>
+  <button onclick="boostExp(Gabriel)">Level up Gabriel</button>
+  <button onclick="boostMoney()">Increase Money</button>
+  <button onclick="healer()">Heal Party</button>
+    <input id="moving-tool" type="number" placeholder="1" onchange="move(parseInt(document.getElementById('moving-tool').value))"></input>
+
+  
 </div>
 <!--Gameplay Elements Below -->
   <button id="shop-button" onclick="openShop()" hidden>Shop</button>
@@ -334,7 +365,7 @@
       <!-- state = 17 -->
       <h2>Great Maka Plains - Beyond the Flaming Field</h2>
       <p>You defeated the Flare Fox!</p>
-      <p><em>Marie and Ando exchange sighs of relief.</em></p>
+      <p><em>Marie, Julie, and Ando exchange sighs of relief.</em></p>
       <p>You found a treasure chest, will you open it?</p>
       <button id="chest-7" onclick="openChest(flameSword, this.id)">Open Chest</button>
       <button onclick="move(19)">Move Forward</button>
@@ -342,6 +373,8 @@
     <div id="plains-1-right-2">
     <!-- state - 18 -->
       <h2>Great Maka Plains - Beyond the Frozen Field</h2>
+      <p>You defeated the Ice Leopard!</p>
+      <p><em>Marie, Julie, and Ando exchange sighs of relief.</em></p>
       <p>You found a treasure chest, will you open it?</p>
       <button id="chest-8" onclick="openChest(iceStaff, this.id)">Open Chest</button>
       <button onclick="move(19)">Move Forward</button>
@@ -490,10 +523,197 @@
     <div id="port-1-1" hidden>
       <!-- state = 33 -->
       <h2>The Port Town of Nubia</h2>
-      <p>The game ends here for now, thanks for playing! The next chapter will be released soon!</p>
+      <p>After defeating the Greatk Shark, you gather its teeth as proof of your victory.</p>
+      <p>After arriving to the port town of Nubia, you take a moment to rest.</p>
+      <p>Ari: "The mayor of this town gave the me the job, I can collect ahead."</p>
+      <p>You decide to go further into town.</p>
+      <button onclick="move(34)">Go Forward</button>
+    </div>
+    <div id="port-1-2" hidden>
+      <!-- state = 34 -->
+      <h2>The Port Town of Nubia - Town Center</h2>
+      <p>The Town Center is full of merchants, you decide to stock up on supplies.</p>
+      <button onclick="move(35)">Go Forward</button>
+    </div>
+    <div id="port-1-3" hidden>
+      <!-- state = 35 -->
+      <h2>The Port Town of Nubia - Mayor Office</h2>
+      <p>The Mayor office is fairly run down, it looks like it hasn't been handled</p>
+      <p>The Mayor was a stout older woman, her face and hair weathered by the Ocean.</p>
+      <p>The Mayor sees Ari and smiles.</p>
+      <p>The Mayor: "Ari! I assume you have good news for me?"</p>
+      <p><em>You show teeth you've gathered from defeating the great shark.</em></p>
+      <p>The Mayor: "Wonderful news! I'd like to present you with the relics of our town. These weapons were used by some of the pilgrims of our town many years ago.</p>
+      <p>You thank the mayor for the relics and prepare to move on.</p>
+      <button id="chest-11" onclick="openChest(silverSword, this.id)">Open Chest 1</button>
+      <button id="chest-12" onclick="openChest(waterDaggers, this.id)">Open Chest 2</button>
+      <button id="chest-13" onclick="openChest(ancientWoodStaff, this.id)">Open Chest 3</button>
+      <button onclick="move(34)">Go Back</button>
+      <button onclick="move(36)">Go Forward</button>
+    </div>
+    <div id="port-1-4" hidden>
+      <!-- state = 36 -->
+      <h2>The Port Town of Nubia - End of Town</h2>
+      <p>Ahead you see the Mountain of Narsh.</p>
+      <p>To your left you see a group of adventurers.</p>
+      <p>They approach you.</p>
+      <p>"Before you go, would you like to train with us? The mountain is full of powerful enemies."</p>
+      <p>Will you train with them? Once you leave town you cannot return.</p>
+      <button onclick="battle([advenKnight, advenMage, advenArcher]); statePost = 36">Train with adventurers</button>
+      <button onclick="move(35)">Go Back</button>
+      <button onclick="move(37)">Go to Mountain of Narsh</button>
     </div>
   </div>
-  <div id="mountain-1" hidden></div>
+  <div id="mountain-1" hidden>
+    <!-- state = 37 -->
+    <div id="mountain-1-1" hidden>
+      <h2>The Mountain of Narsh - Foot of the mountain</h2>
+      <p>The path ahead looks dangerous, you prepare yourself mentally for the battles you'll face.</p>
+      <p>You find a few chests on the ground left from Nubia's villagers for pilgrims going up Mount Narsh.</p>
+      <p>Will you open them?</p>
+      <button id="chest-14" onclick="openChest(highMagicPotion, this.id)">Open Chest 1</button>
+      <button id="chest-15" onclick="openChest(highRevivalPotion, this.id)">Open Chest 2</button>
+      <button onclick="move(38)">Go Forward</button>
+    </div>
+    <div id="mountain-1-2" hidden>
+      <!-- state = 38 -->
+      <h2>The Mountain of Narsh - Pilgrim's Path</h2>
+      <p>Enemies are scattered around the path, looking to attack.</p>
+      <p>You must defend yourself!</p>
+      <button onclick="battle([glassBeast, fireLion, glassBeast]); statePost = 39">Go Forward</button>
+    </div>
+    <div id="mountain-1-3" hidden>
+      <!-- state = 39 -->
+      <h2>The Mountain of Narsh - Pilgrim's Path - Further in</h2>
+      <p>The enemies are relentless!</p>
+      <p>You have no choice but to fight!</p>
+      <button onclick="battle([fireLion, fireLion, obsidianGolem]); statePost = 40">Go Forward</button>
+    </div>
+    <div id="mountain-1-4" hidden>
+      <!-- state = 40 -->
+      <h2>The Mountain of Narsh - Pilgrim's Rest</h2>
+      <p>You've arrived at Pilgrim's Rest, a safe spot protected by a crystal set up by previous Pilgrims</p>
+      <p>You see man there dressed in a dark robe. He approaches you.</p>
+      <p>The Man: "Welcome Pilgrims. It's been a while since we've seen any up here."</p>
+      <p>The Man: "My Name is Gabriel, I'm a healer that tends to travelers wounds."</p>
+      <p>Gabriel: "In the past, I'd usually stay here, but the last few pilgrims to go ahead have yet to return and I'm worried about them."</p>
+      <p>Gabriel: "I'm a skilled healer and can help in battle."</p>
+      <button id="add-gabriel" onclick="addGabriel(this.id)">Let Gabriel Join</button>
+      <button onclick="checkGabe()">Go Forward</button>
+    </div>
+    <div id="mountain-1-5" hidden>
+      <!-- state = 41 -->
+      <h2>The Mountain of Narsh - Beyond the Rest</h2>
+      <p>Here you see some treasure chests, left from previous pilgrims to aid in your quest.</p>
+      <p>Ahead are more enemies, you have no choice but to fight.</p>
+      <button onclick="battle([obsidianGolem, thunRod, obsidianGolem]); statePost = 42;">Fight</button>
+    </div>
+    <div id="mountain-1-6" hidden>
+      <!-- state = 42 -->
+      <h2>The Mountain of Narsh - The Dark Crow</h2>
+      <p>Suddenly from the shadows of the trees a large crow appears.</p>
+      <p>Its eyes glow red as it readies its beak to attack.</p>
+      <p>You have no choice but to fight.</p>
+      <button onclick="battle([darkCrow]); statePost = 43">Fight</button>
+    </div>
+    <div id="mountain-1-7" hidden>
+      <!-- state = 43 -->
+      <h2>The Mountain of Narsh - Traveling Merchant</h2>
+      <p>After defeating the Dark Crow, you come across a man with a plethora of bags, weapons, and items.</p>
+      <p>He introduces himself as a traveling merchant.</p>
+      <p>Perhaps you should buy something for the road ahead?</p>
+      <button onclick="move(44)">Go Forward</button>
+    </div>
+    <div id="mountain-1-8" hidden>
+      <!-- state = 44 -->
+      <h2>The Mountain of Narsh - Near the Peak</h2>
+      <p>You near the peak of the mountain, you begin to see snow at your feet. It is now dark out, but you must find a safe place before you can rest.</p>
+      <p>Although exhausted you remember how far you've come in your adventure.</p>
+      <p>A group of enemies block the path ahead.</p>
+      <p>You steel yourself.</p>
+      <button onclick="battle([obsidianGolem, aquaSlime, fireLion]); statePost = 45">Fight</button>
+    </div>
+    <div id="mountain-1-9" hidden>
+      <!-- state = 45 -->
+      <h2>The Mountain of Narsh - Peak</h2>
+      <p>At the top of the mountain you see the moonlight reflecting on the ocean. The moon's size appears tripled from this height.</p>
+      <p>Although when you think about it harder, you don't recall the moon ever being so large or so bright.</p>
+      <p>Suddenly you see what appears to be a large snake floating towards you from a nearby cave.</p>
+      <p>Its scales are bright white, just like this strange moon. It has a glowing golden mane and a powerful golden gaze.</p>
+      <p>It appears ready to guard what's ahead. You know that it's blocking the Crystal Lake.</p>
+      <p>You prepare yourself for battle.</p>
+      <button onclick="battle([lunarDragon]); statePost = 45;">Fight</button>
+    </div>
+    <div id="mountain-1-10" hidden>
+      <!-- state = 46 -->
+      <h2>The Mountain of Narsh - Overlooking the Crystal Lake</h2>
+      <p>After defeating the Lunar Dragon of Narsh, you see the Crystal Lake ahead, buried deep within the mountain.</p>
+      <p>At last your adventure is nearing its close.</p>
+      <p>There's a chest here, will you open it?</p>
+      <button id="chest-16" onclick="openChest(lunarStaff, this.id)">Open Chest</button>
+      <button>Go Forward</button>
+    </div>
+  </div>
+  <div id="crystal" hidden>
+    <div id="crystal-1" hidden>
+      <!-- state = 47 -->
+      <h2>Crystal Lake - Placing Crystals in the Lake</h2>
+      <p>The lake glows a bright purple, it almost looks like it's breathing.</p>
+      <p>Surrounding the lake are a plethora of crystals, you could easily take a few home to protect the town for years to come.</p>
+      <p>You place the crystals from home in the lake and slowly they begin to take on the energy of the Lake</p>
+      <p>Once they've been re-energized, you decide to head back.</p>
+      <button onclick="move(47)">Head Home</button>
+    </div>
+    <div id="crystal-2" hidden>
+      <!-- state = 48 -->
+      <h2>Crystal Lake - Mysterious Air</h2>
+      <p>You feel a mysterious chill in the air as you turn around. You feel a strange presence behind you.</p>
+      <p>You turn around and are attacked by shadows!</p>
+      <button onclick="battle([shadow, shadow, shadow]); statePost = 48">Fight</button>
+    </div>
+    <div id="crystal-3" hidden>
+      <h2>Crystal Lake - The End</h2>
+      <!-- state = 49 -->
+      <p>After defeating the shadows a man appears. You recognize him, he was the man from the statue, Red, the first Pilgrim</p>
+      <p>Red: "I'm impressed that you've made it this far, I've found ways to stop pilgrims for years now."</p>
+      <p>Red: "The crystals contain Planet Energy, the element that makes us all up. All life in this world comes from Planet Energy."</p>
+      <p>Red: "When I defeated the Solar Dragon, I knew I made a mistake. The Dragon was simply protecting this land. Now the the plants are dying and we will have nothing left."</p>
+      <p>Red: "A long time ago I made a pact with the spirit of the planet to protect this world, and I'll continue to do it!"</p>
+      <p>Red: "Prepare yourselves!"</p>
+      <button onclick="battle([redPilgrim]); statePost = 49">Battle for the Future</button>
+    </div>
+  </div>
+<div id="ending" hidden>
+  <div id="ending-1" hidden>
+    <!-- 50 -->
+    <h2>The End</h2>
+    <p>You defeat Red, knocking him over. He's still breathing.</p>
+    <p>Red: "Why did you let me live? Do you too wish to protect this sacred land?"</p>
+    <p>You ponder for a moment, this could have deep consequences for the world.</p>
+    <button onclick="move(51)">Help Red protect this land</button>
+    <button onclick="move(52)">Reject his offer</button>
+  </div>
+  <div id="ending-1-1" hidden>
+    <!-- 51 -->
+    <h2>Protecting the Crystal Lake</h2>
+    <p>Although you can no longer protect the people of this world, you and your allies decide to protect the Crystal Lake, as without it, no life could exist in this world anymore.</p>
+    <p>Gabriel realizes in his studies that there are more Crystal Lakes in different continents, and sets off with Ari to help protect those lakes.</p>
+    <p>Ando and Marie begin researching alternative ways to help protect the villages from monsters without the need of the Planet Energy</p>
+    <hr>
+    <p><em>Thanks for playing, I hope you enjoyed Textia! - Andy</em></p>
+  </div>
+  <div id="ending-2-1" hidden>
+    <!-- 52 -->
+    <h2>Returning to Amaryllis Town</h2>
+    <p>Having rejected Red's offer, you return to Amaryllis Town</p>
+    <p>The Shaman: "You've saved us! Now that our crystal is back we will live in peace for many years to come."</p>
+    <p>Ando and Marie live peacefully in Amaryllis Town until the end of their days.</p>
+    <p>Julie returns to her hometown and brings a crystal to them, ensuring peace.</p>
+    <p>Gabriel begins researching ways to reuse the planet's energies. We hope his research will come to fruition in the near future.</p>
+    <hr>
+    <p><em>Thanks for playing, I hope you enjoyed Textia! - Andy</em></p>
+  </div>
+</div>
 <!-- Adv mode Div -->
 </div>
   </body>

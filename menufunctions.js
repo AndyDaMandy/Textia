@@ -354,6 +354,7 @@ function saveScreen(){
  document.getElementById("save-menu").hidden = false;
 }
 function save () {
+  simpleStorage.flush()
     simpleStorage.set("ando",  JSON.stringify(ando));
     //simpleStorage.set("ando", ando);
     simpleStorage.set("marie", JSON.stringify(marie));
@@ -373,7 +374,8 @@ function save () {
     simpleStorage.set("gamecheck", gameCheck);
    // simpleStorage.set("chest", chests.hidden = true);
     document.getElementById("save-menu").hidden = false;
-    };
+};
+    /*
 function saveOne () {
       simpleStorage.set("ando1",  JSON.stringify(ando));
       //simpleStorage.set("ando", ando);
@@ -395,6 +397,7 @@ function saveOne () {
      // simpleStorage.set("chest", chests.hidden = true);
       document.getElementById("save-menu").hidden = false;
       };
+      */
 function openTutorial(){
   document.getElementById("equip-screen").hidden = true;
   document.getElementById("equipment").innerHTML = "";
@@ -580,7 +583,7 @@ currentParty.length = 3;
   enemyPlace.innerHTML = "";
   partyPlace.innerHTML = "";
   end.innerHTML = "";
-  };
+};
   /*
   function loadOne(){
     currentParty = [];
@@ -648,7 +651,7 @@ currentParty.length = 3;
     end.innerHTML = "";
     };
     */
- function check() {
+function check() {
   gameCheck = simpleStorage.get("gamecheck", gameCheck);
   if (gameCheck  === true) {
   document.getElementById("continue").hidden = false;

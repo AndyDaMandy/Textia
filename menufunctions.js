@@ -581,6 +581,7 @@ currentParty.length = 3;
   partyPlace.innerHTML = "";
   end.innerHTML = "";
   };
+  /*
   function loadOne(){
     currentParty = [];
     reserveParty = [];
@@ -646,15 +647,18 @@ currentParty.length = 3;
     partyPlace.innerHTML = "";
     end.innerHTML = "";
     };
+    */
  function check() {
   gameCheck = simpleStorage.get("gamecheck", gameCheck);
   if (gameCheck  === true) {
   document.getElementById("continue").hidden = false;
   }
 };
+/*
 function checkOne() {
   gameCheck = simpleStorage.get("gamecheck1", gameCheck);
   if (gameCheck  === true) {
   document.getElementById("continue1").hidden = false;
   }
 };
+*/

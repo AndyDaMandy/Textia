@@ -299,7 +299,7 @@ const moonlight = new EnemySkill('Moonlight', 'Healing', 20, 2, 'Single');
 const eFire = new EnemySkill('Fire', 'Magical', 3, 2, 'Single');
 const lightHeal = new EnemySkill('Light Heal', 'Healing', 10, 3, 'Single');
 const ethun = new EnemySkill('Thunder', 'Magical', 3, 2, 'Single');
-const thunWave = new EnemeySkill('Thunder Wave', 'Magical', 2, 2, 'All');
+const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
 
 //enemies go here
   class Enemy {
@@ -331,8 +331,8 @@ const thunWave = new EnemeySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   const arenaMage = new Enemy('Arena Mage', 10, 25, 20, 12, 8, 14, 5, iceEl, 5, 5, [eFire], 'Human', magicPotion);
   const swordFish = new Enemy('Sword Fish', 5, 30, 5, 18, 7, 7, 6, thunEl, 10, 20, [], 'Fish', highPotion);
   const shieldFish = new Enemy('Shield Fish', 5, 40, 4, 16, 13, 2, 2, thunEl, 10, 20, [], 'Fish', highPotion);
-  const advenKnight = new Enemy('Adventurer Knight', 10, 50, 5, 90, 12, 0, 9, neuEl, 10, 10, [], 'Human', highRevivalPotion);
-  const advenArcher = new Enemy('Adventurer Archer', 5, 40, 10, 21, 12, 0, 12, iceEl, 10, 10, [], 'Human', highPotion);
+  const advenKnight = new Enemy('Adventurer Knight', 10, 40, 5, 19, 12, 0, 9, neuEl, 10, 10, [], 'Human', highRevivalPotion);
+  const advenArcher = new Enemy('Adventurer Archer', 5, 30, 10, 21, 12, 0, 12, iceEl, 10, 10, [], 'Human', highPotion);
   const advenMage = new Enemy('Adventurer Mage', 10, 30, 20, 15, 12, 10, 15, neuEl, 10, 10, [eFire, flameWave, lightHeal], 'Human', highMagicPotion);
   const glassBeast = new Enemy('Glass Beast', 15, 100, 0, 25, 0, 0, 15, fireEl, 25, 25, [], 'Glass', blankItem);
   const fireLion = new Enemy('Fire Mountain Lion', 13, 40, 10, 22, 16, 0, 12, iceEl, 25, 25, [], 'Lion', highPotion);

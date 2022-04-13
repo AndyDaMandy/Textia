@@ -45,4 +45,24 @@ function toggleChests(){
     opened.hidden = true;
 };
 
-let globalDev = 0;
+function boostExp(char){
+    char.exp += 50;
+    levelUp(char);
+    char.chp = char.hp;
+    char.cmp = char.mp;
+}
+function boostMoney(){
+    money+= 300;
+}
+function healer(){
+    for (let i = 0; i < currentParty.length; i++){
+        currentParty[i].chp = currentParty[i].hp;
+        currentParty[i].cmp = currentParty[i].mp;
+    }
+    if (reserveParty.length >= 1){
+        for (let i = 0; i < reserveParty.length; i++){
+            reserveParty[i].chp = reserveParty[i].hp;
+            reserveParty[i].cmp = reserveParty[i].mp;
+        }
+    }
+}

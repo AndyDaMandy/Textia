@@ -24,7 +24,7 @@
 	gtag('config', 'UA-87767693-3');
 	</script>
   </head>
-  <body onload="check(); checkOne();">
+  <body onload="check();">
     <header>
     <h1>Textia: a World without Images</h1>
     <p><em>To play, click the buttons below:</em></p>
@@ -52,16 +52,17 @@
 </div>
 <div class="well" id="save-menu" hidden>
   <p><em>Click a slot to save your game</em></p>
-  <button onclick="save(); document.getElementById('saved-1').hidden = false;">Save Slot 1</button>
-  <button onclick="saveOne(); document.getElementById('saved-2').hidden = false;">Save Slot 2</button>
+  <button onclick="save(); document.getElementById('saved-1').hidden = false;">Save Slot</button>
+ <!-- <button onclick="saveOne(); document.getElementById('saved-2').hidden = false;">Save Slot 2</button> -->
   <div id="saved-1" hidden>
     <p>You saved slot 1!</p>
-    <button onclick="document.getElementById('saved-1').hidden = true;">Close Slot 1 Save Screen</button>
+    <button onclick="document.getElementById('saved-1').hidden = true;">Close Saved Message</button>
   </div>
-  <div id="saved-2" hidden>
+ <!-- <div id="saved-2" hidden>
     <p>You saved slot 2!</p>
     <button onclick="document.getElementById('saved-2').hidden = true;">Close Slot 2 Save Screen</button>
   </div>
+-->
 </div>
   <div class="well" id="equip-screen" hidden>
       <h5>Party:</h5>
@@ -141,18 +142,18 @@
 <div class="well" id="dev-menu" hidden>
   <h3>Welcome to Dev mode! If you're seeing this you're a dev, a savvy user, or I messed up!</h3>
   <p>Here you can adjust gameplay elements and select where you'd like to go in the story.</p>
-  <button>Add Julie to party</button>
-  <button>Add Ari to party</button>
-  <button>Add Gabriel to party</button>
-  <button>Level up Ando</button>
-  <button>Level up Marie</button>
-  <button>Level up Julie</button>
-  <button>Level up Ari</button>
-  <button>Level up Gabriel</button>
-  <form onsubmit="return false">
+  <button onclick="addJulie('test-1')">Add Julie to party</button>
+  <button onclick="addAri('test-2')">Add Ari to party</button>
+  <button onclick="addGabriel('test-3')">Add Gabriel to party</button>
+  <button onclick="boostExp(ando)">Level up Ando</button>
+  <button onclick="boostExp(marie)">Level up Marie</button>
+  <button onclick="boostExp(julie)">Level up Julie</button>
+  <button onclick="boostExp(ari)">Level up Ari</button>
+  <button onclick="boostExp(Gabriel)">Level up Gabriel</button>
+  <button onclick="boostMoney()">Increase Money</button>
+  <button onclick="healer()">Heal Party</button>
     <input id="moving-tool" type="number" placeholder="1" onchange="move(parseInt(document.getElementById('moving-tool').value))"></input>
-    <input type="submit" onclick="move(parseInt(document.getElementById('moving-tool').value))"></input>
-  </form>
+
   
 </div>
 <!--Gameplay Elements Below -->

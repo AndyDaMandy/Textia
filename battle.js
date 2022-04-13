@@ -508,7 +508,7 @@ function enemCalc (){
       let target = currentParty[getRandomInt(teamLength)];
       //NEW BRANCH FOR MAGIC ENEMIES GOES HERE!!!!! IT CHECKS IF THE ATTACKER HAS MORE MAGIC ATTACK THAN ATTACK
       //enemies can then use skills....?
-      let attacker = enemyParty[getRandomInt(enLength)];
+      let attacker = enemyParty[i];
       if (attacker.eSkills.length > 0){
         let coinFlip = getRandomInt(2);
         //flips for skills or not

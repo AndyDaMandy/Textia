@@ -553,12 +553,13 @@ function alertOne(){
   function addGabriel(id){
     if (currentParty.length >= 3) {
       reserveParty.push(gabriel);
+      alert("Gabriel has joined the party!");
     } else {
       currentParty.push(gabriel);
+      alert("Gabriel has joined the party!");
     }
     document.getElementById(id).hidden = true;
     opened.push(id);
-    alert("Gabriel has joined the party! ");
   }
   // read magic book function
   function addBook(id){

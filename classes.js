@@ -407,8 +407,8 @@ const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   const greatShark = new Enemy('Great Shark of Aster Ocean', 10, 105, 10, 22, 8, 20, 10, thunEl, 55, 100, [largeBite, bigWave], 'Fish', sparkBow);
   //dark crow
   const darkCrow = new Enemy('Dark Crow', 20, 80, 30, 25, 20, 25, 20, neuEl, 80, 80, [], 'Flying', blankItem);
-  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 110, 30, 29, 14, 27, 14, watEl, 200, 300, [lunarEdge, moonlight, crescentStrike], 'Dragon', dragonScales);
-  const redPilgrim = new Enemy('Red - The First Pilgrim', 100, 300, 20, 30, 9, 30, 9, neuEl, 200, 500, [sunSlash, crystalBlessing, eCriticalThrust, wideSlash], 'Human', excalibur);
+  const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 140, 30, 29, 14, 27, 14, watEl, 200, 300, [lunarEdge, moonlight, crescentStrike], 'Dragon', dragonScales);
+  const redPilgrim = new Enemy('Red - The First Pilgrim', 100, 300, 20, 30, 10, 30, 10, neuEl, 200, 500, [sunSlash, crystalBlessing, eCriticalThrust, wideSlash], 'Human', excalibur);
 //============================
 //Skills
 //===========================

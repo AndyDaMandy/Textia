@@ -940,7 +940,7 @@ function levelUp(char){
   if (char.exp >= 650 && char.level < 11){
     statBoost(char);
   }
-  if (char.exp >= 800 && char.level < 12){
+  if (char.exp >= 750 && char.level < 12){
     statBoost(char);
     if (char.level === 12 && char.name === "Ando") {
       ando.skills.push(criticalThrust);
@@ -948,8 +948,14 @@ function levelUp(char){
       learnedSkill.textContent = `Ando learned Critical Thrust!` 
       info.appendChild(learnedSkill);
       }
+    if (char.level === 12 && char.name === 'Ari'){
+      ari.skills.push(mug);
+      let learnedSkill = document.createElement("p");
+      learnedSkill.textContent = 'Ari learned Mug!';
+      info.appendChild(learnedSkill);
+      }
   }
-  if (char.exp >= 950 && char.level < 13){
+  if (char.exp >= 850 && char.level < 13){
     statBoost(char);
     if (char.level === 13 && char.name === "Julie") {
     julie.skills.push(drainArrow);
@@ -958,7 +964,7 @@ function levelUp(char){
     info.appendChild(learnedSkill);
     }
   }
-  if (char.exp >= 1100 && char.level < 14){
+  if (char.exp >= 950 && char.level < 14){
     statBoost(char);
     if (char.level === 14 && char.name === "Marie") {
     marie.skills.push(thunderThree);
@@ -967,7 +973,7 @@ function levelUp(char){
       info.appendChild(learnedSkill);
     }
   }
-  if (char.exp >= 1300 && char.level < 15){
+  if (char.exp >= 1050 && char.level < 15){
     statBoost(char);
     if (char.level === 15 && char.name === "Ando") {
     ando.support.push(meditate);
@@ -976,32 +982,34 @@ function levelUp(char){
     info.appendChild(learnedSkill);
     }
   }
-  if (char.exp >= 1500 && char.level < 16){
-    statBoost(char);
-    ari.skills.push(mug);
-    let learnedSkill = document.createElement("p");
-    learnedSkill.textContent = 'Ari learned Mug!';
-    info.appendChild(learnedSkill);
-  }
-  if (char.exp >= 1800 && char.level < 17){
+  if (char.exp >= 1200 && char.level < 16){
     statBoost(char);
   }
-  if (char.exp >= 2100 && char.level < 18){
+  if (char.exp >= 1300 && char.level < 17){
     statBoost(char);
   }
-  if (char.exp >= 2400 && char.level < 19){
+  if (char.exp >= 1500 && char.level < 18){
     statBoost(char);
   }
-  if (char.exp >= 2800 && char.level < 20){
+  if (char.exp >= 1800 && char.level < 19){
     statBoost(char);
   }
-  if (char.exp >= 3200 && char.level < 21){
+  if (char.exp >= 2000 && char.level < 20){
     statBoost(char);
   }
-  if (char.exp >= 3800 && char.level < 22){
+  if (char.exp >= 2300 && char.level < 21){
     statBoost(char);
   }
-  if (char.exp >= 4200 && char.level < 23){
+  if (char.exp >= 2400 && char.level < 22){
+    statBoost(char);
+  }
+  if (char.exp >= 2600 && char.level < 23){
+    statBoost(char);
+  }
+  if (char.exp >= 2800 && char.level < 24){
+    statBoost(char);
+  }
+  if (char.exp >= 3200 && char.level < 25){
     statBoost(char);
   }
 };

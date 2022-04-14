@@ -565,8 +565,11 @@ function enemCalc (){
               let healedTargetVal = getRandomInt(enLength);
               enHp[healedTargetVal] += healingVal;
               if (enHp[healedTargetVal] >= enemyParty[healedTargetVal].hp){enHp[healedTargetVal] = enemyParty[healedTargetVal].hp}
+              let healName = document.createElement("p");
+              healName.textContent = `${attacker.name} used ${attackChoice.name}!`;
               let showHeal = document.createElement("p");
-              showHeal.textContent = `${enemyParty[healedTargetVal].name} has been healed for ${healingVal}!`
+              showHeal.textContent = `${enemyParty[healedTargetVal].name} has been healed for ${healingVal}!`;
+              info.appendChild(healName);
               info.appendChild(showHeal);
             }
           }
@@ -947,24 +950,30 @@ function levelUp(char){
   }
   if (char.exp >= 950 && char.level < 13){
     statBoost(char);
+    if (char.level === 13 && char.name === "Julie") {
     julie.skills.push(drainArrow);
     let learnedSkill = document.createElement("p");
     learnedSkill.textContent = 'Julie learned Drain Arrow!';
     info.appendChild(learnedSkill);
+    }
   }
   if (char.exp >= 1100 && char.level < 14){
     statBoost(char);
+    if (char.level === 14 && char.name === "Marie") {
     marie.skills.push(thunderThree);
     let learnedSkill = document.createElement("p");
       learnedSkill.textContent = 'Marie learned Thunder 3!';
       info.appendChild(learnedSkill);
+    }
   }
   if (char.exp >= 1300 && char.level < 15){
     statBoost(char);
+    if (char.level === 15 && char.name === "Ando") {
     ando.support.push(meditate);
     let learnedSkill = document.createElement("p");
     learnedSkill.textContent = 'Ando learned Meditate!';
     info.appendChild(learnedSkill);
+    }
   }
   if (char.exp >= 1500 && char.level < 16){
     statBoost(char);

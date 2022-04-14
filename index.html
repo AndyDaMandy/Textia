@@ -631,7 +631,7 @@
       <p>Its scales are bright white, just like this strange moon. It has a glowing golden mane and a powerful golden gaze.</p>
       <p>It appears ready to guard what's ahead. You know that it's blocking the Crystal Lake.</p>
       <p>You prepare yourself for battle.</p>
-      <button onclick="battle([lunarDragon]); statePost = 45;">Fight</button>
+      <button onclick="battle([lunarDragon]); statePost = 46;">Fight</button>
     </div>
     <div id="mountain-1-10" hidden>
       <!-- state = 46 -->
@@ -640,7 +640,7 @@
       <p>At last your adventure is nearing its close.</p>
       <p>There's a chest here, will you open it?</p>
       <button id="chest-16" onclick="openChest(lunarStaff, this.id)">Open Chest</button>
-      <button>Go Forward</button>
+      <button onclick="move(49)">Go Forward</button>
     </div>
   </div>
   <div id="crystal" hidden>
@@ -651,14 +651,14 @@
       <p>Surrounding the lake are a plethora of crystals, you could easily take a few home to protect the town for years to come.</p>
       <p>You place the crystals from home in the lake and slowly they begin to take on the energy of the Lake</p>
       <p>Once they've been re-energized, you decide to head back.</p>
-      <button onclick="move(47)">Head Home</button>
+      <button onclick="move(48)">Head Home</button>
     </div>
     <div id="crystal-2" hidden>
       <!-- state = 48 -->
       <h2>Crystal Lake - Mysterious Air</h2>
       <p>You feel a mysterious chill in the air as you turn around. You feel a strange presence behind you.</p>
       <p>You turn around and are attacked by shadows!</p>
-      <button onclick="battle([shadow, shadow, shadow]); statePost = 48">Fight</button>
+      <button onclick="battle([shadow, shadow, shadow]); statePost = 49">Fight</button>
     </div>
     <div id="crystal-3" hidden>
       <h2>Crystal Lake - The End</h2>
@@ -669,7 +669,7 @@
       <p>Red: "When I defeated the Solar Dragon, I knew I made a mistake. The Dragon was simply protecting this land. Now the the plants are dying and we will have nothing left."</p>
       <p>Red: "A long time ago I made a pact with the spirit of the planet to protect this world, and I'll continue to do it!"</p>
       <p>Red: "Prepare yourselves!"</p>
-      <button onclick="battle([redPilgrim]); statePost = 49">Battle for the Future</button>
+      <button onclick="battle([redPilgrim]); statePost = 50">Battle for the Future</button>
     </div>
   </div>
 <div id="ending" hidden>

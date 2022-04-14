@@ -447,6 +447,7 @@ function gameFlow (state) {
         }
         if (state === 47){
           document.getElementById("mountain-1").hidden = true;
+          document.getElementById("mountain-1-10").hidden = true;
           document.getElementById("crystal").hidden = false;
           document.getElementById("crystal-1").hidden = false;
         }

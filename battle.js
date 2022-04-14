@@ -709,6 +709,7 @@ function supCalc(caster, partymem, sup){
         let pheal = document.createElement("p")
         pheal.textContent = currentParty[i].name + "'s HP is now: " + currentParty[i].chp + "/" + currentParty[i].hp;
         info.appendChild(pheal);
+        loadPartyInfo();
       }
     } else {
     partymem.chp += sup.pow;

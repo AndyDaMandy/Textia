@@ -346,11 +346,11 @@ const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   const advenArcher = new Enemy('Adventurer Archer', 5, 25, 25, 21, 12, 0, 12, iceEl, 10, 10, [], 'Human', highPotion);
   const advenMage = new Enemy('Adventurer Mage', 10, 20, 20, 17, 12, 20, 12, neuEl, 10, 10, [eFire, flameWave, lightHeal], 'Human', highMagicPotion);
   const glassBeast = new Enemy('Glass Beast', 15, 80, 0, 25, 0, 0, 2, fireEl, 25, 25, [], 'Glass', blankItem);
-  const fireLion = new Enemy('Fire Mountain Lion', 13, 30, 10, 23, 10, 0, 12, iceEl, 25, 25, [], 'Lion', highPotion);
+  const fireLion = new Enemy('Fire Mountain Lion', 13, 30, 10, 27, 10, 0, 12, iceEl, 25, 25, [], 'Lion', highPotion);
   const obsidianGolem = new Enemy('Obsidian Golem', 20, 35, 10, 20, 12, 0, 6, fireEl, 30, 30, [], 'Golem', highRevivalPotion); 
   const thunderRod = new Enemy('Thunder Rod', 20, 30, 30, 19, 10, 25, 15, watEl, 40, 40, [ethun, thunWave], 'Rod', blankItem);
   const aquaSlime = new Enemy('Aqua Slime', 10, 30, 10, 27, 12, 20, 15, thunEl, 20, 20, [], 'Slime', highMagicPotion);
-  const shadow = new Enemy('Shadow Warrior', 20, 45, 40, 26, 12, 26, 12, neuEl, 40, 40, [eFire, lightHeal], 'Shadow', highRevivalPotion);
+  const shadow = new Enemy('Shadow Warrior', 20, 35, 40, 26, 12, 26, 12, neuEl, 40, 40, [eFire, lightHeal], 'Shadow', highRevivalPotion);
   const goblin = {
     name: "Goblin",
     level: 1,
@@ -408,7 +408,7 @@ const thunWave = new EnemySkill('Thunder Wave', 'Magical', 2, 2, 'All');
   //dark crow
   const darkCrow = new Enemy('Dark Crow', 20, 80, 30, 25, 20, 25, 20, neuEl, 80, 80, [], 'Flying', blankItem);
   const lunarDragon = new Enemy('Lunar Dragon of Narsh', 20, 140, 30, 29, 14, 27, 14, watEl, 200, 300, [lunarEdge, moonlight, crescentStrike], 'Dragon', dragonScales);
-  const redPilgrim = new Enemy('Red - The First Pilgrim', 100, 300, 20, 30, 10, 30, 10, neuEl, 200, 500, [sunSlash, crystalBlessing, eCriticalThrust, wideSlash], 'Human', excalibur);
+  const redPilgrim = new Enemy('Red - The First Pilgrim', 100, 300, 20, 32, 10, 32, 10, neuEl, 200, 500, [sunSlash, crystalBlessing, eCriticalThrust, wideSlash], 'Human', excalibur);
 //============================
 //Skills
 //===========================

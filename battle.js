@@ -1116,6 +1116,7 @@ function battle(en) {
   adv.hidden = true;
   battleState = 1;
   battleMode.hidden = false;
+  document.getElementById("alert-screen").hidden = true;
   mainMenu.hidden = true;
   if (currentParty.length < 3){
     savedParty = [currentParty[0].name, currentParty[1].name];

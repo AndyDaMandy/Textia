@@ -483,7 +483,7 @@ function move (state) {
     };   
 //alerts and misc dialogue
 function alertOne(){
-    alert("There's a Shaman that helps adventurers at our chapel! He's training them to be strong enough to take on the outside world! Adventurers, come train here!");
+    alertPlayer("There's a Shaman that helps adventurers at our chapel! He's training them to be strong enough to take on the outside world! Adventurers, come train here!");
   };
   
   //shop functions
@@ -539,6 +539,21 @@ function alertOne(){
   }
   let opened = [];
 
+
+  //game alerts
+  function alertPlayer(text) {
+    document.getElementById("alert-text").innerHTML = "";
+    let alertText = document.getElementById("alert-text");
+    let p = document.createElement("p")
+    p = document.createTextNode(text)
+    alertText.appendChild(p)
+    document.getElementById("alert-screen").hidden = false;
+
+  }
+  function closeAlert(){
+    document.getElementById("alert-screen").hidden = true;
+    document.getElementById("alert-text").innerHTML = "";
+  }
   //===================================
   //Open chest and stuff
   //==================================
@@ -551,7 +566,8 @@ function alertOne(){
     }
     document.getElementById(id).hidden = true;
     opened.push(id);
-    alert("You found: " + item.name + " - in the chest!"); 
+    alertPlayer("You found: " + item.name + " - in the chest!");
+    //alert("You found: " + item.name + " - in the chest!"); 
   };
  /* function openWeapon(weapon, id){
     weaponsOwned.push(weapon);
@@ -574,7 +590,8 @@ function alertOne(){
     } else {
       currentParty.push(julie);
     }
-    alert("Julie joined the party!");
+    
+    alertPlayer("Julie joined the party!");
     document.getElementById(id).hidden = true;
     //julie button gets treated as a chest to prevent getting Julia more than once.
     //Julie dialogue trees could get interesting.
@@ -583,10 +600,10 @@ function alertOne(){
   function addAri(id) {
     if (currentParty.length >= 3){
       reserveParty.push(ari);
-      alert("Ari has joined the party! Since your party is full she is in the reserve party. To switch check the menu!");
+      alertPlayer("Ari has joined the party! Since your party is full she is in the reserve party. To switch check the menu!");
     } else if (currentParty.length <= 2) {
       currentParty.push(ari);
-      alert("Ari has joined the party! ");
+      alertPlayer("Ari has joined the party! ");
     }
     document.getElementById(id).hidden = true;
     opened.push(id);
@@ -594,10 +611,10 @@ function alertOne(){
   function addGabriel(id){
     if (currentParty.length >= 3) {
       reserveParty.push(gabriel);
-      alert("Gabriel has joined the party!");
+      alertPlayer("Gabriel has joined the party!");
     } else {
       currentParty.push(gabriel);
-      alert("Gabriel has joined the party!");
+      alertPlayer("Gabriel has joined the party!");
     }
     document.getElementById(id).hidden = true;
     opened.push(id);
@@ -608,7 +625,7 @@ function alertOne(){
     marie.skills.push(fireTwo);
     julie.skills.push(waterArrowTwo);
     ari.skills.push(thunSwipes);
-    alert('"Magic comes from pulling the energy from nature. By focusing your mind on the elements and their power you can further harness them. A kind soul that protects nature will have more magical power than one that destroys it." After reading the book you and your allies have received newfound knowledge! You now have better mastery over your skills!');
+    alertPlayer('"Magic comes from pulling the energy from nature. By focusing your mind on the elements and their power you can further harness them. A kind soul that protects nature will have more magical power than one that destroys it." After reading the book you and your allies have received newfound knowledge! You now have better mastery over your skills!');
     document.getElementById(id).hidden = true;
     opened.push(id);
   }
@@ -616,27 +633,27 @@ function alertOne(){
   //Checks for Julie
   function checkJulie(){
     if (currentParty.indexOf(julie) != -1){
-      alert("Julie: I'm glad we're joining together! I'll do my best!")
+      alertPlayer("Julie: I'm glad we're joining together! I'll do my best!")
       move(10);
     } else {
-      alert('You think it would be best to go back and join up with Julie. The more the merrier!');
+      alertPlayer('You think it would be best to go back and join up with Julie. The more the merrier!');
     }
   }
   //Checks for Ari
   function rideBoat(){
     if (currentParty.indexOf(ari) != -1 || reserveParty.indexOf(ari) != -1){
-      alert('Ari: "And so our voyage begins!!"')
+      alertPlayer('Ari: "And so our voyage begins!!"')
       move(28);
     } else {
-      alert('You asked around to see if someone would be willing to let you ride a boat, but it appears nobody will take you. You decide to turn back and see if you can find a way to get access to a boat.')
+      alertPlayer('You asked around to see if someone would be willing to let you ride a boat, but it appears nobody will take you. You decide to turn back and see if you can find a way to get access to a boat.')
     }
   }
   //checks for Gabriel
   function checkGabe (){
     if (currentParty.indexOf(gabriel) != -1 || reserveParty.indexOf(gabriel) != -1){
-      alert('Gabriel: "Let us march forward then."')
+      alertPlayer('Gabriel: "Let us march forward then."')
       move(41);
     } else {
-      alert('You think it would be best to accept the offer, better to have more allies then less.')
+      alertPlayer('You think it would be best to accept the offer, better to have more allies then less.')
     }
   }

@@ -561,7 +561,7 @@ function alertOne(){
   function openChest(item, id){
     if (item.category === "Weapon"){
       weaponsOwned.push(item);
-    } else if (item.category === "item"){
+    } else if (item.category === "Item"){
       inventory.push(item);
     }
     document.getElementById(id).hidden = true;
